@@ -1,44 +1,25 @@
-#include <TFile.h>
-#include <TTree.h>
-#include <TROOT.h>
-#include <TRandom.h>
-#include <TApplication.h>
-#include <TCanvas.h>
-#include <TPostScript.h>
-#include <TAxis.h>
-#include <TH1F.h>
-#include <TH2F.h>
-#include <TGraph.h>
-#include <TGraphErrors.h>
-#include <TLegend.h>
-#include <TF1.h>
-#include <TLine.h>
-#include <TStyle.h>
-#include <TProfile.h>
-#include <TMapFile.h>
-#include <TPaveStats.h>
-
-
+// C++ includes
 #include <fstream>
-#include <iomanip>
 #include <string>
 #include <iostream>
+#include <cstdio>
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <limits.h>  
-#include <string.h>
-#include <unistd.h>
-#include <sys/mman.h>
-#include <errno.h>
-#include <ctype.h>
-#include <math.h>
-#include <time.h>
+// ROOT includes
+#include <TROOT.h>
+#include <TStyle.h>
+#include <TFile.h>
+#include <TTree.h>
+#include <TGraphErrors.h>
+#include <TCanvas.h>
 
 //LOCAL INCLUDES
 #include "Aux.hh"
 
 using namespace std;
+
+TStyle* style;
+
+int graphic_init();
 
 std::string ParseCommandLine( int argc, char* argv[], std::string opt )
 {
@@ -56,12 +37,8 @@ std::string ParseCommandLine( int argc, char* argv[], std::string opt )
 };
 
 
-int graphic_init();
-
-TStyle* style;
-
-
-int main(int argc, char **argv){
+int main(int argc, char **argv) {
+  gROOT->SetBatch();
 
   FILE* fp1;
   char stitle[200];
@@ -518,8 +495,7 @@ int main(int argc, char **argv){
 
 
 
-int
-graphic_init( void){
+int graphic_init(){
 
   style = new TStyle("style", "style");
   

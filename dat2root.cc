@@ -13,6 +13,7 @@
 
 //LOCAL INCLUDES
 #include "Aux.hh"
+#include "Config.hh"
 
 using namespace std;
 
@@ -86,6 +87,19 @@ int main(int argc, char **argv) {
       saveRaw = true;
       doFilter = true;
       std::cout << "Will apply Weierstrass transform (gaussian filter) to input pulses\n";
+  }
+
+  std::string configName = "config/15may2017.config";
+  std::string _configName = ParseCommandLine( argc, argv, "--config" );
+  if ( _configName != "" ) {
+      configName = _configName;
+  }
+
+  std::cout << "\n=== Parsing configuration file " << configName << " ===\n" << std::endl;
+  Config config(configName);
+  if ( !config.hasChannels() || !config.isValid() ) {
+      std::cerr << "\nFailed to load channel information from config " << configName << std::endl;
+      return -1;
   }
 
   //**************************************
@@ -316,9 +330,8 @@ int main(int argc, char **argv) {
 
 	// Correct pulse shape for baseline offset
 	for(int j = 0; j < 1024; j++) {
-	  double polarity = 1; // TODO: define polarity via external config
-          if (i == 1) polarity = -1;
-	  channel[totalIndex][j] = polarity * (short)((double)(channel[totalIndex][j]) + baseline);
+          float multiplier = config.getChannelMultiplicationFactor(totalIndex);
+	  channel[totalIndex][j] = multiplier * (short)((double)(channel[totalIndex][j]) + baseline);
 	}
 
 	// DRS-glitch finder: zero out bins which have large difference
@@ -376,14 +389,18 @@ int main(int argc, char **argv) {
         float fs[5]; // constant-fraction fit output
         if ( !isTrigChannel ) {
             if( drawDebugPulses ) {
-                timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
-                if ( xmin[totalIndex] != 0.0 ) {
+                if ( config.doGaussFit(totalIndex) ) {
+                    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
+                }
+                if ( config.doRisingEdgeFit(totalIndex) && xmin[totalIndex] != 0.0 ) {
                     RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
                 }
             }
             else {
-                timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
-                if ( xmin[totalIndex] != 0.0 ) {
+                if ( config.doGaussFit(totalIndex) ) {
+                    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
+                }
+                if ( config.doRisingEdgeFit(totalIndex) && xmin[totalIndex] != 0.0 ) {
                     RisingEdgeFitTime( pulse, index_min, fs, event, "" );
                 }
             }

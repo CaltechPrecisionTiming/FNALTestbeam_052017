@@ -9,7 +9,7 @@ LDFLAGS := $(shell root-config --glibs)
 CPPFLAGS += -g -std=c++11
 
 TARGET = dat2root
-SRC = dat2root.cc src/Aux.cc
+SRC = dat2root.cc src/Aux.cc src/Config.cc
 OBJ = $(SRC:.cc=.o)
 
 all : $(TARGET) 

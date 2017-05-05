@@ -342,7 +342,6 @@ int main(int argc, char **argv) {
         // Recreate the pulse TGraph using baseline-subtracted channel data
 	delete pulse;
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );
-	//index_min = FindRealMin(1024, channel[totalIndex]); 
 	xmin[totalIndex] = index_min;
 
 	if (doFilter) {

@@ -304,15 +304,43 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
       c->SaveAs(fname+"LinearFit.pdf");
       //delete c;
     }
-  tstamp[0] = (0.0*y-b)/slope;
-  //std::cout << "----" << tstamp[0]  << std::endl;
-  tstamp[1] = (0.15*y-b)/slope;
-  tstamp[2] = (0.30*y-b)/slope;
-  tstamp[3] = (0.45*y-b)/slope;
-  tstamp[4] = (0.60*y-b)/slope;
+
+  tstamp[0] = (0.90*y-b)/slope - (0.10*y-b/slope);
+  tstamp[1] = (0.0*y-b)/slope;
+  tstamp[2] = (0.15*y-b)/slope;
+  tstamp[3] = (0.30*y-b)/slope;
+  tstamp[4] = (0.45*y-b)/slope;
+  tstamp[5] = (0.60*y-b)/slope;
   
   delete flinear;
 };
+
+float ConstantThresholdTime(TGraphErrors* pulse, const float threshold)
+{
+  double* yy = pulse->GetY();
+  double* xx = pulse->GetX();
+  int indexCrossThreshold = 0;
+  for ( int i = 0; i < 1024; i++ )
+    {
+      if (yy[i] > threshold) {
+	indexCrossThreshold = i;
+	break;
+      }
+    }
+
+  double y2 = yy[indexCrossThreshold];
+  double x2 = xx[indexCrossThreshold];
+  double y1 = yy[indexCrossThreshold-1];
+  double x1 = xx[indexCrossThreshold-1];
+  double xThreshold = (threshold - y1) * (x2-x1)/(y2-y1) + x1;  
+
+
+  //std::cout << "test: " << indexCrossThreshold << " " << xThreshold << " : " << x1 << "," << y1 << " | " << x2 << "," << y2 << "\n";
+
+  return xThreshold;
+};
+
+
 
 
 float SigmoidTimeFit(TGraphErrors * pulse, const float index_min, int event, TString fname, bool makePlot )
@@ -458,7 +486,9 @@ float GetPulseIntegral(int peak, short *a, std::string option)
 //----------------------------------------------
 //Gaussian Filter to reduce high frequency noise
 //----------------------------------------------
-TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseName, bool makePlot )
+TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseName, 
+				    double sigma,
+				    bool makePlot )
 {
   float Gauss[1024];
   //Setting Errors
@@ -475,7 +505,6 @@ TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseNa
   
   TF1 *fb = new TF1("fb","gaus(0)", 0.0, 204.6);
   fb->SetParameter(1, 100);
-  float sigma = 3.0;
   fb->SetParameter(2, sigma);
   fb->SetParameter(0, 1/(sqrt(3.1415*2.0)*sigma) );
   //eval Gaussian

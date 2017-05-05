@@ -47,7 +47,7 @@ int main(int argc, char **argv) {
   // Parse command line arguments
   //**************************************
 
-  int numRequiredArgs = 2;
+  int numRequiredArgs = 3;
   if (argc - 1 < numRequiredArgs) {
       std::cerr << "Usage: dat2root in_file.dat num_events" << std::endl;
       return -1;
@@ -55,11 +55,11 @@ int main(int argc, char **argv) {
   std::cout << "\n=== Beginning program ===\n" << std::endl;
 
   std::string inputFilename = argv[1];
-  std::string outputFilename = inputFilename + "-full.root";
+  std::string outputFilename = argv[2];
   std::cout << "Input file: " << inputFilename << std::endl;
-  std::cout << "Output file: " << outputFilename << std::endl << std::endl;
+  std::cout << "Output file: " << outputFilename << std::endl;
 
-  int nEvents = atoi(argv[2]);
+  int nEvents = atoi(argv[3]);
   std::cout << "Will process " << nEvents << " events" << std::endl;
 
   // Board number is fixed at 1 for now because we only have one board
@@ -161,6 +161,8 @@ int main(int argc, char **argv) {
   float linearTime30[36];
   float linearTime45[36];
   float linearTime60[36];
+  float risetime[36]; 
+  float constantThresholdTime[36];
  
   tree->Branch("event", &event, "event/I");
   tree->Branch("tc", tc, "tc[4]/s");
@@ -181,6 +183,8 @@ int main(int argc, char **argv) {
   tree->Branch("linearTime30", linearTime30, "linearTime30[36]/F");
   tree->Branch("linearTime45", linearTime45, "linearTime45[36]/F");
   tree->Branch("linearTime60", linearTime60, "linearTime60[36]/F");
+  tree->Branch("risetime", risetime, "risetime[36]/F");
+  tree->Branch("constantThresholdTime", constantThresholdTime, "constantThresholdTime[36]/F");
 
   // temp variables for data input
   uint   event_header;
@@ -347,7 +351,7 @@ int main(int argc, char **argv) {
 	xmin[totalIndex] = index_min;
 
 	if (doFilter && totalIndex == 4) {
-	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName , false);
+	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName, 2.0, false);
 	}
 	
 	//Compute Amplitude : use units V
@@ -375,7 +379,7 @@ int main(int argc, char **argv) {
 	float timepeak   = 0;
         bool isTrigChannel = ( totalIndex == 8 || totalIndex == 17 
                             || totalIndex == 26 || totalIndex == 35 );
-        float fs[5]; // constant-fraction fit output
+        float fs[6]; // constant-fraction fit output
         if ( !isTrigChannel ) {
 	  if( drawDebugPulses ) {
 	    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
@@ -398,11 +402,13 @@ int main(int argc, char **argv) {
         }
         // for output tree
 	gauspeak[totalIndex] = timepeak;
-	linearTime0[totalIndex] = fs[0];
-	linearTime15[totalIndex] = fs[1];
-	linearTime30[totalIndex] = fs[2];
-	linearTime45[totalIndex] = fs[3];
-	linearTime60[totalIndex] = fs[4];
+	risetime[totalIndex] = fs[0];
+	linearTime0[totalIndex] = fs[1];
+	linearTime15[totalIndex] = fs[2];
+	linearTime30[totalIndex] = fs[3];
+	linearTime45[totalIndex] = fs[4];
+	linearTime60[totalIndex] = fs[5];
+	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
 
 	delete pulse;
       }

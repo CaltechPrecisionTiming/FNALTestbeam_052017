@@ -18,7 +18,7 @@ static float amplificationFactor[nPoints] = { 27.9/1.37*10 , 26.8/1.37*10, 31.6/
     63*10, 66*10, 68*10, 66*10 };
 
 double GetAmplificationFactor ( double measuredAmplitude );
-TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseName, bool makePlot = false );
+TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseName, double sigma = 1.0, bool makePlot = false );
 TGraphErrors* GetTGraph( float* channel, float* time );
 TGraphErrors GetTGraph( short* channel, float* time );
 double GetGaussTime( TGraphErrors* pulse );
@@ -34,5 +34,7 @@ float GausFit_MeanTime(TGraphErrors* pulse, const float index_first, const float
 float GetBaseline( int peak, short *a );
 float GetBaseline(TGraphErrors * pulse, int i_low, int i_high, TString fname );
 float GetPulseIntegral(int peak, short *a, std::string option = "");
+float ConstantThresholdTime(TGraphErrors * pulse, const float threshold);
+
 
 #endif

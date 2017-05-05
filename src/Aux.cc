@@ -80,7 +80,7 @@ int FindMinAbsolute( int n, short *a) {
   float xmin = a[5];
   int loc = 0;
   for  (int i = 5; i < n-10; i++) {
-    if (xmin > a[i] && a[i+1] < 0.5*a[i] && a[i] < -40. )  
+    if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -40. )  
       {
 	//std::cout << i << " " << a[i] << std::endl;
 	xmin = a[i];
@@ -213,7 +213,7 @@ float GausFit_MeanTime(TGraphErrors* pulse, const float index_first, const float
   pulse->SetMarkerSize(0.5);
   pulse->SetMarkerStyle(20);
   pulse->Draw("AP");
-  c->SaveAs(fname+".pdf");
+  c->SaveAs(fname+"GausPeakPlots.pdf");
   delete fpeak;
   
   return timepeak;
@@ -237,7 +237,7 @@ float RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float
     {
       std::cout << "make plot" << std::endl;
       TCanvas* c = new TCanvas("canvas","canvas",800,400) ;
-      pulse->GetXaxis()->SetLimits(x_low-3, x_high+3);
+      pulse->GetXaxis()->SetLimits(x_low-100, x_high+100);
       pulse->SetMarkerSize(0.3);
       pulse->SetMarkerStyle(20);
       pulse->Draw("AP");
@@ -255,15 +255,15 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
   double x_low, x_high, y, dummy;
   double ymax;
   pulse->GetPoint(index_min, x_low, ymax);
-  for ( int i = 1; i < 100; i++ )
+  for ( int i = 1; i < 200; i++ )
     {
       pulse->GetPoint(index_min-i, x_low, y);
-      if ( y < 0.2*ymax ) break;
+      if ( y < 0.1*ymax ) break;
     }
-  for ( int i = 1; i < 100; i++ )
+  for ( int i = 1; i < 200; i++ )
     {
       pulse->GetPoint(index_min-i, x_high, y);
-      if ( y < 0.9*ymax ) break;
+      if ( y < 0.6*ymax ) break;
     }
   //pulse->GetPoint(index_min-8, x_low, y);
   //pulse->GetPoint(index_min-3, x_high, y);
@@ -297,7 +297,7 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
     {
       std::cout << "make plot" << std::endl;
       TCanvas* c = new TCanvas("canvas","canvas",800,400) ;
-      pulse->GetXaxis()->SetLimits(x_low-10, x_high+10);
+      pulse->GetXaxis()->SetLimits(x_low-50, x_high+50);
       pulse->SetMarkerSize(0.3);
       pulse->SetMarkerStyle(20);
       pulse->Draw("AP");
@@ -388,7 +388,10 @@ float GetPulseIntegral(int peak, short *a, std::string option)
 
 }
 
-TGraphErrors* GetTGraphFilter( short* channel, float* time, TString pulseName, bool makePlot )
+//----------------------------------------------
+//Gaussian Filter to reduce high frequency noise
+//----------------------------------------------
+TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseName, bool makePlot )
 {
   float Gauss[1024];
   //Setting Errors
@@ -445,8 +448,8 @@ TGraphErrors* GetTGraphFilter( short* channel, float* time, TString pulseName, b
 
   if (makePlot) {
     TCanvas* c = new TCanvas("canvas","canvas",800,400) ;         
-    tg2->GetXaxis()->SetLimits(50, 70);
-    tg->GetXaxis()->SetLimits(50, 70);
+    tg2->GetXaxis()->SetLimits(0, 200);
+    tg->GetXaxis()->SetLimits(0, 200);
     //tg2->Fit("fb","","", 0.0, 204.6 );
     tg2->SetMarkerSize(0.5);
     tg->SetMarkerSize(0.5);
@@ -457,6 +460,6 @@ TGraphErrors* GetTGraphFilter( short* channel, float* time, TString pulseName, b
     tg->Draw("sameP");
     c->SaveAs(pulseName + "GausPulse.pdf");
   }
-  return tg;
+  return tg2;
 };
 

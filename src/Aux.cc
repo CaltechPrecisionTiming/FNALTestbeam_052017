@@ -80,9 +80,9 @@ int FindMinAbsolute( int n, short *a) {
   float xmin = a[5];
   int loc = 0;
   for  (int i = 5; i < n-10; i++) {
-    if (xmin > a[i] && a[i+1] < 0.5*a[i] && a[i] < -40. )  
+    if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -40. )  
       {
-	std::cout << i << " " << a[i] << std::endl;
+	//std::cout << i << " " << a[i] << std::endl;
 	xmin = a[i];
 	loc = i;
 	//if ( a[i+5]>a[i] && a[i+10]>a[i+5] ) {

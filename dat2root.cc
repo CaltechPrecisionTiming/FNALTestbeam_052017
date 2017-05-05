@@ -318,13 +318,8 @@ int main(int argc, char **argv) {
 	// Find the absolute minimum. This is only used as a rough determination 
         // to decide if we'll use the early time samples
 	// or the late time samples to do the baseline fit
-	std::cout << "---event "  << event << "-------ch#: " << totalIndex << std::endl;
+	//std::cout << "---event "  << event << "-------ch#: " << totalIndex << std::endl;
 	int index_min = FindMinAbsolute(1024, channel[totalIndex]); 
-	if( event==155 && totalIndex == 1 )
-	  {
-	    std::cout << "indexmin: " << index_min << std::endl;
-	    return 1;
-	  }
 	
 	// DRS-glitch finder: zero out bins which have large difference
 	// with respect to neighbors in only one or two bins

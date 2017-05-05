@@ -358,7 +358,7 @@ int main(int argc, char **argv) {
 	xmin[totalIndex] = index_min;
 
 	if (doFilter) {
-	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName , false);
+	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName , 1.0, false);
 	}
 	
 	//Compute Amplitude : use units V

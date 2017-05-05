@@ -314,6 +314,33 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
   delete flinear;
 };
 
+float ConstantThresholdTime(TGraphErrors* pulse, const float threshold)
+{
+  double* yy = pulse->GetY();
+  double* xx = pulse->GetX();
+  int indexCrossThreshold = 0;
+  for ( int i = 0; i < 1024; i++ )
+    {
+      if (yy[i] > threshold) {
+	indexCrossThreshold = i;
+	break;
+      }
+    }
+
+  double y2 = yy[indexCrossThreshold];
+  double x2 = xx[indexCrossThreshold];
+  double y1 = yy[indexCrossThreshold-1];
+  double x1 = xx[indexCrossThreshold-1];
+  double xThreshold = (threshold - y1) * (x2-x1)/(y2-y1) + x1;  
+
+
+  //std::cout << "test: " << indexCrossThreshold << " " << xThreshold << " : " << x1 << "," << y1 << " | " << x2 << "," << y2 << "\n";
+
+  return xThreshold;
+};
+
+
+
 
 double GetGaussTime( TGraphErrors* pulse )
 {

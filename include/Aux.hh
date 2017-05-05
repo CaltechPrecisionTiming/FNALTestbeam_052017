@@ -33,5 +33,7 @@ float GausFit_MeanTime(TGraphErrors* pulse, const float index_first, const float
 float GetBaseline( int peak, short *a );
 float GetBaseline(TGraphErrors * pulse, int i_low, int i_high, TString fname );
 float GetPulseIntegral(int peak, short *a, std::string option = "");
+float ConstantThresholdTime(TGraphErrors * pulse, const float threshold);
+
 
 #endif

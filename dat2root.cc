@@ -174,6 +174,7 @@ int main(int argc, char **argv) {
   float linearTime30[36];
   float linearTime45[36];
   float linearTime60[36];
+  float constantThresholdTime[36];
  
   tree->Branch("event", &event, "event/I");
   tree->Branch("tc", tc, "tc[4]/s");
@@ -193,6 +194,7 @@ int main(int argc, char **argv) {
   tree->Branch("linearTime30", linearTime30, "linearTime30[36]/F");
   tree->Branch("linearTime45", linearTime45, "linearTime45[36]/F");
   tree->Branch("linearTime60", linearTime60, "linearTime60[36]/F");
+  tree->Branch("constantThresholdTime", constantThresholdTime, "constantThresholdTime[36]/F");
 
   // temp variables for data input
   uint   event_header;
@@ -358,7 +360,9 @@ int main(int argc, char **argv) {
 	xmin[totalIndex] = index_min;
 
 	if (doFilter) {
-	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName , 1.0, false);
+	  if (i==4) {
+	    pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName , 2.0, false);
+	  }
 	}
 	
 	//Compute Amplitude : use units V
@@ -416,6 +420,7 @@ int main(int argc, char **argv) {
 	linearTime30[totalIndex] = fs[2];
 	linearTime45[totalIndex] = fs[3];
 	linearTime60[totalIndex] = fs[4];
+	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
 
 	delete pulse;
       }

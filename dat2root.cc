@@ -13,7 +13,6 @@
 
 //LOCAL INCLUDES
 #include "Aux.hh"
-#include "Config.hh"
 
 using namespace std;
 
@@ -89,19 +88,6 @@ int main(int argc, char **argv) {
       std::cout << "Will apply Weierstrass transform (gaussian filter) to input pulses\n";
   }
 
-  std::string configName = "config/15may2017.config";
-  std::string _configName = ParseCommandLine( argc, argv, "--config" );
-  if ( _configName != "" ) {
-      configName = _configName;
-  }
-
-  std::cout << "\n=== Parsing configuration file " << configName << " ===\n" << std::endl;
-  Config config(configName);
-  if ( !config.hasChannels() || !config.isValid() ) {
-      std::cerr << "\nFailed to load channel information from config " << configName << std::endl;
-      return -1;
-  }
-
   //**************************************
   // Load Voltage Calibration
   //**************************************
@@ -169,6 +155,7 @@ int main(int argc, char **argv) {
   float integral[36]; // integral in a window
   float integralFull[36]; // integral over all bins
   float gauspeak[36]; // time extracted with gaussian fit
+  float sigmoidTime[36];//time extracted with sigmoid fit
   float linearTime0[36]; // constant fraction fit coordinates
   float linearTime15[36];
   float linearTime30[36];
@@ -188,6 +175,7 @@ int main(int argc, char **argv) {
   tree->Branch("int", integral, "int[36]/F");
   tree->Branch("intfull", integralFull, "intfull[36]/F");
   tree->Branch("gauspeak", gauspeak, "gauspeak[36]/F");
+  tree->Branch("sigmoidTime", sigmoidTime, "sigmoidTime[36]/F");
   tree->Branch("linearTime0", linearTime0, "linearTime0[36]/F");
   tree->Branch("linearTime15", linearTime15, "linearTime15[36]/F");
   tree->Branch("linearTime30", linearTime30, "linearTime30[36]/F");
@@ -324,8 +312,9 @@ int main(int argc, char **argv) {
 
 	// Correct pulse shape for baseline offset
 	for(int j = 0; j < 1024; j++) {
-          float multiplier = config.getChannelMultiplicationFactor(totalIndex);
-	  channel[totalIndex][j] = multiplier * (short)((double)(channel[totalIndex][j]) + baseline);
+	  double polarity = 1; // TODO: define polarity via external config
+          if (i == 1) polarity = -1;
+	  channel[totalIndex][j] = polarity * (short)((double)(channel[totalIndex][j]) + baseline);
 	}
 
 	// Find the absolute minimum. This is only used as a rough determination 
@@ -357,7 +346,7 @@ int main(int argc, char **argv) {
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );
 	xmin[totalIndex] = index_min;
 
-	if (doFilter) {
+	if (doFilter && totalIndex == 4) {
 	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName , false);
 	}
 	
@@ -388,22 +377,20 @@ int main(int argc, char **argv) {
                             || totalIndex == 26 || totalIndex == 35 );
         float fs[5]; // constant-fraction fit output
         if ( !isTrigChannel ) {
-            if( drawDebugPulses ) {
-                if ( config.doGaussFit(totalIndex) ) {
-                    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
-                }
-                if ( config.doRisingEdgeFit(totalIndex) && xmin[totalIndex] != 0.0 ) {
-                    RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
-                }
-            }
-            else {
-                if ( config.doGaussFit(totalIndex) ) {
-                    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
-                }
-                if ( config.doRisingEdgeFit(totalIndex) && xmin[totalIndex] != 0.0 ) {
-                    RisingEdgeFitTime( pulse, index_min, fs, event, "" );
-                }
-            }
+	  if( drawDebugPulses ) {
+	    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
+	    if ( xmin[totalIndex] != 0.0 ) {
+	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
+	      sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
+	    }
+	  }
+	  else {
+	    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
+	    if ( xmin[totalIndex] != 0.0 ) {
+	      RisingEdgeFitTime( pulse, index_min, fs, event, "" );
+	      sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
+	    }
+	  }
         }
 	
         else {

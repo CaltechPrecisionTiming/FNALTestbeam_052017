@@ -258,7 +258,7 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
   for ( int i = 1; i < 200; i++ )
     {
       pulse->GetPoint(index_min-i, x_low, y);
-      if ( y < 0.1*ymax ) break;
+      if ( y < 0.2*ymax ) break;
     }
   for ( int i = 1; i < 200; i++ )
     {
@@ -312,6 +312,73 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
   tstamp[4] = (0.60*y-b)/slope;
   
   delete flinear;
+};
+
+
+float SigmoidTimeFit(TGraphErrors * pulse, const float index_min, int event, TString fname, bool makePlot )
+{
+  double x_low, x_high, y, dummy;
+  double ymax;
+  pulse->GetPoint(index_min, x_low, ymax);
+  
+  pulse->GetPoint(index_min-150, x_low, y);
+  
+  for ( int i = 1; i < 200; i++ )
+    {
+      pulse->GetPoint(index_min-i, x_high, y);
+      if ( y < 0.6*ymax ) break;
+    }
+  //pulse->GetPoint(index_min-8, x_low, y);
+  //pulse->GetPoint(index_min-3, x_high, y);
+
+
+  //pulse->GetPoint(index_min-12, x_low, y);
+  //pulse->GetPoint(index_min-7, x_high, y);
+  pulse->GetPoint(index_min, dummy, y);
+  
+  TF1* fsigmoid = new TF1("fsigmoid","[0]/(1.0+exp(-(x-[1])/[2]))",x_low-50,x_high+50);
+  fsigmoid->SetParameter(0,1000);
+  fsigmoid->SetParLimits(0,0,10000);
+  fsigmoid->SetParameter(1,50);
+  fsigmoid->SetParameter(2,2);
+  
+  float max = -9999;
+  double* yy = pulse->GetY();
+  
+  for ( int i = 0; i < 1024; i++ )
+    {
+      if ( yy[i] > max ) max = yy[i];
+    }
+  //std::cout << "max: " << max << std::endl;
+
+  /*if( max < 10 || index_min < 0 || index_min > 1023 )
+    {
+      std::cout << "DEB: skipping event--> " << event << std::endl;
+      return;
+    }
+  */
+  pulse->Fit("fsigmoid","Q","", x_low, x_high );
+  double maxAmp   = fsigmoid->GetParameter(0);
+  double midpoint = fsigmoid->GetParameter(1);
+  double width    = fsigmoid->GetParameter(2);
+  
+  if ( makePlot )
+    {
+      std::cout << "make plot" << std::endl;
+      TCanvas* c = new TCanvas("canvas","canvas",800,400) ;
+      pulse->GetXaxis()->SetLimits(x_low-50, x_high+50);
+      pulse->SetMarkerSize(0.3);
+      pulse->SetMarkerStyle(20);
+      pulse->Draw("AP");
+      fsigmoid->SetLineColor(kBlue);
+      fsigmoid->Draw("same");
+      c->SaveAs(fname+"Sigmoid.pdf");
+      //delete c;
+    }
+
+  return midpoint;
+  
+  delete fsigmoid;
 };
 
 
@@ -408,7 +475,7 @@ TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseNa
   
   TF1 *fb = new TF1("fb","gaus(0)", 0.0, 204.6);
   fb->SetParameter(1, 100);
-  float sigma =1.0;
+  float sigma = 3.0;
   fb->SetParameter(2, sigma);
   fb->SetParameter(0, 1/(sqrt(3.1415*2.0)*sigma) );
   //eval Gaussian

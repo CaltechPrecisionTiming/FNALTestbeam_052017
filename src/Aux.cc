@@ -304,12 +304,13 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
       c->SaveAs(fname+"LinearFit.pdf");
       //delete c;
     }
-  tstamp[0] = (0.0*y-b)/slope;
-  //std::cout << "----" << tstamp[0]  << std::endl;
-  tstamp[1] = (0.15*y-b)/slope;
-  tstamp[2] = (0.30*y-b)/slope;
-  tstamp[3] = (0.45*y-b)/slope;
-  tstamp[4] = (0.60*y-b)/slope;
+
+  tstamp[0] = (0.90*y-b)/slope - (0.10*y-b/slope);
+  tstamp[1] = (0.0*y-b)/slope;
+  tstamp[2] = (0.15*y-b)/slope;
+  tstamp[3] = (0.30*y-b)/slope;
+  tstamp[4] = (0.45*y-b)/slope;
+  tstamp[5] = (0.60*y-b)/slope;
   
   delete flinear;
 };

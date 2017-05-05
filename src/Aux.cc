@@ -204,7 +204,7 @@ float GausFit_MeanTime(TGraphErrors* pulse, const float index_first, const float
       if ( yy[i] > max ) max = yy[i];
     }
   //std::cout << "max: " << max << std::endl;
-  if( max < 42 || index_first < 10 || index_last > 1010 ) return -99999;
+  //if( max < 42 || index_first < 10 || index_last > 1010 ) return -99999;
   pulse->Fit("fpeak","Q","", index_first, index_last);
   
   TCanvas* c = new TCanvas("canvas","canvas",800,400) ;

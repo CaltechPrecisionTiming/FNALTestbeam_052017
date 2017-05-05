@@ -18,7 +18,7 @@ static float amplificationFactor[nPoints] = { 27.9/1.37*10 , 26.8/1.37*10, 31.6/
     63*10, 66*10, 68*10, 66*10 };
 
 double GetAmplificationFactor ( double measuredAmplitude );
-TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseName, bool makePlot = false );
+TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseName, double sigma = 1.0, bool makePlot = false );
 TGraphErrors* GetTGraph( float* channel, float* time );
 TGraphErrors GetTGraph( short* channel, float* time );
 double GetGaussTime( TGraphErrors* pulse );

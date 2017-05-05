@@ -391,7 +391,9 @@ float GetPulseIntegral(int peak, short *a, std::string option)
 //----------------------------------------------
 //Gaussian Filter to reduce high frequency noise
 //----------------------------------------------
-TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseName, bool makePlot )
+TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseName, 
+				    double sigma,
+				    bool makePlot )
 {
   float Gauss[1024];
   //Setting Errors
@@ -408,7 +410,6 @@ TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseNa
   
   TF1 *fb = new TF1("fb","gaus(0)", 0.0, 204.6);
   fb->SetParameter(1, 100);
-  float sigma =1.0;
   fb->SetParameter(2, sigma);
   fb->SetParameter(0, 1/(sqrt(3.1415*2.0)*sigma) );
   //eval Gaussian

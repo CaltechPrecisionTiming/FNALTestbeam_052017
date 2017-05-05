@@ -48,7 +48,7 @@ int main(int argc, char **argv) {
   // Parse command line arguments
   //**************************************
 
-  int numRequiredArgs = 2;
+  int numRequiredArgs = 3;
   if (argc - 1 < numRequiredArgs) {
       std::cerr << "Usage: dat2root in_file.dat num_events" << std::endl;
       return -1;
@@ -56,11 +56,11 @@ int main(int argc, char **argv) {
   std::cout << "\n=== Beginning program ===\n" << std::endl;
 
   std::string inputFilename = argv[1];
-  std::string outputFilename = inputFilename + "-full.root";
+  std::string outputFilename = argv[2];
   std::cout << "Input file: " << inputFilename << std::endl;
-  std::cout << "Output file: " << outputFilename << std::endl << std::endl;
+  std::cout << "Output file: " << outputFilename << std::endl;
 
-  int nEvents = atoi(argv[2]);
+  int nEvents = atoi(argv[3]);
   std::cout << "Will process " << nEvents << " events" << std::endl;
 
   // Board number is fixed at 1 for now because we only have one board

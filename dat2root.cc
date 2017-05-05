@@ -166,6 +166,7 @@ int main(int argc, char **argv) {
   if (saveRaw) {
     tree->Branch("raw", raw, "raw[36][1024]/S");   
   }
+  tree->Branch("channel", channel, "channel[36][1024]/S");
   tree->Branch("time", time, "time[4][1024]/F");
   tree->Branch("xmin", xmin, "xmin[36]/F");
   tree->Branch("amp", amp, "amp[36]/F");

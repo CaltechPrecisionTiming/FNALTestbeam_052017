@@ -408,7 +408,7 @@ int main(int argc, char **argv) {
 	linearTime30[totalIndex] = fs[3];
 	linearTime45[totalIndex] = fs[4];
 	linearTime60[totalIndex] = fs[5];
-	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
+	//constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
 
 	delete pulse;
       }

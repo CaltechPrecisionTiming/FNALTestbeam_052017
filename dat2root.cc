@@ -180,7 +180,7 @@ int main(int argc, char **argv) {
     tree->Branch("raw", raw, "raw[36][1024]/S");   
     tree->Branch("t",  t, "t[36864]/I");    
   }
-  tree->Branch("channel", channel, "channelCorrected[36][1024]/S");
+  tree->Branch("channel", channel, "channel[36][1024]/S");
   tree->Branch("t0",  t0, "t0[1024]/I");
   tree->Branch("time", time, "time[4][1024]/F");
   tree->Branch("xmin", xmin, "xmin[36]/F");
@@ -353,7 +353,7 @@ int main(int argc, char **argv) {
 	for(int j = 0; j < 1024; j++) {
 	  channel[realGroup[group]*9 + i][j] = (short)((double)(channel[realGroup[group]*9 + i][j]) + baseline);
 	  double polarity = 1;
-	  if (i == 4 || i == 1) polarity = -1;
+	  if (i == 1) polarity = -1;
 	  channel[realGroup[group]*9 + i][j] = polarity * channel[realGroup[group]*9 + i][j];
 	  channelCorrected[realGroup[group]*9 + i][j] = polarity * channel[realGroup[group]*9 + i][j];
 

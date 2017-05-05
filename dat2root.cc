@@ -299,15 +299,9 @@ int main(int argc, char **argv) {
                   - (double)(off_mean[realGroup[group]][i][(j+tcn)%1024]));
 	}
 
-	// Find the absolute minimum. This is only used as a rough determination 
-        // to decide if we'll use the early time samples
-	// or the late time samples to do the baseline fit
-	int index_min = FindMinAbsolute(1024, channel[totalIndex]); 
-
 	// Make pulse shape graph
 	TString pulseName = Form("pulse_event%d_group%d_ch%d", iEvent, realGroup[group], i);
-	TGraphErrors* pulse = new TGraphErrors( GetTGraph( 
-                    channel[totalIndex], time[realGroup[group]] ) );
+	TGraphErrors* pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );
 
 	// Estimate baseline
 	float baseline;
@@ -321,6 +315,17 @@ int main(int argc, char **argv) {
 	  channel[totalIndex][j] = polarity * (short)((double)(channel[totalIndex][j]) + baseline);
 	}
 
+	// Find the absolute minimum. This is only used as a rough determination 
+        // to decide if we'll use the early time samples
+	// or the late time samples to do the baseline fit
+	std::cout << "---event "  << event << "-------ch#: " << totalIndex << std::endl;
+	int index_min = FindMinAbsolute(1024, channel[totalIndex]); 
+	if( event==155 && totalIndex == 1 )
+	  {
+	    std::cout << "indexmin: " << index_min << std::endl;
+	    return 1;
+	  }
+	
 	// DRS-glitch finder: zero out bins which have large difference
 	// with respect to neighbors in only one or two bins
 	for(int j = 0; j < 1024; j++) {
@@ -345,7 +350,7 @@ int main(int argc, char **argv) {
 	xmin[totalIndex] = index_min;
 
 	if (doFilter) {
-	  pulse = GetTGraphFilter( channel[totalIndex], time[realGroup[group]], pulseName , false);
+	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName , false);
 	}
 	
 	//Compute Amplitude : use units V
@@ -367,29 +372,30 @@ int main(int argc, char **argv) {
 	// Gaussian time stamp and constant-fraction fit
 	Double_t min = 0.; Double_t low_edge = 0.; Double_t high_edge = 0.; Double_t y = 0.; 
 	pulse->GetPoint(index_min, min, y);	
-	pulse->GetPoint(index_min-3, low_edge, y); // time of the low edge of the fit range
-	pulse->GetPoint(index_min+3, high_edge, y);  // time of the upper edge of the fit range	
+	pulse->GetPoint(index_min-4, low_edge, y); // time of the low edge of the fit range
+	pulse->GetPoint(index_min+4, high_edge, y);  // time of the upper edge of the fit range	
 
 	float timepeak   = 0;
         bool isTrigChannel = ( totalIndex == 8 || totalIndex == 17 
                             || totalIndex == 26 || totalIndex == 35 );
         float fs[5]; // constant-fraction fit output
         if ( !isTrigChannel ) {
-            if( drawDebugPulses ) {
-                timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
-                if ( xmin[totalIndex] != 0.0 ) {
-                    RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
-                }
-            }
-            else {
-                timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
-                if ( xmin[totalIndex] != 0.0 ) {
-                    RisingEdgeFitTime( pulse, index_min, fs, event, "" );
-                }
-            }
+	  if( drawDebugPulses ) {
+	    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
+	    if ( xmin[totalIndex] != 0.0 ) {
+	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
+	    }
+	  }
+	  else {
+	    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
+	    if ( xmin[totalIndex] != 0.0 ) {
+	      RisingEdgeFitTime( pulse, index_min, fs, event, "" );
+	    }
+	  }
         }
+	
         else {
-            for ( int kk = 0; kk < 5; kk++ ) fs[kk] = -999;
+	  for ( int kk = 0; kk < 5; kk++ ) fs[kk] = -999;
         }
         // for output tree
 	gauspeak[totalIndex] = timepeak;

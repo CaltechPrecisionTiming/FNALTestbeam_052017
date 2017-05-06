@@ -444,7 +444,32 @@ int main(int argc, char **argv) {
 			  for(int i = 0; i < 9; i++) {
 
 				  totalIndex = realGroup[group]*9 + i;
-
+          
+          // Do not analyze disabled channels
+          if ( !config.hasChannel(totalIndex) ) {
+            for ( int j = 0; j < 1024; j++ ) {
+                if (DATTYPE) {
+                  raw[totalIndex][j] = 0; }
+                channel[totalIndex][j] = 0;
+            }
+            if (DATTYPE) {
+              xmin[totalIndex] = 0.;
+              amp [totalIndex] = 0.;
+              base[totalIndex] = 0.;
+              integral[totalIndex] = 0.;
+              integralFull[totalIndex] = 0.;
+              gauspeak[totalIndex] = 0.;
+              sigmoidTime[totalIndex] = 0.;
+              linearTime0[totalIndex] = 0.;
+              linearTime15[totalIndex] = 0.;
+              linearTime30[totalIndex] = 0.;
+              linearTime45[totalIndex] = 0.;
+              linearTime60[totalIndex] = 0.;
+              risetime[totalIndex] = 0.;
+              constantThresholdTime[totalIndex] = 0.; }
+            continue;
+        }
+          
 				  // Fill pulses
 				  if (DATTYPE) {
 				    std::cout << "13" << std::endl;

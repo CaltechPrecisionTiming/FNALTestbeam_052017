@@ -196,7 +196,7 @@ int main(int argc, char **argv) {
 	short tc[4]; // trigger counter bin
 	
 	// want groups so set everything to -1 for init
-	float time[4][1024] = {0}; // calibrated time
+	float time[4][1024]; // calibrated time
 	
 	//memset(time, -1, sizeof(time[0][0]) * 4 * 1024);
 	
@@ -208,9 +208,9 @@ int main(int argc, char **argv) {
     }
   }
   
-  std::cout << "FINISHED TESTING" << std::endl;
-} 
-/**	
+  //std::cout << "FINISHED TESTING" << std::endl;
+
+
 	short raw[36][1024]; // ADC counts
 	short channel[36][1024]; // calibrated input (in V)
 	float xmin[36]; // location of peak
@@ -291,114 +291,138 @@ int main(int argc, char **argv) {
 		if ( iEvent % 100 == 0 ) std::cout << "Event " << iEvent << " of " << nEvents << std::endl;
 
 		event = nGoodEvents; // for output tree
-
-
-		// first header word
-		dummy = fread( &event_header, sizeof(uint), 1, fpin);
-		// second header word
-		dummy = fread( &event_header, sizeof(uint), 1, fpin);  
-		uint grM     = event_header & 0x0f; // 4-bit channel group mask
-		// third and fourth header words
-		dummy = fread( &event_header, sizeof(uint), 1, fpin);  
-		dummy = fread( &event_header, sizeof(uint), 1, fpin);  
-
-		//*************************
-		// Parse group mask into channels
-		//*************************
-
-		bool _isGR_On[4];
-		_isGR_On[0] = (grM & 0x01);
-		_isGR_On[1] = (grM & 0x02);
-		_isGR_On[2] = (grM & 0x04);
-		_isGR_On[3] = (grM & 0x08);
-
-		int activeGroupsN = 0;
+    
+    int activeGroupsN = 0;
 		int realGroup[4] = {-1, -1, -1, -1};
-		for ( int l = 0; l < 4; l++ ) {
-			if ( _isGR_On[l] ) 
-			{
-				realGroup[activeGroupsN] = l; 
-				activeGroupsN++;
-			}
-		}
+    int totalIndex;
+    // SET THINGS FOR DATTYPE
+    
+    if (DATTYPE) {
+      
+		  // first header word
+		  dummy = fread( &event_header, sizeof(uint), 1, fpin);
+		  // second header word
+		  dummy = fread( &event_header, sizeof(uint), 1, fpin);  
+		  uint grM     = event_header & 0x0f; // 4-bit channel group mask
+		  // third and fourth header words
+		  dummy = fread( &event_header, sizeof(uint), 1, fpin);  
+		  dummy = fread( &event_header, sizeof(uint), 1, fpin);  
 
+		  //*************************
+		  // Parse group mask into channels
+		  //*************************
+
+		  bool _isGR_On[4];
+		  _isGR_On[0] = (grM & 0x01);
+		  _isGR_On[1] = (grM & 0x02);
+		  _isGR_On[2] = (grM & 0x04);
+		  _isGR_On[3] = (grM & 0x08);
+
+		  
+		  for ( int l = 0; l < 4; l++ ) {
+			  if ( _isGR_On[l] ) 
+			  {
+				  realGroup[activeGroupsN] = l; 
+				  activeGroupsN++;
+			  }
+		  }
+    }
+    
+    // SET THINGS FOR ROOT TYPE
+    
+    if (!DATTYPE) {
+      // get time and channel
+      //TBranch *time = rootInputTree->GetBranch("time");
+			//time->SetAddress(&time);
+      rootInputTree->SetBranchAddress("time", time);
+      
+		  //TBranch *channel = rootInputTree->GetBranch("channel");
+			//channel->SetAddress(&channel);
+			rootInputTree->SetBranchAddress("channel", channel);
+      
+      // get groups from time
+      
+      for (int i = 0; i < 4; i++) {
+        if (time[i][0] != -1.0) {
+          realGroup[activeGroupsN] = i;
+          activeGroupsN++; 
+        }
+      }
+    }
+    
 		//************************************
 		// Loop over channel groups
 		//************************************
 
 		for ( int group = 0; group < activeGroupsN; group++ ) {
-			// Read group header
-			dummy = fread( &event_header, sizeof(uint), 1, fpin);  
-			ushort tcn = (event_header >> 20) & 0xfff; // trigger counter bin
-			tc[realGroup[group]] = tcn;
+		  ushort tcn; 
+		  
+		  if (DATTYPE) {
+		    
+			  // Read group header
+			  dummy = fread( &event_header, sizeof(uint), 1, fpin);  
+			  tcn = (event_header >> 20) & 0xfff; // trigger counter bin
+			  tc[realGroup[group]] = tcn;
 
-			// Check if all channels were active (if 8 channels active return 3072)
-			int nsample = (event_header & 0xfff) / 3;
+			  // Check if all channels were active (if 8 channels active return 3072)
+			  int nsample = (event_header & 0xfff) / 3;
 
-			// Define time coordinate
-			time[realGroup[group]][0] = 0.0;
-			for( int i = 1; i < 1024; i++ ){
-				time[realGroup[group]][i] = float(i);
-				time[realGroup[group]][i] = float(tcal[realGroup[group]][(i-1+tcn)%1024] 
-						+ time[realGroup[group]][i-1]);
-			}      
+			  // Define time coordinate
+			  time[realGroup[group]][0] = 0.0;
+			  for( int i = 1; i < 1024; i++ ){
+				  time[realGroup[group]][i] = float(i);
+				  time[realGroup[group]][i] = float(tcal[realGroup[group]][(i-1+tcn)%1024] 
+						  + time[realGroup[group]][i-1]);
+			  }      
 
-			//************************************
-			// Read sample info for group
-			//************************************      
+			  //************************************
+			  // Read sample info for group
+			  //************************************      
 
-			for ( int i = 0; i < nsample; i++ ) {
-				dummy = fread( &temp, sizeof(uint), 3, fpin );  
-				samples[0][i] =  temp[0] & 0xfff;
-				samples[1][i] = (temp[0] >> 12) & 0xfff;
-				samples[2][i] = (temp[0] >> 24) | ((temp[1] & 0xf) << 8);
-				samples[3][i] = (temp[1] >>  4) & 0xfff;
-				samples[4][i] = (temp[1] >> 16) & 0xfff;
-				samples[5][i] = (temp[1] >> 28) | ((temp[2] & 0xff) << 4);
-				samples[6][i] = (temp[2] >>  8) & 0xfff;
-				samples[7][i] =  temp[2] >> 20;	
-			}
+			  for ( int i = 0; i < nsample; i++ ) {
+				  dummy = fread( &temp, sizeof(uint), 3, fpin );  
+				  samples[0][i] =  temp[0] & 0xfff;
+				  samples[1][i] = (temp[0] >> 12) & 0xfff;
+				  samples[2][i] = (temp[0] >> 24) | ((temp[1] & 0xf) << 8);
+				  samples[3][i] = (temp[1] >>  4) & 0xfff;
+				  samples[4][i] = (temp[1] >> 16) & 0xfff;
+				  samples[5][i] = (temp[1] >> 28) | ((temp[2] & 0xff) << 4);
+				  samples[6][i] = (temp[2] >>  8) & 0xfff;
+				  samples[7][i] =  temp[2] >> 20;	
+			  }
 
-			// Trigger channel
-			for(int j = 0; j < nsample/8; j++){
-				fread( &temp, sizeof(uint), 3, fpin);  
-				samples[8][j*8+0] =  temp[0] & 0xfff;
-				samples[8][j*8+1] = (temp[0] >> 12) & 0xfff;
-				samples[8][j*8+2] = (temp[0] >> 24) | ((temp[1] & 0xf) << 8);
-				samples[8][j*8+3] = (temp[1] >>  4) & 0xfff;
-				samples[8][j*8+4] = (temp[1] >> 16) & 0xfff;
-				samples[8][j*8+5] = (temp[1] >> 28) | ((temp[2] & 0xff) << 4);
-				samples[8][j*8+6] = (temp[2] >>  8) & 0xfff;
-				samples[8][j*8+7] =  temp[2] >> 20;
-			}
+			  // Trigger channel
+			  for(int j = 0; j < nsample/8; j++){
+				  fread( &temp, sizeof(uint), 3, fpin);  
+				  samples[8][j*8+0] =  temp[0] & 0xfff;
+				  samples[8][j*8+1] = (temp[0] >> 12) & 0xfff;
+				  samples[8][j*8+2] = (temp[0] >> 24) | ((temp[1] & 0xf) << 8);
+				  samples[8][j*8+3] = (temp[1] >>  4) & 0xfff;
+				  samples[8][j*8+4] = (temp[1] >> 16) & 0xfff;
+				  samples[8][j*8+5] = (temp[1] >> 28) | ((temp[2] & 0xff) << 4);
+				  samples[8][j*8+6] = (temp[2] >>  8) & 0xfff;
+				  samples[8][j*8+7] =  temp[2] >> 20;
+			  }
+      }
+			  //************************************
+			  // Loop over channels 0-8
+			  //************************************      
 
-			//************************************
-			// Loop over channels 0-8
-			//************************************      
+			  for(int i = 0; i < 9; i++) {
 
-			for(int i = 0; i < 9; i++) {
+				  totalIndex = realGroup[group]*9 + i;
 
-				int totalIndex = realGroup[group]*9 + i;
-
-				// Fill pulses
-				for ( int j = 0; j < 1024; j++ ) {
-					raw[totalIndex][j] = (short)(samples[i][j]);
-					channel[totalIndex][j] = (short)((double)(samples[i][j]) 
-							- (double)(off_mean[realGroup[group]][i][(j+tcn)%1024]));
-				}
-
-			} 
-			else {
-
-				TBranch *time = rootInputTree.GetBranch("time");
-				time->SetAddress(&time);
-
-				TBranch *channel = rootInputTree.GetBranch("channel");
-				channel->SetAddress(&channel);
-			}
-
-
+				  // Fill pulses
+				  if (DATTYPE) {
+				    for ( int j = 0; j < 1024; j++ ) {
+					    raw[totalIndex][j] = (short)(samples[i][j]);
+					    channel[totalIndex][j] = (short)((double)(samples[i][j]) 
+							    - (double)(off_mean[realGroup[group]][i][(j+tcn)%1024]));
+				    }
+		      }
+///////////////////////////////////////
 //////// Starting here, dat and root file types both use all the following code 
+////////////////////////////////////////
 
 			// Make pulse shape graph
 			TString pulseName = Form("pulse_event%d_group%d_ch%d", iEvent, realGroup[group], i);
@@ -566,4 +590,4 @@ int graphic_init(){
 
 	return 0;
 }
-**/
+

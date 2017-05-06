@@ -60,6 +60,12 @@ int main(int argc, char **argv) {
   std::cout << "Input file: " << inputFilename << std::endl;
   std::cout << "Output file: " << outputFilename << std::endl;
 
+  ifstream ifile(inputFilename);
+  if (!ifile) {
+    printf("!USAGE! Input file does not exist. Please enter valid file name"); 
+    exit(0);}
+
+
   int nEvents = atoi(argv[3]);
   std::cout << "Will process " << nEvents << " events" << std::endl;
 
@@ -79,14 +85,6 @@ int main(int argc, char **argv) {
   if ( _drawDebugPulses == "yes" ) {
     drawDebugPulses = true;
     std::cout << "draw: " << drawDebugPulses << std::endl;
-  }
-
-  bool doFilter = false;
-  std::string _doFilter = ParseCommandLine( argc, argv, "--doFilter" );
-  if ( _doFilter == "yes" ) {
-      saveRaw = true;
-      doFilter = true;
-      std::cout << "Will apply Weierstrass transform (gaussian filter) to input pulses\n";
   }
 
   std::string configName = "config/15may2017.config";
@@ -364,10 +362,11 @@ int main(int argc, char **argv) {
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );
 	xmin[totalIndex] = index_min;
 
-	if (doFilter && totalIndex == 4)
-	  {
-	    pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName, 2.0, false);
-	  }
+        float filterWidth = config.getFilterWidth(totalIndex);
+	if (filterWidth) {
+	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], 
+					pulseName, filterWidth, false );
+	}
 	
 	//Compute Amplitude : use units V
 	Double_t tmpAmp = 0.0;

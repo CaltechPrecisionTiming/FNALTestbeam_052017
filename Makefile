@@ -10,7 +10,12 @@ CPPFLAGS += -g -std=c++14
 
 TARGET = dat2root
 SRC = dat2root.cc src/Aux.cc src/Config.cc
+
+TARGET2 = datroot2root
+SRC2 = datroot2root.cc src/Aux.cc src/Config.cc
+
 OBJ = $(SRC:.cc=.o)
+OBJ2 = $(SRC2:.cc=.o)
 
 all : $(TARGET) 
 
@@ -18,8 +23,13 @@ $(TARGET) : $(OBJ)
 	@echo $@
 	$(LD) $(CPPFLAGS) -o $(TARGET) $(OBJ) $(LDFLAGS)
 
+$(TARGET2) : $(OBJ2)
+	@echo $@
+	$(LD) $(CPPFLAGS) -o $(TARGET2) $(OBJ2) $(LDFLAGS)
+
+
 %.o : %.cc
 	@echo $@
 	$(CXX) $(CPPFLAGS) -o $@ -c $<
 clean :
-	rm -f *.o src/*.o $(Aux)/src/*.o $(TARGET) *~
+	rm -f *.o src/*.o $(Aux)/src/*.o $(TARGET) $(TARGET2) *~

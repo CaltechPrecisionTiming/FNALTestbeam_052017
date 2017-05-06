@@ -1,0 +1,17 @@
+#!/bin/sh
+
+### Wrapper around dat2root script: picks up environment from local CMSSW area, then runs dat2root
+# Arguments:
+# 1) path to directory containing dat2root (should be inside a CMSSW release area)
+# 2) input file name
+# 3) name of output file
+# 4) path to config file
+
+source /cvmfs/cms.cern.ch/cmsset_default.sh
+cd $1; eval `scramv1 runtime -sh`; cd -
+cp $1/dat2root .
+
+# specify 100000 events to ensure we run over the whole input file
+cmd="./dat2root $2 $3 100000 --config=$4"
+echo $cmd
+eval $cmd

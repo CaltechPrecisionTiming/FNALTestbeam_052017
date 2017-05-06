@@ -1,3 +1,9 @@
 *.o
+*.root
+*.dat
 *.swp
+*.log.*
+*.out.*
+*.err.*
+*.cmd
 dat2root

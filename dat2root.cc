@@ -13,6 +13,7 @@
 
 //LOCAL INCLUDES
 #include "Aux.hh"
+#include "Config.hh"
 
 using namespace std;
 
@@ -88,6 +89,19 @@ int main(int argc, char **argv) {
       std::cout << "Will apply Weierstrass transform (gaussian filter) to input pulses\n";
   }
 
+  std::string configName = "config/15may2017.config";
+  std::string _configName = ParseCommandLine( argc, argv, "--config" );
+  if ( _configName != "" ) {
+    configName = _configName;
+  }
+  
+  std::cout << "\n=== Parsing configuration file " << configName << " ===\n" << std::endl;
+  Config config(configName);
+  if ( !config.hasChannels() || !config.isValid() ) {
+    std::cerr << "\nFailed to load channel information from config " << configName << std::endl;
+    return -1;
+  }
+  
   //**************************************
   // Load Voltage Calibration
   //**************************************
@@ -316,9 +330,9 @@ int main(int argc, char **argv) {
 
 	// Correct pulse shape for baseline offset
 	for(int j = 0; j < 1024; j++) {
-	  double polarity = 1; // TODO: define polarity via external config
-          if (i == 1) polarity = -1;
-	  channel[totalIndex][j] = polarity * (short)((double)(channel[totalIndex][j]) + baseline);
+	  
+	  float multiplier = config.getChannelMultiplicationFactor(totalIndex);
+ 	  channel[totalIndex][j] = multiplier * (short)((double)(channel[totalIndex][j]) + baseline);
 	}
 
 	// Find the absolute minimum. This is only used as a rough determination 

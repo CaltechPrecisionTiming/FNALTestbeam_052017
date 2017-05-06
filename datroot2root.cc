@@ -198,12 +198,13 @@ int main(int argc, char **argv) {
 	// want groups so set everything to -1 for init
 	float time[4][1024] = {0}; // calibrated time
 	
-	memset(time, -1, sizeof(time[0][0]) * 4 * 1024);
+	//memset(time, -1, sizeof(time[0][0]) * 4 * 1024);
 	
 	for (int i =0; i < 4; i++) {
     for (int j=0; j < 1024; j++) {
-      if (time[i][j] != -1)
-        std::cout << "NOT CORRECT" << std::endl;
+      //if (time[i][j] != -1)
+        //std::cout << "NOT CORRECT" << std::endl;
+      time[i][j] = -1.0;
     }
   }
   

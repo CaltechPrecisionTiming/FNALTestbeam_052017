@@ -242,6 +242,7 @@ float RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float
       pulse->SetMarkerStyle(20);
       pulse->Draw("AP");
       c->SaveAs(fname+"LinearFit.pdf");
+      c->SaveAs(fname+"LinearFit.png");
       //delete c;
     }
   delete flinear;
@@ -302,6 +303,7 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
       pulse->SetMarkerStyle(20);
       pulse->Draw("AP");
       c->SaveAs(fname+"LinearFit.pdf");
+      c->SaveAs(fname+"LinearFit.png");
       //delete c;
     }
 

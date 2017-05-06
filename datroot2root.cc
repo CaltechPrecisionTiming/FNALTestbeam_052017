@@ -273,6 +273,10 @@ int main(int argc, char **argv) {
 	else {
 		rootInput = new TFile( inputFilename.c_str() );
 		rootInputTree = (TTree *)rootInput->Get("pulse");
+		
+		rootInputTree->SetBranchAddress("time", time);
+      
+		rootInputTree->SetBranchAddress("channel", channel);
 	}
 
 
@@ -350,21 +354,17 @@ int main(int argc, char **argv) {
     std::cout << "5" << std::endl;
     
     if (!DATTYPE) {
-      // get time and channel
-      //TBranch *time = rootInputTree->GetBranch("time");
-			//time->SetAddress(&time);
-      rootInputTree->SetBranchAddress("time", time);
       
-		  //TBranch *channel = rootInputTree->GetBranch("channel");
-			//channel->SetAddress(&channel);
-			rootInputTree->SetBranchAddress("channel", channel);
+      rootInputTree->GetEntry(iEvent);
       
       std::cout << "6" << std::endl;
       
       // get groups from time
       
+      // CHECK THAT TIME CANNOT BE NEGATIVE IN NORMAL SITUATIONS
+      
       for (int i = 0; i < 4; i++) {
-        if (time[i][0] != -1.0) {
+        if (time[i][0] < 0) {
           realGroup[activeGroupsN] = i;
           activeGroupsN++; 
         }
@@ -448,25 +448,23 @@ int main(int argc, char **argv) {
           // Do not analyze disabled channels
           if ( !config.hasChannel(totalIndex) ) {
             for ( int j = 0; j < 1024; j++ ) {
-                if (DATTYPE) {
-                  raw[totalIndex][j] = 0; }
+                raw[totalIndex][j] = 0; 
                 channel[totalIndex][j] = 0;
             }
-            if (DATTYPE) {
-              xmin[totalIndex] = 0.;
-              amp [totalIndex] = 0.;
-              base[totalIndex] = 0.;
-              integral[totalIndex] = 0.;
-              integralFull[totalIndex] = 0.;
-              gauspeak[totalIndex] = 0.;
-              sigmoidTime[totalIndex] = 0.;
-              linearTime0[totalIndex] = 0.;
-              linearTime15[totalIndex] = 0.;
-              linearTime30[totalIndex] = 0.;
-              linearTime45[totalIndex] = 0.;
-              linearTime60[totalIndex] = 0.;
-              risetime[totalIndex] = 0.;
-              constantThresholdTime[totalIndex] = 0.; }
+            xmin[totalIndex] = 0.;
+            amp [totalIndex] = 0.;
+            base[totalIndex] = 0.;
+            integral[totalIndex] = 0.;
+            integralFull[totalIndex] = 0.;
+            gauspeak[totalIndex] = 0.;
+            sigmoidTime[totalIndex] = 0.;
+            linearTime0[totalIndex] = 0.;
+            linearTime15[totalIndex] = 0.;
+            linearTime30[totalIndex] = 0.;
+            linearTime45[totalIndex] = 0.;
+            linearTime60[totalIndex] = 0.;
+            risetime[totalIndex] = 0.;
+            constantThresholdTime[totalIndex] = 0.;
             continue;
         }
           
@@ -491,11 +489,15 @@ int main(int argc, char **argv) {
       
       std::cout << "15" << std::endl;
       
+      // TO DO: GET BASE FROM PULSE IF ROOT FILE HERE
+      
 			// Estimate baseline
 			float baseline;
 			baseline = GetBaseline( pulse, 5 ,150, pulseName );
 			base[totalIndex] = baseline;
       
+      
+      // ALSO ONLY DO IF ROOT FILE
 			// Correct pulse shape for baseline offset
 			for(int j = 0; j < 1024; j++) {
 
@@ -616,7 +618,10 @@ int main(int argc, char **argv) {
 std::cout << "21" << std::endl;
 
 if (DATTYPE) {
-  fclose(fpin);}
+  fclose(fpin);
+} else {
+  rootInput->Close();
+}
   
 cout << "\nProcessed total of " << nGoodEvents << " events\n";
 

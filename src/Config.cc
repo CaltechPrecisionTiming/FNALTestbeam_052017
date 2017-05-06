@@ -31,12 +31,15 @@ void Config::parseConfigLine(std::string line) {
     
     try {
         // channel number (and check for commented line)
+        int chNum = -1;
         nextConfigElement(ss, item);
         if ( item.at(0) == '#' ) {
             return;
         }
         else {
-            channel.push_back(std::stoi(item));
+            chNum = std::stoi(item);
+            channel.push_back(chNum);
+            std::cout << "Config: channel " << chNum << " activated" << std::endl;
         }
 
         // polarity
@@ -46,7 +49,7 @@ void Config::parseConfigLine(std::string line) {
         }
         else {
             polarity.push_back(-1);
-            std::cout << "Config: inverse polarity for channel " << channel.size()-1 << std::endl;
+            std::cout << "Config: inverse polarity for channel " << chNum << std::endl;
         }
 
         // amplification
@@ -55,7 +58,7 @@ void Config::parseConfigLine(std::string line) {
         amplification.push_back(amp);
         if ( amp ) {
             std::cout << "Config: amplification of " << amp << " dB for channel " 
-                << channel.size()-1 << std::endl;
+                << chNum << std::endl;
         }
 
         // attenuation
@@ -64,20 +67,20 @@ void Config::parseConfigLine(std::string line) {
         attenuation.push_back(att);
         if ( att ) {
             std::cout << "Config: attenuation of " << att << " dB for channel " 
-                << channel.size()-1 << std::endl;
+                << chNum << std::endl;
         }
 
         // algorithm
         nextConfigElement(ss, item);
         int alg = std::stoi(item);
         algorithm.push_back(alg);
-        if ( doGaussFit(channel.size()-1) ) {
+        if ( doGaussFit(chNum) ) {
             std::cout << "Config: will perform gaussian pulse fit in channel " 
-                << channel.size()-1 << std::endl;
+                << chNum << std::endl;
         }
-        if ( doRisingEdgeFit(channel.size()-1) ) {
+        if ( doRisingEdgeFit(chNum) ) {
             std::cout << "Config: will perform constant-fraction fit in channel " 
-                << channel.size()-1 << std::endl;
+                << chNum << std::endl;
         }
 
         // filter width
@@ -86,7 +89,7 @@ void Config::parseConfigLine(std::string line) {
         filterWidth.push_back(width);
         if ( width ) {
             std::cout << "Config: will apply Weierstrass transform with filter width " 
-                << width << " to channel " << channel.size()-1 << std::endl;
+                << width << " to channel " << chNum << std::endl;
         }
     }
     catch (std::invalid_argument) {
@@ -100,14 +103,34 @@ float Config::dBToAmplitudeRatio(float dB) {
 }
 
 float Config::getChannelMultiplicationFactor(unsigned int ch) {
-    return polarity[ch] * dBToAmplitudeRatio( amplification[ch] ) 
-        * dBToAmplitudeRatio( -attenuation[ch] );
+    unsigned int ind = getChannelIndex(ch);
+    return polarity[ind] * dBToAmplitudeRatio( amplification[ind] ) 
+        * dBToAmplitudeRatio( -attenuation[ind] );
 }
 
 bool Config::doGaussFit(unsigned int ch) {
-    return algorithm[ch] & 0x1;
+    return algorithm[getChannelIndex(ch)] & 0x1;
 }
 
 bool Config::doRisingEdgeFit(unsigned int ch) {
-    return algorithm[ch] & 0x2;
+    return algorithm[getChannelIndex(ch)] & 0x2;
+}
+
+unsigned int Config::getChannelIndex(unsigned int ch) {
+    for ( unsigned int i = 0; i < channel.size(); i++ ) {
+        if (channel[i] == ch) {
+            return i;
+        }
+    }
+    std::cerr << "Config error: channel " << ch << " requested but not found in config!" << std::endl;
+    return -1;
+}
+
+bool Config::hasChannel(unsigned int ch) {
+    for ( unsigned int i = 0; i < channel.size(); i++ ) {
+        if (channel[i] == ch) {
+            return true;
+        }
+    }
+    return false;
 }

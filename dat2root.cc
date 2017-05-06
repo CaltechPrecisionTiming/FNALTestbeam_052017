@@ -60,11 +60,12 @@ int main(int argc, char **argv) {
   std::cout << "Input file: " << inputFilename << std::endl;
   std::cout << "Output file: " << outputFilename << std::endl;
 
+  // Check if has valid input file, otherwise exit with error
   ifstream ifile(inputFilename);
   if (!ifile) {
     printf("!USAGE! Input file does not exist. Please enter valid file name"); 
-    exit(0);}
-
+    exit(0);
+  }
 
   int nEvents = atoi(argv[3]);
   std::cout << "Will process " << nEvents << " events" << std::endl;
@@ -99,7 +100,7 @@ int main(int argc, char **argv) {
     std::cerr << "\nFailed to load channel information from config " << configName << std::endl;
     return -1;
   }
-  
+
   //**************************************
   // Load Voltage Calibration
   //**************************************
@@ -107,16 +108,16 @@ int main(int argc, char **argv) {
   std::cout << "\n=== Loading voltage calibration ===\n" << std::endl;
   double off_mean[4][9][1024];
   for( int i = 0; i < 4; i++ ){
-    sprintf( stitle, "v1740_bd%s_group_%d_offset.txt", boardNumber.c_str(), i );
-    fp1 = fopen( stitle, "r" );
-    printf("Loading offset data from %s\n", stitle);
+      sprintf( stitle, "v1740_bd%s_group_%d_offset.txt", boardNumber.c_str(), i );
+      fp1 = fopen( stitle, "r" );
+      printf("Loading offset data from %s\n", stitle);
 
-    for( int k = 0; k < 1024; k++ ) {     
-      for( int j = 0; j < 9; j++ ){      
-	dummy = fscanf( fp1, "%lf ", &off_mean[i][j][k] ); 
+      for( int k = 0; k < 1024; k++ ) {     
+          for( int j = 0; j < 9; j++ ){      
+              dummy = fscanf( fp1, "%lf ", &off_mean[i][j][k] ); 
+          }
       }
-    }
-    fclose(fp1);
+      fclose(fp1);
   }
 
   //**************************************
@@ -127,25 +128,25 @@ int main(int argc, char **argv) {
   double fdummy;
   double tcal_dV[4][1024];
   for( int i = 0; i < 4; i++ ) {
-    sprintf( stitle, "v1740_bd%s_group_%d_dV.txt", boardNumber.c_str(), i );
-    fp1 = fopen( stitle, "r" );
-    printf("Loading dV data from %s\n", stitle);
+      sprintf( stitle, "v1740_bd%s_group_%d_dV.txt", boardNumber.c_str(), i );
+      fp1 = fopen( stitle, "r" );
+      printf("Loading dV data from %s\n", stitle);
 
-    for( int k = 0; k < 1024; k++)      
-	dummy = fscanf( fp1, "%lf %lf %lf %lf %lf ", 
-		        &fdummy, &fdummy, &fdummy, &fdummy, &tcal_dV[i][k] ); 
-    fclose(fp1);
+      for( int k = 0; k < 1024; k++)      
+          dummy = fscanf( fp1, "%lf %lf %lf %lf %lf ", 
+                  &fdummy, &fdummy, &fdummy, &fdummy, &tcal_dV[i][k] ); 
+      fclose(fp1);
   }
   double dV_sum[4] = {0, 0, 0, 0};
   for( int i = 0; i < 4; i++ ) {
-    for( int j = 0; j < 1024; j++ )
-    dV_sum[i] += tcal_dV[i][j];
+      for( int j = 0; j < 1024; j++ )
+          dV_sum[i] += tcal_dV[i][j];
   }
 
   double tcal[4][1024];
   for( int i = 0; i < 4; i++) {
-    for( int j = 0; j < 1024; j++) {
-	tcal[i][j] = tcal_dV[i][j] / dV_sum[i] * 200.0;
+      for( int j = 0; j < 1024; j++) {
+          tcal[i][j] = tcal_dV[i][j] / dV_sum[i] * 200.0;
       }
   }
   
@@ -208,13 +209,13 @@ int main(int argc, char **argv) {
   //*************************
 
   FILE* fpin = fopen( inputFilename.c_str(), "r" );
-  int nGoodEvents = 0;
 
   //*************************
   //Event Loop
   //*************************
 
   std::cout << "\n=== Processing input data ===\n" << std::endl;
+  int nGoodEvents = 0;
   for( int iEvent = 0; iEvent < nEvents; iEvent++){ 
 
     // check for end of file
@@ -309,6 +310,29 @@ int main(int argc, char **argv) {
       for(int i = 0; i < 9; i++) {
 
 	int totalIndex = realGroup[group]*9 + i;
+
+        // Do not analyze disabled channels
+        if ( !config.hasChannel(totalIndex) ) {
+            for ( int j = 0; j < 1024; j++ ) {
+                raw[totalIndex][j] = 0;
+                channel[totalIndex][j] = 0;
+            }
+            xmin[totalIndex] = 0.;
+            amp [totalIndex] = 0.;
+            base[totalIndex] = 0.;
+            integral[totalIndex] = 0.;
+            integralFull[totalIndex] = 0.;
+            gauspeak[totalIndex] = 0.;
+            sigmoidTime[totalIndex] = 0.;
+            linearTime0[totalIndex] = 0.;
+            linearTime15[totalIndex] = 0.;
+            linearTime30[totalIndex] = 0.;
+            linearTime45[totalIndex] = 0.;
+            linearTime60[totalIndex] = 0.;
+            risetime[totalIndex] = 0.;
+            constantThresholdTime[totalIndex] = 0.;
+            continue;
+        }
 	
 	// Fill pulses
 	for ( int j = 0; j < 1024; j++ ) {

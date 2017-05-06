@@ -395,7 +395,6 @@ float SigmoidTimeFit(TGraphErrors * pulse, const float index_min, int event, TSt
   
   if ( makePlot )
     {
-      std::cout << "make plot" << std::endl;
       TCanvas* c = new TCanvas("canvas","canvas",800,400) ;
       pulse->GetXaxis()->SetLimits(x_low-50, x_high+50);
       pulse->SetMarkerSize(0.3);
@@ -406,8 +405,9 @@ float SigmoidTimeFit(TGraphErrors * pulse, const float index_min, int event, TSt
       c->SaveAs(fname+"Sigmoid.pdf");
       //delete c;
     }
+  
 
-  return midpoint;
+  return midpoint-width*log(maxAmp/0.01 -1);
   
   delete fsigmoid;
 };

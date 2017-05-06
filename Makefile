@@ -12,19 +12,20 @@ TARGET = dat2root
 SRC = dat2root.cc src/Aux.cc src/Config.cc
 
 TARGET2 = datroot2root
-SRC = datroot2root.cc src/Aux.cc src/Config.cc
+SRC2 = datroot2root.cc src/Aux.cc src/Config.cc
 
 OBJ = $(SRC:.cc=.o)
+OBJ2 = $(SRC2:.cc=.o)
 
-all : $(TARGET) $(TARGET2)
+all : $(TARGET) 
 
 $(TARGET) : $(OBJ)
 	@echo $@
 	$(LD) $(CPPFLAGS) -o $(TARGET) $(OBJ) $(LDFLAGS)
 
-$(TARGET2) : $(OBJ)
+$(TARGET2) : $(OBJ2)
 	@echo $@
-	$(LD) $(CPPFLAGS) -o $(TARGET2) $(OBJ) $(LDFLAGS)
+	$(LD) $(CPPFLAGS) -o $(TARGET2) $(OBJ2) $(LDFLAGS)
 
 
 %.o : %.cc

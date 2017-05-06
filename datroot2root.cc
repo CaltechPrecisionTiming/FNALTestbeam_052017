@@ -141,7 +141,7 @@ if (DATTYPE) {
 
 	    for( int k = 0; k < 1024; k++ ) {     
 	      for( int j = 0; j < 9; j++ ){      
-		dummy = fscanf( fp1, "%lf ", &off_mean[i][j][k] ); 
+          dummy = fscanf( fp1, "%lf ", &off_mean[i][j][k] ); 
 	      }
 	    }
 	    fclose(fp1);

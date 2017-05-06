@@ -289,10 +289,16 @@ int main(int argc, char **argv) {
     
     if (DATTYPE) {
 		  // check for end of file
-		  if (feof(fpin)) break; }
+		  if (feof(fpin)) {
+		    std::cout << "breaking" << std::endl;
+		    break; }
+    }
 
-		if ( iEvent % 100 == 0 ) std::cout << "Event " << iEvent << " of " << nEvents << std::endl;
-
+		if ( iEvent % 100 == 0 ) {
+		  std::cout << "Event " << iEvent << " of " << nEvents << std::endl; }
+    
+    std::cout << "here" << std::endl;
+    
 		event = nGoodEvents; // for output tree
     
     int activeGroupsN = 0;

@@ -364,9 +364,10 @@ int main(int argc, char **argv) {
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );
 	xmin[totalIndex] = index_min;
 
-	if (doFilter && totalIndex == 4) {
-	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName, 2.0, false);
-	}
+	if (doFilter && totalIndex == 4)
+	  {
+	    pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName, 2.0, false);
+	  }
 	
 	//Compute Amplitude : use units V
 	Double_t tmpAmp = 0.0;

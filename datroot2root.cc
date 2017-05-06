@@ -287,8 +287,9 @@ int main(int argc, char **argv) {
     
     std::cout << "1" << std::endl;
     
-		// check for end of file
-		if (feof(fpin)) break;
+    if (DATTYPE) {
+		  // check for end of file
+		  if (feof(fpin)) break; }
 
 		if ( iEvent % 100 == 0 ) std::cout << "Event " << iEvent << " of " << nEvents << std::endl;
 

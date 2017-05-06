@@ -11,7 +11,7 @@
 // and amplification factors for each digitizer channel.  
 // 
 // Config file lines should be of the following form (lines beginning with a '#' are ignored):
-// CH  POLARITY  AMPLIFICATION  ATTENUATION (dB)
+// CH  POLARITY  AMPLIFICATION  ATTENUATION (dB)  ALGORITHM  FILTER_WIDTH
 // with:
 // CH - channel number (integer)
 // POLARITY - sign of the pulse ('+' or '-')
@@ -22,6 +22,8 @@
 //      1: gaussian fit
 //      2: linear constant-fraction fit
 //      3: gaussian and linear fits
+// FILTER_WIDTH - gaussian kernel width for Weierstrass transform (gaussian filter).
+//      If 0, no Weierstrass transform will be applied.
 // 
 // Note that the channel number column in the config is an arbitrary placeholder, and does not 
 // correspond to the physical channel number or the channel index in the code.
@@ -34,6 +36,7 @@ class Config {
         float getAmplification(unsigned int ch) { return amplification[ch]; }
         float getAttenuation(unsigned int ch) { return attenuation[ch]; }
         int getAlgorithm(unsigned int ch) { return algorithm[ch]; }
+        float getFilterWidth(unsigned int ch) { return filterWidth[ch]; }
         bool isValid() { return _isValid; }
 
         // time extraction algorithm
@@ -61,6 +64,7 @@ class Config {
         std::vector<float> amplification; // amplification factor in dB
         std::vector<float> attenuation; // attenuation factor in dB
         std::vector<int> algorithm; // bitmask indicating algorithm to run
+        std::vector<float> filterWidth; // gaussian filter width
 };
 
 #endif

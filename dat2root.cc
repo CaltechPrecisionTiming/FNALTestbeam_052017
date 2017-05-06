@@ -87,14 +87,6 @@ int main(int argc, char **argv) {
     std::cout << "draw: " << drawDebugPulses << std::endl;
   }
 
-  bool doFilter = false;
-  std::string _doFilter = ParseCommandLine( argc, argv, "--doFilter" );
-  if ( _doFilter == "yes" ) {
-      saveRaw = true;
-      doFilter = true;
-      std::cout << "Will apply Weierstrass transform (gaussian filter) to input pulses\n";
-  }
-
   std::string configName = "config/15may2017.config";
   std::string _configName = ParseCommandLine( argc, argv, "--config" );
   if ( _configName != "" ) {
@@ -370,8 +362,10 @@ int main(int argc, char **argv) {
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );
 	xmin[totalIndex] = index_min;
 
-	if (doFilter && totalIndex == 4) {
-	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName, 2.0, false);
+        float filterWidth = config.getFilterWidth(totalIndex);
+	if (filterWidth) {
+	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], 
+                  pulseName, filterWidth, false );
 	}
 	
 	//Compute Amplitude : use units V

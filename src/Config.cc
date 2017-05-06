@@ -79,6 +79,15 @@ void Config::parseConfigLine(std::string line) {
             std::cout << "Config: will perform constant-fraction fit in channel " 
                 << channel.size()-1 << std::endl;
         }
+
+        // filter width
+        nextConfigElement(ss, item);
+        float width = std::stof(item);
+        filterWidth.push_back(width);
+        if ( width ) {
+            std::cout << "Config: will apply Weierstrass transform with filter width " 
+                << width << " to channel " << channel.size()-1 << std::endl;
+        }
     }
     catch (std::invalid_argument) {
         std::cerr << "Illegal parameter found in config!  Configuration is not valid." << std::endl;

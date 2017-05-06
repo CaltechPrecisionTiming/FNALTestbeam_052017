@@ -391,7 +391,7 @@ int main(int argc, char **argv) {
 	  else {
 	    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
 	    if ( xmin[totalIndex] != 0.0 ) {
-	      RisingEdgeFitTime( pulse, index_min, fs, event, "" );
+	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, false );
 	      sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
 	    }
 	  }

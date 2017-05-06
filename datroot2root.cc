@@ -615,7 +615,9 @@ int main(int argc, char **argv) {
 
 std::cout << "21" << std::endl;
 
-fclose(fpin);
+if (DATTYPE) {
+  fclose(fpin);}
+  
 cout << "\nProcessed total of " << nGoodEvents << " events\n";
 
 file->Write();

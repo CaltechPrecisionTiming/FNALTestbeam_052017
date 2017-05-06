@@ -288,13 +288,15 @@ int main(int argc, char **argv) {
     std::cout << "1" << std::endl;
     
     if (DATTYPE) {
+      std::cout << "a" << std::endl;
 		  // check for end of file
 		  if (feof(fpin)) {
 		    std::cout << "breaking" << std::endl;
 		    break; }
     }
-
+    std::cout << "b" << std::endl;
 		if ( iEvent % 100 == 0 ) {
+		  std::cout << "c" << std::endl;
 		  std::cout << "Event " << iEvent << " of " << nEvents << std::endl; }
     
     std::cout << "here" << std::endl;

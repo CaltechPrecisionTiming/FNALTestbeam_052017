@@ -330,12 +330,13 @@ float ConstantThresholdTime(TGraphErrors* pulse, const float threshold)
 
   double y2 = yy[indexCrossThreshold];
   double x2 = xx[indexCrossThreshold];
-  double y1 = yy[indexCrossThreshold-1];
-  double x1 = xx[indexCrossThreshold-1];
+  double y1 = y2;
+  double x1 = x2; 
+  if (indexCrossThreshold>0) {
+    y1 = yy[indexCrossThreshold-1];
+    x1 = xx[indexCrossThreshold-1];
+  }
   double xThreshold = (threshold - y1) * (x2-x1)/(y2-y1) + x1;  
-
-
-  //std::cout << "test: " << indexCrossThreshold << " " << xThreshold << " : " << x1 << "," << y1 << " | " << x2 << "," << y2 << "\n";
 
   return xThreshold;
 };

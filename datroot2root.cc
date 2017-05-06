@@ -206,6 +206,8 @@ int main(int argc, char **argv) {
         std::cout << "NOT CORRECT" << std::endl;
     }
   }
+  
+  std::cout << "FINISHED TESTING" << std::endl;
 } 
 /**	
 	short raw[36][1024]; // ADC counts

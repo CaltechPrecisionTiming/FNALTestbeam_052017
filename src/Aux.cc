@@ -242,6 +242,7 @@ float RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float
       pulse->SetMarkerStyle(20);
       pulse->Draw("AP");
       c->SaveAs(fname+"LinearFit.pdf");
+      c->SaveAs(fname+"LinearFit.png");
       //delete c;
     }
   delete flinear;
@@ -302,10 +303,11 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
       pulse->SetMarkerStyle(20);
       pulse->Draw("AP");
       c->SaveAs(fname+"LinearFit.pdf");
+      c->SaveAs(fname+"LinearFit.png");
       //delete c;
     }
 
-  tstamp[0] = (0.90*y-b)/slope - (0.10*y-b/slope);
+  tstamp[0] = (0.90*y-b)/slope - (0.10*y-b)/slope;
   tstamp[1] = (0.0*y-b)/slope;
   tstamp[2] = (0.15*y-b)/slope;
   tstamp[3] = (0.30*y-b)/slope;
@@ -330,12 +332,13 @@ float ConstantThresholdTime(TGraphErrors* pulse, const float threshold)
 
   double y2 = yy[indexCrossThreshold];
   double x2 = xx[indexCrossThreshold];
-  double y1 = yy[indexCrossThreshold-1];
-  double x1 = xx[indexCrossThreshold-1];
+  double y1 = y2;
+  double x1 = x2; 
+  if (indexCrossThreshold>0) {
+    y1 = yy[indexCrossThreshold-1];
+    x1 = xx[indexCrossThreshold-1];
+  }
   double xThreshold = (threshold - y1) * (x2-x1)/(y2-y1) + x1;  
-
-
-  //std::cout << "test: " << indexCrossThreshold << " " << xThreshold << " : " << x1 << "," << y1 << " | " << x2 << "," << y2 << "\n";
 
   return xThreshold;
 };

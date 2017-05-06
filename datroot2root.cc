@@ -196,7 +196,7 @@ int main(int argc, char **argv) {
 	short tc[4]; // trigger counter bin
 	
 	// want groups so set everything to -1 for init
-	float time[4][1024]; // calibrated time
+	float time[4][1024] = {0}; // calibrated time
 	
 	memset(time, -1, sizeof(time[0][0]) * 4 * 1024);
 	

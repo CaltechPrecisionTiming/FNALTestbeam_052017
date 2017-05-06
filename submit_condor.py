@@ -51,7 +51,7 @@ if __name__ == '__main__':
     executable = local_dir+'/runDat2Root'
 
     infiles = [
-           local_dir+args.infile,
+           args.infile,
            local_dir+"config/"+args.config,
            local_dir+"v1740_bd1_group_0_dV.txt",
            local_dir+"v1740_bd1_group_0_offset.txt",

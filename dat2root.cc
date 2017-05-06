@@ -218,9 +218,6 @@ int main(int argc, char **argv) {
   int nGoodEvents = 0;
   for( int iEvent = 0; iEvent < nEvents; iEvent++){ 
 
-    // check for end of file
-    if (feof(fpin)) break;
-      
     if ( iEvent % 100 == 0 ) std::cout << "Event " << iEvent << " of " << nEvents << std::endl;
     event = nGoodEvents; // for output tree
 
@@ -232,6 +229,9 @@ int main(int argc, char **argv) {
     // third and fourth header words
     dummy = fread( &event_header, sizeof(uint), 1, fpin);  
     dummy = fread( &event_header, sizeof(uint), 1, fpin);  
+
+    // check for end of file
+    if (feof(fpin)) break;
     
     //*************************
     // Parse group mask into channels

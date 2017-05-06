@@ -262,12 +262,13 @@ int main(int argc, char **argv) {
 	FILE *fpin = 0;
 	TFile *rootInput = 0;
 	TTree *rootInputTree = 0;
+  
 
 	int nGoodEvents = 0;
 
 	// Set according to if dat type or root type
 	if (DATTYPE) {
-		FILE* fpin = fopen( inputFilename.c_str(), "r" );
+		 fpin= fopen( inputFilename.c_str(), "r" );
 	}
 	else {
 		rootInput = new TFile( inputFilename.c_str() );

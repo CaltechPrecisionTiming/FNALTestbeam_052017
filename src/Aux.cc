@@ -305,7 +305,7 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
       //delete c;
     }
 
-  tstamp[0] = (0.90*y-b)/slope - (0.10*y-b/slope);
+  tstamp[0] = (0.90*y-b)/slope - (0.10*y-b)/slope;
   tstamp[1] = (0.0*y-b)/slope;
   tstamp[2] = (0.15*y-b)/slope;
   tstamp[3] = (0.30*y-b)/slope;

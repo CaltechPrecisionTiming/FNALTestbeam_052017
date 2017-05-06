@@ -389,7 +389,7 @@ int main(int argc, char **argv) {
         float filterWidth = config.getFilterWidth(totalIndex);
 	if (filterWidth) {
 	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], 
-                  pulseName, filterWidth, false );
+					pulseName, filterWidth, false );
 	}
 	
 	//Compute Amplitude : use units V

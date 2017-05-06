@@ -187,7 +187,7 @@ if (DATTYPE) {
 
   TFile* file = new TFile( outputFilename.c_str(), "RECREATE", "CAEN V1742");
   TTree* tree = new TTree("pulse", "Digitized waveforms");
-
+  
   int event;
   short tc[4]; // trigger counter bin
   float time[4][1024]; // calibrated time
@@ -238,8 +238,20 @@ if (DATTYPE) {
   //*************************
   // Open Input File
   //*************************
-
-  FILE* fpin = fopen( inputFilename.c_str(), "r" );
+  
+  FILE *fpin = 0;
+  TFile *rootInput = 0;
+  TTree *rootInputTree = 0;
+  
+  // Set according to if dat type or root type
+  if (DATTYPE) {
+     FILE* fpin = fopen( inputFilename.c_str(), “r” );
+  }
+  else {
+     rootInput = new TFile( inputFilename.c_str() );
+     rootInputTree = (TTree*)rootInput->Get(“pulse”);
+  }
+  
   int nGoodEvents = 0;
 
   //*************************

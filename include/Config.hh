@@ -24,19 +24,18 @@
 //      3: gaussian and linear fits
 // FILTER_WIDTH - gaussian kernel width for Weierstrass transform (gaussian filter).
 //      If 0, no Weierstrass transform will be applied.
-// 
-// Note that the channel number column in the config is an arbitrary placeholder, and does not 
-// correspond to the physical channel number or the channel index in the code.
+
 class Config {
     public:
         Config(std::string fname);
 
         // accessor functions
-        int getPolarity(unsigned int ch) { return polarity[ch]; }
-        float getAmplification(unsigned int ch) { return amplification[ch]; }
-        float getAttenuation(unsigned int ch) { return attenuation[ch]; }
-        int getAlgorithm(unsigned int ch) { return algorithm[ch]; }
-        float getFilterWidth(unsigned int ch) { return filterWidth[ch]; }
+        unsigned int getChannelIndex(unsigned int ch);
+        int getPolarity(unsigned int ch) { return polarity[getChannelIndex(ch)]; }
+        float getAmplification(unsigned int ch) { return amplification[getChannelIndex(ch)]; }
+        float getAttenuation(unsigned int ch) { return attenuation[getChannelIndex(ch)]; }
+        int getAlgorithm(unsigned int ch) { return algorithm[getChannelIndex(ch)]; }
+        float getFilterWidth(unsigned int ch) { return filterWidth[getChannelIndex(ch)]; }
         bool isValid() { return _isValid; }
 
         // time extraction algorithm
@@ -48,6 +47,8 @@ class Config {
 
         // returns true if at least one channel is present in the config
         bool hasChannels() { return channel.size(); }
+        // returns true if the specified channel is present in the config
+        bool hasChannel(unsigned int ch);
 
     private:
         // process one line of the config file

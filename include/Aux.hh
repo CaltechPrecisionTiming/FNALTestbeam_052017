@@ -30,6 +30,7 @@ float GausFit_MeanTime(TGraphErrors * pulse, const float index_first, const floa
 float RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float constantFraction, TString fname, bool makePlot = false );
 void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstamp, int event, TString fname, bool makePlot = false);
 float SigmoidTimeFit(TGraphErrors * pulse, const float index_min, int event, TString fname, bool makePlot = false );
+float FullFitScint( TGraphErrors * pulse, const float index_min, int event, TString fname, bool makePlot = false );
 float GausFit_MeanTime(TGraphErrors* pulse, const float index_first, const float index_last, TString fname);
 float GetBaseline( int peak, short *a );
 float GetBaseline(TGraphErrors * pulse, int i_low, int i_high, TString fname );

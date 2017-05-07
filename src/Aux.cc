@@ -1,6 +1,7 @@
 #include "Aux.hh"
 #include <math.h>
 #include <string>
+#include "TLine.h"
 
 //*********************************************************
 // Get amplification factor used for the silicon sensor
@@ -304,7 +305,7 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
       pulse->Draw("AP");
       c->SaveAs(fname+"LinearFit.pdf");
       c->SaveAs(fname+"LinearFit.png");
-      //delete c;
+      delete c;
     }
 
   tstamp[0] = (0.90*y-b)/slope - (0.10*y-b)/slope;
@@ -403,15 +404,76 @@ float SigmoidTimeFit(TGraphErrors * pulse, const float index_min, int event, TSt
       fsigmoid->SetLineColor(kBlue);
       fsigmoid->Draw("same");
       c->SaveAs(fname+"Sigmoid.pdf");
-      //delete c;
+      delete c;
     }
   
 
-  return midpoint-width*log(maxAmp/0.01 -1);
+  return midpoint-width*log(maxAmp/0.1 -1);
   
   delete fsigmoid;
 };
 
+
+float FullFitScint( TGraphErrors * pulse, const float index_min, int event, TString fname, bool makePlot) 
+{
+
+  double x_low, x_high, y, dummy;
+  double ymax;
+  pulse->GetPoint(index_min, x_low, ymax);
+  
+  pulse->GetPoint(index_min-150, x_low, y);
+  
+  for ( int i = 1; i < 200; i++ )
+    {
+      pulse->GetPoint(index_min-i, x_high, y);
+      if ( y < 0.6*ymax ) break;
+    }
+  
+  pulse->GetPoint(index_min, dummy, y);
+  
+  //TF1* fullFit = new TF1("fullFit","[2]+[1]*0.004217/2*exp(0.004217/2*(2.0*357.0+1.0*2.06**2.0-2.0*(x-[0])))*ROOT::Math::erfc((357.0+0.004217*2.06**2.0-(x-[0]))/(1.41*2.06))",0,200);
+  TF1* fullFit = new TF1("fullFit","[0]*([1]/2.0)*exp([1]/2.*(2*[2]+[1]*[3]*[3]-2*x))*ROOT::Math::erfc(([2]+[1]*[3]*[3]-x)/(TMath::Sqrt(2.)*[3]))",0,200);
+  fullFit->SetParameter(0,800);
+  fullFit->SetParameter(1,1);
+  fullFit->SetParameter(2,125);
+  fullFit->SetParameter(3,10);
+  
+  float max = -9999;
+  double* yy = pulse->GetY();
+  
+  for ( int i = 0; i < 1024; i++ )
+    {
+      if ( yy[i] > max ) max = yy[i];
+    }
+ 
+  pulse->Fit("fullFit","Q","", 0, 200 );
+  double maxAmp   = fullFit->GetParameter(0);
+  double lambda   = fullFit->GetParameter(1);
+  double mu       = fullFit->GetParameter(2);
+  double sigma    = fullFit->GetParameter(2);
+
+  std::cout << "maxAmp: " << maxAmp << " lambda: " << lambda << " mu: " << mu << " sigma: " << sigma << std::endl;
+  TLine* line  = new TLine( mu, 0, mu, 1000);
+  if ( makePlot )
+    {
+      TCanvas* c = new TCanvas("canvas","canvas",800,400) ;
+      pulse->GetXaxis()->SetLimits(0, 200);
+      pulse->SetMarkerSize(0.3);
+      pulse->SetMarkerStyle(20);
+      pulse->Draw("AP");
+      fullFit->SetLineColor(kBlue-3);
+      fullFit->Draw("same");
+      line->Draw("same");
+      c->SaveAs(fname+"fullFit.pdf");
+      delete c;
+    }
+  
+
+  return mu;
+  
+  delete fullFit;
+
+};
 
 double GetGaussTime( TGraphErrors* pulse )
 {

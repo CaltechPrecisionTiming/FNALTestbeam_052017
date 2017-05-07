@@ -88,6 +88,7 @@ int main(int argc, char **argv) {
   }
 
   std::string configName = "config/15may2017.config";
+  //std::string configName = "alignmentTestConfig.config";
   std::string _configName = ParseCommandLine( argc, argv, "--config" );
   if ( _configName != "" ) {
     configName = _configName;
@@ -400,6 +401,7 @@ int main(int argc, char **argv) {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
 	      sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
+	      FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, true );
 	    }
 	  }
 	  else {

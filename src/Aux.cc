@@ -79,12 +79,12 @@ int FindMinAbsolute( int n, short *a) {
   
   if (n <= 0 || !a) return -1;
   float xmin = a[5];
-  std::cout << xmin << std::endl;
+  //std::cout << xmin << std::endl;
   int loc = 0;
   for  (int i = 5; i < n-10; i++) {
     if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -40. )  
      {
-      //std::cout << i << " " << a[i] << std::endl;
+      std::cout << i << " " << a[i] << std::endl;
 	
 	    xmin = a[i];
 	    loc = i;

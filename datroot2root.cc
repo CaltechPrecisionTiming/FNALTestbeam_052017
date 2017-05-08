@@ -366,7 +366,7 @@ int main(int argc, char **argv) {
       for (int i = 0; i < 4; i++) {
         if (time[i][0] < 0) {
           if (time[i][0] != -1.0) {
-            std::cout time[i][0]; }
+            std::cout << time[i][0] << std::endl; }
           realGroup[activeGroupsN] = i;
           activeGroupsN++; 
         }

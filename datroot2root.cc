@@ -525,6 +525,8 @@ int main(int argc, char **argv) {
 			// or the late time samples to do the baseline fit
 			//std::cout << "---event "  << event << "-------ch#: " << totalIndex << std::endl;
 			int index_min = FindMinAbsolute(1024, channel[totalIndex]); 
+			
+			std::cout << "CHANNEL: " << channel[totalIndex] << std::endl;
 
 			// DRS-glitch finder: zero out bins which have large difference
 			// with respect to neighbors in only one or two bins
@@ -551,7 +553,7 @@ int main(int argc, char **argv) {
 			pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );
 			xmin[totalIndex] = index_min;
 			
-			std::cout << "INDEX MIN: " << index_min << std::endl;
+			//std::cout << "INDEX MIN: " << index_min << std::endl;
 
 			//if (doFilter && totalIndex == 4) {
 			//	pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName, 2.0, false);

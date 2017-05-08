@@ -352,7 +352,7 @@ int main(int argc, char **argv) {
 			  }
 		  }
 		  
-		  std::cout << "DAT TYPE ACTIVE GROUPS: " << activeGroupsN << std::endl;
+		  //std::cout << "DAT TYPE ACTIVE GROUPS: " << activeGroupsN << std::endl;
     }
     
     // SET THINGS FOR ROOT TYPE
@@ -373,14 +373,13 @@ int main(int argc, char **argv) {
         if (time[i][1] > 0) {
           realGroup[activeGroupsN] = i;
           activeGroupsN++; 
-          
-          for (int j = 0; j < 1024; j++) {
-            if (time[i][j] < 0) {
-              std::cout << "TIME: " << i << " , " << j << std::endl; } } 
-        }    
+        }
+        //for (int j = 0; j < 1024; j++) {
+          //if (time[i][j] > 0) {
+            //std::cout << "TIME: " << i << " , " << j << std::endl; } }
       }
       
-      std::cout << "ROOT ACTIVE GROUPS: " << activeGroupsN << std::endl;
+      //std::cout << "ROOT ACTIVE GROUPS: " << activeGroupsN << std::endl;
     } 
     
     //std::cout << "7" << std::endl;
@@ -551,6 +550,8 @@ int main(int argc, char **argv) {
 			delete pulse;
 			pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );
 			xmin[totalIndex] = index_min;
+			
+			std::cout << "INDEX MIN: " << index_min << std::endl;
 
 			//if (doFilter && totalIndex == 4) {
 			//	pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], pulseName, 2.0, false);

@@ -284,7 +284,7 @@ int main(int argc, char **argv) {
 		rootInputTree->SetBranchAddress("tc", tc);
 		
 		if (saveRaw) {
-		  rootInputTree->SetBranchAddress("raw", raw);
+		  rootInputTree->SetBranchAddress("raw", raw); }
 	}
 
 

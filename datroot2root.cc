@@ -310,8 +310,6 @@ int main(int argc, char **argv) {
 		if ( iEvent % 100 == 0 ) {
 		  std::cout << "Event " << iEvent << " of " << nEvents << std::endl; }
     
-    std::cout << "here" << std::endl;
-    
 		event = nGoodEvents; // for output tree
     
     int activeGroupsN = 0;
@@ -375,10 +373,11 @@ int main(int argc, char **argv) {
         if (time[i][1] > 0) {
           realGroup[activeGroupsN] = i;
           activeGroupsN++; 
-        }
-        //for (int j = 0; j < 1024; j++) {
-          //if (time[i][j] > 0) {
-            //std::cout << "TIME: " << i << " , " << j << std::endl; } }
+          
+          for (int j = 0; j < 1024; j++) {
+            if (time[i][j] < 0) {
+              std::cout << "TIME: " << i << " , " << j << std::endl; } } 
+        }    
       }
       
       std::cout << "ROOT ACTIVE GROUPS: " << activeGroupsN << std::endl;

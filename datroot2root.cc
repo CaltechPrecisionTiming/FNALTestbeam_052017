@@ -298,7 +298,7 @@ int main(int argc, char **argv) {
 	std::cout << "\n=== Processing input data ===\n" << std::endl;
 	for( int iEvent = 0; iEvent < nEvents; iEvent++){ 
     
-    std::cout << "1" << std::endl;
+    //std::cout << "1" << std::endl;
     
     if (DATTYPE) {
 		  // check for end of file
@@ -319,7 +319,7 @@ int main(int argc, char **argv) {
     int totalIndex;
     // SET THINGS FOR DATTYPE
     
-    std::cout << "2" << std::endl;
+    //std::cout << "2" << std::endl;
     
     if (DATTYPE) {
       
@@ -336,7 +336,7 @@ int main(int argc, char **argv) {
 		  // Parse group mask into channels
 		  //*************************
       
-      std::cout << "3" << std::endl;
+      //std::cout << "3" << std::endl;
       
 		  bool _isGR_On[4];
 		  _isGR_On[0] = (grM & 0x01);
@@ -344,7 +344,7 @@ int main(int argc, char **argv) {
 		  _isGR_On[2] = (grM & 0x04);
 		  _isGR_On[3] = (grM & 0x08);
 
-      std::cout << "4" << std::endl;
+      //std::cout << "4" << std::endl;
 		  
 		  for ( int l = 0; l < 4; l++ ) {
 			  if ( _isGR_On[l] ) 
@@ -353,17 +353,19 @@ int main(int argc, char **argv) {
 				  activeGroupsN++;
 			  }
 		  }
+		  
+		  std::cout << "DAT TYPE ACTIVE GROUPS: " << activeGroupsN << std::endl;
     }
     
     // SET THINGS FOR ROOT TYPE
     
-    std::cout << "5" << std::endl;
+    //std::cout << "5" << std::endl;
     
     if (!DATTYPE) {
       
       rootInputTree->GetEntry(iEvent);
       
-      std::cout << "6" << std::endl;
+      //std::cout << "6" << std::endl;
       
       // get groups from time
       
@@ -375,9 +377,11 @@ int main(int argc, char **argv) {
           activeGroupsN++; 
         }
       }
+      
+      std::cout << "ROOT ACTIVE GROUPS: " << activeGroupsN << std::endl;
     }
     
-    std::cout << "7" << std::endl;
+    //std::cout << "7" << std::endl;
     
 		//************************************
 		// Loop over channel groups
@@ -386,7 +390,7 @@ int main(int argc, char **argv) {
 		for ( int group = 0; group < activeGroupsN; group++ ) {
 		  ushort tcn; 
 		  
-		  std::cout << "8" << std::endl;
+		  //std::cout << "8" << std::endl;
 		  
 		  if (DATTYPE) {
 		    
@@ -398,7 +402,7 @@ int main(int argc, char **argv) {
 			  // Check if all channels were active (if 8 channels active return 3072)
 			  int nsample = (event_header & 0xfff) / 3;
         
-        std::cout << "9" << std::endl;
+        //std::cout << "9" << std::endl;
         
 			  // Define time coordinate
 			  time[realGroup[group]][0] = 0.0;
@@ -408,7 +412,7 @@ int main(int argc, char **argv) {
 						  + time[realGroup[group]][i-1]);
 			  }      
         
-        std::cout << "10" << std::endl;
+        //std::cout << "10" << std::endl;
         
 			  //************************************
 			  // Read sample info for group
@@ -426,7 +430,7 @@ int main(int argc, char **argv) {
 				  samples[7][i] =  temp[2] >> 20;	
 			  }
         
-        std::cout << "11" << std::endl;
+        //std::cout << "11" << std::endl;
         
 			  // Trigger channel
 			  for(int j = 0; j < nsample/8; j++){
@@ -442,7 +446,7 @@ int main(int argc, char **argv) {
 			  }
       }
       
-      std::cout << "12" << std::endl;
+      //std::cout << "12" << std::endl;
 			  //************************************
 			  // Loop over channels 0-8
 			  //************************************      
@@ -476,7 +480,7 @@ int main(int argc, char **argv) {
           
 				  // Fill pulses
 				  if (DATTYPE) {
-				    std::cout << "13" << std::endl;
+				    //std::cout << "13" << std::endl;
 				    for ( int j = 0; j < 1024; j++ ) {
 					    raw[totalIndex][j] = (short)(samples[i][j]);
 					    channel[totalIndex][j] = (short)((double)(samples[i][j]) 
@@ -487,13 +491,13 @@ int main(int argc, char **argv) {
 //////// Starting here, dat and root file types both use all the following code 
 ////////////////////////////////////////
       
-      std::cout << "14" << std::endl;
+      //std::cout << "14" << std::endl;
       
 			// Make pulse shape graph
 			TString pulseName = Form("pulse_event%d_group%d_ch%d", iEvent, realGroup[group], i);
 			TGraphErrors* pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );
       
-      std::cout << "15" << std::endl;
+      //std::cout << "15" << std::endl;
       
       // Only for dattype; base variable already extracted from root file if processing root type
       
@@ -513,7 +517,7 @@ int main(int argc, char **argv) {
 			  }
       }
       
-      std::cout << "16" << std::endl;
+      //std::cout << "16" << std::endl;
       
 			// Find the absolute minimum. This is only used as a rough determination 
 			// to decide if we'll use the early time samples
@@ -539,7 +543,7 @@ int main(int argc, char **argv) {
 					channel[totalIndex][j] = 0;
 			}
       
-      std::cout << "17" << std::endl;
+      //std::cout << "17" << std::endl;
       
 			// Recreate the pulse TGraph using baseline-subtracted channel data
 			delete pulse;
@@ -556,7 +560,7 @@ int main(int argc, char **argv) {
       }
       
       
-      std::cout << "18" << std::endl;
+      //std::cout << "18" << std::endl;
       
 			//Compute Amplitude : use units V
 			Double_t tmpAmp = 0.0;
@@ -574,7 +578,7 @@ int main(int argc, char **argv) {
 				integralFull[totalIndex] = 0.0;
 			}
       
-      std::cout << "19" << std::endl;
+      //std::cout << "19" << std::endl;
       
 			// Gaussian time stamp and constant-fraction fit
 			Double_t min = 0.; Double_t low_edge = 0.; Double_t high_edge = 0.; Double_t y = 0.; 
@@ -607,7 +611,7 @@ int main(int argc, char **argv) {
 				for ( int kk = 0; kk < 5; kk++ ) fs[kk] = -999;
 			}
 			
-			std::cout << "20" << std::endl;
+			//std::cout << "20" << std::endl;
 			
 			// for output tree
 			gauspeak[totalIndex] = timepeak;
@@ -630,7 +634,7 @@ int main(int argc, char **argv) {
 	nGoodEvents++;
 }
 
-std::cout << "21" << std::endl;
+//std::cout << "21" << std::endl;
 
 if (DATTYPE) {
   fclose(fpin);

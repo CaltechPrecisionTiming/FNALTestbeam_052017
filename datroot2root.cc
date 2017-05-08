@@ -276,11 +276,15 @@ int main(int argc, char **argv) {
 		rootInput = new TFile( inputFilename.c_str() );
 		rootInputTree = (TTree *)rootInput->Get("pulse");
 		
-		rootInputTree->SetBranchAddress("time", time);
-      
+		rootInputTree->SetBranchAddress("time", time);    
 		rootInputTree->SetBranchAddress("channel", channel);
-		
 		rootInputTree->SetBranchAddress("base", base);
+		
+		//copy over other stuff that wont get overwritten
+		rootInputTree->SetBranchAddress("tc", tc);
+		
+		if (saveRaw) {
+		  rootInputTree->SetBranchAddress("raw", raw);
 	}
 
 

@@ -301,15 +301,13 @@ int main(int argc, char **argv) {
     std::cout << "1" << std::endl;
     
     if (DATTYPE) {
-      std::cout << "a" << std::endl;
 		  // check for end of file
 		  if (feof(fpin)) {
 		    std::cout << "breaking" << std::endl;
 		    break; }
     }
-    std::cout << "b" << std::endl;
+    
 		if ( iEvent % 100 == 0 ) {
-		  std::cout << "c" << std::endl;
 		  std::cout << "Event " << iEvent << " of " << nEvents << std::endl; }
     
     std::cout << "here" << std::endl;
@@ -372,7 +370,7 @@ int main(int argc, char **argv) {
       // assuming time can never be negative
       
       for (int i = 0; i < 4; i++) {
-        if (time[i][0] < 0) {
+        if (time[i][0] > 0) {
           realGroup[activeGroupsN] = i;
           activeGroupsN++; 
         }
@@ -514,6 +512,7 @@ int main(int argc, char **argv) {
 				  channel[totalIndex][j] = multiplier * (short)((double)(channel[totalIndex][j]) + baseline);
 			  }
       }
+      
       std::cout << "16" << std::endl;
       
 			// Find the absolute minimum. This is only used as a rough determination 

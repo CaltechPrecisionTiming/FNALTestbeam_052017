@@ -204,7 +204,7 @@ int main(int argc, char **argv) {
     for (int j=0; j < 1024; j++) {
       //if (time[i][j] != -1)
         //std::cout << "NOT CORRECT" << std::endl;
-      time[i][j] = -1.0;
+      time[i][j] = -999.0;
     }
   }
   
@@ -277,6 +277,8 @@ int main(int argc, char **argv) {
 		rootInputTree->SetBranchAddress("time", time);
       
 		rootInputTree->SetBranchAddress("channel", channel);
+		
+		rootInputTree->SetBranchAddress("base", base);
 	}
 
 
@@ -361,12 +363,10 @@ int main(int argc, char **argv) {
       
       // get groups from time
       
-      // CHECK THAT TIME CANNOT BE NEGATIVE IN NORMAL SITUATIONS
+      // assuming time can never be negative
       
       for (int i = 0; i < 4; i++) {
         if (time[i][0] < 0) {
-          if (time[i][0] != -1.0) {
-            std::cout << time[i][0] << std::endl; }
           realGroup[activeGroupsN] = i;
           activeGroupsN++; 
         }
@@ -491,22 +491,23 @@ int main(int argc, char **argv) {
       
       std::cout << "15" << std::endl;
       
-      // TO DO: GET BASE FROM PULSE IF ROOT FILE HERE
+      // Only for dattype; base variable already extracted from root file if processing root type
       
-			// Estimate baseline
-			float baseline;
-			baseline = GetBaseline( pulse, 5 ,150, pulseName );
-			base[totalIndex] = baseline;
+      if (DATTYPE) {
       
-      
-      // ALSO ONLY DO IF ROOT FILE
-			// Correct pulse shape for baseline offset
-			for(int j = 0; j < 1024; j++) {
+			  // Estimate baseline
+			  float baseline;
+			  baseline = GetBaseline( pulse, 5 ,150, pulseName );
+			  base[totalIndex] = baseline;
+        
+        
+			  // Correct pulse shape for baseline offset
+			  for(int j = 0; j < 1024; j++) {
 
-				float multiplier = config.getChannelMultiplicationFactor(totalIndex);
-				channel[totalIndex][j] = multiplier * (short)((double)(channel[totalIndex][j]) + baseline);
-			}
-      
+				  float multiplier = config.getChannelMultiplicationFactor(totalIndex);
+				  channel[totalIndex][j] = multiplier * (short)((double)(channel[totalIndex][j]) + baseline);
+			  }
+      }
       std::cout << "16" << std::endl;
       
 			// Find the absolute minimum. This is only used as a rough determination 

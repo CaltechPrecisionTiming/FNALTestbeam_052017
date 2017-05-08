@@ -170,6 +170,7 @@ int main(int argc, char **argv) {
   float integralFull[36]; // integral over all bins
   float gauspeak[36]; // time extracted with gaussian fit
   float sigmoidTime[36];//time extracted with sigmoid fit
+  float fullFitTime[36];//time extracted with sigmoid fit
   float linearTime0[36]; // constant fraction fit coordinates
   float linearTime15[36];
   float linearTime30[36];
@@ -192,6 +193,7 @@ int main(int argc, char **argv) {
   tree->Branch("intfull", integralFull, "intfull[36]/F");
   tree->Branch("gauspeak", gauspeak, "gauspeak[36]/F");
   tree->Branch("sigmoidTime", sigmoidTime, "sigmoidTime[36]/F");
+  tree->Branch("fullFitTime", fullFitTime, "fullFitTime[36]/F");
   tree->Branch("linearTime0", linearTime0, "linearTime0[36]/F");
   tree->Branch("linearTime15", linearTime15, "linearTime15[36]/F");
   tree->Branch("linearTime30", linearTime30, "linearTime30[36]/F");
@@ -424,15 +426,17 @@ int main(int argc, char **argv) {
 	    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
-	      sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
-	      FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, true );
+	      sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
+	      fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, false );
 	    }
+	    
 	  }
 	  else {
-	    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
+	    timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge);
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, false );
 	      sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
+	      fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, false );
 	    }
 	  }
         }

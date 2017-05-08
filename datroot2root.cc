@@ -376,10 +376,13 @@ int main(int argc, char **argv) {
           realGroup[activeGroupsN] = i;
           activeGroupsN++; 
         }
+        for (int j = 0; j < 1024; j++) {
+          if (time[i][j] > 0) {
+            std::cout << "TIME: " << i << " , " << j << std::endl; } }
       }
       
       std::cout << "ROOT ACTIVE GROUPS: " << activeGroupsN << std::endl;
-    }
+    } 
     
     //std::cout << "7" << std::endl;
     

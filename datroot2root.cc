@@ -526,7 +526,6 @@ int main(int argc, char **argv) {
 			//std::cout << "---event "  << event << "-------ch#: " << totalIndex << std::endl;
 			int index_min = FindMinAbsolute(1024, channel[totalIndex]); 
 			
-			std::cout << "CHANNEL: " << channel[totalIndex] << std::endl;
 
 			// DRS-glitch finder: zero out bins which have large difference
 			// with respect to neighbors in only one or two bins

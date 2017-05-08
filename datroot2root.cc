@@ -618,8 +618,9 @@ int main(int argc, char **argv) {
 
 			delete pulse;
 		}
-
-		dummy = fread( &event_header, sizeof(uint), 1, fpin);
+    
+    if (DATTYPE) {
+		  dummy = fread( &event_header, sizeof(uint), 1, fpin); }
 	}
 
 	tree->Fill();

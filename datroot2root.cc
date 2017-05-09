@@ -524,7 +524,7 @@ int main(int argc, char **argv) {
 			// to decide if we'll use the early time samples
 			// or the late time samples to do the baseline fit
 			//std::cout << "---event "  << event << "-------ch#: " << totalIndex << std::endl;
-			int index_min = FindMinAbsolute(1024, *(channel + totalIndex)); 
+			int index_min = FindMinAbsolute(1024, channel[totalIndex]); 
 			
 
 			// DRS-glitch finder: zero out bins which have large difference
@@ -535,6 +535,9 @@ int main(int argc, char **argv) {
 				short a2 = abs(channel[totalIndex][j+1]);
 				short a3 = abs(channel[totalIndex][j+2]);
         
+        if (j == 56 && a1 == 0 && a2 == 0) {
+      //std::cout << "PRE: " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;}
+          std::cout << "POST a value: " << *channel[totalIndex] << std::endl; }
         
 				if ( ( a1>3*a0 && a2>3*a0 && a2>3*a3 && a1>30) )
 				{

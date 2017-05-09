@@ -529,13 +529,12 @@ int main(int argc, char **argv) {
 
 			// DRS-glitch finder: zero out bins which have large difference
 			// with respect to neighbors in only one or two bins
-			for(int j = 0; j < 1024; j++) {
+			for(int j = 1; j < 1022; j++) {
 				short a0 = abs(channel[totalIndex][j-1]);
 				short a1 = abs(channel[totalIndex][j]);
 				short a2 = abs(channel[totalIndex][j+1]);
 				short a3 = abs(channel[totalIndex][j+2]);
         
-        std::cout << a1 << std::endl;
         
 				if ( ( a1>3*a0 && a2>3*a0 && a2>3*a3 && a1>30) )
 				{

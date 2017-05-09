@@ -84,7 +84,7 @@ int FindMinAbsolute( int n, short *a) {
   for  (int i = 5; i < n-10; i++) {
     if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -40. )  
      {
-      //std::cout << i << " " << a[i] << std::endl;
+      std::cout << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;
 	    
 	   // if (i == 56) {
 	     // std::cout << a[i] << " " << a[i+1] << " " << std::endl; }

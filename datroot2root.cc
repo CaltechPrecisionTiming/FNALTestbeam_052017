@@ -524,7 +524,7 @@ int main(int argc, char **argv) {
 			// to decide if we'll use the early time samples
 			// or the late time samples to do the baseline fit
 			//std::cout << "---event "  << event << "-------ch#: " << totalIndex << std::endl;
-			int index_min = FindMinAbsolute(1024, channel[totalIndex]); 
+			int index_min = FindMinAbsolute(1024, *(channel + totalIndex)); 
 			
 
 			// DRS-glitch finder: zero out bins which have large difference

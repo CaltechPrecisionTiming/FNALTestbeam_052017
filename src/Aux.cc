@@ -98,7 +98,7 @@ int FindMinAbsolute( int n, short *a) {
       //if (i == 56) {
        // std::cout << "THIS " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;} }
   }
-  std::cout << "loc0: " << loc << std::endl;
+  //std::cout << "loc0: " << loc << std::endl;
   return loc;
 }
 

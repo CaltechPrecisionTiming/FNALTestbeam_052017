@@ -538,7 +538,8 @@ int main(int argc, char **argv) {
         if (j == 56 && a1 == 0 && a2 == 0) {
       //std::cout << "PRE: " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;}
           std::cout << "POST a value: " << *channel[totalIndex] << std::endl; 
-          if (*channel[totalIndex] == 5.) {std::cout << j << std::endl;}}
+          if (*channel[totalIndex] == 5.) {
+            channel[totalIndex][j] = 0; }}
         
 				if ( ( a1>3*a0 && a2>3*a0 && a2>3*a3 && a1>30) )
 				{

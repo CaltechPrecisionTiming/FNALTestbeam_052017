@@ -259,26 +259,20 @@ float RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float
 
 void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstamp, int event, TString fname, bool makePlot )
 {
-  double x_low, x_high, y, dummy;
-  double ymax;
+  double x_low, x_high;
+  double ymax, ydummy;
   pulse->GetPoint(index_min, x_low, ymax);
-  for ( int i = 1; i < 200; i++ )
+  for ( int i = 1; i < 300; i++ )
     {
-      pulse->GetPoint(index_min-i, x_low, y);
-      if ( y < 0.2*ymax ) break;
+      pulse->GetPoint(index_min-i, x_low, ydummy);
+      if ( ydummy < 0.05*ymax ) break;
     }
-  for ( int i = 1; i < 200; i++ )
+  for ( int i = 1; i < 300; i++ )
     {
-      pulse->GetPoint(index_min-i, x_high, y);
-      if ( y < 0.6*ymax ) break;
+      pulse->GetPoint(index_min-i, x_high, ydummy);
+      if ( ydummy < 0.2*ymax ) break;
     }
-  //pulse->GetPoint(index_min-8, x_low, y);
-  //pulse->GetPoint(index_min-3, x_high, y);
 
-
-  //pulse->GetPoint(index_min-12, x_low, y);
-  //pulse->GetPoint(index_min-7, x_high, y);
-  pulse->GetPoint(index_min, dummy, y);
   
   TF1* flinear = new TF1("flinear","[0]*x+[1]", x_low, x_high );
   float max = -9999;
@@ -288,17 +282,80 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
     {
       if ( yy[i] > max ) max = yy[i];
     }
-  //std::cout << "max: " << max << std::endl;
 
-  /*if( max < 10 || index_min < 0 || index_min > 1023 )
-    {
-      std::cout << "DEB: skipping event--> " << event << std::endl;
-      return;
-    }
-  */
   pulse->Fit("flinear","Q","", x_low, x_high );
   double slope = flinear->GetParameter(0);
   double b     = flinear->GetParameter(1);
+
+  tstamp[0] = (0.90*ymax-b)/slope - (0.10*ymax-b)/slope;
+  tstamp[1] = (0.0*ymax-b)/slope;
+  tstamp[2] = (0.05*ymax-b)/slope;
+  tstamp[3] = (0.075*ymax-b)/slope;
+  tstamp[4] = (0.10*ymax-b)/slope;
+  tstamp[5] = (0.125*ymax-b)/slope;
+  
+  TLine* line  = new TLine( tstamp[2], 0, tstamp[2], 1000);
+  
+  if ( makePlot )
+    {
+      std::cout << "make plot" << std::endl;
+      TCanvas* c = new TCanvas("canvas","canvas",800,400) ;
+      pulse->GetXaxis()->SetLimits(x_low-50, x_high+150);
+      pulse->SetMarkerSize(0.3);
+      pulse->SetMarkerStyle(20);
+      pulse->Draw("AP");
+      line->Draw("same");
+      line->SetLineColor(kRed);
+      line->SetLineWidth(2);
+      line->SetLineStyle(2);
+      c->SaveAs(fname+"LinearFit.pdf");
+      //c->SaveAs(fname+"LinearFit.png");
+      delete c;
+    }
+
+  
+  
+  delete flinear;
+};
+
+void TailFitTime(TGraphErrors * pulse, const float index_min, float* tstamp, int event, TString fname, bool makePlot )
+{
+  double x_low, x_high;
+  double ymax, ydummy;
+  pulse->GetPoint(index_min, x_low, ymax);
+  for ( int i = 1; i < 300; i++ )
+    {
+      pulse->GetPoint(index_min-i, x_low, ydummy);
+      if ( ydummy < 0.075*ymax ) break;
+    }
+  for ( int i = 1; i < 300; i++ )
+    {
+      pulse->GetPoint(index_min-i, x_high, ydummy);
+      if ( ydummy < 0.2*ymax ) break;
+    }
+
+  
+  TF1* flinear = new TF1("flinear","[0]*x+[1]", x_low, x_high );
+  float max = -9999;
+  double* yy = pulse->GetY();
+  
+  for ( int i = 0; i < 1024; i++ )
+    {
+      if ( yy[i] > max ) max = yy[i];
+    }
+
+  pulse->Fit("flinear","Q","", x_low, x_high );
+  double slope = flinear->GetParameter(0);
+  double b     = flinear->GetParameter(1);
+
+  tstamp[0] = (0.90*ymax-b)/slope - (0.10*ymax-b)/slope;
+  tstamp[1] = (0.0*ymax-b)/slope;
+  tstamp[2] = (0.10*ymax-b)/slope;
+  tstamp[3] = (0.30*ymax-b)/slope;
+  tstamp[4] = (0.45*ymax-b)/slope;
+  tstamp[5] = (0.60*ymax-b)/slope;
+  
+  TLine* line  = new TLine( tstamp[2], 0, tstamp[2], 1000);
   
   if ( makePlot )
     {
@@ -308,17 +365,16 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
       pulse->SetMarkerSize(0.3);
       pulse->SetMarkerStyle(20);
       pulse->Draw("AP");
+      line->Draw("same");
+      line->SetLineColor(kRed);
+      line->SetLineWidth(2);
+      line->SetLineStyle(2);
       c->SaveAs(fname+"LinearFit.pdf");
-      c->SaveAs(fname+"LinearFit.png");
+      //c->SaveAs(fname+"LinearFit.png");
       delete c;
     }
 
-  tstamp[0] = (0.90*y-b)/slope - (0.10*y-b)/slope;
-  tstamp[1] = (0.0*y-b)/slope;
-  tstamp[2] = (0.15*y-b)/slope;
-  tstamp[3] = (0.30*y-b)/slope;
-  tstamp[4] = (0.45*y-b)/slope;
-  tstamp[5] = (0.60*y-b)/slope;
+  
   
   delete flinear;
 };
@@ -422,25 +478,13 @@ float SigmoidTimeFit(TGraphErrors * pulse, const float index_min, int event, TSt
 float FullFitScint( TGraphErrors * pulse, const float index_min, int event, TString fname, bool makePlot) 
 {
 
-  double x_low, x_high, y, dummy;
+  double x_max;
   double ymax;
-  pulse->GetPoint(index_min, x_low, ymax);
-  
-  pulse->GetPoint(index_min-150, x_low, y);
-  
-  for ( int i = 1; i < 200; i++ )
-    {
-      pulse->GetPoint(index_min-i, x_high, y);
-      if ( y < 0.6*ymax ) break;
-    }
-  
-  pulse->GetPoint(index_min, dummy, y);
-  
-  //TF1* fullFit = new TF1("fullFit","[2]+[1]*0.004217/2*exp(0.004217/2*(2.0*357.0+1.0*2.06**2.0-2.0*(x-[0])))*ROOT::Math::erfc((357.0+0.004217*2.06**2.0-(x-[0]))/(1.41*2.06))",0,200);
-  TF1* fullFit = new TF1("fullFit","[0]*([1]/2.0)*exp([1]/2.*(2*[2]+[1]*[3]*[3]-2*x))*ROOT::Math::erfc(([2]+[1]*[3]*[3]-x)/(TMath::Sqrt(2.)*[3]))",0,200);
-  fullFit->SetParameter(0,800);
-  fullFit->SetParameter(1,1);
-  fullFit->SetParameter(2,125);
+  pulse->GetPoint(index_min, x_max, ymax);
+  TF1* fullFit = new TF1("fullFit","[0]*([1]/2.0)*exp([1]/2.*(2*[2]+[1]*[3]*[3]-2*x))*ROOT::Math::erfc(([2]+[1]*[3]*[3]-x)/(TMath::Sqrt(2.)*[3]))",x_max-50,x_max+50);
+  fullFit->SetParameter(0,ymax/0.1);
+  fullFit->SetParameter(1,0.5);
+  fullFit->SetParameter(2,135);
   fullFit->SetParameter(3,10);
   
   float max = -9999;
@@ -451,13 +495,22 @@ float FullFitScint( TGraphErrors * pulse, const float index_min, int event, TStr
       if ( yy[i] > max ) max = yy[i];
     }
  
-  pulse->Fit("fullFit","Q","", 0, 200 );
+  pulse->Fit("fullFit","Q","", x_max-50, x_max+50 );
   double maxAmp   = fullFit->GetParameter(0);
   double lambda   = fullFit->GetParameter(1);
   double mu       = fullFit->GetParameter(2);
-  double sigma    = fullFit->GetParameter(2);
+  double sigma    = fullFit->GetParameter(3);
 
-  std::cout << "maxAmp: " << maxAmp << " lambda: " << lambda << " mu: " << mu << " sigma: " << sigma << std::endl;
+  mu = -999;
+  for( int i = 0; i < 1000; i++ )
+    {
+      if ( fullFit->Eval(30.+0.001*i) > 0.05*ymax )
+	{
+	  mu = 30.+0.001*i;
+	  break;
+	}
+    }
+
   TLine* line  = new TLine( mu, 0, mu, 1000);
   if ( makePlot )
     {
@@ -469,15 +522,15 @@ float FullFitScint( TGraphErrors * pulse, const float index_min, int event, TStr
       fullFit->SetLineColor(kBlue-3);
       fullFit->Draw("same");
       line->Draw("same");
+      line->SetLineColor(kRed);
+      line->SetLineWidth(2);
+      line->SetLineStyle(2);
       c->SaveAs(fname+"fullFit.pdf");
       delete c;
     }
-  
 
-  return mu;
-  
   delete fullFit;
-
+  return mu;
 };
 
 double GetGaussTime( TGraphErrors* pulse )

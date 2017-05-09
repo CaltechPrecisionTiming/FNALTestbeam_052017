@@ -534,7 +534,9 @@ int main(int argc, char **argv) {
 				short a1 = abs(channel[totalIndex][j]);
 				short a2 = abs(channel[totalIndex][j+1]);
 				short a3 = abs(channel[totalIndex][j+2]);
-
+        
+        std::cout << a1 << std::endl;
+        
 				if ( ( a1>3*a0 && a2>3*a0 && a2>3*a3 && a1>30) )
 				{
 					channel[totalIndex][j] = 0;

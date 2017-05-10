@@ -106,11 +106,33 @@ int FindMinAbsolute( int n, short *a) {
   float xmin = a[5];
   int loc = 0;
   for  (int i = 5; i < n-10; i++) {
+<<<<<<< HEAD
     if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -40. )  
       { 
 	xmin = a[i];
 	loc = i;
       }
+=======
+    
+    //if (i == 56 && a[i] == 0 && a[i+1] == 0) {
+      //std::cout << "PRE: " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;}
+      //std::cout << "a value: " << *a << std::endl; }
+      
+    if ( (a[i] < xmin)  && (a[i+1] < (0.5 * a[i])) && (a[i] < -40.0) )  
+     {
+      //std::cout << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;
+	    
+	   // if (i == 56) {
+	     // std::cout << a[i] << " " << a[i+1] << " " << std::endl; }
+	    
+	    xmin = a[i];
+	    loc = i;
+	    //if ( a[i+5]>a[i] && a[i+10]>a[i+5] ) {
+	    //break;
+    } //else {
+      //if (i == 56) {
+        //std::cout << "THIS " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;} }
+>>>>>>> 6111d09f1b0a4c591d02350e2b5bd0d17630c4b3
   }
   
   return loc;

@@ -520,14 +520,8 @@ int main(int argc, char **argv) {
       
       //std::cout << "16" << std::endl;
       
-			// Find the absolute minimum. This is only used as a rough determination 
-			// to decide if we'll use the early time samples
-			// or the late time samples to do the baseline fit
-			//std::cout << "---event "  << event << "-------ch#: " << totalIndex << std::endl;
-			int index_min = FindMinAbsolute(1024, channel[totalIndex]); 
-			
-
-			// DRS-glitch finder: zero out bins which have large difference
+      
+      // DRS-glitch finder: zero out bins which have large difference
 			// with respect to neighbors in only one or two bins
 			for(int j = 0; j < 1024; j++) {
 				short a0 = abs(channel[totalIndex][j-1]);
@@ -550,6 +544,18 @@ int main(int argc, char **argv) {
 				if ( ( a1>3*a0 && a1>3*a2 && a1>30) )
 					channel[totalIndex][j] = 0;
 			}
+      
+      
+      
+      
+			// Find the absolute minimum. This is only used as a rough determination 
+			// to decide if we'll use the early time samples
+			// or the late time samples to do the baseline fit
+			//std::cout << "---event "  << event << "-------ch#: " << totalIndex << std::endl;
+			int index_min = FindMinAbsolute(1024, channel[totalIndex]); 
+			
+
+			
       
       //std::cout << "17" << std::endl;
       

@@ -50,7 +50,7 @@ void HighPassFilter( short* channel, double* filteredCurrent,  float* time, doub
   // define the filtered current using input voltage (channel[i]), output current (filteredCurrent[i]), time difference (time[i], convert from ns to s), and the RC values
   for ( int i = 0; i < 1024; i++ )
     {
-      filteredCurrent[i+1] = (double)(channel[i+1] - channel[i])/R - filteredCurrent[i]*(double)(1000.)(time[i+1]-time[i])/(R*C) + filteredCurrent[i];
+      filteredCurrent[i+1] = (double)(channel[i+1] - channel[i])/R - (filteredCurrent[i]) * (1000.) * ((double)(time[i+1]-time[i]))/(R*C) + filteredCurrent[i];
     }
   
   for ( int i = 0; i < 1024; i++ )
@@ -107,13 +107,11 @@ int FindMinAbsolute( int n, short *a) {
   float xmin = a[5];
   int loc = 0;
   for  (int i = 5; i < n-10; i++) {
-<<<<<<< HEAD
     if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -40. )  
       { 
 	xmin = a[i];
 	loc = i;
       }
-=======
     
     //if (i == 56 && a[i] == 0 && a[i+1] == 0) {
       //std::cout << "PRE: " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;}
@@ -133,7 +131,6 @@ int FindMinAbsolute( int n, short *a) {
     } //else {
       //if (i == 56) {
         //std::cout << "THIS " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;} }
->>>>>>> 6111d09f1b0a4c591d02350e2b5bd0d17630c4b3
   }
   
   return loc;

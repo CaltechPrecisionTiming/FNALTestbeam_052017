@@ -44,17 +44,18 @@ void HighPassFilter( short* channel, double* filteredCurrent,  float* time, doub
   for ( int i = 0; i < 1024; i++ ) filteredCurrent[i] = 0.0;
   if ( R <= 0. || C <= 0. )
     {
-      std::cout << "not doing anything" << std::endl;
+      std::cout << "Not valid R and/or C values" << std::endl;
       return;
     }
-
+  // define the filtered current using input voltage (channel[i]), output current (filteredCurrent[i]), time difference (time[i], convert from ns to s), and the RC values
   for ( int i = 0; i < 1024; i++ )
     {
-      filteredCurrent[i+1] = (double)(channel[i+1] - channel[i])/R - filteredCurrent[i]*(double)(time[i+1]-time[i])/(R*C) + filteredCurrent[i];
+      filteredCurrent[i+1] = (double)(channel[i+1] - channel[i])/R - filteredCurrent[i]*(double)(1000.)(time[i+1]-time[i])/(R*C) + filteredCurrent[i];
     }
   
   for ( int i = 0; i < 1024; i++ )
     {
+      // return voltage in the filtered current array **NOTE THE CHANGE IN VARIABLE**  
       filteredCurrent[i] = filteredCurrent[i]*R;
     }
 

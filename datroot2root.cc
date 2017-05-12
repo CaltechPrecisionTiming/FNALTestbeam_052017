@@ -215,6 +215,7 @@ int main(int argc, char **argv) {
 
 	short raw[36][1024]; // ADC counts
 	short channel[36][1024]; // calibrated input (in V)
+	double channelFilter[36][1024]; // calibrated input (in V)
 	float xmin[36]; // location of peak
 	float base[36]; // baseline voltage
 	float amp[36]; // pulse amplitude
@@ -227,6 +228,9 @@ int main(int argc, char **argv) {
 	float linearTime30[36];
 	float linearTime45[36];
 	float linearTime60[36];
+	
+	float fallingTime[36]; // falling exponential timestamp
+	
 	float risetime[36]; 
 	float constantThresholdTime[36];
 
@@ -236,6 +240,7 @@ int main(int argc, char **argv) {
 		tree->Branch("raw", raw, "raw[36][1024]/S");   
 	}
 	tree->Branch("channel", channel, "channel[36][1024]/S");
+	tree->Branch("channelFilter", channelFilter, "channelFilter[36][1024]/D");
 	tree->Branch("time", time, "time[4][1024]/F");
 	tree->Branch("xmin", xmin, "xmin[36]/F");
 	tree->Branch("amp", amp, "amp[36]/F");
@@ -249,6 +254,7 @@ int main(int argc, char **argv) {
 	tree->Branch("linearTime30", linearTime30, "linearTime30[36]/F");
 	tree->Branch("linearTime45", linearTime45, "linearTime45[36]/F");
 	tree->Branch("linearTime60", linearTime60, "linearTime60[36]/F");
+	tree->Branch("fallingTime", fallingTime, "fallingTime[36]/F");
 	tree->Branch("risetime", risetime, "risetime[36]/F");
 	tree->Branch("constantThresholdTime", constantThresholdTime, "constantThresholdTime[36]/F");
 
@@ -300,12 +306,6 @@ int main(int argc, char **argv) {
     
     //std::cout << "1" << std::endl;
     
-    if (DATTYPE) {
-		  // check for end of file
-		  if (feof(fpin)) {
-		    std::cout << "breaking" << std::endl;
-		    break; }
-    }
     
 		if ( iEvent % 100 == 0 ) {
 		  std::cout << "Event " << iEvent << " of " << nEvents << std::endl; }
@@ -329,6 +329,11 @@ int main(int argc, char **argv) {
 		  // third and fourth header words
 		  dummy = fread( &event_header, sizeof(uint), 1, fpin);  
 		  dummy = fread( &event_header, sizeof(uint), 1, fpin);  
+
+		  // check for end of file
+		  if (feof(fpin)) {
+		    std::cout << "breaking" << std::endl;
+		    break; }
 
 		  //*************************
 		  // Parse group mask into channels
@@ -520,6 +525,9 @@ int main(int argc, char **argv) {
       
       //std::cout << "16" << std::endl;
       
+      //Apply HighPass Filter (clipping circuit)
+	    HighPassFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 1000., 0.01 );
+
       
       // DRS-glitch finder: zero out bins which have large difference
 			// with respect to neighbors in only one or two bins
@@ -606,25 +614,33 @@ int main(int argc, char **argv) {
 			bool isTrigChannel = ( totalIndex == 8 || totalIndex == 17 
 					|| totalIndex == 26 || totalIndex == 35 );
 			float fs[6]; // constant-fraction fit output
+			float fs_falling[6]; // falling exp timestapms
 			if ( !isTrigChannel ) {
 				if( drawDebugPulses ) {
-					timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
 					if ( xmin[totalIndex] != 0.0 ) {
+					  timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
 						RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
-						sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
+						//TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, true );
+						//sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
+						//fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, true );
 					}
 				}
 				else {
-					timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
 					if ( xmin[totalIndex] != 0.0 ) {
+						timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
 						RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, false );
-						sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
-					}
+						//TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, false );
+	          //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
+	          //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, false );
+	        }
 				}
 			}
 
 			else {
-				for ( int kk = 0; kk < 5; kk++ ) fs[kk] = -999;
+				for ( int kk = 0; kk < 5; kk++ ) {
+          fs[kk] = -999;
+          fs_falling[kk] = -999;
+        }
 			}
 			
 			//std::cout << "20" << std::endl;
@@ -637,6 +653,7 @@ int main(int argc, char **argv) {
 			linearTime30[totalIndex] = fs[3];
 			linearTime45[totalIndex] = fs[4];
 			linearTime60[totalIndex] = fs[5];
+			fallingTime[totalIndex] = fs_falling[0];
 			constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
 
 			delete pulse;

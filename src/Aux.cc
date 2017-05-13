@@ -85,8 +85,8 @@ TGraphErrors GetTGraph(  short* channel, float* time )
   for ( int i = 0; i < 1024; i++ )
     {
       errorX[i]       = .0;
-      errorY[i]       = _errorY*channel[i];
-      channelFloat[i] = -channel[i];
+      errorY[i]       = _errorY*float(channel[i]);
+      channelFloat[i] = -1.0*float(channel[i]);
     }
   //TGraphErrors* tg = new TGraphErrors( 1024, time, channelFloat, errorX, errorY );
   TGraphErrors tg( 1024, time, channelFloat, errorX, errorY );
@@ -106,33 +106,12 @@ int FindMinAbsolute( int n, short *a) {
   float xmin = a[5];
   int loc = 0;
   for  (int i = 5; i < n-10; i++) {
-<<<<<<< HEAD
+    
     if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -40. )  
       { 
 	xmin = a[i];
 	loc = i;
       }
-=======
-    
-    //if (i == 56 && a[i] == 0 && a[i+1] == 0) {
-      //std::cout << "PRE: " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;}
-      //std::cout << "a value: " << *a << std::endl; }
-      
-    if ( (a[i] < xmin)  && (a[i+1] < (0.5 * a[i])) && (a[i] < -40.0) )  
-     {
-      //std::cout << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;
-	    
-	   // if (i == 56) {
-	     // std::cout << a[i] << " " << a[i+1] << " " << std::endl; }
-	    
-	    xmin = a[i];
-	    loc = i;
-	    //if ( a[i+5]>a[i] && a[i+10]>a[i+5] ) {
-	    //break;
-    } //else {
-      //if (i == 56) {
-        //std::cout << "THIS " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;} }
->>>>>>> 6111d09f1b0a4c591d02350e2b5bd0d17630c4b3
   }
   
   return loc;
@@ -321,12 +300,12 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
   for ( int i = 1; i < 500; i++ )
     {
       pulse->GetPoint(index_min-i, x_low, ydummy);
-      if ( ydummy < 0.1*ymax ) break;
+      if ( ydummy < 0.15*ymax ) break;
     }
   for ( int i = 1; i < 500; i++ )
     {
       pulse->GetPoint(index_min-i, x_high, ydummy);
-      if ( ydummy < 0.6*ymax ) break;
+      if ( ydummy < 0.7*ymax ) break;
     }
 
   
@@ -341,10 +320,10 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
 
   tstamp[0] = (0.90*ymax-b)/slope - (0.10*ymax-b)/slope;
   tstamp[1] = (0.0*ymax-b)/slope;
-  tstamp[2] = (0.05*ymax-b)/slope;
-  tstamp[3] = (0.1*ymax-b)/slope;
-  tstamp[4] = (0.15*ymax-b)/slope;
-  tstamp[5] = (0.20*ymax-b)/slope;
+  tstamp[2] = (0.10*ymax-b)/slope;
+  tstamp[3] = (0.20*ymax-b)/slope;
+  tstamp[4] = (0.30*ymax-b)/slope;
+  tstamp[5] = (0.40*ymax-b)/slope;
   
   TLine* line  = new TLine( tstamp[2], 0, tstamp[2], 1000);
   
@@ -653,10 +632,11 @@ TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseNa
       channelFloat[i] = -channel[i];
     }
   
-  TF1 *fb = new TF1("fb","gaus(0)", 0.0, 204.6);
-  fb->SetParameter(1, 100);
+  //TF1 *fb = new TF1("fb","gaus(0)", 0.0, 204.6);
+  TF1 *fb = new TF1("fb","[0]*sin(2*pi*[1]*x)/(2*pi*[1]*x)", 0.0, 204.6);
+  fb->SetParameter(1, 1);
   fb->SetParameter(2, sigma);
-  fb->SetParameter(0, 1/(sqrt(3.1415*2.0)*sigma) );
+  //fb->SetParameter(0, 1/(sqrt(3.1415*2.0)*sigma) );
   //eval Gaussian
   float step = 0.2;//200ps
   for ( int i = 0; i < 1024; i++ )

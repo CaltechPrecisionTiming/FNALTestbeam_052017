@@ -39,7 +39,7 @@ std::string ParseCommandLine( int argc, char* argv[], std::string opt )
 
 int main(int argc, char **argv) {
   gROOT->SetBatch();
-
+  
   FILE* fp1;
   char stitle[200];
   int dummy;
@@ -396,10 +396,26 @@ int main(int argc, char **argv) {
 	
         // Recreate the pulse TGraph using baseline-subtracted channel data
 	delete pulse;
+	
+	if( event < 10 && totalIndex == 1 )
+	  {
+	    std::cout << "===============event " << event << "=====================" << std::endl;
+	    for ( int i = 0; i < 1024; i++) std::cout << i << " " << channel[1][i] << " " << time[0][i] << std::endl;
+	  }
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );//Short Version
 	//pulse = new TGraphErrors( *GetTGraph( channelFilter[totalIndex], time[realGroup[group]] ) );//Float Version
 	xmin[totalIndex] = index_min;
-
+	if( event < 10 && totalIndex == 1 )
+	  {
+	    for ( int i = 0; i < 1024; i++)
+	      {
+		double myT, myY;
+		std::cout << i << " " << channel[1][i] << " " << time[0][i] << std::endl;
+		pulse->GetPoint(i, myT, myY);
+		std::cout << i << " " << myY << " " << myT << std::endl;
+	      }
+	  }
+	
         float filterWidth = config.getFilterWidth(totalIndex);
 	if (filterWidth) {
 	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], 
@@ -436,12 +452,13 @@ int main(int argc, char **argv) {
         if ( !isTrigChannel ) {
 	  if( drawDebugPulses ) {
 	    if ( xmin[totalIndex] != 0.0 ) {
-	      // if ( totalIndex == 4 && amp[4]>0.08 && amp[4]<0.45){
+	      if ( totalIndex == 1 && amp[1]>0.08 && amp[1]<0.45){
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName);
 	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, true );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
 	      //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, true );
+	      }
 	    }
 	  }
 	  else {
@@ -471,7 +488,7 @@ int main(int argc, char **argv) {
 	linearTime45[totalIndex] = fs[4];
 	linearTime60[totalIndex] = fs[5];
 	fallingTime[totalIndex] = fs_falling[0];
-	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
+	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 3);
 	
 	delete pulse;
       }
@@ -494,7 +511,7 @@ int main(int argc, char **argv) {
 
 
 
-int graphic_init(){
+  int graphic_init(){
 
   style = new TStyle("style", "style");
   

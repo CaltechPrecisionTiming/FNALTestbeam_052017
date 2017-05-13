@@ -17,6 +17,18 @@
 
 using namespace std;
 
+struct FTBFPixelEvent {
+    double xSlope;
+    double ySlope;
+    double xIntercept;
+    double yIntercept;
+    double chi2;
+    int trigger;
+    int runNumber;
+    Long64_t timestamp;    
+};
+
+
 TStyle* style;
 
 int graphic_init();
@@ -39,7 +51,7 @@ std::string ParseCommandLine( int argc, char* argv[], std::string opt )
 
 int main(int argc, char **argv) {
   gROOT->SetBatch();
-  
+
   FILE* fp1;
   char stitle[200];
   int dummy;
@@ -48,18 +60,20 @@ int main(int argc, char **argv) {
   // Parse command line arguments
   //**************************************
 
-  int numRequiredArgs = 3;
+  int numRequiredArgs = 4;
   if (argc - 1 < numRequiredArgs) {
-      std::cerr << "Usage: dat2root in_file.dat num_events" << std::endl;
+      std::cerr << "Usage: dat2root in_file.dat inputPixelFile.root outputFile.root num_events" << std::endl;
       return -1;
   }
   std::cout << "\n=== Beginning program ===\n" << std::endl;
 
   std::string inputFilename = argv[1];
-  std::string outputFilename = argv[2];
+  std::string pixelInputFilename = argv[2];
+  std::string outputFilename = argv[3];
   std::cout << "Input file: " << inputFilename << std::endl;
-  std::cout << "Output file: " << outputFilename << std::endl;
-
+  std::cout << "Pixel Input file: " << pixelInputFilename << std::endl;
+   std::cout << "Output file: " << outputFilename << std::endl;
+   
   // Check if has valid input file, otherwise exit with error
   ifstream ifile(inputFilename);
   if (!ifile) {
@@ -67,7 +81,7 @@ int main(int argc, char **argv) {
     exit(0);
   }
 
-  int nEvents = atoi(argv[3]);
+  int nEvents = atoi(argv[4]);
   std::cout << "Will process " << nEvents << " events" << std::endl;
 
   // Board number is fixed at 1 for now because we only have one board
@@ -177,12 +191,19 @@ int main(int argc, char **argv) {
   float linearTime30[36];
   float linearTime45[36];
   float linearTime60[36];
-
-  float fallingTime[36]; // falling exponential timestamp
-    
+  float fallingTime[36]; // falling exponential timestamp    
   float risetime[36]; 
   float constantThresholdTime[36];
  
+  float xIntercept;
+  float yIntercept;
+  float xSlope;
+  float ySlope;
+  float x1;
+  float y1;
+  float x2;
+  float y2;
+
   tree->Branch("event", &event, "event/I");
   tree->Branch("tc", tc, "tc[4]/s");
   if (saveRaw) {
@@ -207,6 +228,14 @@ int main(int argc, char **argv) {
   tree->Branch("fallingTime", fallingTime, "fallingTime[36]/F");
   tree->Branch("risetime", risetime, "risetime[36]/F");
   tree->Branch("constantThresholdTime", constantThresholdTime, "constantThresholdTime[36]/F");
+  tree->Branch("xIntercept", &xIntercept, "xIntercept/F");
+  tree->Branch("yIntercept", &yIntercept, "yIntercept/F");
+  tree->Branch("xSlope", &xSlope, "xSlope/F");
+  tree->Branch("ySlope", &ySlope, "ySlope/F");
+  tree->Branch("x1", &x1, "x1/F");
+  tree->Branch("y1", &y1, "y1/F");
+  tree->Branch("x2", &x2, "x2/F");
+  tree->Branch("y2", &y2, "y2/F");
 
   // temp variables for data input
   uint   event_header;
@@ -214,8 +243,31 @@ int main(int argc, char **argv) {
   ushort samples[9][1024];
 
   //*************************
-  // Open Input File
+  // Open Pixel Tree
   //*************************
+  TFile *pixelDataFile = TFile::Open( pixelInputFilename.c_str(),"READ");
+  if (!pixelDataFile) {
+    cout << "Error: Pixel file not found\n";
+    return 0;
+  }
+  TTree *pixelTree = (TTree*)pixelDataFile->Get("T1037");
+  if (!pixelTree) {
+    cout << "Error: Pixel Tree not found\n";
+    return 0;
+  }
+ 
+  FTBFPixelEvent pixelEvent;
+  pixelTree->SetBranchAddress("event",&pixelEvent);
+  // for( int iEvent = 0; iEvent < pixelTree->GetEntries(); iEvent++){ 
+  //   pixelTree->GetEntry(iEvent);
+  //   //cout << iEvent << " : " << pixelEvent.xSlope << " " << pixelEvent.ySlope << " " << pixelEvent.xIntercept << " " << pixelEvent.yIntercept << "\n";
+   
+  // }
+
+
+  //*************************
+  // Open Input File
+  //************************* 
 
   FILE* fpin = fopen( inputFilename.c_str(), "r" );
 
@@ -226,6 +278,32 @@ int main(int argc, char **argv) {
   std::cout << "\n=== Processing input data ===\n" << std::endl;
   int nGoodEvents = 0;
   for( int iEvent = 0; iEvent < nEvents; iEvent++){ 
+
+    //find corresponding pixel event    
+    bool foundPixelEvent = false;
+    xIntercept = -999;
+    yIntercept = -999;
+    xSlope = -999;
+    ySlope = -999;
+    x1 = -999;
+    y1 = -999;
+    x2 = -999;
+    y2 = -999;  
+    for( int iPixelEvent = 0; iPixelEvent < pixelTree->GetEntries(); iPixelEvent++){ 
+      pixelTree->GetEntry(iPixelEvent);
+      if (pixelEvent.trigger == iEvent) {
+	xIntercept = pixelEvent.xIntercept;
+	yIntercept = pixelEvent.yIntercept;
+	xSlope = pixelEvent.xSlope;
+	ySlope = pixelEvent.ySlope;
+	x1 = xIntercept + xSlope*(-50000);
+	y1 = yIntercept + ySlope*(-50000);
+	x2 = xIntercept + xSlope*(50000);
+	y2 = yIntercept + ySlope*(50000);
+      }
+    }
+   
+    
 
     if ( iEvent % 100 == 0 ) std::cout << "Event " << iEvent << " of " << nEvents << std::endl;
     event = nGoodEvents; // for output tree
@@ -396,26 +474,10 @@ int main(int argc, char **argv) {
 	
         // Recreate the pulse TGraph using baseline-subtracted channel data
 	delete pulse;
-	
-	if( event < 10 && totalIndex == 1 )
-	  {
-	    std::cout << "===============event " << event << "=====================" << std::endl;
-	    for ( int i = 0; i < 1024; i++) std::cout << i << " " << channel[1][i] << " " << time[0][i] << std::endl;
-	  }
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );//Short Version
 	//pulse = new TGraphErrors( *GetTGraph( channelFilter[totalIndex], time[realGroup[group]] ) );//Float Version
 	xmin[totalIndex] = index_min;
-	if( event < 10 && totalIndex == 1 )
-	  {
-	    for ( int i = 0; i < 1024; i++)
-	      {
-		double myT, myY;
-		std::cout << i << " " << channel[1][i] << " " << time[0][i] << std::endl;
-		pulse->GetPoint(i, myT, myY);
-		std::cout << i << " " << myY << " " << myT << std::endl;
-	      }
-	  }
-	
+
         float filterWidth = config.getFilterWidth(totalIndex);
 	if (filterWidth) {
 	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], 
@@ -452,13 +514,12 @@ int main(int argc, char **argv) {
         if ( !isTrigChannel ) {
 	  if( drawDebugPulses ) {
 	    if ( xmin[totalIndex] != 0.0 ) {
-	      if ( totalIndex == 1 && amp[1]>0.08 && amp[1]<0.45){
+	      // if ( totalIndex == 4 && amp[4]>0.08 && amp[4]<0.45){
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName);
 	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, true );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
 	      //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, true );
-	      }
 	    }
 	  }
 	  else {
@@ -488,7 +549,7 @@ int main(int argc, char **argv) {
 	linearTime45[totalIndex] = fs[4];
 	linearTime60[totalIndex] = fs[5];
 	fallingTime[totalIndex] = fs_falling[0];
-	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 3);
+	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
 	
 	delete pulse;
       }
@@ -511,7 +572,7 @@ int main(int argc, char **argv) {
 
 
 
-  int graphic_init(){
+int graphic_init(){
 
   style = new TStyle("style", "style");
   

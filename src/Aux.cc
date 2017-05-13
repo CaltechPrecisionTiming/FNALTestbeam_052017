@@ -44,17 +44,18 @@ void HighPassFilter( short* channel, double* filteredCurrent,  float* time, doub
   for ( int i = 0; i < 1024; i++ ) filteredCurrent[i] = 0.0;
   if ( R <= 0. || C <= 0. )
     {
-      std::cout << "not doing anything" << std::endl;
+      std::cout << "Not valid R and/or C values" << std::endl;
       return;
     }
-
+  // define the filtered current using input voltage (channel[i]), output current (filteredCurrent[i]), time difference (time[i], convert from ns to s), and the RC values
   for ( int i = 0; i < 1024; i++ )
     {
-      filteredCurrent[i+1] = (double)(channel[i+1] - channel[i])/R - filteredCurrent[i]*(double)(time[i+1]-time[i])/(R*C) + filteredCurrent[i];
+      filteredCurrent[i+1] = (double)(channel[i+1] - channel[i])/R - (filteredCurrent[i]) * (1000.) * ((double)(time[i+1]-time[i]))/(R*C) + filteredCurrent[i];
     }
   
   for ( int i = 0; i < 1024; i++ )
     {
+      // return voltage in the filtered current array **NOTE THE CHANGE IN VARIABLE**  
       filteredCurrent[i] = filteredCurrent[i]*R;
     }
 
@@ -106,14 +107,12 @@ int FindMinAbsolute( int n, short *a) {
   float xmin = a[5];
   int loc = 0;
   for  (int i = 5; i < n-10; i++) {
-    
     if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -40. )  
       { 
 	xmin = a[i];
 	loc = i;
       }
-  }
-  
+    
   return loc;
 }
 
@@ -320,10 +319,10 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
 
   tstamp[0] = (0.90*ymax-b)/slope - (0.10*ymax-b)/slope;
   tstamp[1] = (0.0*ymax-b)/slope;
-  tstamp[2] = (0.10*ymax-b)/slope;
-  tstamp[3] = (0.20*ymax-b)/slope;
-  tstamp[4] = (0.30*ymax-b)/slope;
-  tstamp[5] = (0.40*ymax-b)/slope;
+  tstamp[2] = (0.15*ymax-b)/slope;
+  tstamp[3] = (0.30*ymax-b)/slope;
+  tstamp[4] = (0.45*ymax-b)/slope;
+  tstamp[5] = (0.60*ymax-b)/slope;
   
   TLine* line  = new TLine( tstamp[2], 0, tstamp[2], 1000);
   
@@ -347,6 +346,65 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
 
   delete flinear;
 };
+
+
+void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float fitLowEdge, const float fitHighEdge,
+		       float* tstamp, int event, TString fname, bool makePlot )
+{
+  double x_low, x_high;
+  double ymax, ydummy;
+  pulse->GetPoint(index_min, x_low, ymax);
+  for ( int i = 1; i < 500; i++ )
+    {
+      pulse->GetPoint(index_min-i, x_low, ydummy);
+      if ( ydummy < fitLowEdge*ymax ) break;
+    }
+  for ( int i = 1; i < 500; i++ )
+    {
+      pulse->GetPoint(index_min-i, x_high, ydummy);
+      if ( ydummy < fitHighEdge*ymax ) break;
+    }
+
+  
+  TF1* flinear = new TF1("flinear","[0]*x+[1]", x_low, x_high );
+  //TF1* flinear = new TF1("flinear","[0]*x+[1]", x_low,  x_low+1.4 );
+  
+
+  pulse->Fit("flinear","Q","", x_low, x_high );
+  //pulse->Fit("flinear","Q","", x_low, x_low+1.4 );
+  double slope = flinear->GetParameter(0);
+  double b     = flinear->GetParameter(1);
+
+  tstamp[0] = (0.90*ymax-b)/slope - (0.10*ymax-b)/slope;
+  tstamp[1] = (0.0*ymax-b)/slope;
+  tstamp[2] = (0.05*ymax-b)/slope;
+  tstamp[3] = (0.10*ymax-b)/slope;
+  tstamp[4] = (0.15*ymax-b)/slope;
+  tstamp[5] = (0.20*ymax-b)/slope;
+  
+  TLine* line  = new TLine( tstamp[2], 0, tstamp[2], 1000);
+  
+  if ( makePlot )
+    {
+      std::cout << "make plot" << std::endl;
+      TCanvas* c = new TCanvas("canvas","canvas",800,400) ;
+      pulse->GetXaxis()->SetLimits(x_low-50, x_high+150);
+      pulse->SetMarkerSize(0.3);
+      pulse->SetMarkerStyle(20);
+      pulse->Draw("AP");
+      line->Draw("same");
+      line->SetLineColor(kRed);
+      line->SetLineWidth(2);
+      line->SetLineStyle(2);
+      c->SaveAs(fname+"LinearFit.pdf");
+      //c->SaveAs(fname+"LinearFit.gif");
+      //c->SaveAs(fname+"LinearFit.png");
+      delete c;
+    }
+
+  delete flinear;
+};
+
 
 void TailFitTime(TGraphErrors * pulse, const float index_min, float* tstamp, int event, TString fname, bool makePlot )
 {

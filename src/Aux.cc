@@ -112,13 +112,13 @@ int FindMinAbsolute( int n, short *a) {
 	xmin = a[i];
 	loc = i;
       }
-    
+  }
   return loc;
 }
 
-
-int FindMinAbsolute( int n, double *a) {
   
+int FindMinAbsolute( int n, double *a) {
+    
   if (n <= 0 || !a) return -1;
   float xmin = a[5];
   int loc = 0;

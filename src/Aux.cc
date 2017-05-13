@@ -319,12 +319,12 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
   for ( int i = 1; i < 500; i++ )
     {
       pulse->GetPoint(index_min-i, x_low, ydummy);
-      if ( ydummy < 0.1*ymax ) break;
+      if ( ydummy < 0.2*ymax ) break;
     }
   for ( int i = 1; i < 500; i++ )
     {
       pulse->GetPoint(index_min-i, x_high, ydummy);
-      if ( ydummy < 0.6*ymax ) break;
+      if ( ydummy < 0.9*ymax ) break;
     }
 
   
@@ -339,10 +339,10 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
 
   tstamp[0] = (0.90*ymax-b)/slope - (0.10*ymax-b)/slope;
   tstamp[1] = (0.0*ymax-b)/slope;
-  tstamp[2] = (0.05*ymax-b)/slope;
-  tstamp[3] = (0.1*ymax-b)/slope;
-  tstamp[4] = (0.15*ymax-b)/slope;
-  tstamp[5] = (0.20*ymax-b)/slope;
+  tstamp[2] = (0.15*ymax-b)/slope;
+  tstamp[3] = (0.30*ymax-b)/slope;
+  tstamp[4] = (0.45*ymax-b)/slope;
+  tstamp[5] = (0.60*ymax-b)/slope;
   
   TLine* line  = new TLine( tstamp[2], 0, tstamp[2], 1000);
   

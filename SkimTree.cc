@@ -16,15 +16,14 @@ using namespace std;
 int main(int argc, char* argv[]) {
 
     //parse input list to get names of ROOT files
-    if(argc < 5){
-        cerr << "usage SkimNtuple inputList.txt <outputDirectory> <outputfileLabel> <Skim Cut String>" << endl;
+    if(argc < 4){
+        cerr << "usage SkimNtuple inputList.txt <outputDirectory> <outputfileLabel>" << endl;
         return -1;
     }
     string inputList(argv[1]);
     
     string outputDir = argv[2];
     string outputfileLabel = argv[3];
-    string SkimCutString = argv[4];
 
     ifstream filein(inputList.c_str());
     string curFilename;
@@ -114,7 +113,7 @@ int main(int argc, char* argv[]) {
                 inputTree->GetEntry(n);
 
 		bool passSkim = false;
-		passSkim = (amp[0] > 0.01 && amp[5]>0.01);
+		passSkim = (amp[0] > 0.01 && (amp[1]>0.06 || amp[2] > 0.06) );
 
 		if (passSkim) {
 		  EventsPassed++;

@@ -47,16 +47,50 @@ void HighPassFilter( short* channel, double* filteredCurrent,  float* time, doub
       std::cout << "Not valid R and/or C values" << std::endl;
       return;
     }
+  
+  const float ns2s = 1.e-9;//convert nseconds to seconds
   // define the filtered current using input voltage (channel[i]), output current (filteredCurrent[i]), time difference (time[i], convert from ns to s), and the RC values
   for ( int i = 0; i < 1024; i++ )
     {
-      filteredCurrent[i+1] = (double)(channel[i+1] - channel[i])/R - (filteredCurrent[i]) * (1000.) * ((double)(time[i+1]-time[i]))/(R*C) + filteredCurrent[i];
+      filteredCurrent[i+1] = (double)(channel[i+1] - channel[i])/R - (filteredCurrent[i]) * ns2s *((double)(time[i+1]-time[i]))/(R*C) + filteredCurrent[i];
     }
   
   for ( int i = 0; i < 1024; i++ )
     {
       // return voltage in the filtered current array **NOTE THE CHANGE IN VARIABLE**  
       filteredCurrent[i] = filteredCurrent[i]*R;
+    }
+
+  return;
+};
+
+//----------------------------------------------------
+//Notch Filter. Tries to remove a particular frequency
+//----------------------------------------------------
+void NotchFilter( short* channel, double* filteredCurrent, float* time, double R, double C, double L)
+{
+
+  for ( int i = 0; i < 1024; i++ ) filteredCurrent[i] = 0.0;
+  if ( R <= 0. || C <= 0. || L <= 0 )
+    {
+      std::cout << "Not valid R, L, and/or C values" << std::endl;
+      return;
+    }
+  // define the filtered current using input voltage (channel[i]), output current (filteredCurrent[i]), time difference (time[i], convert from ns to s), and the RC values
+  const float ns2s = 1.e-9;
+  for ( int i = 0; i < 1024; i++ )
+    {
+      filteredCurrent[i+2] =
+	(1/L) * (channel[i+1]-channel[i]) * ns2s * ((double)(time[i+1]-time[i]))
+	+ (double)(2.*filteredCurrent[i+1] - filteredCurrent[i])
+	- (R/L) * (filteredCurrent[i+1]-filteredCurrent[i]) * ns2s * ((double)(time[i+1]-time[i]))
+	- (1./(L*C)) * filteredCurrent[i] * pow( ns2s, 2.) * pow( ((double)(time[i+1]-time[i])), 2. );
+    }
+  
+  for ( int i = 0; i < 1024; i++ )
+    {
+      // return voltage in the filtered current array **NOTE THE CHANGE IN VARIABLE**  
+      filteredCurrent[i] = channel[i] - filteredCurrent[i]*R;
     }
 
   return;
@@ -86,8 +120,8 @@ TGraphErrors GetTGraph(  short* channel, float* time )
   for ( int i = 0; i < 1024; i++ )
     {
       errorX[i]       = .0;
-      errorY[i]       = _errorY*channel[i];
-      channelFloat[i] = -channel[i];
+      errorY[i]       = _errorY*float(channel[i]);
+      channelFloat[i] = -1.0*float(channel[i]);
     }
   //TGraphErrors* tg = new TGraphErrors( 1024, time, channelFloat, errorX, errorY );
   TGraphErrors tg( 1024, time, channelFloat, errorX, errorY );
@@ -112,33 +146,13 @@ int FindMinAbsolute( int n, short *a) {
 	xmin = a[i];
 	loc = i;
       }
-    
-    //if (i == 56 && a[i] == 0 && a[i+1] == 0) {
-      //std::cout << "PRE: " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;}
-      //std::cout << "a value: " << *a << std::endl; }
-      
-    if ( (a[i] < xmin)  && (a[i+1] < (0.5 * a[i])) && (a[i] < -40.0) )  
-     {
-      //std::cout << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;
-	    
-	   // if (i == 56) {
-	     // std::cout << a[i] << " " << a[i+1] << " " << std::endl; }
-	    
-	    xmin = a[i];
-	    loc = i;
-	    //if ( a[i+5]>a[i] && a[i+10]>a[i+5] ) {
-	    //break;
-    } //else {
-      //if (i == 56) {
-        //std::cout << "THIS " << i << " " << a[i] << " " << xmin << " " << a[i+1] << std::endl;} }
   }
-  
   return loc;
 }
 
-
-int FindMinAbsolute( int n, double *a) {
   
+int FindMinAbsolute( int n, double *a) {
+    
   if (n <= 0 || !a) return -1;
   float xmin = a[5];
   int loc = 0;
@@ -319,12 +333,12 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
   for ( int i = 1; i < 500; i++ )
     {
       pulse->GetPoint(index_min-i, x_low, ydummy);
-      if ( ydummy < 0.2*ymax ) break;
+      if ( ydummy < 0.15*ymax ) break;
     }
   for ( int i = 1; i < 500; i++ )
     {
       pulse->GetPoint(index_min-i, x_high, ydummy);
-      if ( ydummy < 0.9*ymax ) break;
+      if ( ydummy < 0.7*ymax ) break;
     }
 
   
@@ -397,10 +411,10 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float 
 
   tstamp[0] = (0.90*ymax-b)/slope - (0.10*ymax-b)/slope;
   tstamp[1] = (0.0*ymax-b)/slope;
-  tstamp[2] = (0.05*ymax-b)/slope;
-  tstamp[3] = (0.10*ymax-b)/slope;
-  tstamp[4] = (0.15*ymax-b)/slope;
-  tstamp[5] = (0.20*ymax-b)/slope;
+  tstamp[2] = (0.01*ymax-b)/slope;
+  tstamp[3] = (0.02*ymax-b)/slope;
+  tstamp[4] = (0.03*ymax-b)/slope;
+  tstamp[5] = (0.04*ymax-b)/slope;
   
   TLine* line  = new TLine( tstamp[2], 0, tstamp[2], 1000);
   
@@ -711,6 +725,7 @@ TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseNa
     }
   
   TF1 *fb = new TF1("fb","gaus(0)", 0.0, 204.6);
+  //TF1 *fb = new TF1("fb","[0]*sin(2*pi*[1]*x)/(2*pi*[1]*x)", 0.0, 204.6);
   fb->SetParameter(1, 100);
   fb->SetParameter(2, sigma);
   fb->SetParameter(0, 1/(sqrt(3.1415*2.0)*sigma) );
@@ -761,7 +776,7 @@ TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseNa
     tg2->Draw("AP");
     tg2->SetMarkerColor(kBlue);
     tg->Draw("sameP");
-    c->SaveAs(pulseName + "GausPulse.pdf");
+    c->SaveAs(pulseName + "_Weierstrass.pdf");
   }
   return tg2;
 };

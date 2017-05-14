@@ -48,4 +48,4 @@ $(TARGET4) : $(OBJ4)
 	@echo $@
 	$(CXX) $(CPPFLAGS) -o $@ -c $<
 clean :
-	rm -f *.o src/*.o $(Aux)/src/*.o $(TARGET) $(TARGET2) *~
+	rm -f *.o src/*.o $(Aux)/src/*.o $(TARGET) $(TARGET2) $(TARGET3) *~

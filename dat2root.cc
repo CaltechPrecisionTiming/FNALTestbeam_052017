@@ -366,8 +366,11 @@ int main(int argc, char **argv) {
 	}
 
 	//Apply HighPass Filter (clipping circuit)
-	HighPassFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 1000., 0.01 );
+	//HighPassFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 1000., 22.*1e-12 );
 
+	//Apply Notch Filter
+	//NotchFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 10, 10.*1e-12, 5.*1e-7 );
+	
 	// Find the absolute minimum. This is only used as a rough determination 
         // to decide if we'll use the early time samples
 	// or the late time samples to do the baseline fit
@@ -397,24 +400,9 @@ int main(int argc, char **argv) {
         // Recreate the pulse TGraph using baseline-subtracted channel data
 	delete pulse;
 	
-	if( event < 10 && totalIndex == 1 )
-	  {
-	    std::cout << "===============event " << event << "=====================" << std::endl;
-	    for ( int i = 0; i < 1024; i++) std::cout << i << " " << channel[1][i] << " " << time[0][i] << std::endl;
-	  }
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );//Short Version
 	//pulse = new TGraphErrors( *GetTGraph( channelFilter[totalIndex], time[realGroup[group]] ) );//Float Version
 	xmin[totalIndex] = index_min;
-	if( event < 10 && totalIndex == 1 )
-	  {
-	    for ( int i = 0; i < 1024; i++)
-	      {
-		double myT, myY;
-		std::cout << i << " " << channel[1][i] << " " << time[0][i] << std::endl;
-		pulse->GetPoint(i, myT, myY);
-		std::cout << i << " " << myY << " " << myT << std::endl;
-	      }
-	  }
 	
         float filterWidth = config.getFilterWidth(totalIndex);
 	if (filterWidth) {

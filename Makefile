@@ -11,7 +11,7 @@ CPPFLAGS += -g -std=c++14
 TARGET = dat2root
 SRC = dat2root.cc src/Aux.cc src/Config.cc
 
-TARGET2 = datroot2root
+TARGET2 = Rereco
 SRC2 = datroot2root.cc src/Aux.cc src/Config.cc
 
 TARGET3 = dat2rootPixels

@@ -22,6 +22,18 @@ std::string ParseCommandLine( int argc, char* argv[], std::string opt )
 
 int main( int argc, char** argv)
 {
+
+  std::string inputRootFile = ParseCommandLine( argc, argv, "--inputRootFile" );
+  if ( inputRootFile == "" )
+    {
+      std::cerr << "[ERROR]: Please provide a valid ROOT file to run on!!\n";
+      return -1;
+    }
+
+  TFile* fin = new TFile(inputRootFile.c_str(), "READ");
+  TTree* myTree = (TTree*)fin->Get("pulse");
+  pulse* myPulse = new pulse( myTree );
+  myPulse->MPV_vs_Position();
   
   
   return 0;

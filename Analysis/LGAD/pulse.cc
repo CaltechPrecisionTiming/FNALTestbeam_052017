@@ -41,3 +41,26 @@ void pulse::Loop()
       // if (Cut(ientry) < 0) continue;
    }
 }
+
+
+void pulse::MPV_vs_Position( const int indexPlot, const float lowCut, const float highCut, TString coordinate )
+{
+  if ( indexPlot < 0 ) return;
+  
+  if (fChain == 0) return;
+  Long64_t nentries = fChain->GetEntriesFast();
+  Long64_t nbytes = 0, nb = 0;
+
+  TH1F* h_mpv = new TH1F("h_mpv", "h_mpv", 100, 0, 0.5);
+  for (Long64_t jentry=0; jentry<nentries;jentry++)
+    {
+      Long64_t ientry = LoadTree(jentry);
+      if (ientry < 0) break;
+      nb = fChain->GetEntry(jentry);   nbytes += nb;
+      
+      if ( amp[indexPlot] >= lowCut && amp[indexPlot] <= highCut )
+	{
+	  h_mpv->Fill(amp[indexPlot]);
+	}
+    }
+};

@@ -90,6 +90,8 @@ public :
    virtual void     Loop();
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
+   void MakeEfficiencyVsXY();
+
 };
 
 #endif

@@ -3,6 +3,7 @@
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>
+#include <TF1.h>
 #include "EfficiencyUtils.hh"
 
 using namespace std;
@@ -106,7 +107,9 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
 void pulse::MPV_vs_Position( const int indexPlot, const float lowCut, const float highCut, TString coordinate )
 {
   if ( indexPlot < 0 ) return;
-  
+
+  fChain->SetBranchStatus("*", 0);
+  fChain->SetBranchStatus("amp", 1);
   if (fChain == 0) return;
   Long64_t nentries = fChain->GetEntriesFast();
   Long64_t nbytes = 0, nb = 0;
@@ -123,4 +126,11 @@ void pulse::MPV_vs_Position( const int indexPlot, const float lowCut, const floa
 	  h_mpv->Fill(amp[indexPlot]);
 	}
     }
+
+  TF1* landau = new TF1( "landau", "landau", lowCut, highCut-0.15 );
+  h_mpv->Fit("landau","Q","", lowCut, highCut-0.15 );
+  TFile* fout = new TFile("mpv_test.root", "recreate");
+  h_mpv->Write();
+  fout->Close();
+  
 };

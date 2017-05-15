@@ -73,15 +73,17 @@ int main(int argc, char **argv) {
   std::string filetype = inputFilename.substr(inputFilename.find_last_of(".") + 1);
 
   if (filetype  == "dat") {
-    DATTYPE = true; }
+    DATTYPE = true;
+  }
   else if (filetype == "root") {
-    DATTYPE = false; }
+    DATTYPE = false;
+  }
   else {
     printf("!USAGE! Invalid input file type");
-    exit(0); }
-
-  // std::cout << filetype << std::endl;
-
+    exit(0);
+  }
+  
+  
   int nEvents = atoi(argv[3]);
   std::cout << "Will process " << nEvents << " events" << std::endl;
 
@@ -233,7 +235,16 @@ int main(int argc, char **argv) {
 	
   float risetime[36]; 
   float constantThresholdTime[36];
-
+  
+  float xIntercept;
+  float yIntercept;
+  float xSlope;
+  float ySlope;
+  float x1;
+  float y1;
+  float x2;
+  float y2;
+  
   tree->Branch("event", &event, "event/I");
   tree->Branch("tc", tc, "tc[4]/s");
   if (saveRaw) {
@@ -258,6 +269,15 @@ int main(int argc, char **argv) {
   tree->Branch("risetime", risetime, "risetime[36]/F");
   tree->Branch("constantThresholdTime", constantThresholdTime, "constantThresholdTime[36]/F");
 
+  tree->Branch("xIntercept", &xIntercept, "xIntercept/F");
+  tree->Branch("yIntercept", &yIntercept, "yIntercept/F");
+  tree->Branch("xSlope", &xSlope, "xSlope/F");
+  tree->Branch("ySlope", &ySlope, "ySlope/F");
+  tree->Branch("x1", &x1, "x1/F");
+  tree->Branch("y1", &y1, "y1/F");
+  tree->Branch("x2", &x2, "x2/F");
+  tree->Branch("y2", &y2, "y2/F");
+  
   // temp variables for data input
   uint   event_header;
   uint   temp[3];
@@ -285,7 +305,15 @@ int main(int argc, char **argv) {
     rootInputTree->SetBranchAddress("time", time);    
     rootInputTree->SetBranchAddress("channel", channel);
     rootInputTree->SetBranchAddress("base", base);
-		
+    rootInputTree->SetBranchAddress("xIntercept", &xIntercept);
+    rootInputTree->SetBranchAddress("yIntercept", &yIntercept);
+    rootInputTree->SetBranchAddress("xSlope", &xSlope);
+    rootInputTree->SetBranchAddress("ySlope", &ySlope);
+    rootInputTree->SetBranchAddress("x1", &x1);
+    rootInputTree->SetBranchAddress("y1", &y1);
+    rootInputTree->SetBranchAddress("x2", &x2);
+    rootInputTree->SetBranchAddress("y2", &y2);
+    
     //copy over other stuff that wont get overwritten
     rootInputTree->SetBranchAddress("tc", tc);
 		

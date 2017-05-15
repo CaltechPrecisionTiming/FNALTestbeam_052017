@@ -33,7 +33,7 @@ int main( int argc, char** argv)
   TFile* fin = new TFile(inputRootFile.c_str(), "READ");
   TTree* myTree = (TTree*)fin->Get("pulse");
   pulse* myPulse = new pulse( myTree );
-  myPulse->MPV_vs_Position(1, 0.08, 0.35);
+  myPulse->MPV_vs_Position(1, 15000 , 27000, 0.08, 0.35);
   
   
   return 0;

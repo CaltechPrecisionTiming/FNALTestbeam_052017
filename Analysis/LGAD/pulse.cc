@@ -102,7 +102,7 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
 
 }
 
-void pulse::MPV_vs_Position( const int indexPlot, const float lowCut, const float highCut, TString coordinate )
+void pulse::MPV_vs_Position( const int indexPlot, const float x_low, const float y_low, const float lowCut, const float highCut)
 {
   if ( indexPlot < 0 ) return;
 
@@ -121,7 +121,7 @@ void pulse::MPV_vs_Position( const int indexPlot, const float lowCut, const floa
       
       if ( amp[indexPlot] >= lowCut && amp[indexPlot] <= highCut )
 	{
-	  h_mpv->Fill(amp[indexPlot]);
+	  if ( x2 >= x_low && x2 < x_low + 25. && y2 >= y_low && y2 < y_low + 25.) h_mpv->Fill(amp[indexPlot]);
 	}
     }
 

@@ -113,7 +113,7 @@ int main(int argc, char* argv[]) {
                 inputTree->GetEntry(n);
 
 		bool passSkim = false;
-		passSkim = (amp[0] > 0.01 && (amp[1]>0.06 || amp[2] > 0.06) );
+		passSkim = (amp[0] > 0.01 && (amp[1]>0.05 || amp[2] > 0.05) );
 
 		if (passSkim) {
 		  EventsPassed++;

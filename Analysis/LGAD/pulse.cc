@@ -1,5 +1,5 @@
 #define pulse_cxx
-#include "pulse.h"
+#include "pulse.hh"
 #include <TH2.h>
 #include <TStyle.h>
 #include <TCanvas.h>

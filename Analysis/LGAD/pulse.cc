@@ -104,16 +104,18 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
 
 }
 
-void pulse::MPV_vs_Position( const int indexPlot, const float x_low, const float y_low, const float lowCut, const float highCut)
+void pulse::MPV_vs_Position( TString coor, const int indexPlot, const float _low, const float lowCut, const float highCut)
 {
   if ( indexPlot < 0 ) return;
-
+  
   fChain->SetBranchStatus("*", 0);
   fChain->SetBranchStatus("amp", 1);
+  fChain->SetBranchStatus("x2", 1);
+  fChain->SetBranchStatus("y2", 1);
   if (fChain == 0) return;
   Long64_t nentries = fChain->GetEntriesFast();
   Long64_t nbytes = 0, nb = 0;
-
+  
   TH1F* h_mpv = new TH1F("h_mpv", "h_mpv", 100, 0, 0.5);
   for (Long64_t jentry=0; jentry<nentries;jentry++)
     {
@@ -123,10 +125,11 @@ void pulse::MPV_vs_Position( const int indexPlot, const float x_low, const float
       
       if ( amp[indexPlot] >= lowCut && amp[indexPlot] <= highCut )
 	{
-	  if ( x2 >= x_low && x2 < x_low + 25. && y2 >= y_low && y2 < y_low + 25.) h_mpv->Fill(amp[indexPlot]);
+	  if ( (coor == "x" || coor == "X") && x2 >= _low && x2 < _low + 25. ) h_mpv->Fill(amp[indexPlot]);
+	  if ( (coor == "y" || coor == "Y") && y2 >= _low && y2 < _low + 25. ) h_mpv->Fill(amp[indexPlot]);
 	}
     }
-
+  
   TF1* landau = new TF1( "landau", "landau", lowCut, highCut-0.15 );
   h_mpv->Fit("landau","Q","", lowCut, highCut-0.15 );
   TFile* fout = new TFile("mpv_test.root", "recreate");

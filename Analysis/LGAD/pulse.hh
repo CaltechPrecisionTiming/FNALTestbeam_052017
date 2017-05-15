@@ -89,7 +89,9 @@ public :
    virtual Long64_t LoadTree(Long64_t entry);
    virtual void     Init(TTree *tree);
    virtual void     Loop();
-  virtual void MPV_vs_Position( TString coor = "X", const int indexPlot = -1, const float _low = 0, const float lowCut = 0, const float highCut = 0.0);
+  virtual float MPV_vs_Position( TString coor = "X", const int channel = -1, const float coorLow = 0, const float step = 25.,
+				 const float AmpLowCut = 0, const float AmpHighCut = 0.0);
+  virtual void CreateMPV_vs_PositionHisto(  );
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
    void MakeEfficiencyVsXY(int channelNumber);

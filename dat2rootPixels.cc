@@ -277,7 +277,9 @@ int main(int argc, char **argv) {
 
   std::cout << "\n=== Processing input data ===\n" << std::endl;
   int nGoodEvents = 0;
-  for( int iEvent = 0; iEvent < nEvents; iEvent++){ 
+  int maxEvents = nEvents;
+  if (nEvents < 0) maxEvents = 999999;
+  for( int iEvent = 0; iEvent < maxEvents; iEvent++){ 
 
     //find corresponding pixel event    
     bool foundPixelEvent = false;
@@ -305,7 +307,13 @@ int main(int argc, char **argv) {
    
     
 
-    if ( iEvent % 100 == 0 ) std::cout << "Event " << iEvent << " of " << nEvents << std::endl;
+    if ( iEvent % 100 == 0 ) {
+      if (nEvents >= 0) {
+	std::cout << "Event " << iEvent << " of " << nEvents << std::endl;
+      } else {
+	std::cout << "Event " << iEvent << "\n";
+      }
+    }
     event = nGoodEvents; // for output tree
 
     // first header word

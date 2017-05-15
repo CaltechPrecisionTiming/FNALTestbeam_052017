@@ -92,7 +92,7 @@ public :
   virtual void MPV_vs_Position( const int indexPlot = -1, const float lowCut = 0, const float highCut = 0.5, TString coordinate = "" );
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
-   void MakeEfficiencyVsXY();
+   void MakeEfficiencyVsXY(int channelNumber);
 
 };
 

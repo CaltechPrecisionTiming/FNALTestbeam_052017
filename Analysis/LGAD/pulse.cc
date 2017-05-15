@@ -5,6 +5,8 @@
 #include <TCanvas.h>
 #include "EfficiencyUtils.hh"
 
+using namespace std;
+
 void pulse::Loop()
 {
 //   In a ROOT session, you can do:
@@ -47,10 +49,10 @@ void pulse::Loop()
 void pulse::MakeEfficiencyVsXY(int channelNumber) {
 
   //declare histograms
-  TH1F *histX_den = new TH1F("histX_den",";X [mm];Number of Events"; 400, 20,30);
-  TH1F *histX_num = new TH1F("histX_num",";X [mm];Number of Events"; 400, 20,30);
-  TH1F *histY_den = new TH1F("histY_den",";Y [mm];Number of Events"; 400, 10,20);
-  TH1F *histY_num = new TH1F("histY_num",";Y [mm];Number of Events"; 400, 10,20);
+  TH1F *histX_den = new TH1F("histX_den",";X [mm];Number of Events", 400, 20,30);
+  TH1F *histX_num = new TH1F("histX_num",";X [mm];Number of Events", 400, 20,30);
+  TH1F *histY_den = new TH1F("histY_den",";Y [mm];Number of Events", 400, 10,20);
+  TH1F *histY_num = new TH1F("histY_num",";Y [mm];Number of Events", 400, 10,20);
   
   if (fChain == 0) return;
    Long64_t nentries = fChain->GetEntriesFast();

@@ -8,8 +8,8 @@ CPPFLAGS := $(shell root-config --cflags) -I$(INC)/include
 LDFLAGS := $(shell root-config --glibs) 
 CPPFLAGS += -g -std=c++14
 
-TARGET = dat2root
-SRC = dat2root.cc src/Aux.cc src/Config.cc
+TARGET = LGAD_Analysis
+SRC = LGAD_Analysis.cc pulse.cc
 
 
 OBJ = $(SRC:.cc=.o)

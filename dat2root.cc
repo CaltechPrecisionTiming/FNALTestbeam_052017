@@ -366,7 +366,7 @@ int main(int argc, char **argv) {
 	}
 
 	//Apply HighPass Filter (clipping circuit)
-	HighPassFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 1000., 0.01 );
+	//HighPassFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 1000., 0.01 );
 
 	// Find the absolute minimum. This is only used as a rough determination 
         // to decide if we'll use the early time samples

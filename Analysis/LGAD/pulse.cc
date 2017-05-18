@@ -4,6 +4,7 @@
 #include <TStyle.h>
 #include <TCanvas.h>
 #include <TF1.h>
+#include <TGraphErrors.h>
 #include "EfficiencyUtils.hh"
 
 using namespace std;
@@ -102,18 +103,60 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
    
 
 
-}
+};
 
-void pulse::MPV_vs_Position( const int indexPlot, const float lowCut, const float highCut, TString coordinate )
+void pulse::CreateMPV_vs_PositionHisto( )
 {
-  if ( indexPlot < 0 ) return;
+  const int npoints = 240;
+  float x_pos[npoints];//x-positions
+  float x_pos_un[npoints];//x-position uncertainty
+  float mpv_x[npoints];//mpv amplitude for x
+  float mpv_x_un[npoints];//uncertainty on mpv amplitude x
+  float y_pos[npoints];//y-positions
+  float y_pos_un[npoints];//y-position uncertainty
+  float mpv_y[npoints];//mpv amplitude for x
+  float mpv_y_un[npoints];//uncertainty on mpv amplitude y
 
+  //------------------
+  //Define initial positions and step size, all units are in microns
+  //-------------------
+  float x_init = 12000.;//microns
+  float y_init = 25000.;//microns
+  float step = 50.;//microns
+  for ( int i = 0; i < npoints; i++ )
+    {
+      x_pos[i] = x_init + step*(float)i;
+      x_pos_un[i] = 0;
+      mpv_x[i] = MPV_vs_Position( "X", 1, x_pos[i], step, 0.02, 0.35 );
+      mpv_x_un[i] = 0;
+      y_pos[i] = y_init + step*(float)i;
+      y_pos_un[i] = 0;
+      mpv_y[i] = MPV_vs_Position( "Y", 1, y_pos[i], step, 0.02, 0.35 );
+      mpv_y_un[i] = 0;
+    }
+
+  TGraphErrors* gr_mpv_x = new TGraphErrors(npoints, x_pos, mpv_x, x_pos_un, mpv_x_un);
+  TGraphErrors* gr_mpv_y = new TGraphErrors(npoints, y_pos, mpv_y, y_pos_un, mpv_y_un);
+
+  TFile* fout = new TFile("mpv_tgraphs.root", "RECREATE");
+  gr_mpv_x->Write("mpv_x");
+  gr_mpv_y->Write("mpv_y");
+  fout->Close();
+};
+
+float pulse::MPV_vs_Position( TString coor, const int channel, const float coorLow, const float step,
+			      const float AmpLowCut, const float AmpHighCut)
+{
+  if ( channel < 0 ) return -999.;
+  
   fChain->SetBranchStatus("*", 0);
   fChain->SetBranchStatus("amp", 1);
-  if (fChain == 0) return;
+  fChain->SetBranchStatus("x2", 1);
+  fChain->SetBranchStatus("y2", 1);
+  if (fChain == 0) return -999;
   Long64_t nentries = fChain->GetEntriesFast();
   Long64_t nbytes = 0, nb = 0;
-
+  
   TH1F* h_mpv = new TH1F("h_mpv", "h_mpv", 100, 0, 0.5);
   for (Long64_t jentry=0; jentry<nentries;jentry++)
     {
@@ -121,16 +164,18 @@ void pulse::MPV_vs_Position( const int indexPlot, const float lowCut, const floa
       if (ientry < 0) break;
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       
-      if ( amp[indexPlot] >= lowCut && amp[indexPlot] <= highCut )
+      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut )
 	{
-	  h_mpv->Fill(amp[indexPlot]);
+ 	  if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < coorLow + step ) h_mpv->Fill(amp[channel]);
+	  if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < coorLow + step ) h_mpv->Fill(amp[channel]);
 	}
     }
-
-  TF1* landau = new TF1( "landau", "landau", lowCut, highCut-0.15 );
-  h_mpv->Fit("landau","Q","", lowCut, highCut-0.15 );
+  
+  TF1* landau = new TF1( "landau", "landau", AmpLowCut, AmpHighCut-0.15 );
+  h_mpv->Fit("landau","Q","", AmpLowCut, AmpHighCut-0.15 );
+  float mpv = landau->GetParameter(1);
   TFile* fout = new TFile("mpv_test.root", "recreate");
   h_mpv->Write();
   fout->Close();
-  
+  return mpv;
 };

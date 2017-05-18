@@ -411,10 +411,10 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float 
 
   tstamp[0] = (0.90*ymax-b)/slope - (0.10*ymax-b)/slope;
   tstamp[1] = (0.0*ymax-b)/slope;
-  tstamp[2] = (0.15*ymax-b)/slope;
-  tstamp[3] = (0.30*ymax-b)/slope;
-  tstamp[4] = (0.45*ymax-b)/slope;
-  tstamp[5] = (0.60*ymax-b)/slope;
+  tstamp[2] = (0.025*ymax-b)/slope;
+  tstamp[3] = (0.050*ymax-b)/slope;
+  tstamp[4] = (0.075*ymax-b)/slope;
+  tstamp[5] = (0.1*ymax-b)/slope;
   
   TLine* line  = new TLine( tstamp[2], 0, tstamp[2], 1000);
   

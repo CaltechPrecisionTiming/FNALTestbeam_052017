@@ -4,6 +4,6 @@ sdiff totalList doneList | grep "<" | awk '{print $1}' >! newList
 
 foreach f(`cat newList`)
    echo "Processing Run${f}"
-   echo "./dat2rootPixels /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/RawDataSaver0CMSTiming0_Run${f}_0_Raw.dat /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/Run${f}_CMSTiming_converted.root /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/RECO/Run${f}_RECO.root -1"
-   ./dat2rootPixels /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/RawDataSaver0CMSTiming0_Run${f}_0_Raw.dat /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/Run${f}_CMSTiming_converted.root /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/RECO/Run${f}_RECO.root -1
+   echo "./dat2rootPixels /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/RawDataSaver0CMSTiming0_Run${f}_0_Raw.dat /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/Run${f}_CMSTiming_converted.root /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/RECO/Run${f}_RECO.root -1 --config=config/LGAD05162017.config"
+   ./dat2rootPixels /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/RawDataSaver0CMSTiming0_Run${f}_0_Raw.dat /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/Run${f}_CMSTiming_converted.root /eos/uscms/store/user/cmstestbeam/ETL/MT6Section1Data/052017/RECO/Run${f}_RECO.root -1 --config=config/LGAD05162017.config
 end

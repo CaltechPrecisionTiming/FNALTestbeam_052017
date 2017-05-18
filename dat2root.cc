@@ -39,7 +39,7 @@ std::string ParseCommandLine( int argc, char* argv[], std::string opt )
 
 int main(int argc, char **argv) {
   gROOT->SetBatch();
-
+  
   FILE* fp1;
   char stitle[200];
   int dummy;
@@ -225,9 +225,17 @@ int main(int argc, char **argv) {
 
   std::cout << "\n=== Processing input data ===\n" << std::endl;
   int nGoodEvents = 0;
-  for( int iEvent = 0; iEvent < nEvents; iEvent++){ 
+  int maxEvents = nEvents;
+  if (nEvents < 0) maxEvents = 999999;
+  for( int iEvent = 0; iEvent < maxEvents; iEvent++){ 
 
-    if ( iEvent % 100 == 0 ) std::cout << "Event " << iEvent << " of " << nEvents << std::endl;
+    if ( iEvent % 100 == 0 ) {
+      if (nEvents >= 0) {
+	std::cout << "Event " << iEvent << " of " << nEvents << std::endl;
+      } else {
+	std::cout << "Event " << iEvent << "\n";
+      }
+    }
     event = nGoodEvents; // for output tree
 
     // first header word
@@ -366,8 +374,11 @@ int main(int argc, char **argv) {
 	}
 
 	//Apply HighPass Filter (clipping circuit)
-	//HighPassFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 1000., 0.01 );
+	//HighPassFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 1000., 22.*1e-12 );
 
+	//Apply Notch Filter
+	//NotchFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 10, 10.*1e-12, 5.*1e-7 );
+	
 	// Find the absolute minimum. This is only used as a rough determination 
         // to decide if we'll use the early time samples
 	// or the late time samples to do the baseline fit
@@ -396,10 +407,11 @@ int main(int argc, char **argv) {
 	
         // Recreate the pulse TGraph using baseline-subtracted channel data
 	delete pulse;
+	
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );//Short Version
 	//pulse = new TGraphErrors( *GetTGraph( channelFilter[totalIndex], time[realGroup[group]] ) );//Float Version
 	xmin[totalIndex] = index_min;
-
+	
         float filterWidth = config.getFilterWidth(totalIndex);
 	if (filterWidth) {
 	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], 
@@ -436,9 +448,9 @@ int main(int argc, char **argv) {
         if ( !isTrigChannel ) {
 	  if( drawDebugPulses ) {
 	    if ( xmin[totalIndex] != 0.0 ) {
-	      // if ( totalIndex == 4 && amp[4]>0.08 && amp[4]<0.45){
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName);
-	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
+	      RisingEdgeFitTime( pulse, index_min, 0.1, 0.90, fs, event, "linearFit_" + pulseName, true );
+	      //RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, true );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
 	      //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, true );
@@ -447,7 +459,8 @@ int main(int argc, char **argv) {
 	  else {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge);
-	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, false );
+	      RisingEdgeFitTime( pulse, index_min, 0.1, 0.90, fs, event, "linearFit_" + pulseName, false );
+	      //RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, false );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, false );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
 	      //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, false );
@@ -471,7 +484,7 @@ int main(int argc, char **argv) {
 	linearTime45[totalIndex] = fs[4];
 	linearTime60[totalIndex] = fs[5];
 	fallingTime[totalIndex] = fs_falling[0];
-	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
+	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 3);
 	
 	delete pulse;
       }
@@ -494,7 +507,7 @@ int main(int argc, char **argv) {
 
 
 
-int graphic_init(){
+  int graphic_init(){
 
   style = new TStyle("style", "style");
   

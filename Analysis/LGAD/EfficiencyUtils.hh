@@ -487,7 +487,7 @@ TGraphAsymmErrors* createEfficiencyGraph(TH1F* numerator, TH1F* denominator,
 
   Int_t nbins = n->GetNbinsX();
 
-  assert(nbins <= 200);
+  assert(nbins <= 1000);
 
   //define vectors to temporarily hold graph values
   vector<double> X; 

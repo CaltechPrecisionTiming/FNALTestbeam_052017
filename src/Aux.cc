@@ -377,7 +377,7 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, float* tstam
       //c->SaveAs(fname+"LinearFit.png");
       delete c;
     }
-
+  
   delete flinear;
 };
 
@@ -411,10 +411,10 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float 
 
   tstamp[0] = (0.90*ymax-b)/slope - (0.10*ymax-b)/slope;
   tstamp[1] = (0.0*ymax-b)/slope;
-  tstamp[2] = (0.025*ymax-b)/slope;
-  tstamp[3] = (0.050*ymax-b)/slope;
-  tstamp[4] = (0.075*ymax-b)/slope;
-  tstamp[5] = (0.1*ymax-b)/slope;
+  tstamp[2] = (0.15*ymax-b)/slope;
+  tstamp[3] = (0.30*ymax-b)/slope;
+  tstamp[4] = (0.45*ymax-b)/slope;
+  tstamp[5] = (0.60*ymax-b)/slope;
   
   TLine* line  = new TLine( tstamp[2], 0, tstamp[2], 1000);
   
@@ -422,7 +422,7 @@ void RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float 
     {
       std::cout << "make plot" << std::endl;
       TCanvas* c = new TCanvas("canvas","canvas",800,400) ;
-      pulse->GetXaxis()->SetLimits(x_low-50, x_high+150);
+      pulse->GetXaxis()->SetLimits(x_low-10, x_high+10);
       pulse->SetMarkerSize(0.3);
       pulse->SetMarkerStyle(20);
       pulse->Draw("AP");
@@ -526,17 +526,17 @@ float SigmoidTimeFit(TGraphErrors * pulse, const float index_min, int event, TSt
   double x_low, x_high, y, dummy;
   double ymax;
   pulse->GetPoint(index_min, x_low, ymax);
-  pulse->GetPoint(index_min-150, x_low, y);
+  pulse->GetPoint(index_min-50, x_low, y);
   
-  for ( int i = 1; i < 200; i++ )
+  for ( int i = 1; i < 500; i++ )
     {
       pulse->GetPoint(index_min-i, x_high, y);
-      if ( y < 0.6*ymax ) break;
+      if ( y < 0.4*ymax ) break;
     }
   
   pulse->GetPoint(index_min, dummy, y);
   
-  TF1* fsigmoid = new TF1("fsigmoid","[0]/(1.0+exp(-(x-[1])/[2]))",x_low-50,x_high+50);
+  TF1* fsigmoid = new TF1("fsigmoid","[0]/(1.0+exp(-(x-[1])/[2]))",x_low,x_high);
   fsigmoid->SetParameter(0,1000);
   fsigmoid->SetParLimits(0,0,10000);
   fsigmoid->SetParameter(1,50);
@@ -547,12 +547,14 @@ float SigmoidTimeFit(TGraphErrors * pulse, const float index_min, int event, TSt
   double midpoint = fsigmoid->GetParameter(1);
   double width    = fsigmoid->GetParameter(2);
 
-  double tstamp =  midpoint-width*log(maxAmp/0.1 -1);
+  //double tstamp =  midpoint-width*log(maxAmp/0.1 -1);
+  double tstamp =  midpoint-width*log(33.3 -1.0);
+  
   TLine* line  = new TLine( tstamp, 0, tstamp, 1000);
   if ( makePlot )
     {
       TCanvas* c = new TCanvas("canvas","canvas",800,400) ;
-      pulse->GetXaxis()->SetLimits(x_low-50, x_high+50);
+      pulse->GetXaxis()->SetLimits(x_low-15, x_high+15);
       pulse->SetMarkerSize(0.3);
       pulse->SetMarkerStyle(20);
       pulse->Draw("AP");
@@ -704,6 +706,19 @@ float GetPulseIntegral(int peak, short *a, std::string option)
 
 }
 
+float GetPulseIntegral(int peak, int nsamples, short *a, float *t) //returns charge in pC asssuming 50 Ohm termination
+{
+  float integral = 0.;
+    for (int i=peak-nsamples; i < peak+nsamples; i++) {
+      //Simpson's Rule for equaled space-->Cartwright correction for unequaled space, only worked for odd points
+      integral += ( (t[i+2]-t[i]) / 6.0 ) * ( ( 2-(t[i+2]-t[i+1])/(t[i+1]-t[i]) )* a[i] + (t[i+2]-t[i])*(t[i+2]-t[i])/((t[i+2]-t[i+1])*(t[i+1]-t[i])) * a[i+1] + ( 2-(t[i+1]-t[i])/(t[i+2]-t[i+1]) ) * a[i+2] ) * 1e-9 * (1.0/4096.0) * (1.0/50.0) * 1e12; //in units of pC, for 50Ohm termination
+      i++;
+    }
+    
+  return -1.0 * integral;
+
+}
+
 //----------------------------------------------
 //Gaussian Filter to reduce high frequency noise
 //----------------------------------------------
@@ -781,3 +796,19 @@ TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseNa
   return tg2;
 };
 
+bool isRinging( int peak, short *a )
+{
+  short left_max, right_max;//Left and right maximum amplitude from the minimum
+  left_max  = a[peak];
+  right_max = a[peak];
+  
+  for ( int i = 1; i < 150; i++)
+    {
+      if ( a[peak-i] > left_max )  left_max  = a[peak-i];
+      if ( a[peak+i] > right_max ) right_max = a[peak+i];
+    }
+
+  if ( left_max  > 0.5*fabs(a[peak]) ) return true;
+  if ( right_max > 0.5*fabs(a[peak]) ) return true;
+  return false;
+};

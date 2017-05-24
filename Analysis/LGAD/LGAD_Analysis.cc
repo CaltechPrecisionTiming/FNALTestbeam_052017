@@ -26,7 +26,7 @@ int main( int argc, char** argv)
   std::string inputRootFile = ParseCommandLine( argc, argv, "--inputRootFile" );
   if ( inputRootFile == "" )
     {
-      std::cerr << "[ERROR]: Please provide a valid ROOT file to run on!!\n";
+      std::cerr << "[ERROR]: Please provide a valid ROOT file to run on!! Please use --inputRootFile=<your_file_name>\n";
       return -1;
     }
 

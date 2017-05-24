@@ -256,7 +256,7 @@ int main(int argc, char **argv) {
   tree->Branch("xmin", xmin, "xmin[36]/F");
   tree->Branch("amp", amp, "amp[36]/F");
   tree->Branch("base", base, "base[36]/F");
-  tree->Branch("int", integral, "int[36]/F");
+  tree->Branch("integral", integral, "integral[36]/F");
   tree->Branch("intfull", integralFull, "intfull[36]/F");
   tree->Branch("gauspeak", gauspeak, "gauspeak[36]/F");
   tree->Branch("sigmoidTime", sigmoidTime, "sigmoidTime[36]/F");
@@ -649,7 +649,7 @@ int main(int argc, char **argv) {
 	  if( drawDebugPulses ) {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
-	      RisingEdgeFitTime( pulse, index_min, 0.05, 0.20, fs, event, "linearFit_" + pulseName, true );
+	      RisingEdgeFitTime( pulse, index_min, 0.1, 0.60, fs, event, "linearFit_" + pulseName, true );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, true );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
 	      //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, true );
@@ -658,7 +658,7 @@ int main(int argc, char **argv) {
 	  else {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
-	      RisingEdgeFitTime( pulse, index_min, 0.05, 0.20, fs, event, "linearFit_" + pulseName, false );
+	      RisingEdgeFitTime( pulse, index_min, 0.1, 0.60, fs, event, "linearFit_" + pulseName, false );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, false );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
 	      //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, false );
@@ -672,7 +672,11 @@ int main(int argc, char **argv) {
 	    fs_falling[kk] = -999;
 	  }
 	}
-			
+
+	if( isRinging( index_min, channel[totalIndex] ) )
+	  {
+	    std::cout << "event = " << event  << " channel = " << totalIndex << std::endl;
+	  };
 	//std::cout << "20" << std::endl;
 			
 	// for output tree

@@ -194,6 +194,7 @@ int main(int argc, char **argv) {
   float fallingTime[36]; // falling exponential timestamp    
   float risetime[36]; 
   float constantThresholdTime[36];
+  bool _isRinging[36];
  
   float xIntercept;
   float yIntercept;
@@ -215,7 +216,7 @@ int main(int argc, char **argv) {
   tree->Branch("xmin", xmin, "xmin[36]/F");
   tree->Branch("amp", amp, "amp[36]/F");
   tree->Branch("base", base, "base[36]/F");
-  tree->Branch("int", integral, "int[36]/F");
+  tree->Branch("integral", integral, "integral[36]/F");
   tree->Branch("intfull", integralFull, "intfull[36]/F");
   tree->Branch("gauspeak", gauspeak, "gauspeak[36]/F");
   tree->Branch("sigmoidTime", sigmoidTime, "sigmoidTime[36]/F");
@@ -228,6 +229,7 @@ int main(int argc, char **argv) {
   tree->Branch("fallingTime", fallingTime, "fallingTime[36]/F");
   tree->Branch("risetime", risetime, "risetime[36]/F");
   tree->Branch("constantThresholdTime", constantThresholdTime, "constantThresholdTime[36]/F");
+  tree->Branch("isRinging", _isRinging, "isRinging[36]/O");
   tree->Branch("xIntercept", &xIntercept, "xIntercept/F");
   tree->Branch("yIntercept", &yIntercept, "yIntercept/F");
   tree->Branch("xSlope", &xSlope, "xSlope/F");
@@ -500,8 +502,9 @@ int main(int argc, char **argv) {
 
 	// Get pulse integral
 	if ( xmin[totalIndex] != 0 ) {
-	    integral[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex]);
-	    integralFull[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex], "full");
+	  //integral[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex]);
+	  integral[totalIndex] = GetPulseIntegral( index_min, 20, channel[totalIndex], time[realGroup[group]] );
+	  integralFull[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex], "full");
         }
 	else {
 	    integral[totalIndex] = 0.0;
@@ -519,12 +522,14 @@ int main(int argc, char **argv) {
                             || totalIndex == 26 || totalIndex == 35 );
         float fs[6]; // constant-fraction fit output
 	float fs_falling[6]; // falling exp timestapms
+	float cft_low_range  = 0.03;
+	float cft_high_range = 0.20;
         if ( !isTrigChannel ) {
 	  if( drawDebugPulses ) {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      // if ( totalIndex == 4 && amp[4]>0.08 && amp[4]<0.45){
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName);
-	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
+	      RisingEdgeFitTime( pulse, index_min, cft_low_range, cft_high_range, fs, event, "linearFit_" + pulseName, true );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, true );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
 	      //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, true );
@@ -533,7 +538,7 @@ int main(int argc, char **argv) {
 	  else {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge);
-	      RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, false );
+	      RisingEdgeFitTime( pulse, index_min, cft_low_range, cft_high_range, fs, event, "linearFit_" + pulseName, false );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, false );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
 	      //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, false );
@@ -548,6 +553,8 @@ int main(int argc, char **argv) {
 	      fs_falling[kk] = -999;
 	    }
         }
+	
+	_isRinging[totalIndex] = isRinging( index_min, channel[totalIndex] );
         // for output tree
 	gauspeak[totalIndex] = timepeak;
 	risetime[totalIndex] = fs[0];
@@ -557,7 +564,7 @@ int main(int argc, char **argv) {
 	linearTime45[totalIndex] = fs[4];
 	linearTime60[totalIndex] = fs[5];
 	fallingTime[totalIndex] = fs_falling[0];
-	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
+	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 75);
 	
 	delete pulse;
       }

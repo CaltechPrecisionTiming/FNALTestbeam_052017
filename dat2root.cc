@@ -182,6 +182,7 @@ int main(int argc, char **argv) {
     
   float risetime[36]; 
   float constantThresholdTime[36];
+  bool _isRinging[36];
  
   tree->Branch("event", &event, "event/I");
   tree->Branch("tc", tc, "tc[4]/s");
@@ -194,7 +195,7 @@ int main(int argc, char **argv) {
   tree->Branch("xmin", xmin, "xmin[36]/F");
   tree->Branch("amp", amp, "amp[36]/F");
   tree->Branch("base", base, "base[36]/F");
-  tree->Branch("int", integral, "int[36]/F");
+  tree->Branch("integral", integral, "integral[36]/F");
   tree->Branch("intfull", integralFull, "intfull[36]/F");
   tree->Branch("gauspeak", gauspeak, "gauspeak[36]/F");
   tree->Branch("sigmoidTime", sigmoidTime, "sigmoidTime[36]/F");
@@ -207,6 +208,7 @@ int main(int argc, char **argv) {
   tree->Branch("fallingTime", fallingTime, "fallingTime[36]/F");
   tree->Branch("risetime", risetime, "risetime[36]/F");
   tree->Branch("constantThresholdTime", constantThresholdTime, "constantThresholdTime[36]/F");
+  tree->Branch("isRinging", _isRinging, "isRinging[36]/O");
 
   // temp variables for data input
   uint   event_header;
@@ -449,7 +451,7 @@ int main(int argc, char **argv) {
 	  if( drawDebugPulses ) {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName);
-	      RisingEdgeFitTime( pulse, index_min, 0.1, 0.90, fs, event, "linearFit_" + pulseName, true );
+	      RisingEdgeFitTime( pulse, index_min, 0.2, 0.80, fs, event, "linearFit_" + pulseName, true );
 	      //RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, true );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
@@ -459,7 +461,7 @@ int main(int argc, char **argv) {
 	  else {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge);
-	      RisingEdgeFitTime( pulse, index_min, 0.1, 0.90, fs, event, "linearFit_" + pulseName, false );
+	      RisingEdgeFitTime( pulse, index_min, 0.2, 0.60, fs, event, "linearFit_" + pulseName, false );
 	      //RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, false );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, false );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
@@ -475,6 +477,8 @@ int main(int argc, char **argv) {
 	      fs_falling[kk] = -999;
 	    }
         }
+
+	_isRinging[totalIndex] = isRinging( index_min, channel[totalIndex] );
         // for output tree
 	gauspeak[totalIndex] = timepeak;
 	risetime[totalIndex] = fs[0];
@@ -484,7 +488,7 @@ int main(int argc, char **argv) {
 	linearTime45[totalIndex] = fs[4];
 	linearTime60[totalIndex] = fs[5];
 	fallingTime[totalIndex] = fs_falling[0];
-	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 3);
+	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
 	
 	delete pulse;
       }

@@ -107,7 +107,7 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
 
 void pulse::CreateMPV_vs_PositionHisto( )
 {
-  const int npoints = 240;
+  const int npoints = 30;
   float x_pos[npoints];//x-positions
   float x_pos_un[npoints];//x-position uncertainty
   float mpv_x[npoints];//mpv amplitude for x
@@ -120,18 +120,18 @@ void pulse::CreateMPV_vs_PositionHisto( )
   //------------------
   //Define initial positions and step size, all units are in microns
   //-------------------
-  float x_init = 12000.;//microns
-  float y_init = 25000.;//microns
-  float step = 50.;//microns
+  float x_init = 11000.;//microns
+  float y_init = 13000.;//microns
+  float step = 500.;//microns
   for ( int i = 0; i < npoints; i++ )
     {
       x_pos[i] = x_init + step*(float)i;
       x_pos_un[i] = 0;
-      mpv_x[i] = MPV_vs_Position( "X", 1, x_pos[i], step, 0.02, 0.35 );
+      mpv_x[i] = MPV_vs_Position( "X", 1, x_pos[i], step, 0.08, 0.2 );
       mpv_x_un[i] = 0;
       y_pos[i] = y_init + step*(float)i;
       y_pos_un[i] = 0;
-      mpv_y[i] = MPV_vs_Position( "Y", 1, y_pos[i], step, 0.02, 0.35 );
+      mpv_y[i] = MPV_vs_Position( "Y", 1, y_pos[i], step, 0.08, 0.2 );
       mpv_y_un[i] = 0;
     }
 
@@ -171,8 +171,8 @@ float pulse::MPV_vs_Position( TString coor, const int channel, const float coorL
 	}
     }
   
-  TF1* landau = new TF1( "landau", "landau", AmpLowCut, AmpHighCut-0.15 );
-  h_mpv->Fit("landau","Q","", AmpLowCut, AmpHighCut-0.15 );
+  TF1* landau = new TF1( "landau", "landau", AmpLowCut, AmpHighCut );
+  h_mpv->Fit("landau","Q","", AmpLowCut, AmpHighCut);
   float mpv = landau->GetParameter(1);
   TFile* fout = new TFile("mpv_test.root", "recreate");
   h_mpv->Write();

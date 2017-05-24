@@ -51,10 +51,10 @@ void pulse::Loop()
 void pulse::MakeEfficiencyVsXY(int channelNumber) {
 
   //declare histograms
-  TH1F *histX_den = new TH1F("histX_den",";X [mm];Number of Events", 400, 20,30);
-  TH1F *histX_num = new TH1F("histX_num",";X [mm];Number of Events", 400, 20,30);
-  TH1F *histY_den = new TH1F("histY_den",";Y [mm];Number of Events", 400, 10,20);
-  TH1F *histY_num = new TH1F("histY_num",";Y [mm];Number of Events", 400, 10,20);
+  TH1F *histY_den = new TH1F("histX_den",";Y [mm];Number of Events", 400, 20,30);
+  TH1F *histY_num = new TH1F("histX_num",";Y [mm];Number of Events", 400, 20,30);
+  TH1F *histX_den = new TH1F("histY_den",";X [mm];Number of Events", 400, 10,20);
+  TH1F *histX_num = new TH1F("histY_num",";X [mm];Number of Events", 400, 10,20);
   
   if (fChain == 0) return;
    Long64_t nentries = fChain->GetEntriesFast();
@@ -62,18 +62,23 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
    for (Long64_t jentry=0; jentry<nentries;jentry++) {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
+      if (jentry % 100 == 0) cout << "Processing Event " << jentry << " of " << nentries << "\n";
+
       nb = fChain->GetEntry(jentry);   nbytes += nb;
 
       //cuts
 
       //require photek to show MIP signal
       if (!(amp[0] > 0.1 && amp[0] < 0.2)) continue;
+      if (!(x2 > 11300 && x2 < 14600 && y2 > 25000 && y2 < 28500)) continue;
 
       histX_den->Fill( 0.001*x2 );
       histY_den->Fill( 0.001*y2 );
+      //cout << "Fill Den: " << 0.001*x2 << " " << 0.001*y2 << "\n";
       
       //numerator
       if (amp[channelNumber] > 0.08) {
+	//cout << "Fill NUM: " << 0.001*x2 << " " << 0.001*y2 << "\n";
 	histX_num->Fill( 0.001*x2 );
 	histY_num->Fill( 0.001*y2 );       
       }
@@ -91,18 +96,23 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
    TGraphAsymmErrors* effY = createEfficiencyGraph(histY_num, histY_den,
 						   Form("EfficiencyVsY_Channel%d",channelNumber),
 						   ybins,
-						   25.5, 28.5,
+						   25.3, 28.4,
 						   0.0, 1.0,
 						   false
 						   );
    
-   TCanvas *cv = new TCanvas ("cv","cv", 800,800);
 
-   effX->Draw("AP");
-
+   TFile *file = new TFile("eff.root","UPDATE");
+   file->cd();
+   file->WriteTObject(effX, "Efficiency_X", "WriteDelete");
+   file->WriteTObject(effY, "Efficiency_Y", "WriteDelete");
+   file->WriteTObject(histX_num, "histX_num", "WriteDelete");
+   file->WriteTObject(histX_den, "histX_den", "WriteDelete");
+   file->WriteTObject(histY_num, "histY_num", "WriteDelete");
+   file->WriteTObject(histY_den, "histY_den", "WriteDelete");
+   file->Close();
+   delete file; 
    
-
-
 };
 
 void pulse::CreateMPV_vs_PositionHisto( )

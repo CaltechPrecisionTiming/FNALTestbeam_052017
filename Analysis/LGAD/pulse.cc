@@ -51,10 +51,10 @@ void pulse::Loop()
 void pulse::MakeEfficiencyVsXY(int channelNumber) {
 
   //declare histograms
-  TH1F *histX_den = new TH1F("histX_den",";X [mm];Number of Events", 400, 20,30);
-  TH1F *histX_num = new TH1F("histX_num",";X [mm];Number of Events", 400, 20,30);
-  TH1F *histY_den = new TH1F("histY_den",";Y [mm];Number of Events", 400, 10,20);
-  TH1F *histY_num = new TH1F("histY_num",";Y [mm];Number of Events", 400, 10,20);
+  TH1F *histY_den = new TH1F("histX_den",";Y [mm];Number of Events", 400, 20,30);
+  TH1F *histY_num = new TH1F("histX_num",";Y [mm];Number of Events", 400, 20,30);
+  TH1F *histX_den = new TH1F("histY_den",";X [mm];Number of Events", 400, 10,20);
+  TH1F *histX_num = new TH1F("histY_num",";X [mm];Number of Events", 400, 10,20);
   
   if (fChain == 0) return;
    Long64_t nentries = fChain->GetEntriesFast();
@@ -62,18 +62,23 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
    for (Long64_t jentry=0; jentry<nentries;jentry++) {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
+      if (jentry % 100 == 0) cout << "Processing Event " << jentry << " of " << nentries << "\n";
+
       nb = fChain->GetEntry(jentry);   nbytes += nb;
 
       //cuts
 
       //require photek to show MIP signal
       if (!(amp[0] > 0.1 && amp[0] < 0.2)) continue;
+      if (!(x2 > 11300 && x2 < 14600 && y2 > 25000 && y2 < 28500)) continue;
 
       histX_den->Fill( 0.001*x2 );
       histY_den->Fill( 0.001*y2 );
+      //cout << "Fill Den: " << 0.001*x2 << " " << 0.001*y2 << "\n";
       
       //numerator
       if (amp[channelNumber] > 0.08) {
+	//cout << "Fill NUM: " << 0.001*x2 << " " << 0.001*y2 << "\n";
 	histX_num->Fill( 0.001*x2 );
 	histY_num->Fill( 0.001*y2 );       
       }
@@ -91,18 +96,23 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
    TGraphAsymmErrors* effY = createEfficiencyGraph(histY_num, histY_den,
 						   Form("EfficiencyVsY_Channel%d",channelNumber),
 						   ybins,
-						   25.5, 28.5,
+						   25.3, 28.4,
 						   0.0, 1.0,
 						   false
 						   );
    
-   TCanvas *cv = new TCanvas ("cv","cv", 800,800);
 
-   effX->Draw("AP");
-
+   TFile *file = new TFile("eff.root","UPDATE");
+   file->cd();
+   file->WriteTObject(effX, "Efficiency_X", "WriteDelete");
+   file->WriteTObject(effY, "Efficiency_Y", "WriteDelete");
+   file->WriteTObject(histX_num, "histX_num", "WriteDelete");
+   file->WriteTObject(histX_den, "histX_den", "WriteDelete");
+   file->WriteTObject(histY_num, "histY_num", "WriteDelete");
+   file->WriteTObject(histY_den, "histY_den", "WriteDelete");
+   file->Close();
+   delete file; 
    
-
-
 };
 
 void pulse::CreateMPV_vs_PositionHisto( )
@@ -127,12 +137,14 @@ void pulse::CreateMPV_vs_PositionHisto( )
     {
       x_pos[i] = x_init + step*(float)i;
       x_pos_un[i] = 0;
-      mpv_x[i] = MPV_vs_Position( "X", 1, x_pos[i], step, 0.08, 0.2 );
-      mpv_x_un[i] = 0;
+      std::pair<float,float> MPVAndError_X = MPV_vs_Position( "X", 1, x_pos[i], step, 0.08, 0.2 );
+      mpv_x[i] = MPVAndError_X.first;
+      mpv_x_un[i] = MPVAndError_X.second;
       y_pos[i] = y_init + step*(float)i;
       y_pos_un[i] = 0;
-      mpv_y[i] = MPV_vs_Position( "Y", 1, y_pos[i], step, 0.08, 0.2 );
-      mpv_y_un[i] = 0;
+      std::pair<float,float> MPVAndError_Y = MPV_vs_Position( "Y", 1, y_pos[i], step, 0.08, 0.2 );
+      mpv_y[i] = MPVAndError_Y.first;
+      mpv_y_un[i] = MPVAndError_Y.second;
     }
 
   TGraphErrors* gr_mpv_x = new TGraphErrors(npoints, x_pos, mpv_x, x_pos_un, mpv_x_un);
@@ -144,24 +156,27 @@ void pulse::CreateMPV_vs_PositionHisto( )
   fout->Close();
 };
 
-float pulse::MPV_vs_Position( TString coor, const int channel, const float coorLow, const float step,
+std::pair<float,float> pulse::MPV_vs_Position( TString coor, const int channel, const float coorLow, const float step,
 			      const float AmpLowCut, const float AmpHighCut)
 {
-  if ( channel < 0 ) return -999.;
+  if ( channel < 0 ) return std::pair<float,float>(-999,0);
   
   fChain->SetBranchStatus("*", 0);
   fChain->SetBranchStatus("amp", 1);
   fChain->SetBranchStatus("x2", 1);
   fChain->SetBranchStatus("y2", 1);
-  if (fChain == 0) return -999;
+  if (fChain == 0) return std::pair<float,float>(-999,0);
   Long64_t nentries = fChain->GetEntriesFast();
   Long64_t nbytes = 0, nb = 0;
   
+  cout << "Running MPV_vs_Position Analysis\n";
+  cout << "Total Events: " << nentries << "\n";
   TH1F* h_mpv = new TH1F("h_mpv", "h_mpv", 100, 0, 0.5);
   for (Long64_t jentry=0; jentry<nentries;jentry++)
     {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
+      if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       
       if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut )
@@ -173,9 +188,11 @@ float pulse::MPV_vs_Position( TString coor, const int channel, const float coorL
   
   TF1* landau = new TF1( "landau", "landau", AmpLowCut, AmpHighCut );
   h_mpv->Fit("landau","Q","", AmpLowCut, AmpHighCut);
-  float mpv = landau->GetParameter(1);
+  std::pair<float,float> result;
+  result.first = landau->GetParameter(1);
+  result.second = landau->GetParError(1);
   TFile* fout = new TFile("mpv_test.root", "recreate");
   h_mpv->Write();
   fout->Close();
-  return mpv;
+  return result;
 };

@@ -137,12 +137,14 @@ void pulse::CreateMPV_vs_PositionHisto( )
     {
       x_pos[i] = x_init + step*(float)i;
       x_pos_un[i] = 0;
-      mpv_x[i] = MPV_vs_Position( "X", 1, x_pos[i], step, 0.08, 0.2 );
-      mpv_x_un[i] = 0;
+      std::pair<float,float> MPVAndError_X = MPV_vs_Position( "X", 1, x_pos[i], step, 0.08, 0.2 );
+      mpv_x[i] = MPVAndError_X.first;
+      mpv_x_un[i] = MPVAndError_X.second;
       y_pos[i] = y_init + step*(float)i;
       y_pos_un[i] = 0;
-      mpv_y[i] = MPV_vs_Position( "Y", 1, y_pos[i], step, 0.08, 0.2 );
-      mpv_y_un[i] = 0;
+      std::pair<float,float> MPVAndError_Y = MPV_vs_Position( "Y", 1, y_pos[i], step, 0.08, 0.2 );
+      mpv_y[i] = MPVAndError_Y.first;
+      mpv_y_un[i] = MPVAndError_Y.second;
     }
 
   TGraphErrors* gr_mpv_x = new TGraphErrors(npoints, x_pos, mpv_x, x_pos_un, mpv_x_un);
@@ -154,24 +156,27 @@ void pulse::CreateMPV_vs_PositionHisto( )
   fout->Close();
 };
 
-float pulse::MPV_vs_Position( TString coor, const int channel, const float coorLow, const float step,
+std::pair<float,float> pulse::MPV_vs_Position( TString coor, const int channel, const float coorLow, const float step,
 			      const float AmpLowCut, const float AmpHighCut)
 {
-  if ( channel < 0 ) return -999.;
+  if ( channel < 0 ) return std::pair<float,float>(-999,0);
   
   fChain->SetBranchStatus("*", 0);
   fChain->SetBranchStatus("amp", 1);
   fChain->SetBranchStatus("x2", 1);
   fChain->SetBranchStatus("y2", 1);
-  if (fChain == 0) return -999;
+  if (fChain == 0) return std::pair<float,float>(-999,0);
   Long64_t nentries = fChain->GetEntriesFast();
   Long64_t nbytes = 0, nb = 0;
   
+  cout << "Running MPV_vs_Position Analysis\n";
+  cout << "Total Events: " << nentries << "\n";
   TH1F* h_mpv = new TH1F("h_mpv", "h_mpv", 100, 0, 0.5);
   for (Long64_t jentry=0; jentry<nentries;jentry++)
     {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
+      if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       
       if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut )
@@ -183,9 +188,11 @@ float pulse::MPV_vs_Position( TString coor, const int channel, const float coorL
   
   TF1* landau = new TF1( "landau", "landau", AmpLowCut, AmpHighCut );
   h_mpv->Fit("landau","Q","", AmpLowCut, AmpHighCut);
-  float mpv = landau->GetParameter(1);
+  std::pair<float,float> result;
+  result.first = landau->GetParameter(1);
+  result.second = landau->GetParError(1);
   TFile* fout = new TFile("mpv_test.root", "recreate");
   h_mpv->Write();
   fout->Close();
-  return mpv;
+  return result;
 };

@@ -377,7 +377,7 @@ int main(int argc, char **argv) {
 
 	//Apply HighPass Filter (clipping circuit)
 	//HighPassFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 1000., 22.*1e-12 );
-
+	
 	//Apply Notch Filter
 	//NotchFilter( channel[totalIndex], channelFilter[totalIndex],  time[realGroup[group]], 10, 10.*1e-12, 5.*1e-7 );
 	
@@ -416,6 +416,8 @@ int main(int argc, char **argv) {
 	
         float filterWidth = config.getFilterWidth(totalIndex);
 	if (filterWidth) {
+	  WeierstrassTransform( channel[totalIndex], channelFilter[totalIndex], time[realGroup[group]], 
+				pulseName, filterWidth);
 	  pulse = WeierstrassTransform( channel[totalIndex], time[realGroup[group]], 
 					pulseName, filterWidth, false );
 	}
@@ -428,8 +430,8 @@ int main(int argc, char **argv) {
 
 	// Get pulse integral
 	if ( xmin[totalIndex] != 0 ) {
-	    integral[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex]);
-	    integralFull[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex], "full");
+	  integral[totalIndex] = GetPulseIntegral( index_min, 10, 25, channel[totalIndex], time[realGroup[group]] );
+	  integralFull[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex], "full");
         }
 	else {
 	    integral[totalIndex] = 0.0;

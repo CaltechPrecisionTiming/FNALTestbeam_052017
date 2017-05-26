@@ -19,6 +19,7 @@ static float amplificationFactor[nPoints] = { 27.9/1.37*10 , 26.8/1.37*10, 31.6/
 
 double GetAmplificationFactor ( double measuredAmplitude );
 TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseName, double sigma = 1.0, bool makePlot = false );
+void WeierstrassTransform( short* channel, double* channelFilter, float* time, TString pulseName, double sigma );
 TGraphErrors* GetTGraph( double* channel, float* time );
 TGraphErrors GetTGraph( short* channel, float* time );
 double GetGaussTime( TGraphErrors* pulse );
@@ -41,7 +42,7 @@ float GausFit_MeanTime(TGraphErrors* pulse, const float index_first, const float
 float GetBaseline( int peak, short *a );
 float GetBaseline(TGraphErrors * pulse, int i_low, int i_high, TString fname );
 float GetPulseIntegral(int peak, short *a, std::string option = "");
-float GetPulseIntegral(int peak, int nsamples, short *a, float *t);
+float GetPulseIntegral(int peak, int nsamplesL, int nsamplesR, short *a, float *t);
 float ConstantThresholdTime(TGraphErrors * pulse, const float threshold);
 bool isRinging( int peak, short *a );
 

@@ -503,7 +503,7 @@ int main(int argc, char **argv) {
 	// Get pulse integral
 	if ( xmin[totalIndex] != 0 ) {
 	  //integral[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex]);
-	  integral[totalIndex] = GetPulseIntegral( index_min, 20, channel[totalIndex], time[realGroup[group]] );
+	  integral[totalIndex] = GetPulseIntegral( index_min, 20, 50, channel[totalIndex], time[realGroup[group]] );
 	  integralFull[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex], "full");
         }
 	else {

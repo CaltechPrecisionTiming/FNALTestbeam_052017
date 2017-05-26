@@ -141,7 +141,7 @@ int FindMinAbsolute( int n, short *a) {
   float xmin = a[5];
   int loc = 0;
   for  (int i = 5; i < n-10; i++) {
-    if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -40. )  
+    if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -8. )  
       { 
 	xmin = a[i];
 	loc = i;
@@ -157,7 +157,7 @@ int FindMinAbsolute( int n, double *a) {
   float xmin = a[5];
   int loc = 0;
   for  (int i = 5; i < n-10; i++) {
-    if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -40. )  
+    if ( a[i] < xmin  && a[i+1] < 0.5*a[i] && a[i] < -8. )  
       { 
 	xmin = a[i];
 	loc = i;
@@ -706,10 +706,10 @@ float GetPulseIntegral(int peak, short *a, std::string option)
 
 }
 
-float GetPulseIntegral(int peak, int nsamples, short *a, float *t) //returns charge in pC asssuming 50 Ohm termination
+float GetPulseIntegral(int peak, int nsamplesL, int nsamplesR, short *a, float *t) //returns charge in pC asssuming 50 Ohm termination
 {
   float integral = 0.;
-    for (int i=peak-nsamples; i < peak+nsamples; i++) {
+    for (int i=peak-nsamplesL; i < peak+nsamplesR; i++) {
       //Simpson's Rule for equaled space-->Cartwright correction for unequaled space, only worked for odd points
       integral += ( (t[i+2]-t[i]) / 6.0 ) * ( ( 2-(t[i+2]-t[i+1])/(t[i+1]-t[i]) )* a[i] + (t[i+2]-t[i])*(t[i+2]-t[i])/((t[i+2]-t[i+1])*(t[i+1]-t[i])) * a[i+1] + ( 2-(t[i+1]-t[i])/(t[i+2]-t[i+1]) ) * a[i+2] ) * 1e-9 * (1.0/4096.0) * (1.0/50.0) * 1e12; //in units of pC, for 50Ohm termination
       i++;
@@ -794,6 +794,61 @@ TGraphErrors* WeierstrassTransform( short* channel, float* time, TString pulseNa
     c->SaveAs(pulseName + "_Weierstrass.pdf");
   }
   return tg2;
+};
+
+
+//----------------------------------------------
+//Gaussian Filter to reduce high frequency noise
+//----------------------------------------------
+void WeierstrassTransform( short* channel, double* channelFilter, float* time, TString pulseName, 
+				    double sigma
+				    )
+{
+  float Gauss[1024];
+  //Setting Errors
+  float channelFloat[1024];
+  
+  for ( int i = 0; i < 1024; i++ )
+    {
+      channelFloat[i] = 1.0*channel[i];
+      channelFilter[i] = 0.0;
+    }
+  
+  TF1 *fb = new TF1("fb","gaus(0)", 0.0, 204.6);
+  fb->SetParameter(1, 100);
+  fb->SetParameter(2, sigma);
+  fb->SetParameter(0, 1/(sqrt(3.1415*2.0)*sigma) );
+  //eval Gaussian
+  float step = 0.2;//200ps
+  for ( int i = 0; i < 1024; i++ )
+    {
+      Gauss[i] = fb->Eval( float(i)*step );
+    }
+
+  float channelFloatFiltered[2048];
+  for ( int i = 0; i < 2048; i++ )
+    {
+      float convolvedPoint = 0;
+      for ( int j = 0; j <= i; j++ )
+	{
+	  if ( i < 1024 )
+	    {
+	      convolvedPoint += channelFloat[i-j]*Gauss[1023-j];
+	    }
+	  else
+	    {
+	      if ( 1023-(i-1023)-j >= 0 ) convolvedPoint += channelFloat[1023-j]*Gauss[1023-(i-1023)-j];
+	    }
+	}
+      //if ( i < 1024 ) channelFloatFiltered[i] = convolvedPoint;
+      channelFloatFiltered[i] = convolvedPoint;
+    }
+
+
+  for ( int i = 0; i < 1024; i++ ) channelFilter[i] = 0.2*channelFloatFiltered[i+523];
+
+  
+  return;
 };
 
 bool isRinging( int peak, short *a )

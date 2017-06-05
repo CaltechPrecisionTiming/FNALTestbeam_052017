@@ -284,7 +284,9 @@ int main(int argc, char **argv) {
   std::cout << "\n=== Processing input data ===\n" << std::endl;
   int nGoodEvents = 0;
   int maxEvents = nEvents;
-  if (nEvents < 0) maxEvents = 999999; maxEvents = nEvents;
+  if (nEvents < 0) maxEvents = 999999; 
+  else maxEvents = nEvents;
+
   for( int iEvent = 0; iEvent < maxEvents; iEvent++){ 
 
     //find corresponding pixel event    

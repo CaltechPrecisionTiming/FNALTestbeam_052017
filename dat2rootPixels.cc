@@ -204,6 +204,8 @@ int main(int argc, char **argv) {
   float y1;
   float x2;
   float y2;
+  float chi2;
+  int ntracks;
 
   tree->Branch("event", &event, "event/I");
   tree->Branch("tc", tc, "tc[4]/s");
@@ -238,6 +240,8 @@ int main(int argc, char **argv) {
   tree->Branch("y1", &y1, "y1/F");
   tree->Branch("x2", &x2, "x2/F");
   tree->Branch("y2", &y2, "y2/F");
+  tree->Branch("chi2", &chi2, "chi2/F");
+  tree->Branch("ntracks", &ntracks, "ntracks/I");
 
   // temp variables for data input
   uint   event_header;
@@ -280,7 +284,7 @@ int main(int argc, char **argv) {
   std::cout << "\n=== Processing input data ===\n" << std::endl;
   int nGoodEvents = 0;
   int maxEvents = nEvents;
-  if (nEvents < 0) maxEvents = 999999;
+  if (nEvents < 0) maxEvents = 999999; maxEvents = nEvents;
   for( int iEvent = 0; iEvent < maxEvents; iEvent++){ 
 
     //find corresponding pixel event    
@@ -293,9 +297,13 @@ int main(int argc, char **argv) {
     y1 = -999;
     x2 = -999;
     y2 = -999;  
+    chi2 = -999.;
+    ntracks = 0;
+
     for( int iPixelEvent = 0; iPixelEvent < pixelTree->GetEntries(); iPixelEvent++){ 
       pixelTree->GetEntry(iPixelEvent);
       if (pixelEvent.trigger == iEvent) {
+
 	xIntercept = pixelEvent.xIntercept;
 	yIntercept = pixelEvent.yIntercept;
 	xSlope = pixelEvent.xSlope;
@@ -304,6 +312,8 @@ int main(int argc, char **argv) {
 	y1 = yIntercept + ySlope*(-50000);
 	x2 = xIntercept + xSlope*(50000);
 	y2 = yIntercept + ySlope*(50000);
+	chi2 = pixelEvent.chi2;
+	ntracks++;
       }
     }
    

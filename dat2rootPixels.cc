@@ -534,8 +534,8 @@ int main(int argc, char **argv) {
                             || totalIndex == 26 || totalIndex == 35 );
         float fs[6]; // constant-fraction fit output
 	float fs_falling[6]; // falling exp timestapms
-	float cft_low_range  = 0.03;
-	float cft_high_range = 0.20;
+	float cft_low_range  = 0.15;
+	float cft_high_range = 0.70;
         if ( !isTrigChannel ) {
 	  if( drawDebugPulses ) {
 	    if ( xmin[totalIndex] != 0.0 ) {

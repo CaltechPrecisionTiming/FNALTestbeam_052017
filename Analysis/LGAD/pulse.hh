@@ -1,8 +1,8 @@
 //////////////////////////////////////////////////////////
 // This class has been automatically generated on
-// Sun May 14 21:19:56 2017 by ROOT version 6.08/00
+// Mon Jun  5 22:54:41 2017 by ROOT version 6.08/05
 // from TTree pulse/Digitized waveforms
-// found on file: Run521-576_CH1CH2LGADSkim_Rereco.root
+// found on file: data/RECO/v2/Run531_RECO.root
 //////////////////////////////////////////////////////////
 
 #ifndef pulse_h
@@ -35,6 +35,7 @@ public :
    Float_t         intfull[36];
    Float_t         gauspeak[36];
    Float_t         sigmoidTime[36];
+   Float_t         fullFitTime[36];
    Float_t         linearTime0[36];
    Float_t         linearTime15[36];
    Float_t         linearTime30[36];
@@ -43,6 +44,7 @@ public :
    Float_t         fallingTime[36];
    Float_t         risetime[36];
    Float_t         constantThresholdTime[36];
+   Bool_t          isRinging[36];
    Float_t         xIntercept;
    Float_t         yIntercept;
    Float_t         xSlope;
@@ -51,6 +53,8 @@ public :
    Float_t         y1;
    Float_t         x2;
    Float_t         y2;
+   Float_t         chi2;
+   Int_t           ntracks;
 
    // List of branches
    TBranch        *b_event;   //!
@@ -61,10 +65,11 @@ public :
    TBranch        *b_xmin;   //!
    TBranch        *b_amp;   //!
    TBranch        *b_base;   //!
-   TBranch        *b_int;   //!
+   TBranch        *b_integral;   //!
    TBranch        *b_intfull;   //!
    TBranch        *b_gauspeak;   //!
    TBranch        *b_sigmoidTime;   //!
+   TBranch        *b_fullFitTime;   //!
    TBranch        *b_linearTime0;   //!
    TBranch        *b_linearTime15;   //!
    TBranch        *b_linearTime30;   //!
@@ -73,6 +78,7 @@ public :
    TBranch        *b_fallingTime;   //!
    TBranch        *b_risetime;   //!
    TBranch        *b_constantThresholdTime;   //!
+   TBranch        *b_isRinging;   //!
    TBranch        *b_xIntercept;   //!
    TBranch        *b_yIntercept;   //!
    TBranch        *b_xSlope;   //!
@@ -81,6 +87,8 @@ public :
    TBranch        *b_y1;   //!
    TBranch        *b_x2;   //!
    TBranch        *b_y2;   //!
+   TBranch        *b_chi2;   //!
+   TBranch        *b_ntracks;   //!
 
    pulse(TTree *tree=0);
    virtual ~pulse();
@@ -89,13 +97,14 @@ public :
    virtual Long64_t LoadTree(Long64_t entry);
    virtual void     Init(TTree *tree);
    virtual void     Loop();
-   virtual std::pair<float,float> MPV_vs_Position( TString coor = "X", const int channel = -1, const float coorLow = 0, const float step = 25.,
-						  const float AmpLowCut = 0, const float AmpHighCut = 0.0);
-   virtual void CreateMPV_vs_PositionHisto(  );
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
+
+   virtual std::pair<float,float> MPV_vs_Position( TString coor = "X", const int channel = -1, const float coorLow = 0, const float step = 25.,const float AmpLowCut = 0, const float AmpHighCut = 0.0);
+   virtual void CreateMPV_vs_PositionHisto(  );
    void MakeEfficiencyVsXY(int channelNumber);
    void MakeEfficiencyVsRun(int channelNumber);
+
 
 };
 
@@ -107,9 +116,9 @@ pulse::pulse(TTree *tree) : fChain(0)
 // if parameter tree is not specified (or zero), connect the file
 // used to generate this class and read the Tree.
    if (tree == 0) {
-      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("Run521-576_CH1CH2LGADSkim_Rereco.root");
+      TFile *f = (TFile*)gROOT->GetListOfFiles()->FindObject("data/RECO/v2/Run531_RECO.root");
       if (!f || !f->IsOpen()) {
-         f = new TFile("Run521-576_CH1CH2LGADSkim_Rereco.root");
+         f = new TFile("data/RECO/v2/Run531_RECO.root");
       }
       f->GetObject("pulse",tree);
 
@@ -166,10 +175,11 @@ void pulse::Init(TTree *tree)
    fChain->SetBranchAddress("xmin", xmin, &b_xmin);
    fChain->SetBranchAddress("amp", amp, &b_amp);
    fChain->SetBranchAddress("base", base, &b_base);
-   fChain->SetBranchAddress("int", integral, &b_int);
+   fChain->SetBranchAddress("integral", integral, &b_integral);
    fChain->SetBranchAddress("intfull", intfull, &b_intfull);
    fChain->SetBranchAddress("gauspeak", gauspeak, &b_gauspeak);
    fChain->SetBranchAddress("sigmoidTime", sigmoidTime, &b_sigmoidTime);
+   fChain->SetBranchAddress("fullFitTime", fullFitTime, &b_fullFitTime);
    fChain->SetBranchAddress("linearTime0", linearTime0, &b_linearTime0);
    fChain->SetBranchAddress("linearTime15", linearTime15, &b_linearTime15);
    fChain->SetBranchAddress("linearTime30", linearTime30, &b_linearTime30);
@@ -178,6 +188,7 @@ void pulse::Init(TTree *tree)
    fChain->SetBranchAddress("fallingTime", fallingTime, &b_fallingTime);
    fChain->SetBranchAddress("risetime", risetime, &b_risetime);
    fChain->SetBranchAddress("constantThresholdTime", constantThresholdTime, &b_constantThresholdTime);
+   fChain->SetBranchAddress("isRinging", isRinging, &b_isRinging);
    fChain->SetBranchAddress("xIntercept", &xIntercept, &b_xIntercept);
    fChain->SetBranchAddress("yIntercept", &yIntercept, &b_yIntercept);
    fChain->SetBranchAddress("xSlope", &xSlope, &b_xSlope);
@@ -186,6 +197,8 @@ void pulse::Init(TTree *tree)
    fChain->SetBranchAddress("y1", &y1, &b_y1);
    fChain->SetBranchAddress("x2", &x2, &b_x2);
    fChain->SetBranchAddress("y2", &y2, &b_y2);
+   fChain->SetBranchAddress("chi2", &chi2, &b_chi2);
+   fChain->SetBranchAddress("ntracks", &ntracks, &b_ntracks);
    Notify();
 }
 

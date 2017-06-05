@@ -53,8 +53,8 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
   //declare histograms
   TH1F *histY_den = new TH1F("histX_den",";Y [mm];Number of Events", 50, 25,29);
   TH1F *histY_num = new TH1F("histX_num",";Y [mm];Number of Events", 50, 25,29);
-  TH1F *histX_den = new TH1F("histY_den",";X [mm];Number of Events", 50, 11,15);
-  TH1F *histX_num = new TH1F("histY_num",";X [mm];Number of Events", 50, 11,15);
+  TH1F *histX_den = new TH1F("histY_den",";X [mm];Number of Events", 50, 14,18);
+  TH1F *histX_num = new TH1F("histY_num",";X [mm];Number of Events", 50, 14,18);
   
   if (fChain == 0) return;
    Long64_t nentries = fChain->GetEntriesFast();
@@ -67,30 +67,40 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
       nb = fChain->GetEntry(jentry);   nbytes += nb;
 
       //cuts
-
+   
       //require photek to show MIP signal
-      if (!(amp[0] > 0.1)) continue;
-      // if (!(x1 > 15000 && x1 < 18000 && y1 > 21000 && y1 < 24000)) continue; //CNM irradiated
-      if (!(x1 > 11300 && x1 < 14600 && y1 > 25000 && y1 < 28500)) continue; //HPK KU 2 channel
+      if (!(amp[0] > 0.1 && amp[0] < 0.3)) continue;
+   
+      //reject events with more than 1 track
+      //if ( !(ntracks == 1)) continue;
 
-      histX_den->Fill( 0.001*x1 );
-      histY_den->Fill( 0.001*y1 );
-      //cout << "Fill Den: " << 0.001*x2 << " " << 0.001*y2 << "\n";
-      
-      //numerator
-      if (amp[channelNumber] > 0.01) {
-	//cout << "Fill NUM: " << 0.001*x2 << " " << 0.001*y2 << "\n";
-	histX_num->Fill( 0.001*x1 );
-	histY_num->Fill( 0.001*y1 );       
+      // if (!(x1 > 15000 && x1 < 18000 && y1 > 21000 && y1 < 24000)) continue; //CNM irradiated
+      //if (!(x1 > 11300 && x1 < 14600 && y1 > 25000 && y1 < 28500)) continue; //HPK KU 2 channel
+      //if (!(x1 > 15000 && x1 < 17000 && y1 > 25600 && y1 < 28200)) continue; //HPK KU 2 channel
+
+      if (y1 > 25600 && y1 < 28200 ) {
+	histX_den->Fill( 0.001*x1);
+	if (amp[channelNumber] > 0.05) {
+	    histX_num->Fill( 0.001*x1 );
+	}
       }
+      
+      if ( x1 > 15000 && x1 < 17000) {
+	histY_den->Fill( 0.001*y1 );
+	if (amp[channelNumber] > 0.05) {
+	  histY_num->Fill( 0.001*y1 );       
+	} 
+      }
+    
+	      
    }
 
-   vector<double> xbins;
+   vector<double> xbins; 
    vector<double> ybins;
    TGraphAsymmErrors* effX = createEfficiencyGraph(histX_num, histX_den,
 						   Form("EfficiencyVsX_Channel%d",channelNumber),
 						   xbins,
-						   11, 15,
+						   14, 18,
 						   0.0, 1.0,
 						   false
 						   );

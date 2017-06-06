@@ -50,7 +50,7 @@ int main( int argc, char** argv)
   //************************************
   //DeltaT and Time Resolution Vs Position
   //************************************
-  myPulse->MakeTimingPlotsVsXY(2);
+  myPulse->MakeTimingPlotsVsXY(1);
   
   return 0;
 }

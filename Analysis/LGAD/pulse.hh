@@ -104,7 +104,7 @@ public :
    virtual void CreateMPV_vs_PositionHisto(  );
    void MakeEfficiencyVsXY(int channelNumber);
    void MakeEfficiencyVsRun(int channelNumber);
-
+   void MakeTimingPlotsVsXY(int channelNumber);
 
 };
 

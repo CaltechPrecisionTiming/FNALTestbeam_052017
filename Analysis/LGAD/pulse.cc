@@ -128,6 +128,77 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
    
 };
 
+
+void pulse::MakeTimingPlotsVsXY(int channelNumber) {
+
+  //declare histograms
+  TH2F *histDeltaTVsX = new TH2F("histDeltaTVsX",";X [mm];Number of Events", 16, 14,18, 800, -10,10);
+  TH2F *histDeltaTVsY = new TH2F("histDeltaTVsY",";Y [mm];Number of Events", 16, 25,29, 800, -10,10);
+  
+
+  if (fChain == 0) return;
+   Long64_t nentries = fChain->GetEntriesFast();
+   Long64_t nbytes = 0, nb = 0;
+   for (Long64_t jentry=0; jentry<nentries;jentry++) {
+      Long64_t ientry = LoadTree(jentry);
+      if (ientry < 0) break;
+      if (jentry % 100 == 0) cout << "Processing Event " << jentry << " of " << nentries << "\n";
+
+      nb = fChain->GetEntry(jentry);   nbytes += nb;
+
+      //cuts
+   
+      //require photek to show MIP signal
+      if (!(amp[0] > 0.1 && amp[0] < 0.3)) continue;
+
+      //reject events with more than 1 track
+      if ( !(ntracks == 1 && chi2 < 10 )) continue;
+      if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-4)) continue;
+      if ( !(amp[channelNumber] < 0.3 )) continue;
+      if ( !(amp[channelNumber] > 0.05)) continue;
+
+      histDeltaTVsX->Fill( x1*0.001, gauspeak[0] - linearTime45[channelNumber] );
+      histDeltaTVsY->Fill( y1*0.001, gauspeak[0] - linearTime45[channelNumber] );     
+	      
+   }
+
+   int nXBins = histDeltaTVsX->GetXaxis()->GetNbins();
+   float meanDeltaTVsX[nXBins];
+   float meanDeltaTErrVsX[nXBins];
+   float timeResolutionVsX[nXBins];
+   float timeResolutionErrVsX[nXBins];
+   float xBins[nXBins];
+   float xBinsErr[nXBins];
+   for (int b=1; b<=nXBins; b++) {
+     TH1D *tmphist = histDeltaTVsX->ProjectionY("tmpProjY",b,b+1);
+
+     TF1* fgaus = new TF1("fgaus","gaus", tmphist->GetMean() - 2*tmphist->GetRMS(), tmphist->GetMean() + 2*tmphist->GetRMS());
+     tmphist->Fit("fgaus","Q","", tmphist->GetMean() - 2*tmphist->GetRMS(), tmphist->GetMean() + 2*tmphist->GetRMS());     
+     xBins[b-1] = histDeltaTVsX->GetXaxis()->GetBinCenter(b);
+     xBinsErr[b-1] = histDeltaTVsX->GetXaxis()->GetBinUpEdge(b) - histDeltaTVsX->GetXaxis()->GetBinCenter(b);
+     meanDeltaTVsX[b-1] = fgaus->GetParameter(1);
+     meanDeltaTErrVsX[b-1] = fgaus->GetParError(1);
+     timeResolutionVsX[b-1] = fgaus->GetParameter(2);
+     timeResolutionErrVsX[b-1] = fgaus->GetParError(2); 
+     cout << b-1 << " : " << xBins[b-1] << " " << meanDeltaTVsX[b-1] << "\n";
+   }
+
+
+   TGraphErrors* GraphDeltaTVsX = new TGraphErrors(nXBins, xBins, meanDeltaTVsX, xBinsErr, meanDeltaTErrVsX);
+   TGraphErrors* GraphTimeResolutionVsX = new TGraphErrors(nXBins, xBins, timeResolutionVsX, xBinsErr, timeResolutionErrVsX);
+
+   TFile *file = new TFile("timing.root","UPDATE");
+   file->cd();
+   file->WriteTObject(GraphDeltaTVsX, "GraphDeltaTVsX", "WriteDelete");  
+   file->WriteTObject(GraphTimeResolutionVsX, "GraphTimeResolutionVsX", "WriteDelete");  
+   file->WriteTObject(histDeltaTVsX, "histDeltaTVsX", "WriteDelete");  
+   file->WriteTObject(histDeltaTVsY, "histDeltaTVsY", "WriteDelete");  
+   file->Close();
+   delete file; 
+   
+};
+
+
 void pulse::MakeEfficiencyVsRun(int channelNumber) {
 
   //declare histograms

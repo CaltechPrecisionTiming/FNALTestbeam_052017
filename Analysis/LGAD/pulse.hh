@@ -103,6 +103,7 @@ public :
    virtual std::pair<float,float> MPV_vs_Position( TString coor = "X", const int channel = -1, const float coorLow = 0, const float step = 25.,const float AmpLowCut = 0, const float AmpHighCut = 0.0);
    virtual void CreateMPV_vs_PositionHisto(  );
    void MakeEfficiencyVsXY(int channelNumber);
+   void MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, float xmin, float xmax, float ymin, float ymax);
    void MakeEfficiencyVsRun(int channelNumber);
    void MakeTimingPlotsVsXY(int channelNumber);
 

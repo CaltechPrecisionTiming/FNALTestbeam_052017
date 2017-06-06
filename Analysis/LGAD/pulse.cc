@@ -115,7 +115,7 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
 						   );
    
 
-   TFile *file = new TFile("eff.root","UPDATE");
+   TFile *file = new TFile(Form("eff_Channel%d.root", channelNumber),"UPDATE");
    file->cd();
    file->WriteTObject(effX, "Efficiency_X", "WriteDelete");
    file->WriteTObject(effY, "Efficiency_Y", "WriteDelete");
@@ -128,6 +128,142 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
    
 };
 
+
+void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, float xmin, float xmax, float ymin, float ymax)
+{
+  //declare histograms
+  float histo_x_min = 10.;
+  float histo_x_max = 30.;
+  float histo_y_min = 10.;
+  float histo_y_max = 30.;
+  
+  TH1F *histY_den = new TH1F("histX_den",";Y [mm];Number of Events", nbins, histo_y_min, histo_y_max);
+  TH1F *histY_num = new TH1F("histX_num",";Y [mm];Number of Events", nbins, histo_y_min, histo_y_max);
+  TH1F *histX_den = new TH1F("histY_den",";X [mm];Number of Events", nbins, histo_x_min, histo_x_max);
+  TH1F *histX_num = new TH1F("histY_num",";X [mm];Number of Events", nbins, histo_x_min, histo_x_max);
+
+  //Activate Only Necessary Branches
+  fChain->SetBranchStatus("*", 0);
+  fChain->SetBranchStatus("amp", 1);
+  fChain->SetBranchStatus("x1", 1);
+  fChain->SetBranchStatus("y1", 1);
+  fChain->SetBranchStatus("ntracks", 1);
+  fChain->SetBranchStatus("chi2", 1);
+  fChain->SetBranchStatus("xSlope", 1);
+  fChain->SetBranchStatus("ySlope", 1);
+   
+  if (fChain == 0) return;
+   Long64_t nentries = fChain->GetEntriesFast();
+   Long64_t nbytes = 0, nb = 0;
+   for (Long64_t jentry=0; jentry<nentries;jentry++) {
+      Long64_t ientry = LoadTree(jentry);
+      if (ientry < 0) break;
+      if (jentry % 10000 == 0) cout << "Processing Event " << jentry << " of " << nentries << "\n";
+
+      nb = fChain->GetEntry(jentry);   nbytes += nb;
+
+      //cuts
+   
+      //require photek to show MIP signal
+      if (!(amp[0] > 0.1 && amp[0] < 0.3)) continue;
+
+      //reject events with more than 1 track
+      if ( !(ntracks == 1 && chi2 < 10 )) continue;
+      if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-4)) continue;
+      if ( !(amp[channelNumber] < 0.3 )) continue;
+
+      if ( y1 > ymin && y1 < ymax ) {
+	histX_den->Fill( 0.001*x1);
+	if ( amp[channelNumber] > threshold ) {
+	    histX_num->Fill( 0.001*x1 );
+	}
+      }
+      
+      if ( x1 > xmin && x1 < xmax ) {
+	histY_den->Fill( 0.001*y1 );
+	if ( amp[channelNumber] > threshold ) {
+	  histY_num->Fill( 0.001*y1 );       
+	} 
+      }
+    
+	      
+   }
+
+   vector<double> xbins; 
+   vector<double> ybins;
+   TGraphAsymmErrors* effX = createEfficiencyGraph(histX_num, histX_den,
+						   Form("EfficiencyVsX_Channel%d",channelNumber),
+						   xbins,
+						   histo_x_min, histo_x_max,
+						   0.0, 1.0,
+						   false
+						   );
+   TGraphAsymmErrors* effY = createEfficiencyGraph(histY_num, histY_den,
+						   Form("EfficiencyVsY_Channel%d",channelNumber),
+						   ybins,
+						   histo_y_min, histo_y_max,
+						   0.0, 1.0,
+						   false
+						   );
+
+   //Find x,y position for the max efficiency
+   double x_eff_low, x_eff_high;
+   double y_eff_low, y_eff_high;
+   double dummy_eff;
+   //For X
+   for ( int i = 1; i <= nbins; i++ )
+     {
+       effX->GetPoint( i, x_eff_low, dummy_eff );
+       if( dummy_eff > 0.5 ) break;
+     }
+   
+   for ( int i = 1; i <= nbins; i++ )
+     {
+       effX->GetPoint( nbins-i, x_eff_high, dummy_eff );
+       if( dummy_eff > 0.5 ) break;
+     }
+
+   //For Y
+   for ( int i = 1; i <= nbins; i++ )
+     {
+       effY->GetPoint( i, y_eff_low, dummy_eff );
+       if( dummy_eff > 0.5 ) break;
+     }
+   
+   for ( int i = 1; i <= nbins; i++ )
+     {
+       effY->GetPoint( nbins-i, y_eff_high, dummy_eff );
+       if( dummy_eff > 0.5 ) break;
+     }
+   
+
+   //std::cout << " x:" << y_eff_low << " - " << y_eff_high << std::endl;
+   //Cosmetics
+   effX->SetTitle("");
+   effX->GetYaxis()->SetTitle("Efficiency");
+   effX->GetXaxis()->SetTitle("x-coordinate [mm]");
+   effX->GetXaxis()->SetRangeUser( x_eff_low-1., x_eff_high+1.);
+
+   effY->SetTitle("");
+   effY->GetYaxis()->SetTitle("Efficiency");
+   effY->GetXaxis()->SetTitle("y-coordinate [mm]");
+   effY->GetXaxis()->SetRangeUser( y_eff_low-1., y_eff_high+1.);
+
+
+   //Activate all branches back to normal
+   fChain->SetBranchStatus("*", 1);
+   
+   TFile *file = new TFile(Form("eff_Channel%d.root", channelNumber),"UPDATE");
+   file->cd();
+   file->WriteTObject(effX, "Efficiency_X", "WriteDelete");
+   file->WriteTObject(effY, "Efficiency_Y", "WriteDelete");
+   file->WriteTObject(histX_num, "histX_num", "WriteDelete");
+   file->WriteTObject(histX_den, "histX_den", "WriteDelete");
+   file->WriteTObject(histY_num, "histY_num", "WriteDelete");
+   file->WriteTObject(histY_den, "histY_den", "WriteDelete");
+   file->Close();
+   delete file; 
+};
 
 void pulse::MakeTimingPlotsVsXY(int channelNumber) {
 

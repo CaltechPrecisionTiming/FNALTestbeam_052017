@@ -51,10 +51,10 @@ void pulse::Loop()
 void pulse::MakeEfficiencyVsXY(int channelNumber) {
 
   //declare histograms
-  TH1F *histY_den = new TH1F("histX_den",";Y [mm];Number of Events", 8, 25,29);
-  TH1F *histY_num = new TH1F("histX_num",";Y [mm];Number of Events", 8, 25,29);
-  TH1F *histX_den = new TH1F("histY_den",";X [mm];Number of Events", 8, 14,18);
-  TH1F *histX_num = new TH1F("histY_num",";X [mm];Number of Events", 8, 14,18);
+  TH1F *histY_den = new TH1F("histX_den",";Y [mm];Number of Events", 50, 25,29);
+  TH1F *histY_num = new TH1F("histX_num",";Y [mm];Number of Events", 50, 25,29);
+  TH1F *histX_den = new TH1F("histY_den",";X [mm];Number of Events", 50, 14,18);
+  TH1F *histX_num = new TH1F("histY_num",";X [mm];Number of Events", 50, 14,18);
   
   if (fChain == 0) return;
    Long64_t nentries = fChain->GetEntriesFast();

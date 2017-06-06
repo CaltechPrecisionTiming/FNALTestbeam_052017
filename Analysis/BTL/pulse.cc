@@ -132,8 +132,8 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
 void pulse::MakeTimingPlotsVsXY(int channelNumber) {
 
   //declare histograms
-  TH2F *histDeltaTVsX = new TH2F("histDeltaTVsX",";X [mm];Number of Events", 16, 14,18, 800, -10,10);
-  TH2F *histDeltaTVsY = new TH2F("histDeltaTVsY",";Y [mm];Number of Events", 16, 25,29, 800, -10,10);
+  TH2F *histDeltaTVsX = new TH2F("histDeltaTVsX",";X [mm];Number of Events", 13, 11,24, 800, -10,10);
+  TH2F *histDeltaTVsY = new TH2F("histDeltaTVsY",";Y [mm];Number of Events", 14, 16,30, 800, -10,10);
   
 
   if (fChain == 0) return;
@@ -152,13 +152,13 @@ void pulse::MakeTimingPlotsVsXY(int channelNumber) {
       if (!(amp[0] > 0.1 && amp[0] < 0.3)) continue;
 
       //reject events with more than 1 track
-      if ( !(ntracks == 1 && chi2 < 10 )) continue;
-      if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-4)) continue;
+      // if ( !(ntracks == 1 && chi2 < 10 )) continue;
+      // if ( !(fabs(xSlope) < 1e-3 && fabs(ySlope) < 1e-3)) continue;
       if ( !(amp[channelNumber] < 0.3 )) continue;
       if ( !(amp[channelNumber] > 0.05)) continue;
 
       histDeltaTVsX->Fill( x1*0.001, gauspeak[0] - linearTime45[channelNumber] );
-      histDeltaTVsY->Fill( y1*0.001, gauspeak[0] - linearTime45[channelNumber] );     
+      histDeltaTVsY->Fill( y1*0.001, gauspeak[0] - linearTime45[channelNumber] );        
 	      
    }
 

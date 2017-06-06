@@ -105,19 +105,22 @@ int main(int argc, char* argv[]) {
 
 	    float amp[36];
 	    float integral[36];
+	    float x1;
+            inputTree->SetBranchStatus("*",0);
             inputTree->SetBranchStatus("amp",1);
-            inputTree->SetBranchAddress("amp",amp);	    
 	    inputTree->SetBranchStatus("integral",1);
+	    inputTree->SetBranchStatus("x1",1);
+            inputTree->SetBranchAddress("amp",amp);	    
             inputTree->SetBranchAddress("integral",integral);
+	    inputTree->SetBranchAddress("x1",&x1);
 	    
             //store the weights
             for (int n=0;n<inputTree->GetEntries();n++) { 
-	      if (n%1000000==0) cout << "Processed Event " << n << "\n";
+	      if (n%100==0) cout << "Processed Event " << n << "\n";
                 inputTree->GetEntry(n);
 
 		bool passSkim = false;
-		//passSkim = ( (amp[10] > 0.3 && amp[10] < 0.45) && (amp[9]>0.15 && amp[9] < 0.3) );
-		passSkim = ( integral[5] > 0.5 );
+		passSkim = ( x1 > 0 && amp[0] > 0.1 && (amp[1] > 0.02 || amp[2] > 0.02) );
 
 		if (passSkim) {
 		  EventsPassed++;

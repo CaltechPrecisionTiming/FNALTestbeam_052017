@@ -240,11 +240,31 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
    //std::cout << " x:" << y_eff_low << " - " << y_eff_high << std::endl;
    //Cosmetics
    effX->SetTitle("");
+   effX->GetXaxis()->SetTitleSize(0.05);
+   effX->GetXaxis()->SetTitleOffset(0.87);
+   effX->GetYaxis()->SetTitleSize(0.05);
+   effX->GetYaxis()->SetTitleOffset(0.83);
+   effX->SetMarkerStyle(kBlue);
+   effX->SetMarkerSize(1.1);
+   effX->SetMarkerColor(kBlue);
+   effX->SetLineColor(kBlue);
+   effX->SetMarkerStyle(20);
    effX->GetYaxis()->SetTitle("Efficiency");
    effX->GetXaxis()->SetTitle("x-coordinate [mm]");
    effX->GetXaxis()->SetRangeUser( x_eff_low-1., x_eff_high+1.);
-
+   
+     
    effY->SetTitle("");
+   effY->GetXaxis()->SetTitleSize(0.05);
+   effY->GetXaxis()->SetTitleOffset(0.87);
+   effY->GetYaxis()->SetTitleSize(0.05);
+   effY->GetYaxis()->SetTitleOffset(0.83);
+   effY->SetMarkerStyle(20);
+   effY->SetMarkerStyle(kBlue);
+   effY->SetMarkerSize(1.1);
+   effY->SetMarkerColor(kBlue);
+   effY->SetLineColor(kBlue);
+   effY->SetMarkerStyle(20);
    effY->GetYaxis()->SetTitle("Efficiency");
    effY->GetXaxis()->SetTitle("y-coordinate [mm]");
    effY->GetXaxis()->SetRangeUser( y_eff_low-1., y_eff_high+1.);

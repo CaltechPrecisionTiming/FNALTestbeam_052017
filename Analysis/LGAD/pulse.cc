@@ -252,6 +252,7 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
    effX->GetYaxis()->SetTitle("Efficiency");
    effX->GetXaxis()->SetTitle("x-coordinate [mm]");
    effX->GetXaxis()->SetRangeUser( x_eff_low-1., x_eff_high+1.);
+   effX->GetYaxis()->SetRangeUser( 0, 1.11);
    
      
    effY->SetTitle("");
@@ -268,7 +269,7 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
    effY->GetYaxis()->SetTitle("Efficiency");
    effY->GetXaxis()->SetTitle("y-coordinate [mm]");
    effY->GetXaxis()->SetRangeUser( y_eff_low-1., y_eff_high+1.);
-
+   effY->GetYaxis()->SetRangeUser( 0, 1.11);
 
    //Activate all branches back to normal
    fChain->SetBranchStatus("*", 1);

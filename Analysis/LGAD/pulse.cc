@@ -518,18 +518,206 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
      }
   
   //Cosmetics
-  gr_mpv_x->GetYaxis()->SetRangeUser(0,2.*max(average_x,average_y));
+  gr_mpv_x->GetYaxis()->SetRangeUser(0,1.2*max(average_x,average_y));
   gr_mpv_x->GetXaxis()->SetRangeUser(x_eff_low-1.0,x_eff_high+1.0);
+  gr_mpv_x->SetTitle("");
+  gr_mpv_x->GetXaxis()->SetTitle("x-coordinate [mm]");
+  gr_mpv_x->GetYaxis()->SetTitle("m.p.v [V]");
+  gr_mpv_x->GetXaxis()->SetTitleSize(0.05);
+  gr_mpv_x->GetXaxis()->SetTitleOffset(0.87);
+  gr_mpv_x->GetYaxis()->SetTitleSize(0.05);
+  gr_mpv_x->GetYaxis()->SetTitleOffset(0.83);
+  gr_mpv_x->SetMarkerStyle(20);
+  gr_mpv_x->SetMarkerStyle(kBlue);
+  gr_mpv_x->SetMarkerSize(1.1);
+  gr_mpv_x->SetMarkerColor(kBlue);
+  gr_mpv_x->SetLineColor(kBlue);
+  gr_mpv_x->SetMarkerStyle(20);
   
-  gr_mpv_y->GetYaxis()->SetRangeUser(0,2.*max(average_x,average_y));
-  //gr_mpv_y->GetXaxis()->SetRangeUser(y_eff_low-1.0,y_eff_high+1.0);
+  gr_mpv_y->GetYaxis()->SetRangeUser(0,1.2*max(average_x,average_y));
+  gr_mpv_y->GetXaxis()->SetRangeUser(y_eff_low-1.0,y_eff_high+1.0);
+  gr_mpv_y->SetTitle("");
+  gr_mpv_y->GetXaxis()->SetTitle("y-coordinate [mm]");
+  gr_mpv_y->GetYaxis()->SetTitle("m.p.v [V]");
+  gr_mpv_y->GetXaxis()->SetTitleSize(0.05);
+  gr_mpv_y->GetXaxis()->SetTitleOffset(0.87);
+  gr_mpv_y->GetYaxis()->SetTitleSize(0.05);
+  gr_mpv_y->GetYaxis()->SetTitleOffset(0.83);
+  gr_mpv_y->SetMarkerStyle(20);
+  gr_mpv_y->SetMarkerStyle(kBlue);
+  gr_mpv_y->SetMarkerSize(1.1);
+  gr_mpv_y->SetMarkerColor(kBlue);
+  gr_mpv_y->SetLineColor(kBlue);
+  gr_mpv_y->SetMarkerStyle(20);
   
 
-  TFile* fout = new TFile("mpv_tgraphs.root", "RECREATE");
+  TFile* fout = new TFile(Form("mpv_tgraphs_Channel%d.root", channelNumber), "RECREATE");
   gr_mpv_x->Write("mpv_x");
   gr_mpv_y->Write("mpv_y");
   fout->Close();
 };
+
+
+void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float binWidth, float threshold, float xmin, float xmax, float ymin, float ymax,
+					   bool _isMean )
+{
+   if ( dut <= 0 || dut > 2 )
+     {
+       std::cerr << "[ERROR]: please provide a valid dut = <1,2>" << std::endl;
+       return;
+     }
+  //x_init, y_init, and steps are in microns
+  //const int npoints = 30;
+   
+
+  //------------------
+  //Define initial positions and step size, all units are in microns
+  //-------------------
+  float x_init    = 10000.;//microns
+  float y_init    = 10000.;//microns
+  int niterations = (int)((30000.-10000.)/binWidth);//microns
+
+  float x_pos[niterations];//x-positions
+  float x_pos_un[niterations];//x-position uncertainty
+  float mpv_x[niterations];//mpv amplitude for x
+  float mpv_x_un[niterations];//uncertainty on mpv amplitude x
+  float y_pos[niterations];//y-positions
+  float y_pos_un[niterations];//y-position uncertainty
+  float mpv_y[niterations];//mpv amplitude for x
+  float mpv_y_un[niterations];//uncertainty on mpv amplitude y
+
+
+  const float um_to_mm = 0.001;
+  const float ns_to_ps = 1000.;
+  float average_x = 0;
+  float average_y = 0;
+  int npoints_above_zero_x = 0;
+  int npoints_above_zero_y = 0;
+  for ( int i = 0; i < niterations; i++ )
+    {
+      x_pos[i] = x_init + binWidth*(float)i;
+      x_pos_un[i] = 0;
+      std::pair<float,float> MPVAndError_X;
+      if ( _isMean ) MPVAndError_X = DeltaT_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold, 0.2, ymin, ymax );
+      else MPVAndError_X = DeltaT_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold, 0.2, ymin, ymax, false );
+      x_pos[i] = x_pos[i]*um_to_mm;
+      mpv_x[i] = MPVAndError_X.first*ns_to_ps;
+      mpv_x_un[i] = MPVAndError_X.second*ns_to_ps;
+      if ( mpv_x_un[i]/mpv_x[i] > 0.9 )
+	{
+	  mpv_x[i]    = 0;
+	  mpv_x_un[i] = 0;
+	}
+      if ( mpv_x[i] > -10000 && mpv_x[i] < 10000)
+	{
+	  npoints_above_zero_x++;
+	  average_x += mpv_x[i];
+	}
+      
+      
+      y_pos[i] = y_init + binWidth*(float)i;
+      y_pos_un[i] = 0;
+      std::pair<float,float> MPVAndError_Y;
+      if ( _isMean ) MPVAndError_Y = DeltaT_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold, 0.2, xmin, xmax );
+      else MPVAndError_Y = DeltaT_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold, 0.2, xmin, xmax, false );
+      y_pos[i] = y_pos[i]*um_to_mm;
+      mpv_y[i] = MPVAndError_Y.first*ns_to_ps;
+      mpv_y_un[i] = MPVAndError_Y.second*ns_to_ps;
+      if ( mpv_y_un[i]/mpv_y[i] > 0.9 )
+	{
+	  mpv_y[i]    = 0;
+	  mpv_y_un[i] = 0;
+	}
+      if ( mpv_y[i] > -10000 && mpv_y[i] < 10000)
+	{
+	  npoints_above_zero_y++;
+	  average_y += mpv_y[i];
+	}
+      
+    }
+
+  TGraphErrors* gr_mpv_x = new TGraphErrors(niterations, x_pos, mpv_x, x_pos_un, mpv_x_un);
+  TGraphErrors* gr_mpv_y = new TGraphErrors(niterations, y_pos, mpv_y, y_pos_un, mpv_y_un);
+  average_x = average_x/((float)npoints_above_zero_x);
+  average_y = average_y/((float)npoints_above_zero_y);
+  std::cout << "x: " <<  average_x << " y: " << average_y << std::endl;
+
+  //Find x,y position for the max efficiency
+   double x_eff_low, x_eff_high;
+   double y_eff_low, y_eff_high;
+   double dummy_eff;
+   //For X
+   for ( int i = 1; i <= niterations; i++ )
+     {
+       gr_mpv_x->GetPoint( i, x_eff_low, dummy_eff );
+       if( dummy_eff > 0.8*average_x ) break;
+     }
+   
+   for ( int i = 1; i <= niterations; i++ )
+     {
+       gr_mpv_x->GetPoint( niterations-i, x_eff_high, dummy_eff );
+       if( dummy_eff > 0.8*average_x ) break;
+     }
+
+   //For Y
+   for ( int i = 1; i <= niterations; i++ )
+     {
+       gr_mpv_y->GetPoint( i, y_eff_low, dummy_eff );
+       if( dummy_eff > 0.8*average_y ) break;
+     }
+   
+   for ( int i = 1; i <= niterations; i++ )
+     {
+       gr_mpv_y->GetPoint( niterations-i, y_eff_high, dummy_eff );
+       if( dummy_eff > 0.8*average_y ) break;
+     }
+  
+   //Cosmetics
+   //gr_mpv_x->GetYaxis()->SetRangeUser(0,1.2*max(average_x,average_y));
+   gr_mpv_x->GetYaxis()->SetRangeUser(-10000,10000);
+  gr_mpv_x->GetXaxis()->SetRangeUser(x_eff_low-1.0,x_eff_high+1.0);
+  gr_mpv_x->SetTitle("");
+  gr_mpv_x->GetXaxis()->SetTitle("x-coordinate [mm]");
+  if ( _isMean ) gr_mpv_x->GetYaxis()->SetTitle("#Delta t [ps]");
+  else gr_mpv_x->GetYaxis()->SetTitle("Time resolution [ps]");
+  gr_mpv_x->GetXaxis()->SetTitleSize(0.05);
+  gr_mpv_x->GetXaxis()->SetTitleOffset(0.87);
+  gr_mpv_x->GetYaxis()->SetTitleSize(0.05);
+  gr_mpv_x->GetYaxis()->SetTitleOffset(0.83);
+  gr_mpv_x->SetMarkerStyle(20);
+  gr_mpv_x->SetMarkerStyle(kBlue);
+  gr_mpv_x->SetMarkerSize(1.1);
+  gr_mpv_x->SetMarkerColor(kBlue);
+  gr_mpv_x->SetLineColor(kBlue);
+  gr_mpv_x->SetMarkerStyle(20);
+  
+  //gr_mpv_y->GetYaxis()->SetRangeUser(0,1.2*max(average_x,average_y));
+  gr_mpv_y->GetYaxis()->SetRangeUser(-10000,10000);
+  gr_mpv_y->GetXaxis()->SetRangeUser(y_eff_low-1.0,y_eff_high+1.0);
+  gr_mpv_y->SetTitle("");
+  gr_mpv_y->GetXaxis()->SetTitle("y-coordinate [mm]");
+  if ( _isMean ) gr_mpv_y->GetYaxis()->SetTitle("#Delta t [ps]");
+  else gr_mpv_y->GetYaxis()->SetTitle("Time resolution [ps]");
+  gr_mpv_y->GetXaxis()->SetTitleSize(0.05);
+  gr_mpv_y->GetXaxis()->SetTitleOffset(0.87);
+  gr_mpv_y->GetYaxis()->SetTitleSize(0.05);
+  gr_mpv_y->GetYaxis()->SetTitleOffset(0.83);
+  gr_mpv_y->SetMarkerStyle(20);
+  gr_mpv_y->SetMarkerStyle(kBlue);
+  gr_mpv_y->SetMarkerSize(1.1);
+  gr_mpv_y->SetMarkerColor(kBlue);
+  gr_mpv_y->SetLineColor(kBlue);
+  gr_mpv_y->SetMarkerStyle(20);
+  
+  TString fname;
+  if ( _isMean ) fname = Form("deltaT_mean_tgraphs_Channel%d.root", channelNumber);
+  else fname = Form("deltaT_time_resolution_tgraphs_Channel%d.root", channelNumber);
+  TFile* fout = new TFile( fname, "RECREATE");
+  gr_mpv_x->Write("time_x");
+  gr_mpv_y->Write("time_y");
+  fout->Close();
+};
+
 
 std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int channel, const float coorLow, const float step,
 					       const float AmpLowCut, const float AmpHighCut,
@@ -591,3 +779,91 @@ std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int 
   fout->Close();
   return result;
 };
+
+
+std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const int channel, const float coorLow, const float step,
+						  const float AmpLowCut, const float AmpHighCut,
+						  float other_corr_low, float other_corr_high, bool _isMean )
+{
+  if ( channel < 0 ) return std::pair<float,float>(-999,0);
+  if ( dut <= 0 || dut > 2 )
+    {
+      std::cerr << "[ERROR]: please provide a valid dut = <1,2>" << std::endl;
+      return std::pair<float,float>(-999,0);
+    }
+  
+  fChain->SetBranchStatus("*", 0);
+  fChain->SetBranchStatus("amp", 1);
+  fChain->SetBranchStatus("gauspeak", 1);
+  fChain->SetBranchStatus("linearTime0", 1);
+  fChain->SetBranchStatus("linearTime15", 1);
+  fChain->SetBranchStatus("linearTime30", 1);
+  fChain->SetBranchStatus("linearTime45", 1);
+  fChain->SetBranchStatus("linearTime60", 1);
+  fChain->SetBranchStatus("x1", 1);
+  fChain->SetBranchStatus("y1", 1);
+  fChain->SetBranchStatus("x2", 1);
+  fChain->SetBranchStatus("y2", 1);
+  if (fChain == 0) return std::pair<float,float>(-999,0);
+  Long64_t nentries = fChain->GetEntriesFast();
+  Long64_t nbytes = 0, nb = 0;
+  
+  cout << "Running MPV_vs_Position Analysis\n";
+  cout << "Total Events: " << nentries << "\n";
+  TH1F* h_deltaT = new TH1F("h_delta_T", "h_delta_T", 1000, -10, 10);
+  for (Long64_t jentry=0; jentry<nentries;jentry++)
+    {
+      Long64_t ientry = LoadTree(jentry);
+      if (ientry < 0) break;
+      if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
+      nb = fChain->GetEntry(jentry);   nbytes += nb;
+      
+      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > 0.1 && amp[0] < 0.2 )
+	{
+	  if ( dut == 1 )
+	    {
+	      if ( (coor == "x" || coor == "X") && x1 >= coorLow && x1 < (coorLow + step) && y1 > other_corr_low && y1 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
+	      if ( (coor == "y" || coor == "Y") && y1 >= coorLow && y1 < (coorLow + step) && x1 > other_corr_low && x1 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
+	    }
+	  else if ( dut == 2 )
+	    {
+	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
+	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
+	    }
+	}
+    }
+
+  if ( h_deltaT->GetEntries() < 10 ) return std::pair<float,float>(-999,0);
+  double mean = h_deltaT->GetMean();
+  double rms = h_deltaT->GetRMS();
+  //Restoring all branches
+  fChain->SetBranchStatus("*", 1);
+  //Fitting
+  TF1* gaus = new TF1( "gaus", "gaus", mean -2.*rms, mean +2.*rms );
+  h_deltaT->Fit("gaus","Q","", mean -2.*rms, mean +2.*rms);
+  std::pair<float,float> result;
+  if ( _isMean )
+    {
+      result.first  = gaus->GetParameter(1);
+      result.second = gaus->GetParError(1);
+    }
+  else
+    {
+      result.first  = gaus->GetParameter(2);
+      result.second = gaus->GetParError(2);
+    }
+  //Creating output file
+  std::string myCoor;
+  if ( coor == "X" || coor == "x" ) myCoor = "X";
+  if ( coor == "Y" || coor == "y" ) myCoor = "Y";
+  TString fname;
+  if ( _isMean ) fname  = Form("gaus_mean_Channel%d_step%.2f_%s.root", channel,coorLow + step, myCoor.c_str());
+  else fname  = Form("gaus_sigma_Channel%d_step%.2f_%s.root", channel,coorLow + step, myCoor.c_str());
+  TFile* fout = new TFile(fname, "recreate");
+  h_deltaT->Write();
+  fout->Close();
+  return result;
+};
+
+
+

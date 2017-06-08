@@ -100,8 +100,11 @@ public :
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
 
-   virtual std::pair<float,float> MPV_vs_Position( TString coor = "X", const int channel = -1, const float coorLow = 0, const float step = 25.,const float AmpLowCut = 0, const float AmpHighCut = 0.0);
-   virtual void CreateMPV_vs_PositionHisto(  );
+  virtual std::pair<float,float> MPV_vs_Position( int dut = -1, TString coor = "X", const int channel = -1,
+						  const float coorLow = 0, const float step = 25.,
+						  const float AmpLowCut = 0, const float AmpHighCut = 0.0,
+						  float other_corr_low = 0, float other_corr_high = 99999 );
+  virtual void CreateMPV_vs_PositionHisto(  int dut, int channelNumber, float binWidth, float threshold, float xmin, float xmax, float ymin, float ymax );
    void MakeEfficiencyVsXY(int channelNumber);
    void MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, float xmin, float xmax, float ymin, float ymax);
    void MakeEfficiencyVsRun(int channelNumber);

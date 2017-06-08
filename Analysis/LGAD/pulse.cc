@@ -409,40 +409,121 @@ void pulse::MakeEfficiencyVsRun(int channelNumber) {
 };
 
 
-void pulse::CreateMPV_vs_PositionHisto( )
+void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWidth, float threshold, float xmin, float xmax, float ymin, float ymax )
 {
-  const int npoints = 30;
-  float x_pos[npoints];//x-positions
-  float x_pos_un[npoints];//x-position uncertainty
-  float mpv_x[npoints];//mpv amplitude for x
-  float mpv_x_un[npoints];//uncertainty on mpv amplitude x
-  float y_pos[npoints];//y-positions
-  float y_pos_un[npoints];//y-position uncertainty
-  float mpv_y[npoints];//mpv amplitude for x
-  float mpv_y_un[npoints];//uncertainty on mpv amplitude y
+   if ( dut <= 0 || dut > 2 )
+     {
+       std::cerr << "[ERROR]: please provide a valid dut = <1,2>" << std::endl;
+       return;
+     }
+  //x_init, y_init, and steps are in microns
+  //const int npoints = 30;
+   
 
   //------------------
   //Define initial positions and step size, all units are in microns
   //-------------------
-  float x_init = 11000.;//microns
-  float y_init = 13000.;//microns
-  float step = 500.;//microns
-  for ( int i = 0; i < npoints; i++ )
+  float x_init    = 10000.;//microns
+  float y_init    = 10000.;//microns
+  int niterations = (int)((30000.-10000.)/binWidth);//microns
+
+  float x_pos[niterations];//x-positions
+  float x_pos_un[niterations];//x-position uncertainty
+  float mpv_x[niterations];//mpv amplitude for x
+  float mpv_x_un[niterations];//uncertainty on mpv amplitude x
+  float y_pos[niterations];//y-positions
+  float y_pos_un[niterations];//y-position uncertainty
+  float mpv_y[niterations];//mpv amplitude for x
+  float mpv_y_un[niterations];//uncertainty on mpv amplitude y
+
+
+  const float um_to_mm = 0.001;
+  float average_x = 0;
+  float average_y = 0;
+  int npoints_above_zero_x = 0;
+  int npoints_above_zero_y = 0;
+  for ( int i = 0; i < niterations; i++ )
     {
-      x_pos[i] = x_init + step*(float)i;
+      x_pos[i] = x_init + binWidth*(float)i;
       x_pos_un[i] = 0;
-      std::pair<float,float> MPVAndError_X = MPV_vs_Position( "X", 1, x_pos[i], step, 0.08, 0.2 );
+      std::pair<float,float> MPVAndError_X = MPV_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold, 0.2, ymin, ymax );
+      x_pos[i] = x_pos[i]*um_to_mm;
       mpv_x[i] = MPVAndError_X.first;
       mpv_x_un[i] = MPVAndError_X.second;
-      y_pos[i] = y_init + step*(float)i;
+      if ( mpv_x_un[i]/mpv_x[i] > 0.2 )
+	{
+	  mpv_x[i]    = 0;
+	  mpv_x_un[i] = 0;
+	}
+      if ( mpv_x[i] > 0 && mpv_x[i] < 0.5)
+	{
+	  npoints_above_zero_x++;
+	  average_x += mpv_x[i];
+	}
+      
+      
+      y_pos[i] = y_init + binWidth*(float)i;
       y_pos_un[i] = 0;
-      std::pair<float,float> MPVAndError_Y = MPV_vs_Position( "Y", 1, y_pos[i], step, 0.08, 0.2 );
+      std::pair<float,float> MPVAndError_Y = MPV_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold, 0.2, xmin, xmax );
+      y_pos[i] = y_pos[i]*um_to_mm;
       mpv_y[i] = MPVAndError_Y.first;
       mpv_y_un[i] = MPVAndError_Y.second;
+      if ( mpv_y_un[i]/mpv_y[i] > 0.2 )
+	{
+	  mpv_y[i]    = 0;
+	  mpv_y_un[i] = 0;
+	}
+      if ( mpv_y[i] > 0 && mpv_y[i] < 0.5)
+	{
+	  npoints_above_zero_y++;
+	  average_y += mpv_y[i];
+	}
+      
     }
 
-  TGraphErrors* gr_mpv_x = new TGraphErrors(npoints, x_pos, mpv_x, x_pos_un, mpv_x_un);
-  TGraphErrors* gr_mpv_y = new TGraphErrors(npoints, y_pos, mpv_y, y_pos_un, mpv_y_un);
+  TGraphErrors* gr_mpv_x = new TGraphErrors(niterations, x_pos, mpv_x, x_pos_un, mpv_x_un);
+  TGraphErrors* gr_mpv_y = new TGraphErrors(niterations, y_pos, mpv_y, y_pos_un, mpv_y_un);
+  average_x = average_x/((float)npoints_above_zero_x);
+  average_y = average_y/((float)npoints_above_zero_y);
+  std::cout << "x: " <<  average_x << " y: " << average_y << std::endl;
+
+  //Find x,y position for the max efficiency
+   double x_eff_low, x_eff_high;
+   double y_eff_low, y_eff_high;
+   double dummy_eff;
+   //For X
+   for ( int i = 1; i <= niterations; i++ )
+     {
+       gr_mpv_x->GetPoint( i, x_eff_low, dummy_eff );
+       if( dummy_eff > 0.8*average_x ) break;
+     }
+   
+   for ( int i = 1; i <= niterations; i++ )
+     {
+       gr_mpv_x->GetPoint( niterations-i, x_eff_high, dummy_eff );
+       if( dummy_eff > 0.8*average_x ) break;
+     }
+
+   //For Y
+   for ( int i = 1; i <= niterations; i++ )
+     {
+       gr_mpv_y->GetPoint( i, y_eff_low, dummy_eff );
+       if( dummy_eff > 0.8*average_y ) break;
+     }
+   
+   for ( int i = 1; i <= niterations; i++ )
+     {
+       gr_mpv_y->GetPoint( niterations-i, y_eff_high, dummy_eff );
+       if( dummy_eff > 0.8*average_y ) break;
+     }
+  
+  //Cosmetics
+  gr_mpv_x->GetYaxis()->SetRangeUser(0,2.*max(average_x,average_y));
+  gr_mpv_x->GetXaxis()->SetRangeUser(x_eff_low-1.0,x_eff_high+1.0);
+  
+  gr_mpv_y->GetYaxis()->SetRangeUser(0,2.*max(average_x,average_y));
+  //gr_mpv_y->GetXaxis()->SetRangeUser(y_eff_low-1.0,y_eff_high+1.0);
+  
 
   TFile* fout = new TFile("mpv_tgraphs.root", "RECREATE");
   gr_mpv_x->Write("mpv_x");
@@ -450,13 +531,21 @@ void pulse::CreateMPV_vs_PositionHisto( )
   fout->Close();
 };
 
-std::pair<float,float> pulse::MPV_vs_Position( TString coor, const int channel, const float coorLow, const float step,
-			      const float AmpLowCut, const float AmpHighCut)
+std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int channel, const float coorLow, const float step,
+					       const float AmpLowCut, const float AmpHighCut,
+					       float other_corr_low, float other_corr_high)
 {
   if ( channel < 0 ) return std::pair<float,float>(-999,0);
+  if ( dut <= 0 || dut > 2 )
+    {
+      std::cerr << "[ERROR]: please provide a valid dut = <1,2>" << std::endl;
+      return std::pair<float,float>(-999,0);
+    }
   
   fChain->SetBranchStatus("*", 0);
   fChain->SetBranchStatus("amp", 1);
+  fChain->SetBranchStatus("x1", 1);
+  fChain->SetBranchStatus("y1", 1);
   fChain->SetBranchStatus("x2", 1);
   fChain->SetBranchStatus("y2", 1);
   if (fChain == 0) return std::pair<float,float>(-999,0);
@@ -473,18 +562,30 @@ std::pair<float,float> pulse::MPV_vs_Position( TString coor, const int channel, 
       if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       
-      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut )
+      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > 0.1 && amp[0] < 0.2 )
 	{
- 	  if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < coorLow + step ) h_mpv->Fill(amp[channel]);
-	  if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < coorLow + step ) h_mpv->Fill(amp[channel]);
+	  if ( dut == 1 )
+	    {
+	      if ( (coor == "x" || coor == "X") && x1 >= coorLow && x1 < (coorLow + step) && y1 > other_corr_low && y1 < other_corr_high ) h_mpv->Fill(amp[channel]);
+	      if ( (coor == "y" || coor == "Y") && y1 >= coorLow && y1 < (coorLow + step) && x1 > other_corr_low && x1 < other_corr_high ) h_mpv->Fill(amp[channel]);
+	    }
+	  else if ( dut == 2 )
+	    {
+	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high ) h_mpv->Fill(amp[channel]);
+	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high ) h_mpv->Fill(amp[channel]);
+	    }
 	}
     }
-  
+
+  //Restoring all branches
+  fChain->SetBranchStatus("*", 1);
+  //Fitting
   TF1* landau = new TF1( "landau", "landau", AmpLowCut, AmpHighCut );
   h_mpv->Fit("landau","Q","", AmpLowCut, AmpHighCut);
   std::pair<float,float> result;
   result.first = landau->GetParameter(1);
   result.second = landau->GetParError(1);
+  //Creating output file
   TFile* fout = new TFile("mpv_test.root", "recreate");
   h_mpv->Write();
   fout->Close();

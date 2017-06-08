@@ -37,8 +37,9 @@ int main( int argc, char** argv)
   //myPulse->MPV_vs_Position( "Y", 1, 27000., 0.02, 0.35);
   //myPulse->MakeEfficiencyVsXY(1);
   //myPulse->MakeEfficiencyVsXY(2);
-  myPulse->MakeEfficiencyVsXY(1, 200, 0.07, 11650., 14300., 25500, 28250.);
-  myPulse->MakeEfficiencyVsXY(2, 200, 0.05, 15000., 17100., 25500, 28250.);
+  myPulse->CreateMPV_vs_PositionHisto(1, 1, 500, 0.07, 11650., 14300., 25500, 28250.);
+  //myPulse->MakeEfficiencyVsXY(1, 200, 0.07, 11650., 14300., 25500, 28250.);
+  //myPulse->MakeEfficiencyVsXY(2, 200, 0.05, 15000., 17100., 25500, 28250.);
   
   return 0;
 }

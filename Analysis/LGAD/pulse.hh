@@ -100,20 +100,33 @@ public :
    virtual Bool_t   Notify();
    virtual void     Show(Long64_t entry = -1);
 
+  //Loop, Fits, and Computations are done in these functions; They are used by the end USER Methods
   virtual std::pair<float,float> MPV_vs_Position( int dut = -1, TString coor = "X", const int channel = -1,
 						  const float coorLow = 0, const float step = 25.,
 						  const float AmpLowCut = 0, const float AmpHighCut = 0.0,
-						  float other_corr_low = 0, float other_corr_high = 99999 );
+						  float other_corr_low = 0, float other_corr_high = 99999,
+						  float photek_low = 0.1, float photek_high = 0.3);
   
   virtual std::pair<float,float> DeltaT_vs_Position( int dut = -1, TString coor = "X", const int channel = -1,
 						     const float coorLow = 0, const float step = 25.,
 						     const float AmpLowCut = 0, const float AmpHighCut = 0.0,
-						     float other_corr_low = 0, float other_corr_high = 99999, bool _isMean = true );
-  virtual void CreateMPV_vs_PositionHisto(  int dut, int channelNumber, float binWidth, float threshold, float xmin, float xmax, float ymin, float ymax );
-  virtual void CreateDeltaT_vs_PositionHisto(  int dut, int channelNumber, float binWidth, float threshold, float xmin, float xmax, float ymin, float ymax,
-					       bool _isMean = true );
+						     float other_corr_low = 0, float other_corr_high = 99999, bool _isMean = true,
+						     float photek_low = 0.1, float photek_high = 0.3);
+
+  //This Methods are recommended to be used for by end USER
+  virtual void CreateMPV_vs_PositionHisto(  int dut, int channelNumber, float binWidth, float threshold_low, float threshold_high,
+					    float xmin, float xmax, float ymin, float ymax,
+					    float photek_low = 0.1, float photek_high = 0.3);
+  virtual void CreateDeltaT_vs_PositionHisto(  int dut, int channelNumber, float binWidth, float threshold_low, float threshold_high,
+					       float xmin, float xmax, float ymin, float ymax, bool _isMean = true,
+					       float photek_low = 0.1, float photek_high = 0.3);
+  void MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, float xmin, float xmax, float ymin, float ymax,
+			  float photek_low = 0.1, float photek_high = 0.3);
+  
+  
+  //Si's code
   void MakeEfficiencyVsXY(int channelNumber);
-  void MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, float xmin, float xmax, float ymin, float ymax);
+  
   void MakeEfficiencyVsRun(int channelNumber);
   void MakeTimingPlotsVsXY(int channelNumber);
   

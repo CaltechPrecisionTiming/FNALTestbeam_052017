@@ -129,7 +129,8 @@ void pulse::MakeEfficiencyVsXY(int channelNumber) {
 };
 
 
-void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, float xmin, float xmax, float ymin, float ymax)
+void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, float xmin, float xmax, float ymin, float ymax,
+			       float photek_low, float photek_high)
 {
   //declare histograms
   float histo_x_min = 10.;
@@ -165,11 +166,12 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
       //cuts
    
       //require photek to show MIP signal
-      if (!(amp[0] > 0.1 && amp[0] < 0.3)) continue;
+      if (!(amp[0] > photek_low && amp[0] < photek_high)) continue;
 
       //reject events with more than 1 track
       if ( !(ntracks == 1 && chi2 < 10 )) continue;
-      if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-4)) continue;
+      //if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-4)) continue;
+      if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-3)) continue;
       if ( !(amp[channelNumber] < 0.3 )) continue;
 
       if ( y1 > ymin && y1 < ymax ) {
@@ -409,7 +411,9 @@ void pulse::MakeEfficiencyVsRun(int channelNumber) {
 };
 
 
-void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWidth, float threshold, float xmin, float xmax, float ymin, float ymax )
+void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWidth, float threshold_low, float threshold_high,
+					float xmin, float xmax, float ymin, float ymax,
+					float photek_low, float photek_high)
 {
    if ( dut <= 0 || dut > 2 )
      {
@@ -446,7 +450,8 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
     {
       x_pos[i] = x_init + binWidth*(float)i;
       x_pos_un[i] = 0;
-      std::pair<float,float> MPVAndError_X = MPV_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold, 0.2, ymin, ymax );
+      std::pair<float,float> MPVAndError_X = MPV_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax,
+							      photek_low, photek_high );
       x_pos[i] = x_pos[i]*um_to_mm;
       mpv_x[i] = MPVAndError_X.first;
       mpv_x_un[i] = MPVAndError_X.second;
@@ -464,7 +469,8 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
       
       y_pos[i] = y_init + binWidth*(float)i;
       y_pos_un[i] = 0;
-      std::pair<float,float> MPVAndError_Y = MPV_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold, 0.2, xmin, xmax );
+      std::pair<float,float> MPVAndError_Y = MPV_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax,
+							      photek_low, photek_high);
       y_pos[i] = y_pos[i]*um_to_mm;
       mpv_y[i] = MPVAndError_Y.first;
       mpv_y_un[i] = MPVAndError_Y.second;
@@ -558,8 +564,9 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
 };
 
 
-void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float binWidth, float threshold, float xmin, float xmax, float ymin, float ymax,
-					   bool _isMean )
+void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float binWidth, float threshold_low, float threshold_high,
+					   float xmin, float xmax, float ymin, float ymax, bool _isMean,
+					   float photek_low, float photek_high)
 {
    if ( dut <= 0 || dut > 2 )
      {
@@ -598,8 +605,14 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
       x_pos[i] = x_init + binWidth*(float)i;
       x_pos_un[i] = 0;
       std::pair<float,float> MPVAndError_X;
-      if ( _isMean ) MPVAndError_X = DeltaT_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold, 0.2, ymin, ymax );
-      else MPVAndError_X = DeltaT_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold, 0.2, ymin, ymax, false );
+      if ( _isMean )
+	{
+	  MPVAndError_X = DeltaT_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax, true, photek_low, photek_high );
+	}
+      else
+	{
+	  MPVAndError_X = DeltaT_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax, false, photek_low, photek_high );
+	}
       x_pos[i] = x_pos[i]*um_to_mm;
       mpv_x[i] = MPVAndError_X.first*ns_to_ps;
       mpv_x_un[i] = MPVAndError_X.second*ns_to_ps;
@@ -618,8 +631,14 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
       y_pos[i] = y_init + binWidth*(float)i;
       y_pos_un[i] = 0;
       std::pair<float,float> MPVAndError_Y;
-      if ( _isMean ) MPVAndError_Y = DeltaT_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold, 0.2, xmin, xmax );
-      else MPVAndError_Y = DeltaT_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold, 0.2, xmin, xmax, false );
+      if ( _isMean )
+	{
+	  MPVAndError_Y = DeltaT_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax, true, photek_low, photek_high );
+	}
+      else
+	{
+	  MPVAndError_Y = DeltaT_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax, false, photek_low, photek_high );
+	}
       y_pos[i] = y_pos[i]*um_to_mm;
       mpv_y[i] = MPVAndError_Y.first*ns_to_ps;
       mpv_y_un[i] = MPVAndError_Y.second*ns_to_ps;
@@ -721,7 +740,8 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
 
 std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int channel, const float coorLow, const float step,
 					       const float AmpLowCut, const float AmpHighCut,
-					       float other_corr_low, float other_corr_high)
+					       float other_corr_low, float other_corr_high,
+					       float photek_low, float photek_high)
 {
   if ( channel < 0 ) return std::pair<float,float>(-999,0);
   if ( dut <= 0 || dut > 2 )
@@ -750,7 +770,7 @@ std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int 
       if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       
-      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > 0.1 && amp[0] < 0.2 )
+      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > photek_low && amp[0] < photek_high )
 	{
 	  if ( dut == 1 )
 	    {
@@ -774,7 +794,13 @@ std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int 
   result.first = landau->GetParameter(1);
   result.second = landau->GetParError(1);
   //Creating output file
-  TFile* fout = new TFile("mpv_test.root", "recreate");
+  //Creating output file
+  std::string myCoor;
+  if ( coor == "X" || coor == "x" ) myCoor = "X";
+  if ( coor == "Y" || coor == "y" ) myCoor = "Y";
+  
+  TString fname = Form("mpv_Channel%d_step%.2f_%s.root", channel,coorLow + step, myCoor.c_str());
+  TFile* fout = new TFile(fname, "recreate");
   h_mpv->Write();
   fout->Close();
   return result;
@@ -783,7 +809,8 @@ std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int 
 
 std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const int channel, const float coorLow, const float step,
 						  const float AmpLowCut, const float AmpHighCut,
-						  float other_corr_low, float other_corr_high, bool _isMean )
+						  float other_corr_low, float other_corr_high, bool _isMean,
+						  float photek_low, float photek_high)
 {
   if ( channel < 0 ) return std::pair<float,float>(-999,0);
   if ( dut <= 0 || dut > 2 )
@@ -818,7 +845,7 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
       if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       
-      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > 0.1 && amp[0] < 0.2 )
+      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > photek_low && amp[0] < photek_high )
 	{
 	  if ( dut == 1 )
 	    {

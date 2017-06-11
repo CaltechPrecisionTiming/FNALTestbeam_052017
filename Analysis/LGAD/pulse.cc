@@ -273,6 +273,16 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
    effY->GetXaxis()->SetRangeUser( y_eff_low-1., y_eff_high+1.);
    effY->GetYaxis()->SetRangeUser( 0, 1.11);
 
+   TCanvas* c = new TCanvas("canvas","canvas",600,400);
+   effX->Draw("AP");
+   c->SaveAs(Form("Eff_vs_X_Ch%d.pdf",channelNumber));
+   c->SaveAs(Form("Eff_vs_X_Ch%d.C",channelNumber));
+   effY->Draw("AP");
+   c->SaveAs(Form("Eff_vs_Y_Ch%d.pdf",channelNumber));
+   c->SaveAs(Form("Eff_vs_Y_Ch%d.C",channelNumber));
+   delete c;
+
+   
    //Activate all branches back to normal
    fChain->SetBranchStatus("*", 1);
    
@@ -532,7 +542,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
   gr_mpv_x->GetXaxis()->SetTitleSize(0.05);
   gr_mpv_x->GetXaxis()->SetTitleOffset(0.87);
   gr_mpv_x->GetYaxis()->SetTitleSize(0.05);
-  gr_mpv_x->GetYaxis()->SetTitleOffset(0.83);
+  gr_mpv_x->GetYaxis()->SetTitleOffset(0.98);
   gr_mpv_x->SetMarkerStyle(20);
   gr_mpv_x->SetMarkerStyle(kBlue);
   gr_mpv_x->SetMarkerSize(1.1);
@@ -548,7 +558,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
   gr_mpv_y->GetXaxis()->SetTitleSize(0.05);
   gr_mpv_y->GetXaxis()->SetTitleOffset(0.87);
   gr_mpv_y->GetYaxis()->SetTitleSize(0.05);
-  gr_mpv_y->GetYaxis()->SetTitleOffset(0.83);
+  gr_mpv_y->GetYaxis()->SetTitleOffset(0.98);
   gr_mpv_y->SetMarkerStyle(20);
   gr_mpv_y->SetMarkerStyle(kBlue);
   gr_mpv_y->SetMarkerSize(1.1);
@@ -556,7 +566,14 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
   gr_mpv_y->SetLineColor(kBlue);
   gr_mpv_y->SetMarkerStyle(20);
   
-
+  TCanvas* c = new TCanvas("canvas","canvas",600,400);
+  gr_mpv_x->Draw("AP");
+  c->SaveAs(Form("MPV_vs_X_Ch%d.pdf",channelNumber));
+  c->SaveAs(Form("MPV_vs_X_Ch%d.C",channelNumber));
+  gr_mpv_y->Draw("AP");
+  c->SaveAs(Form("MPV_vs_Y_Ch%d.pdf",channelNumber));
+  c->SaveAs(Form("MPV_vs_Y_Ch%d.C",channelNumber));
+  delete c;
   TFile* fout = new TFile(Form("mpv_tgraphs_Channel%d.root", channelNumber), "RECREATE");
   gr_mpv_x->Write("mpv_x");
   gr_mpv_y->Write("mpv_y");
@@ -729,8 +746,30 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
    gr_mpv_y->SetMarkerStyle(20);
    
   TString fname;
-  if ( _isMean ) fname = Form("deltaT_mean_tgraphs_Channel%d.root", channelNumber);
-  else fname = Form("deltaT_time_resolution_tgraphs_Channel%d.root", channelNumber);
+  if ( _isMean )
+    {
+      TCanvas* c = new TCanvas("canvas","canvas",600,400);
+      gr_mpv_x->Draw("AP");
+      c->SaveAs(Form("MeanTime_vs_X_Ch%d.pdf",channelNumber));
+      c->SaveAs(Form("MeanTime_vs_X_Ch%d.C",channelNumber));
+      gr_mpv_y->Draw("AP");
+      c->SaveAs(Form("MeanTime_vs_Y_Ch%d.pdf",channelNumber));
+      c->SaveAs(Form("MeanTime_vs_Y_Ch%d.C",channelNumber));
+      delete c;
+      fname = Form("deltaT_mean_tgraphs_Channel%d.root", channelNumber);
+    }
+  else
+    {
+      TCanvas* c = new TCanvas("canvas","canvas",600,400);
+      gr_mpv_x->Draw("AP");
+      c->SaveAs(Form("TimeResolution_vs_X_Ch%d.pdf",channelNumber));
+      c->SaveAs(Form("TimeResolution_vs_X_Ch%d.C",channelNumber));
+      gr_mpv_y->Draw("AP");
+      c->SaveAs(Form("TimeResolution_vs_Y_Ch%d.pdf",channelNumber));
+      c->SaveAs(Form("TimeResolution_vs_Y_Ch%d.C",channelNumber));
+      delete c;
+      fname = Form("deltaT_time_resolution_tgraphs_Channel%d.root", channelNumber);
+    }
   TFile* fout = new TFile( fname, "RECREATE");
   gr_mpv_x->Write("time_x");
   gr_mpv_y->Write("time_y");

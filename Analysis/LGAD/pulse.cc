@@ -171,8 +171,8 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
       //reject events with more than 1 track
       if ( !(ntracks == 1 && chi2 < 10 )) continue;
       //if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-4)) continue;
-      if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-3)) continue;
-      if ( !(amp[channelNumber] < 0.3 )) continue;
+      if ( !(fabs(xSlope) < 1e-3 && (fabs(ySlope) < 4e-3) && fabs(ySlope) > 3e-3)) continue;
+      if ( !(amp[channelNumber] < 0.45 )) continue;//No saturation
 
       if ( y1 > ymin && y1 < ymax ) {
 	histX_den->Fill( 0.001*x1);

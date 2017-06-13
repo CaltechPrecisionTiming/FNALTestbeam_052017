@@ -136,6 +136,7 @@ int main( int argc, char** argv)
   myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.030, 0.150, 14500., 17100., 24300, 27000., false, 0.10, 0.30);
   */
 
+  /*
   //------------------------
   //Runs 843-846 2-channel (ch3-ch4) 50CPix KU board
   //------------------------
@@ -156,7 +157,70 @@ int main( int argc, char** argv)
   //--------------------
   myPulse->CreateDeltaT_vs_PositionHisto(1, 3, 200, 0.018, 0.10, 11100., 13100., 22900, 25300., false, 0.16, 0.32);
   myPulse->CreateDeltaT_vs_PositionHisto(1, 4, 200, 0.018, 0.10, 13500., 16000., 26100, 28400., false, 0.16, 0.32);
+  */
+
+  /*
+  //------------------------
+  //Runs 638-781 2-channel (ch1-ch1) 50DPix KU board
+  //------------------------
+  //Efficiency
+  myPulse->MakeEfficiencyVsXY(1, 400, 0.04, 11800., 14250., 25600, 28200., 0.10, 0.23);
+  myPulse->MakeEfficiencyVsXY(2, 400, 0.04, 14850., 17250., 25600, 28200., 0.10, 0.23);
+  //MPV
+  myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.040, 0.18, 11800., 14250., 25600, 28200., 0.10, 0.23);
+  myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.040, 0.18, 14850., 17250., 25600, 28200., 0.10, 0.23);
+  //--------------------
+  // Mean Time
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.040, 0.18, 11800., 14250., 25600, 28200., true, 0.10, 0.23);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.040, 0.18, 14850., 17250., 25600, 28200., true, 0.10, 0.23);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.040, 0.18, 11800., 14250., 25600, 28200., false, 0.10, 0.23);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.040, 0.18, 14850., 17250., 25600, 28200., false, 0.10, 0.23);
+  */
+
+  /*
+  //------------------------
+  //Runs 1637-1681 1-channelCNM 1mm2 on UCSC board (ch2)
+  //------------------------
+  //Efficiency
+  myPulse->MakeEfficiencyVsXY(2, 400, 0.012, 16700., 17200., 21300, 21800., 0.08, 0.14);
+  //MPV
+  myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.012, 0.040, 16700., 17200., 21300, 21800., 0.08, 0.14);
+  //--------------------
+  // Mean Time
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.012, 0.040, 16700., 17200., 21300, 21800., true, 0.08, 0.14);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.012, 0.040, 16700., 17200., 21300, 21800., false, 0.08, 0.14);
+  */
+
+
   
+  //------------------------
+  //Runs 635-961 (Irradiated) 50D on UCSC board (ch1), CNM W11LGA35 (ch2)
+  //------------------------
+  //Efficiency
+  myPulse->MakeEfficiencyVsXY(1, 400, 0.015, 13600., 14300., 21400, 21900., 0.13, 0.32);
+  myPulse->MakeEfficiencyVsXY(2, 400, 0.010, 15600., 16300., 22100, 22900., 0.13, 0.32);
+  //MPV
+  myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., 0.13, 0.32);
+  myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.010, 0.06, 15600., 16300., 22100, 22900., 0.13, 0.32);
+  //--------------------
+  // Mean Time
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., true, 0.13, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.010, 0.06, 15600., 16300., 22100, 22900., true, 0.13, 0.32);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.015, 0.06, 13600., 14300., 21400, 21900., false, 0.13, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.010, 0.08, 15600., 16300., 22100, 22900., false, 0.13, 0.32);
+ 
   
   return 0;
 }

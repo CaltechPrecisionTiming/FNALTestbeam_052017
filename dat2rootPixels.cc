@@ -179,8 +179,10 @@ int main(int argc, char **argv) {
   short channel[36][1024]; // calibrated input (in V)
   double channelFilter[36][1024]; // calibrated input (in V)
   float xmin[36]; // location of peak
+  float xminRestricted[36]; //location of peak restricted near to channel 0 reference
   float base[36]; // baseline voltage
   float amp[36]; // pulse amplitude
+  float ampRestricted[36]; // pulse amplitude within a restricted window near channel 0 reference
   float integral[36]; // integral in a window
   float integralFull[36]; // integral over all bins
   float gauspeak[36]; // time extracted with gaussian fit
@@ -216,7 +218,9 @@ int main(int argc, char **argv) {
   tree->Branch("channelFilter", channelFilter, "channelFilter[36][1024]/D");
   tree->Branch("time", time, "time[4][1024]/F");
   tree->Branch("xmin", xmin, "xmin[36]/F");
+  tree->Branch("xminRestricted", xminRestricted, "xminRestricted[36]/F");
   tree->Branch("amp", amp, "amp[36]/F");
+  tree->Branch("ampRestricted", ampRestricted, "ampRestricted[36]/F");
   tree->Branch("base", base, "base[36]/F");
   tree->Branch("integral", integral, "integral[36]/F");
   tree->Branch("intfull", integralFull, "intfull[36]/F");
@@ -427,7 +431,8 @@ int main(int argc, char **argv) {
                 channel[totalIndex][j] = 0;
             }
             xmin[totalIndex] = 0.;
-            amp [totalIndex] = 0.;
+	    xminRestricted[totalIndex] = 0.;
+	    amp [totalIndex] = 0.;
             base[totalIndex] = 0.;
             integral[totalIndex] = 0.;
             integralFull[totalIndex] = 0.;
@@ -475,6 +480,10 @@ int main(int argc, char **argv) {
 
 	int index_min = FindMinAbsolute(1024, channel[totalIndex]);//Short version
 	//int index_min = FindMinAbsolute(1024, channelFilter[totalIndex]);//Float version
+	int index_min_restricted = index_min;
+	if (totalIndex > 0) {
+	  index_min_restricted = FindMinAbsolute(1024, channel[totalIndex], xmin[0] + 40, xmin[0] + 80 );	
+	}
 	
 	// DRS-glitch finder: zero out bins which have large difference
 	// with respect to neighbors in only one or two bins
@@ -499,6 +508,7 @@ int main(int argc, char **argv) {
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );//Short Version
 	//pulse = new TGraphErrors( *GetTGraph( channelFilter[totalIndex], time[realGroup[group]] ) );//Float Version
 	xmin[totalIndex] = index_min;
+	xminRestricted[totalIndex] = index_min_restricted;
 
         float filterWidth = config.getFilterWidth(totalIndex);
 	if (filterWidth) {
@@ -511,6 +521,8 @@ int main(int argc, char **argv) {
 	Double_t tmpMin = 0.0;
 	pulse->GetPoint(index_min, tmpMin, tmpAmp);
 	amp[totalIndex] = tmpAmp * (1.0 / 4096.0); 
+	pulse->GetPoint(index_min_restricted, tmpMin, tmpAmp);
+	ampRestricted[totalIndex] = tmpAmp * (1.0 / 4096.0); 
 
 	// Get pulse integral
 	if ( xmin[totalIndex] != 0 ) {

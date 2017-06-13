@@ -29,6 +29,7 @@ int FindMin( int n, short *a);
 int FindRealMin( int n, short *a);
 int FindMinAbsolute( int n, double *a);
 int FindMinAbsolute( int n, short *a);
+int FindMinAbsolute( int n, short *a, int leftBoundary, int rightBoundary);
 int FindMinFirstPeakAboveNoise( int n, short *a);
 float GausFit_MeanTime(TGraphErrors * pulse, const float index_first, const float index_last);
 float RisingEdgeFitTime(TGraphErrors * pulse, const float index_min, const float constantFraction, TString fname, bool makePlot = false );

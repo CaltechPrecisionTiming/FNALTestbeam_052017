@@ -33,9 +33,194 @@ int main( int argc, char** argv)
   TFile* fin = new TFile(inputRootFile.c_str(), "READ");
   TTree* myTree = (TTree*)fin->Get("pulse");
   pulse* myPulse = new pulse( myTree );
-  myPulse->CreateMPV_vs_PositionHisto();
-  myPulse->MPV_vs_Position( "Y", 1, 27000., 0.02, 0.35);
+
+  /*
+  //----------------------
+  // MPV
+  //----------------------
+  myPulse->CreateMPV_vs_PositionHisto(1, 1, 250, 0.07, 11650., 14300., 25500, 28250.);
+  myPulse->CreateMPV_vs_PositionHisto(1, 2, 250, 0.05, 15000., 17100., 25500, 28250.);
+  //--------------------
+  // Delta Time
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 250, 0.07, 11650., 14300., 25500, 28250.);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 250, 0.05, 15000., 17100., 25500, 28250.);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 250, 0.07, 0.25, 11650., 14300., 25500, 28250., false, 0.1, 0.3);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 3, 250, 0.05, 0.2, 15000., 17100., 25500, 28250., false, 0.16, 0.32);
+  //-------------------
+  //Efficiency
+  //-------------------
+  myPulse->MakeEfficiencyVsXY(1, 200, 0.07, 11650., 14300., 25500, 28250.);
+  myPulse->MakeEfficiencyVsXY(2, 200, 0.05, 15000., 17100., 25500, 28250.);
+  */
+
+
+
+  /*
+  //------------------------
+  //Runs 847-891 FNAL 50DPix
+  //------------------------
+  //Efficiency
+  myPulse->MakeEfficiencyVsXY(3, 200, 0.02, 11100., 13500., 20500, 23000., 0.16, 0.32);
+  myPulse->MakeEfficiencyVsXY(4, 200, 0.02, 11100., 13500., 23500, 26000., 0.16, 0.32);
+  myPulse->MakeEfficiencyVsXY(5, 200, 0.02, 13800., 16500., 23500, 26000., 0.16, 0.32);
+  myPulse->MakeEfficiencyVsXY(6, 200, 0.02, 13800., 16500., 20500, 23000., 0.16, 0.32);
   
+  //MPV
+  myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.02, 0.1, 11100., 13500., 20500, 23000.);
+  myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.02, 0.1, 11100., 13500., 23500, 26000.);
+  myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.02, 0.1, 13800., 16500., 23500, 26000.);
+  myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.02, 0.1, 13800., 16500., 20500, 23000.);
+  //--------------------
+  // Mean Time
+  //--------------------
+  
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 3, 250, 0.02, 0.1, 11100., 13500., 20500, 23000., true, 0.16, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 4, 250, 0.02, 0.1, 11100., 13500., 23500, 26000., true, 0.16, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 5, 250, 0.02, 0.1, 13800., 16500., 23500, 26000., true, 0.16, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 6, 250, 0.02, 0.1, 13800., 16500., 20500, 23000., true, 0.16, 0.32);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 3, 250, 0.02, 0.1, 11100., 13500., 20500, 23000., false, 0.16, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 4, 250, 0.02, 0.1, 11100., 13500., 23500, 26000., false, 0.16, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 5, 250, 0.02, 0.1, 13800., 16500., 23500, 26000., false, 0.16, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 6, 250, 0.02, 0.1, 13800., 16500., 20500, 23000., false, 0.16, 0.32);
+  */
+
+  /*
+  //------------------------
+  //Runs 843-846 2-channel 50APix KU board
+  //------------------------
+  //Efficiency
+  myPulse->MakeEfficiencyVsXY(1, 400, 0.018, 11100., 12800., 21500, 23800., 0.16, 0.32);
+  myPulse->MakeEfficiencyVsXY(2, 400, 0.018, 13300., 16100., 24500, 26800., 0.16, 0.32);
+  //MPV
+  myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.018, 0.12, 11100., 12800., 21500, 23800., 0.16, 0.32);
+  myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.018, 0.12, 13300., 16100., 24500, 26800., 0.16, 0.32);
+  //--------------------
+  // Mean Time
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.018, 0.12, 11100., 12800., 21500, 23800., true, 0.16, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.018, 0.12, 13300., 16100., 24500, 26800., true, 0.16, 0.32);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.018, 0.12, 11100., 12800., 21500, 23800., false, 0.16, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.018, 0.12, 13300., 16100., 24500, 26800., false, 0.16, 0.32);
+  */
+
+  /*
+  //------------------------
+  //Runs 888-889 2-channel 50BPix KU board
+  //------------------------
+  //Efficiency
+  myPulse->MakeEfficiencyVsXY(1, 400, 0.030, 11500., 14200., 24300, 27000., 0.10, 0.30);
+  myPulse->MakeEfficiencyVsXY(2, 400, 0.020, 14500., 17100., 24300, 27000., 0.10, 0.30);
+  
+  //MPV
+  myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.030, 0.150, 11500., 14200., 24300, 27000., 0.10, 0.30);
+  myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.030, 0.150, 14500., 17100., 24300, 27000., 0.10, 0.30);
+  //--------------------
+  // Mean Time
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.030, 0.150, 11500., 14200., 24300, 27000., true, 0.10, 0.30);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.030, 0.150, 14500., 17100., 24300, 27000., true, 0.10, 0.30);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.030, 0.150, 11500., 14200., 24300, 27000., false, 0.10, 0.30);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.030, 0.150, 14500., 17100., 24300, 27000., false, 0.10, 0.30);
+  */
+
+  /*
+  //------------------------
+  //Runs 843-846 2-channel (ch3-ch4) 50CPix KU board
+  //------------------------
+  //Efficiency
+  myPulse->MakeEfficiencyVsXY(3, 400, 0.018, 11100., 13100., 22900, 25300., 0.16, 0.32);
+  myPulse->MakeEfficiencyVsXY(4, 400, 0.018, 13500., 16000., 26100, 28400., 0.16, 0.32);
+  
+  //MPV
+  myPulse->CreateMPV_vs_PositionHisto(1, 3, 200, 0.018, 0.10, 11100., 13100., 22900, 25300., 0.16, 0.32);
+  myPulse->CreateMPV_vs_PositionHisto(1, 4, 200, 0.018, 0.10, 13500., 16000., 26100, 28400., 0.16, 0.32);
+  //--------------------
+  // Mean Time
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 3, 200, 0.018, 0.10, 11100., 13100., 22900, 25300., true, 0.16, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 4, 200, 0.018, 0.10, 13500., 16000., 26100, 28400., true, 0.16, 0.32);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 3, 200, 0.018, 0.10, 11100., 13100., 22900, 25300., false, 0.16, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 4, 200, 0.018, 0.10, 13500., 16000., 26100, 28400., false, 0.16, 0.32);
+  */
+
+  /*
+  //------------------------
+  //Runs 638-781 2-channel (ch1-ch1) 50DPix KU board
+  //------------------------
+  //Efficiency
+  myPulse->MakeEfficiencyVsXY(1, 400, 0.04, 11800., 14250., 25600, 28200., 0.10, 0.23);
+  myPulse->MakeEfficiencyVsXY(2, 400, 0.04, 14850., 17250., 25600, 28200., 0.10, 0.23);
+  //MPV
+  myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.040, 0.18, 11800., 14250., 25600, 28200., 0.10, 0.23);
+  myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.040, 0.18, 14850., 17250., 25600, 28200., 0.10, 0.23);
+  //--------------------
+  // Mean Time
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.040, 0.18, 11800., 14250., 25600, 28200., true, 0.10, 0.23);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.040, 0.18, 14850., 17250., 25600, 28200., true, 0.10, 0.23);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.040, 0.18, 11800., 14250., 25600, 28200., false, 0.10, 0.23);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.040, 0.18, 14850., 17250., 25600, 28200., false, 0.10, 0.23);
+  */
+
+  /*
+  //------------------------
+  //Runs 1637-1681 1-channelCNM 1mm2 on UCSC board (ch2)
+  //------------------------
+  //Efficiency
+  myPulse->MakeEfficiencyVsXY(2, 400, 0.012, 16700., 17200., 21300, 21800., 0.08, 0.14);
+  //MPV
+  myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.012, 0.040, 16700., 17200., 21300, 21800., 0.08, 0.14);
+  //--------------------
+  // Mean Time
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.012, 0.040, 16700., 17200., 21300, 21800., true, 0.08, 0.14);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.012, 0.040, 16700., 17200., 21300, 21800., false, 0.08, 0.14);
+  */
+
+
+  
+  //------------------------
+  //Runs 635-961 (Irradiated) 50D on UCSC board (ch1), CNM W11LGA35 (ch2)
+  //------------------------
+  //Efficiency
+  myPulse->MakeEfficiencyVsXY(1, 400, 0.015, 13600., 14300., 21400, 21900., 0.13, 0.32);
+  myPulse->MakeEfficiencyVsXY(2, 400, 0.010, 15600., 16300., 22100, 22900., 0.13, 0.32);
+  //MPV
+  myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., 0.13, 0.32);
+  myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.010, 0.06, 15600., 16300., 22100, 22900., 0.13, 0.32);
+  //--------------------
+  // Mean Time
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., true, 0.13, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.010, 0.06, 15600., 16300., 22100, 22900., true, 0.13, 0.32);
+  //--------------------
+  // Time Resolution
+  //--------------------
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.015, 0.06, 13600., 14300., 21400, 21900., false, 0.13, 0.32);
+  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, 200, 0.010, 0.08, 15600., 16300., 22100, 22900., false, 0.13, 0.32);
+ 
   
   return 0;
 }

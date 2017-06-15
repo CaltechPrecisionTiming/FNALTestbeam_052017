@@ -134,6 +134,7 @@ public :
   void MakeEfficiencyVsRun(int channelNumber);
   void MakeTimingPlotsVsXY(int channelNumber);
   void CompareShowerSignal(int CdTeChannel, int SiliconChannel,	
+			   double CdTeAmplification, double SiliconAmplification,
 			   double xLeftBoundary, double xRightBoundary,
 			   double yLeftBoundary, double yRightBoundary);
   

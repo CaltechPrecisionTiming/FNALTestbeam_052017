@@ -935,18 +935,35 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
 
 
 void pulse::CompareShowerSignal(int CdTeChannel, int SiliconChannel, 
+				double CdTeAmplification, double SiliconAmplification,
 				double xLeftBoundary, double xRightBoundary,
 				double yLeftBoundary, double yRightBoundary
 				) {
 
-  //declare histograms
-  TH1F *histCdTeAmplitude = new TH1F("histCdTeAmplitude",";CdTe Amplitude [V];Number of Events", 20, 0, 0.05);
-  TH1F *histCdTeCharge = new TH1F("histCdTeCharge",";CdTe Charge [pC];Number of Events", 20, 0, 10);
-  TH1F *histSiliconAmplitude = new TH1F("histSiliconAmplitude",";Silicon Amplitude [V];Number of Events", 20, 0, 0.03);
-  TH1F *histSiliconCharge = new TH1F("histSiliconCharge",";Silicon Charge [pC];Number of Events", 20, 0, 2);
+  //For Run 1510-1512, 1513-1514
+  // TH1F *histCdTeAmplitude = new TH1F("histCdTeAmplitude",";CdTe Amplitude [V];Number of Events", 20, 0, 0.05);
+  // TH1F *histCdTeCharge = new TH1F("histCdTeCharge",";CdTe Charge [pC];Number of Events", 20, 0, 10);
+  // TH1F *histSiliconAmplitude = new TH1F("histSiliconAmplitude",";Silicon Amplitude [V];Number of Events", 20, 0, 0.03);
+  // TH1F *histSiliconCharge = new TH1F("histSiliconCharge",";Silicon Charge [pC];Number of Events", 20, 0, 2);
+  // TH1F *histCdTeAmplitudeOverSiliconAmplitude = new TH1F("histCdTeAmplitudeOverSiliconAmplitude",";CdTe Amplitude / Silicon Amplitude;Number of Events", 20, 0, 30);
+  // TH1F *histCdTeChargeOverSiliconCharge = new TH1F("histCdTeChargeOverSiliconCharge",";CdTe Charge / Silicon Charge;Number of Events", 20, 0, 30);   
 
+  //For Run 1508-1509
+  // TH1F *histCdTeAmplitude = new TH1F("histCdTeAmplitude",";CdTe Amplitude [V];Number of Events", 20, 0, 0.5);
+  // TH1F *histCdTeCharge = new TH1F("histCdTeCharge",";CdTe Charge [pC];Number of Events", 20, 0, 100);
+  // TH1F *histSiliconAmplitude = new TH1F("histSiliconAmplitude",";Silicon Amplitude [V];Number of Events", 20, 0, 0.03);
+  // TH1F *histSiliconCharge = new TH1F("histSiliconCharge",";Silicon Charge [pC];Number of Events", 20, 0, 2);
+  // TH1F *histCdTeAmplitudeOverSiliconAmplitude = new TH1F("histCdTeAmplitudeOverSiliconAmplitude",";CdTe Amplitude / Silicon Amplitude;Number of Events", 20, 0, 300);
+  // TH1F *histCdTeChargeOverSiliconCharge = new TH1F("histCdTeChargeOverSiliconCharge",";CdTe Charge / Silicon Charge;Number of Events", 20, 0, 300);   
+
+  //Run 1614-1616
+  TH1F *histCdTeAmplitude = new TH1F("histCdTeAmplitude",";CdTe Amplitude [mV];Number of Events", 20, 0, 5);
+  TH1F *histCdTeCharge = new TH1F("histCdTeCharge",";CdTe Charge [fC];Number of Events", 20, 0, 1000);
+  TH1F *histSiliconAmplitude = new TH1F("histSiliconAmplitude",";Silicon Amplitude [mV];Number of Events", 20, 0, 1);
+  TH1F *histSiliconCharge = new TH1F("histSiliconCharge",";Silicon Charge [fC];Number of Events", 20, 0, 200);
   TH1F *histCdTeAmplitudeOverSiliconAmplitude = new TH1F("histCdTeAmplitudeOverSiliconAmplitude",";CdTe Amplitude / Silicon Amplitude;Number of Events", 20, 0, 30);
   TH1F *histCdTeChargeOverSiliconCharge = new TH1F("histCdTeChargeOverSiliconCharge",";CdTe Charge / Silicon Charge;Number of Events", 20, 0, 30);   
+
 
   if (fChain == 0) return;
    Long64_t nentries = fChain->GetEntriesFast();
@@ -969,12 +986,12 @@ void pulse::CompareShowerSignal(int CdTeChannel, int SiliconChannel,
 
       if (!(x1 > xLeftBoundary && x1 < xRightBoundary && y1 > yLeftBoundary && y1 < yRightBoundary )) continue;
     
-      histCdTeAmplitude->Fill( ampRestricted[CdTeChannel]);
-      histCdTeCharge->Fill( integral[CdTeChannel]);
-      histSiliconAmplitude->Fill( ampRestricted[SiliconChannel]);
-      histSiliconCharge->Fill( integral[SiliconChannel]);
-      histCdTeChargeOverSiliconCharge->Fill( integral[CdTeChannel] / integral[SiliconChannel]);
-      histCdTeAmplitudeOverSiliconAmplitude->Fill( ampRestricted[CdTeChannel] / ampRestricted[SiliconChannel] );    
+      histCdTeAmplitude->Fill( 1000 * ampRestricted[CdTeChannel] / CdTeAmplification );
+      histCdTeCharge->Fill( 1000 * integral[CdTeChannel] / CdTeAmplification );
+      histSiliconAmplitude->Fill( 1000 * ampRestricted[SiliconChannel] / SiliconAmplification);
+      histSiliconCharge->Fill( 1000 * integral[SiliconChannel] / SiliconAmplification);
+      histCdTeChargeOverSiliconCharge->Fill( (integral[CdTeChannel] / CdTeAmplification)  / (integral[SiliconChannel] / SiliconAmplification));
+      histCdTeAmplitudeOverSiliconAmplitude->Fill( (ampRestricted[CdTeChannel]/CdTeAmplification) / (ampRestricted[SiliconChannel]/ SiliconAmplification) );    
    }
 
    TFile *file = new TFile("CdTeCalo.root","UPDATE");

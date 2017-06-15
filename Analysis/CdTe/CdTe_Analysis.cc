@@ -35,13 +35,34 @@ int main( int argc, char** argv)
   pulse* myPulse = new pulse( myTree );
   
   //----------------------
-  // Shower Sampling Comparing
+  // Shower Sampling Comparison
+  // |Absorber|5mm Air|Silicon|5mm Air|CdTe|
   //----------------------
-  myPulse->CompareShowerSignal( 1, 2, 12000, 19000, 16000, 23000);
+  //1614-1616, 1617-1627
+  // myPulse->CompareShowerSignal( 1, 2, 12.5, 82, 12000, 19000, 16000, 23000);
 
+  //1510-1512
+  // myPulse->CompareShowerSignal( 1, 2, 12.5, 12.5, 12000, 19000, 16000, 23000);
 
+  //1513-1514
+  // myPulse->CompareShowerSignal( 1, 2, 12.5, 12.5, 12000, 19000, 16000, 23000);
 
+  //1508-1509
+  // myPulse->CompareShowerSignal( 1, 2, 82, 12.5, 12000, 19000, 16000, 23000);
 
+  //----------------------
+  // Shower Sampling Comparison
+  // |Absorber|5mm Air|CdTe|5mm Air|Silicon|
+  //----------------------
+  // 1628-1630, 1631-1633, 1634-1635
+  // myPulse->CompareShowerSignal( 1, 2, 12.5, 82, 12000, 19000, 16000, 23000);
+  
+  //----------------------
+  // Shower Sampling Comparison
+  // |Absorber|5mm Air|CdTe
+  //----------------------
+  // 1502-1506, 1507
+  myPulse->CompareShowerSignal( 1, 2, 82, 12.5, 12000, 19000, 16000, 23000);
   
   return 0;
 }

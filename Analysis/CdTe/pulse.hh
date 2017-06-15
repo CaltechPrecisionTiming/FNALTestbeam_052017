@@ -29,7 +29,9 @@ public :
    Double_t        channelFilter[36][1024];
    Float_t         time[4][1024];
    Float_t         xmin[36];
+   Float_t         xminRestricted[36];
    Float_t         amp[36];
+   Float_t         ampRestricted[36];
    Float_t         base[36];
    Float_t         integral[36];
    Float_t         intfull[36];
@@ -63,7 +65,9 @@ public :
    TBranch        *b_channelFilter;   //!
    TBranch        *b_time;   //!
    TBranch        *b_xmin;   //!
+   TBranch        *b_xminRestricted;   //!
    TBranch        *b_amp;   //!
+   TBranch        *b_ampRestricted;   //!
    TBranch        *b_base;   //!
    TBranch        *b_integral;   //!
    TBranch        *b_intfull;   //!
@@ -129,6 +133,9 @@ public :
   
   void MakeEfficiencyVsRun(int channelNumber);
   void MakeTimingPlotsVsXY(int channelNumber);
+  void CompareShowerSignal(int CdTeChannel, int SiliconChannel,	
+			   double xLeftBoundary, double xRightBoundary,
+			   double yLeftBoundary, double yRightBoundary);
   
 };
 
@@ -197,7 +204,9 @@ void pulse::Init(TTree *tree)
    fChain->SetBranchAddress("channelFilter", channelFilter, &b_channelFilter);
    fChain->SetBranchAddress("time", time, &b_time);
    fChain->SetBranchAddress("xmin", xmin, &b_xmin);
+   fChain->SetBranchAddress("xminRestricted", xminRestricted, &b_xminRestricted);
    fChain->SetBranchAddress("amp", amp, &b_amp);
+   fChain->SetBranchAddress("ampRestricted", ampRestricted, &b_ampRestricted);
    fChain->SetBranchAddress("base", base, &b_base);
    fChain->SetBranchAddress("integral", integral, &b_integral);
    fChain->SetBranchAddress("intfull", intfull, &b_intfull);

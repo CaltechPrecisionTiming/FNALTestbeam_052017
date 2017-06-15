@@ -933,3 +933,59 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
 
 
 
+
+void pulse::CompareShowerSignal(int CdTeChannel, int SiliconChannel, 
+				double xLeftBoundary, double xRightBoundary,
+				double yLeftBoundary, double yRightBoundary
+				) {
+
+  //declare histograms
+  TH1F *histCdTeAmplitude = new TH1F("histCdTeAmplitude",";CdTe Amplitude [V];Number of Events", 20, 0, 0.05);
+  TH1F *histCdTeCharge = new TH1F("histCdTeCharge",";CdTe Charge [pC];Number of Events", 20, 0, 10);
+  TH1F *histSiliconAmplitude = new TH1F("histSiliconAmplitude",";Silicon Amplitude [V];Number of Events", 20, 0, 0.03);
+  TH1F *histSiliconCharge = new TH1F("histSiliconCharge",";Silicon Charge [pC];Number of Events", 20, 0, 2);
+
+  TH1F *histCdTeAmplitudeOverSiliconAmplitude = new TH1F("histCdTeAmplitudeOverSiliconAmplitude",";CdTe Amplitude / Silicon Amplitude;Number of Events", 20, 0, 30);
+  TH1F *histCdTeChargeOverSiliconCharge = new TH1F("histCdTeChargeOverSiliconCharge",";CdTe Charge / Silicon Charge;Number of Events", 20, 0, 30);   
+
+  if (fChain == 0) return;
+   Long64_t nentries = fChain->GetEntriesFast();
+   Long64_t nbytes = 0, nb = 0;
+   for (Long64_t jentry=0; jentry<nentries;jentry++) {
+      Long64_t ientry = LoadTree(jentry);
+      if (ientry < 0) break;
+      if (jentry % 100 == 0) cout << "Processing Event " << jentry << " of " << nentries << "\n";
+
+      nb = fChain->GetEntry(jentry);   nbytes += nb;
+
+      //cuts
+   
+      //require photek signal
+      // if (!(amp[0] > 0.03)) continue;
+
+      //reject events with more than 1 track
+      //if ( !(ntracks == 1 && chi2 < 10 )) continue;
+      if ( isRinging[CdTeChannel] || isRinging[SiliconChannel]) continue;
+
+      if (!(x1 > xLeftBoundary && x1 < xRightBoundary && y1 > yLeftBoundary && y1 < yRightBoundary )) continue;
+    
+      histCdTeAmplitude->Fill( ampRestricted[CdTeChannel]);
+      histCdTeCharge->Fill( integral[CdTeChannel]);
+      histSiliconAmplitude->Fill( ampRestricted[SiliconChannel]);
+      histSiliconCharge->Fill( integral[SiliconChannel]);
+      histCdTeChargeOverSiliconCharge->Fill( integral[CdTeChannel] / integral[SiliconChannel]);
+      histCdTeAmplitudeOverSiliconAmplitude->Fill( ampRestricted[CdTeChannel] / ampRestricted[SiliconChannel] );    
+   }
+
+   TFile *file = new TFile("CdTeCalo.root","UPDATE");
+   file->cd();
+   file->WriteTObject(histCdTeAmplitude, "histCdTeAmplitude", "WriteDelete");  
+   file->WriteTObject(histCdTeCharge, "histCdTeCharge", "WriteDelete");  
+   file->WriteTObject(histSiliconAmplitude, "histSiliconAmplitude", "WriteDelete");  
+   file->WriteTObject(histSiliconCharge, "histSiliconCharge", "WriteDelete");  
+   file->WriteTObject(histCdTeChargeOverSiliconCharge, "histCdTeChargeOverSiliconCharge", "WriteDelete");  
+   file->WriteTObject(histCdTeAmplitudeOverSiliconAmplitude, "histCdTeAmplitudeOverSiliconAmplitude", "WriteDelete");  
+   file->Close();
+   delete file; 
+   
+};

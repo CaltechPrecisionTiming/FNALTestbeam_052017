@@ -5,6 +5,7 @@
 #include <TCanvas.h>
 #include <TF1.h>
 #include <TGraphErrors.h>
+#include <TProfile.h>
 #include "EfficiencyUtils.hh"
 
 using namespace std;
@@ -936,10 +937,16 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
 
 void pulse::CompareShowerSignal(int CdTeChannel, int SiliconChannel, 
 				double CdTeAmplification, double SiliconAmplification,
-				double xLeftBoundary, double xRightBoundary,
-				double yLeftBoundary, double yRightBoundary
+				double xLeftCdTeBoundary, double xRightCdTeBoundary,
+				double yLeftCdTeBoundary, double yRightCdTeBoundary,
+				double xLeftSiliconBoundary, double xRightSiliconBoundary,
+				double yLeftSiliconBoundary, double yRightSiliconBoundary
 				) {
-
+  TH2F *histCdTeChargeVsX = new TH2F("histCdTeChargeVsX",";X Position [mm]; CdTe Charge [fC]; Number of Events", 250, 5, 30 , 10000, 0, 1000 );
+  TH2F *histCdTeChargeVsY = new TH2F("histCdTeChargeVsY",";Y Position [mm]; CdTe Charge [fC]; Number of Events", 250, 5, 30, 10000, 0, 1000);
+  TH2F *histSiliconChargeVsX = new TH2F("histSiliconChargeVsX",";X Position [mm]; Silicon Charge [fC]; Number of Events", 250, 5, 30 , 10000, 0, 1000);
+  TH2F *histSiliconChargeVsY = new TH2F("histSiliconChargeVsY",";Y Position [mm]; Silicon Charge [fC]; Number of Events", 250, 5, 30, 10000, 0, 1000);
+ 
   //For Run 1510-1512, 1513-1514
   // TH1F *histCdTeAmplitude = new TH1F("histCdTeAmplitude",";CdTe Amplitude [V];Number of Events", 20, 0, 0.05);
   // TH1F *histCdTeCharge = new TH1F("histCdTeCharge",";CdTe Charge [pC];Number of Events", 20, 0, 10);
@@ -960,7 +967,7 @@ void pulse::CompareShowerSignal(int CdTeChannel, int SiliconChannel,
   TH1F *histCdTeAmplitude = new TH1F("histCdTeAmplitude",";CdTe Amplitude [mV];Number of Events", 20, 0, 5);
   TH1F *histCdTeCharge = new TH1F("histCdTeCharge",";CdTe Charge [fC];Number of Events", 20, 0, 1000);
   TH1F *histSiliconAmplitude = new TH1F("histSiliconAmplitude",";Silicon Amplitude [mV];Number of Events", 20, 0, 1);
-  TH1F *histSiliconCharge = new TH1F("histSiliconCharge",";Silicon Charge [fC];Number of Events", 20, 0, 200);
+  TH1F *histSiliconCharge = new TH1F("histSiliconCharge",";Silicon Charge [fC];Number of Events", 30, 0, 300);
   TH1F *histCdTeAmplitudeOverSiliconAmplitude = new TH1F("histCdTeAmplitudeOverSiliconAmplitude",";CdTe Amplitude / Silicon Amplitude;Number of Events", 20, 0, 30);
   TH1F *histCdTeChargeOverSiliconCharge = new TH1F("histCdTeChargeOverSiliconCharge",";CdTe Charge / Silicon Charge;Number of Events", 20, 0, 30);   
 
@@ -984,24 +991,58 @@ void pulse::CompareShowerSignal(int CdTeChannel, int SiliconChannel,
       //if ( !(ntracks == 1 && chi2 < 10 )) continue;
       if ( isRinging[CdTeChannel] || isRinging[SiliconChannel]) continue;
 
-      if (!(x1 > xLeftBoundary && x1 < xRightBoundary && y1 > yLeftBoundary && y1 < yRightBoundary )) continue;
-    
-      histCdTeAmplitude->Fill( 1000 * ampRestricted[CdTeChannel] / CdTeAmplification );
-      histCdTeCharge->Fill( 1000 * integral[CdTeChannel] / CdTeAmplification );
-      histSiliconAmplitude->Fill( 1000 * ampRestricted[SiliconChannel] / SiliconAmplification);
-      histSiliconCharge->Fill( 1000 * integral[SiliconChannel] / SiliconAmplification);
-      histCdTeChargeOverSiliconCharge->Fill( (integral[CdTeChannel] / CdTeAmplification)  / (integral[SiliconChannel] / SiliconAmplification));
-      histCdTeAmplitudeOverSiliconAmplitude->Fill( (ampRestricted[CdTeChannel]/CdTeAmplification) / (ampRestricted[SiliconChannel]/ SiliconAmplification) );    
+      if ( y1 > yLeftCdTeBoundary && y1 < yRightCdTeBoundary ) {
+	histCdTeChargeVsX->Fill(x1/1000, 1000 * integral[CdTeChannel] / CdTeAmplification);
+      }
+      if ( x1 > xLeftCdTeBoundary && x1 < xRightCdTeBoundary ) {
+	histCdTeChargeVsY->Fill(y1/1000, 1000 * integral[CdTeChannel] / CdTeAmplification);
+      }
+     if ( x1 > xLeftSiliconBoundary && x1 < xRightSiliconBoundary ) {
+	histSiliconChargeVsY->Fill(y1/1000, 1000 * integral[SiliconChannel] / SiliconAmplification);
+      }
+      if ( y1 > yLeftSiliconBoundary && y1 < yRightSiliconBoundary ) {
+	histSiliconChargeVsX->Fill(x1/1000, 1000 * integral[SiliconChannel] / SiliconAmplification);
+      }
+	  		      
+      if (x1 > xLeftCdTeBoundary && x1 < xRightCdTeBoundary && y1 > yLeftCdTeBoundary && y1 < yRightCdTeBoundary ) {    
+	histCdTeAmplitude->Fill( 1000 * ampRestricted[CdTeChannel] / CdTeAmplification );
+	histCdTeCharge->Fill( 1000 * integral[CdTeChannel] / CdTeAmplification );
+      }
+      if (x1 > xLeftSiliconBoundary && x1 < xRightSiliconBoundary && y1 > yLeftSiliconBoundary && y1 < yRightSiliconBoundary ) { 
+	histSiliconAmplitude->Fill( 1000 * ampRestricted[SiliconChannel] / SiliconAmplification);
+	histSiliconCharge->Fill( 1000 * integral[SiliconChannel] / SiliconAmplification);
+      }
+      
+
+      // histCdTeChargeOverSiliconCharge->Fill( (integral[CdTeChannel] / CdTeAmplification)  / (integral[SiliconChannel] / SiliconAmplification));
+      // histCdTeAmplitudeOverSiliconAmplitude->Fill( (ampRestricted[CdTeChannel]/CdTeAmplification) / (ampRestricted[SiliconChannel]/ SiliconAmplification) );   
+
+
    }
+
+   TProfile *profileCdTeChargeVsX = (TProfile*)histCdTeChargeVsX->ProfileX();
+   TProfile *profileCdTeChargeVsY = (TProfile*)histCdTeChargeVsY->ProfileX();
+   TProfile *profileSiliconChargeVsX = (TProfile*)histSiliconChargeVsX->ProfileX();
+   TProfile *profileSiliconChargeVsY = (TProfile*)histSiliconChargeVsY->ProfileX();
+
 
    TFile *file = new TFile("CdTeCalo.root","UPDATE");
    file->cd();
+
    file->WriteTObject(histCdTeAmplitude, "histCdTeAmplitude", "WriteDelete");  
    file->WriteTObject(histCdTeCharge, "histCdTeCharge", "WriteDelete");  
    file->WriteTObject(histSiliconAmplitude, "histSiliconAmplitude", "WriteDelete");  
    file->WriteTObject(histSiliconCharge, "histSiliconCharge", "WriteDelete");  
    file->WriteTObject(histCdTeChargeOverSiliconCharge, "histCdTeChargeOverSiliconCharge", "WriteDelete");  
    file->WriteTObject(histCdTeAmplitudeOverSiliconAmplitude, "histCdTeAmplitudeOverSiliconAmplitude", "WriteDelete");  
+   file->WriteTObject(profileCdTeChargeVsX, "profileCdTeChargeVsX", "WriteDelete");  
+   file->WriteTObject(profileCdTeChargeVsY, "profileCdTeChargeVsY", "WriteDelete");  
+   file->WriteTObject(profileSiliconChargeVsX, "profileSiliconChargeVsX", "WriteDelete");  
+   file->WriteTObject(profileSiliconChargeVsY, "profileSiliconChargeVsY", "WriteDelete");  
+   file->WriteTObject(histCdTeChargeVsX, "histCdTeChargeVsX", "WriteDelete");  
+   file->WriteTObject(histCdTeChargeVsY, "histCdTeChargeVsY", "WriteDelete");  
+   file->WriteTObject(histSiliconChargeVsX, "histSiliconChargeVsX", "WriteDelete");  
+   file->WriteTObject(histSiliconChargeVsY, "histSiliconChargeVsY", "WriteDelete");  
    file->Close();
    delete file; 
    

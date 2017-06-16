@@ -38,31 +38,34 @@ int main( int argc, char** argv)
   // Shower Sampling Comparison
   // |Absorber|5mm Air|Silicon|5mm Air|CdTe|
   //----------------------
-  //1614-1616, 1617-1627
-  // myPulse->CompareShowerSignal( 1, 2, 12.5, 82, 12000, 19000, 16000, 23000);
+  //1614-1616
+  myPulse->CompareShowerSignal( 1, 2, 12.5, 82, 12000, 19000, 16000, 23000, 11500, 15000, 13000,15000);
+
+  //1617-1627
+  // myPulse->CompareShowerSignal( 1, 2, 12.5, 82, 12000, 19000, 16000, 23000, 11200, 13000, 13000,15000);
 
   //1510-1512
-  // myPulse->CompareShowerSignal( 1, 2, 12.5, 12.5, 12000, 19000, 16000, 23000);
+  // myPulse->CompareShowerSignal( 1, 2, 12.5, 12.5, 12000, 19000, 16000, 23000, 11500, 15000, 13000,15000);
 
   //1513-1514
-  // myPulse->CompareShowerSignal( 1, 2, 12.5, 12.5, 12000, 19000, 16000, 23000);
+  //myPulse->CompareShowerSignal( 1, 2, 12.5, 12.5, 12000, 19000, 16000, 23000, 11500, 15000, 13000,15000);
 
   //1508-1509
-  // myPulse->CompareShowerSignal( 1, 2, 82, 12.5, 12000, 19000, 16000, 23000);
+  // myPulse->CompareShowerSignal( 1, 2, 82, 12.5, 12000, 19000, 16000, 23000, 11500, 15000, 13000,15000);
 
   //----------------------
   // Shower Sampling Comparison
   // |Absorber|5mm Air|CdTe|5mm Air|Silicon|
   //----------------------
   // 1628-1630, 1631-1633, 1634-1635
-  // myPulse->CompareShowerSignal( 1, 2, 12.5, 82, 12000, 19000, 16000, 23000);
-  
+  //myPulse->CompareShowerSignal( 1, 2, 12.5, 82, 14000, 20000, 24000, 26000, 10500,13000,24000,26000);
+   
   //----------------------
   // Shower Sampling Comparison
   // |Absorber|5mm Air|CdTe
   //----------------------
   // 1502-1506, 1507
-  myPulse->CompareShowerSignal( 1, 2, 82, 12.5, 12000, 19000, 16000, 23000);
+  // myPulse->CompareShowerSignal( 1, 2, 82, 12.5, 12000, 19000, 16000, 23000, 0,30000,0,30000);
   
   return 0;
 }

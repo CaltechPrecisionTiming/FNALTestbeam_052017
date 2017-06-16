@@ -136,7 +136,9 @@ public :
   void CompareShowerSignal(int CdTeChannel, int SiliconChannel,	
 			   double CdTeAmplification, double SiliconAmplification,
 			   double xLeftBoundary, double xRightBoundary,
-			   double yLeftBoundary, double yRightBoundary);
+			   double yLeftBoundary, double yRightBoundary,
+			   double xLeftSiliconBoundary, double xRightSiliconBoundary,
+			   double yLeftSiliconBoundary, double yRightSiliconBoundary);
   
 };
 

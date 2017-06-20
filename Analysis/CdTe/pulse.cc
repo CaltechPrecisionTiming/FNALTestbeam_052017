@@ -135,9 +135,9 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
 {
   //declare histograms
   float histo_x_min = 10.;
-  float histo_x_max = 30.;
-  float histo_y_min = 10.;
-  float histo_y_max = 30.;
+  float histo_x_max = 20.;
+  float histo_y_min = 5.;
+  float histo_y_max = 15.;
   
   TH1F *histY_den = new TH1F("histX_den",";Y [mm];Number of Events", nbins, histo_y_min, histo_y_max);
   TH1F *histY_num = new TH1F("histX_num",";Y [mm];Number of Events", nbins, histo_y_min, histo_y_max);
@@ -147,12 +147,15 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
   //Activate Only Necessary Branches
   fChain->SetBranchStatus("*", 0);
   fChain->SetBranchStatus("amp", 1);
+  fChain->SetBranchStatus("ampRestricted", 1);
   fChain->SetBranchStatus("x1", 1);
   fChain->SetBranchStatus("y1", 1);
+  fChain->SetBranchStatus("xIntercept", 1);
+  fChain->SetBranchStatus("xSlope", 1);
+  fChain->SetBranchStatus("yIntercept", 1);
+  fChain->SetBranchStatus("ySlope", 1);
   fChain->SetBranchStatus("ntracks", 1);
   fChain->SetBranchStatus("chi2", 1);
-  fChain->SetBranchStatus("xSlope", 1);
-  fChain->SetBranchStatus("ySlope", 1);
    
   if (fChain == 0) return;
    Long64_t nentries = fChain->GetEntriesFast();
@@ -172,20 +175,20 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
       //reject events with more than 1 track
       if ( !(ntracks == 1 && chi2 < 10 )) continue;
       //if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-4)) continue;
-      if ( !(fabs(xSlope) < 1e-3 && (fabs(ySlope) < 4e-3) && fabs(ySlope) > 3e-3)) continue;
+      //if ( !(fabs(xSlope) < 1e-3 && (fabs(ySlope) < 4e-3) && fabs(ySlope) > 3e-3)) continue;
       if ( !(amp[channelNumber] < 0.45 )) continue;//No saturation
 
-      if ( y1 > ymin && y1 < ymax ) {
-	histX_den->Fill( 0.001*x1);
-	if ( amp[channelNumber] > threshold ) {
-	    histX_num->Fill( 0.001*x1 );
+      if ( yIntercept+ySlope*2e6 > ymin && yIntercept+ySlope*2e6 < ymax ) {	
+	histX_den->Fill( 0.001*(xIntercept+xSlope*2e6));
+	if ( ampRestricted[channelNumber] > threshold ) {
+	  histX_num->Fill( 0.001*(xIntercept+xSlope*2e6) );
 	}
       }
       
-      if ( x1 > xmin && x1 < xmax ) {
-	histY_den->Fill( 0.001*y1 );
-	if ( amp[channelNumber] > threshold ) {
-	  histY_num->Fill( 0.001*y1 );       
+      if ( xIntercept+xSlope*2e6 > xmin && xIntercept+xSlope*2e6 < xmax ) {
+	histY_den->Fill( 0.001*(yIntercept+ySlope*2e6) );
+	if ( ampRestricted[channelNumber] > threshold ) {
+	  histY_num->Fill( 0.001*(yIntercept+ySlope*2e6) );       
 	} 
       }
     
@@ -254,7 +257,7 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
    effX->SetMarkerStyle(20);
    effX->GetYaxis()->SetTitle("Efficiency");
    effX->GetXaxis()->SetTitle("x-coordinate [mm]");
-   effX->GetXaxis()->SetRangeUser( x_eff_low-1., x_eff_high+1.);
+   effX->GetXaxis()->SetRangeUser( xmin, xmax);
    effX->GetYaxis()->SetRangeUser( 0, 1.11);
    
      
@@ -271,7 +274,7 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
    effY->SetMarkerStyle(20);
    effY->GetYaxis()->SetTitle("Efficiency");
    effY->GetXaxis()->SetTitle("y-coordinate [mm]");
-   effY->GetXaxis()->SetRangeUser( y_eff_low-1., y_eff_high+1.);
+   effY->GetXaxis()->SetRangeUser( ymin, ymax);
    effY->GetYaxis()->SetRangeUser( 0, 1.11);
 
    TCanvas* c = new TCanvas("canvas","canvas",600,400);
@@ -422,11 +425,12 @@ void pulse::MakeEfficiencyVsRun(int channelNumber) {
 };
 
 
-void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWidth, float threshold_low, float threshold_high,
+void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float amplificationFactor, 
+					float binWidth, float threshold_low, float threshold_high,
 					float xmin, float xmax, float ymin, float ymax,
 					float photek_low, float photek_high)
 {
-   if ( dut <= 0 || dut > 2 )
+  if (!( dut == 1 || dut == 2 || dut == 10)  )
      {
        std::cerr << "[ERROR]: please provide a valid dut = <1,2>" << std::endl;
        return;
@@ -438,9 +442,9 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
   //------------------
   //Define initial positions and step size, all units are in microns
   //-------------------
-  float x_init    = 10000.;//microns
-  float y_init    = 10000.;//microns
-  int niterations = (int)((30000.-10000.)/binWidth);//microns
+  float x_init    = 0.;//microns
+  float y_init    = 0.;//microns
+  int niterations = (int)((30000.-0.)/binWidth);//microns
 
   float x_pos[niterations];//x-positions
   float x_pos_un[niterations];//x-position uncertainty
@@ -453,6 +457,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
 
 
   const float um_to_mm = 0.001;
+  const float V_to_mV = 1000;
   float average_x = 0;
   float average_y = 0;
   int npoints_above_zero_x = 0;
@@ -461,11 +466,11 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
     {
       x_pos[i] = x_init + binWidth*(float)i;
       x_pos_un[i] = 0;
-      std::pair<float,float> MPVAndError_X = MPV_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax,
+      std::pair<float,float> MPVAndError_X = MPV_vs_Position( dut, "X", channelNumber, amplificationFactor, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax,
 							      photek_low, photek_high );
       x_pos[i] = x_pos[i]*um_to_mm;
-      mpv_x[i] = MPVAndError_X.first;
-      mpv_x_un[i] = MPVAndError_X.second;
+      mpv_x[i] = MPVAndError_X.first * V_to_mV;
+      mpv_x_un[i] = MPVAndError_X.second * V_to_mV;
       if ( mpv_x_un[i]/mpv_x[i] > 0.2 )
 	{
 	  mpv_x[i]    = 0;
@@ -477,14 +482,13 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
 	  average_x += mpv_x[i];
 	}
       
-      
       y_pos[i] = y_init + binWidth*(float)i;
       y_pos_un[i] = 0;
-      std::pair<float,float> MPVAndError_Y = MPV_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax,
+      std::pair<float,float> MPVAndError_Y = MPV_vs_Position( dut, "Y", channelNumber, amplificationFactor, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax,
 							      photek_low, photek_high);
       y_pos[i] = y_pos[i]*um_to_mm;
-      mpv_y[i] = MPVAndError_Y.first;
-      mpv_y_un[i] = MPVAndError_Y.second;
+      mpv_y[i] = MPVAndError_Y.first * V_to_mV;
+      mpv_y_un[i] = MPVAndError_Y.second * V_to_mV;
       if ( mpv_y_un[i]/mpv_y[i] > 0.2 )
 	{
 	  mpv_y[i]    = 0;
@@ -539,7 +543,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
   gr_mpv_x->GetXaxis()->SetRangeUser(x_eff_low-1.0,x_eff_high+1.0);
   gr_mpv_x->SetTitle("");
   gr_mpv_x->GetXaxis()->SetTitle("x-coordinate [mm]");
-  gr_mpv_x->GetYaxis()->SetTitle("m.p.v [V]");
+  gr_mpv_x->GetYaxis()->SetTitle("m.p.v [mV]");
   gr_mpv_x->GetXaxis()->SetTitleSize(0.05);
   gr_mpv_x->GetXaxis()->SetTitleOffset(0.87);
   gr_mpv_x->GetYaxis()->SetTitleSize(0.05);
@@ -555,7 +559,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
   gr_mpv_y->GetXaxis()->SetRangeUser(y_eff_low-1.0,y_eff_high+1.0);
   gr_mpv_y->SetTitle("");
   gr_mpv_y->GetXaxis()->SetTitle("y-coordinate [mm]");
-  gr_mpv_y->GetYaxis()->SetTitle("m.p.v [V]");
+  gr_mpv_y->GetYaxis()->SetTitle("m.p.v [mV]");
   gr_mpv_y->GetXaxis()->SetTitleSize(0.05);
   gr_mpv_y->GetXaxis()->SetTitleOffset(0.87);
   gr_mpv_y->GetYaxis()->SetTitleSize(0.05);
@@ -569,9 +573,11 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
   
   TCanvas* c = new TCanvas("canvas","canvas",600,400);
   gr_mpv_x->Draw("AP");
+  gr_mpv_x->GetXaxis()->SetRangeUser(xmin/1000,xmax/1000);
   c->SaveAs(Form("MPV_vs_X_Ch%d.pdf",channelNumber));
   c->SaveAs(Form("MPV_vs_X_Ch%d.C",channelNumber));
   gr_mpv_y->Draw("AP");
+  gr_mpv_y->GetXaxis()->SetRangeUser(ymin/1000,ymax/1000);
   c->SaveAs(Form("MPV_vs_Y_Ch%d.pdf",channelNumber));
   c->SaveAs(Form("MPV_vs_Y_Ch%d.C",channelNumber));
   delete c;
@@ -586,9 +592,9 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
 					   float xmin, float xmax, float ymin, float ymax, bool _isMean,
 					   float photek_low, float photek_high)
 {
-   if ( dut <= 0 || dut > 2 )
+  if (!( dut == 1 || dut == 2 || dut == 10)  )
      {
-       std::cerr << "[ERROR]: please provide a valid dut = <1,2>" << std::endl;
+       std::cerr << "[ERROR]: please provide a valid dut = <1,2,10>" << std::endl;
        return;
      }
   //x_init, y_init, and steps are in microns
@@ -778,20 +784,26 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
 };
 
 
-std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int channel, const float coorLow, const float step,
+std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int channel, const float amplificationFactor, 
+					       const float coorLow, const float step,
 					       const float AmpLowCut, const float AmpHighCut,
 					       float other_corr_low, float other_corr_high,
 					       float photek_low, float photek_high)
 {
   if ( channel < 0 ) return std::pair<float,float>(-999,0);
-  if ( dut <= 0 || dut > 2 )
+  if ( !(dut ==0 || dut == 1 || dut == 10) )
     {
-      std::cerr << "[ERROR]: please provide a valid dut = <1,2>" << std::endl;
+      std::cerr << "[ERROR]: please provide a valid dut = <1,2,10>" << std::endl;
       return std::pair<float,float>(-999,0);
     }
   
   fChain->SetBranchStatus("*", 0);
   fChain->SetBranchStatus("amp", 1);
+  fChain->SetBranchStatus("ampRestricted", 1);
+  fChain->SetBranchStatus("xIntercept", 1);
+  fChain->SetBranchStatus("xSlope", 1);
+  fChain->SetBranchStatus("yIntercept", 1);
+  fChain->SetBranchStatus("ySlope", 1);
   fChain->SetBranchStatus("x1", 1);
   fChain->SetBranchStatus("y1", 1);
   fChain->SetBranchStatus("x2", 1);
@@ -802,7 +814,7 @@ std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int 
   
   cout << "Running MPV_vs_Position Analysis\n";
   cout << "Total Events: " << nentries << "\n";
-  TH1F* h_mpv = new TH1F("h_mpv", "h_mpv", 100, 0, 0.5);
+  TH1F* h_mpv = new TH1F("h_mpv", "h_mpv", 300, 0, 0.5);
   for (Long64_t jentry=0; jentry<nentries;jentry++)
     {
       Long64_t ientry = LoadTree(jentry);
@@ -810,17 +822,22 @@ std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int 
       if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       
-      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > photek_low && amp[0] < photek_high )
+      if ( ampRestricted[channel] >= AmpLowCut && ampRestricted[channel] <= AmpHighCut && amp[0] > photek_low && amp[0] < photek_high )
 	{
 	  if ( dut == 1 )
 	    {
-	      if ( (coor == "x" || coor == "X") && x1 >= coorLow && x1 < (coorLow + step) && y1 > other_corr_low && y1 < other_corr_high ) h_mpv->Fill(amp[channel]);
-	      if ( (coor == "y" || coor == "Y") && y1 >= coorLow && y1 < (coorLow + step) && x1 > other_corr_low && x1 < other_corr_high ) h_mpv->Fill(amp[channel]);
+	      if ( (coor == "x" || coor == "X") && x1 >= coorLow && x1 < (coorLow + step) && y1 > other_corr_low && y1 < other_corr_high ) h_mpv->Fill(ampRestricted[channel]);
+	      if ( (coor == "y" || coor == "Y") && y1 >= coorLow && y1 < (coorLow + step) && x1 > other_corr_low && x1 < other_corr_high ) h_mpv->Fill(ampRestricted[channel]);
 	    }
 	  else if ( dut == 2 )
 	    {
-	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high ) h_mpv->Fill(amp[channel]);
-	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high ) h_mpv->Fill(amp[channel]);
+	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high ) h_mpv->Fill(ampRestricted[channel]);
+	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high ) h_mpv->Fill(ampRestricted[channel]);
+	    }
+	  else if (dut == 10) 
+	    {
+	      if ( (coor == "x" || coor == "X") && xIntercept + xSlope*2e6 >= coorLow && xIntercept + xSlope*2e6 < (coorLow + step) && yIntercept + ySlope*2e6 > other_corr_low && yIntercept + ySlope*2e6 < other_corr_high ) h_mpv->Fill(ampRestricted[channel]);
+	      if ( (coor == "y" || coor == "Y") && yIntercept + ySlope*2e6 >= coorLow && yIntercept + ySlope*2e6 < (coorLow + step) && xIntercept + xSlope*2e6 > other_corr_low && xIntercept + xSlope*2e6 < other_corr_high ) h_mpv->Fill(ampRestricted[channel]);
 	    }
 	}
     }
@@ -831,8 +848,8 @@ std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int 
   TF1* landau = new TF1( "landau", "landau", AmpLowCut, AmpHighCut );
   h_mpv->Fit("landau","Q","", AmpLowCut, AmpHighCut);
   std::pair<float,float> result;
-  result.first = landau->GetParameter(1);
-  result.second = landau->GetParError(1);
+  result.first = landau->GetParameter(1) / amplificationFactor ;
+  result.second = landau->GetParError(1) / amplificationFactor;
   //Creating output file
   //Creating output file
   std::string myCoor;
@@ -860,7 +877,7 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
     }
   
   fChain->SetBranchStatus("*", 0);
-  fChain->SetBranchStatus("amp", 1);
+  fChain->SetBranchStatus("ampRestricted", 1);
   fChain->SetBranchStatus("gauspeak", 1);
   fChain->SetBranchStatus("linearTime0", 1);
   fChain->SetBranchStatus("linearTime15", 1);
@@ -871,7 +888,11 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
   fChain->SetBranchStatus("y1", 1);
   fChain->SetBranchStatus("x2", 1);
   fChain->SetBranchStatus("y2", 1);
-  if (fChain == 0) return std::pair<float,float>(-999,0);
+  fChain->SetBranchStatus("xIntercept", 1);
+  fChain->SetBranchStatus("xSlope", 1);
+  fChain->SetBranchStatus("yIntercept", 1);
+  fChain->SetBranchStatus("ySlope", 1);
+   if (fChain == 0) return std::pair<float,float>(-999,0);
   Long64_t nentries = fChain->GetEntriesFast();
   Long64_t nbytes = 0, nb = 0;
   
@@ -885,7 +906,7 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
       if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       
-      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > photek_low && amp[0] < photek_high )
+      if ( ampRestricted[channel] >= AmpLowCut && ampRestricted[channel] <= AmpHighCut && amp[0] > photek_low && amp[0] < photek_high )
 	{
 	  if ( dut == 1 )
 	    {
@@ -896,6 +917,11 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
 	    {
 	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
 	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
+	    }
+	  else if (dut == 10) 
+	    {
+	      if ( (coor == "x" || coor == "X") && xIntercept + xSlope*2e6 >= coorLow && xIntercept + xSlope*2e6 < (coorLow + step) && yIntercept + ySlope*2e6 > other_corr_low && yIntercept + ySlope*2e6 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
+	      if ( (coor == "y" || coor == "Y") && yIntercept + ySlope*2e6 >= coorLow && yIntercept + ySlope*2e6 < (coorLow + step) && xIntercept + xSlope*2e6 > other_corr_low && xIntercept + xSlope*2e6 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
 	    }
 	}
     }

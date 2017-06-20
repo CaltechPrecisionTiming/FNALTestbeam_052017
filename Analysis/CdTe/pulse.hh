@@ -106,6 +106,7 @@ public :
 
   //Loop, Fits, and Computations are done in these functions; They are used by the end USER Methods
   virtual std::pair<float,float> MPV_vs_Position( int dut = -1, TString coor = "X", const int channel = -1,
+						  const float amplificationFactor = 1, 
 						  const float coorLow = 0, const float step = 25.,
 						  const float AmpLowCut = 0, const float AmpHighCut = 0.0,
 						  float other_corr_low = 0, float other_corr_high = 99999,
@@ -118,7 +119,8 @@ public :
 						     float photek_low = 0.1, float photek_high = 0.3);
 
   //This Methods are recommended to be used for by end USER
-  virtual void CreateMPV_vs_PositionHisto(  int dut, int channelNumber, float binWidth, float threshold_low, float threshold_high,
+  virtual void CreateMPV_vs_PositionHisto(  int dut, int channelNumber, float amplificationFactor,
+					    float binWidth, float threshold_low, float threshold_high,
 					    float xmin, float xmax, float ymin, float ymax,
 					    float photek_low = 0.1, float photek_high = 0.3);
   virtual void CreateDeltaT_vs_PositionHisto(  int dut, int channelNumber, float binWidth, float threshold_low, float threshold_high,

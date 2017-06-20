@@ -35,11 +35,23 @@ int main( int argc, char** argv)
   pulse* myPulse = new pulse( myTree );
   
   //----------------------
+  // MIP studies
+  //----------------------
+  //myPulse->CreateMPV_vs_PositionHisto(10, 5, 82.0, 500, 0.003, 0.1, 11000., 18500., 6500, 11300., 0.10, 0.25);
+  myPulse->MakeEfficiencyVsXY(5, 20, 
+			      0.003, //0.04e-3*82.0, 
+			      11000., 18500., 6500, 11300., 0.10, 0.25);
+   //myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., true, 0.13, 0.32);
+
+
+
+
+  //----------------------
   // Shower Sampling Comparison
   // |Absorber|5mm Air|Silicon|5mm Air|CdTe|
   //----------------------
   //1614-1616
-  myPulse->CompareShowerSignal( 1, 2, 12.5, 82, 12000, 19000, 16000, 23000, 11500, 15000, 13000,15000);
+  // myPulse->CompareShowerSignal( 1, 2, 12.5, 82, 12000, 19000, 16000, 23000, 11500, 15000, 13000,15000);
 
   //1617-1627
   // myPulse->CompareShowerSignal( 1, 2, 12.5, 82, 12000, 19000, 16000, 23000, 11200, 13000, 13000,15000);

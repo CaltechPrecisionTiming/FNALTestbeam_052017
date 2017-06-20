@@ -219,8 +219,10 @@ int main(int argc, char **argv) {
   short channel[36][1024]; // calibrated input (in V)
   double channelFilter[36][1024]; // calibrated input (in V)
   float xmin[36]; // location of peak
+  float xminRestricted[36]; //location of peak restricted near to channel 0 reference
   float base[36]; // baseline voltage
   float amp[36]; // pulse amplitude
+  float ampRestricted[36]; // pulse amplitude within a restricted window near channel 0 reference
   float integral[36]; // integral in a window
   float integralFull[36]; // integral over all bins
   float gauspeak[36]; // time extracted with gaussian fit
@@ -235,7 +237,8 @@ int main(int argc, char **argv) {
 	
   float risetime[36]; 
   float constantThresholdTime[36];
-  
+  bool _isRinging[36];
+
   float xIntercept;
   float yIntercept;
   float xSlope;
@@ -254,7 +257,9 @@ int main(int argc, char **argv) {
   tree->Branch("channelFilter", channelFilter, "channelFilter[36][1024]/D");
   tree->Branch("time", time, "time[4][1024]/F");
   tree->Branch("xmin", xmin, "xmin[36]/F");
+  tree->Branch("xminRestricted", xminRestricted, "xminRestricted[36]/F");
   tree->Branch("amp", amp, "amp[36]/F");
+  tree->Branch("ampRestricted", ampRestricted, "ampRestricted[36]/F");
   tree->Branch("base", base, "base[36]/F");
   tree->Branch("integral", integral, "integral[36]/F");
   tree->Branch("intfull", integralFull, "intfull[36]/F");
@@ -268,7 +273,7 @@ int main(int argc, char **argv) {
   tree->Branch("fallingTime", fallingTime, "fallingTime[36]/F");
   tree->Branch("risetime", risetime, "risetime[36]/F");
   tree->Branch("constantThresholdTime", constantThresholdTime, "constantThresholdTime[36]/F");
-
+  tree->Branch("isRinging", _isRinging, "isRinging[36]/O");  
   tree->Branch("xIntercept", &xIntercept, "xIntercept/F");
   tree->Branch("yIntercept", &yIntercept, "yIntercept/F");
   tree->Branch("xSlope", &xSlope, "xSlope/F");
@@ -302,6 +307,7 @@ int main(int argc, char **argv) {
     rootInput = new TFile( inputFilename.c_str() );
     rootInputTree = (TTree *)rootInput->Get("pulse");
 		
+    rootInputTree->SetBranchAddress("event", &event);    
     rootInputTree->SetBranchAddress("time", time);    
     rootInputTree->SetBranchAddress("channel", channel);
     rootInputTree->SetBranchAddress("base", base);
@@ -329,6 +335,7 @@ int main(int argc, char **argv) {
   //Event Loop
   //*************************
   int maxEvent = min( int(rootInputTree->GetEntries()), nEvents);
+  if (nEvents < 0) maxEvent = rootInputTree->GetEntries();
   std::cout << "\nMaxEvents = " << maxEvent << "\n";
   
   std::cout << "\n=== Processing input data ===\n" << std::endl;
@@ -338,9 +345,9 @@ int main(int argc, char **argv) {
     
     
     if ( iEvent % 100 == 0 ) {
-      std::cout << "Event " << iEvent << " of " << nEvents << std::endl; }
-    
-    event = nGoodEvents; // for output tree
+      std::cout << "Event " << iEvent << " of " << maxEvent << std::endl; }
+
+    if (DATTYPE) event = nGoodEvents; // for output tree
     
     int activeGroupsN = 0;
     int realGroup[4] = {-1, -1, -1, -1};
@@ -498,7 +505,9 @@ int main(int argc, char **argv) {
 	    channel[totalIndex][j] = 0;
 	  }
 	  xmin[totalIndex] = 0.;
+	  xminRestricted[totalIndex] = 0.;
 	  amp [totalIndex] = 0.;
+	  ampRestricted [totalIndex] = 0.;
 	  base[totalIndex] = 0.;
 	  integral[totalIndex] = 0.;
 	  integralFull[totalIndex] = 0.;
@@ -591,17 +600,17 @@ int main(int argc, char **argv) {
 	// or the late time samples to do the baseline fit
 	//std::cout << "---event "  << event << "-------ch#: " << totalIndex << std::endl;
 	int index_min = FindMinAbsolute(1024, channel[totalIndex]); 
-			
-
-			
-      
-	//std::cout << "17" << std::endl;
-      
+	int index_min_restricted = index_min;
+	if (totalIndex > 0) {
+	  index_min_restricted = FindMinAbsolute(1024, channel[totalIndex], xmin[0] , xmin[0] + 40 );	
+	}
+	      
 	// Recreate the pulse TGraph using baseline-subtracted channel data
 	delete pulse;
 	pulse = new TGraphErrors( GetTGraph( channel[totalIndex], time[realGroup[group]] ) );
 	xmin[totalIndex] = index_min;
-			
+	xminRestricted[totalIndex] = index_min_restricted;
+	
 	//std::cout << "INDEX MIN: " << index_min << std::endl;
 
 	//if (doFilter && totalIndex == 4) {
@@ -621,10 +630,12 @@ int main(int argc, char **argv) {
 	Double_t tmpMin = 0.0;
 	pulse->GetPoint(index_min, tmpMin, tmpAmp);
 	amp[totalIndex] = tmpAmp * (1.0 / 4096.0); 
+	pulse->GetPoint(index_min_restricted, tmpMin, tmpAmp);
+	ampRestricted[totalIndex] = tmpAmp * (1.0 / 4096.0); 
 
 	// Get pulse integral
 	if ( xmin[totalIndex] != 0 ) {
-	  integral[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex]);
+	  integral[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex], "", 20, 40 );
 	  integralFull[totalIndex] = GetPulseIntegral( index_min , channel[totalIndex], "full");
 	}
 	else {
@@ -673,10 +684,11 @@ int main(int argc, char **argv) {
 	  }
 	}
 
-	if( isRinging( index_min, channel[totalIndex] ) )
-	  {
-	    std::cout << "event = " << event  << " channel = " << totalIndex << std::endl;
-	  };
+	_isRinging[totalIndex] = isRinging( index_min, channel[totalIndex] );
+    	// if( isRinging( index_min, channel[totalIndex] ) )
+	//   {
+	//     std::cout << "event = " << event  << " channel = " << totalIndex << std::endl;
+	//   };
 	//std::cout << "20" << std::endl;
 			
 	// for output tree

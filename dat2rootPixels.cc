@@ -433,6 +433,7 @@ int main(int argc, char **argv) {
             xmin[totalIndex] = 0.;
 	    xminRestricted[totalIndex] = 0.;
 	    amp [totalIndex] = 0.;
+	    ampRestricted [totalIndex] = 0.;
             base[totalIndex] = 0.;
             integral[totalIndex] = 0.;
             integralFull[totalIndex] = 0.;

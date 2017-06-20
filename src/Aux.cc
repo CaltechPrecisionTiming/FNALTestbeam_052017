@@ -703,7 +703,7 @@ float GetBaseline( int peak, short *a ) {
 }
 
 
-float GetPulseIntegral(int peak, short *a, std::string option) 
+float GetPulseIntegral(int peak, short *a, std::string option, int nsamplesL , int nsamplesR ) 
 {
   float integral = 0.;
 
@@ -713,7 +713,7 @@ float GetPulseIntegral(int peak, short *a, std::string option)
     }
   }
   else {
-    for (int i=peak-20; i < peak+25; i++) {
+    for (int i=peak-nsamplesL; i < peak+nsamplesR; i++) {
       integral += a[i] * 0.2 * 1e-9 * (1.0/4096.0) * (1.0/50.0) * 1e12; //in units of pC, for 50Ohm termination
     }
   }

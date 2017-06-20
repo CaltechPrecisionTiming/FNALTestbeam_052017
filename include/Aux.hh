@@ -42,7 +42,7 @@ float FullFitScint( TGraphErrors * pulse, const float index_min, int event, TStr
 float GausFit_MeanTime(TGraphErrors* pulse, const float index_first, const float index_last, TString fname);
 float GetBaseline( int peak, short *a );
 float GetBaseline(TGraphErrors * pulse, int i_low, int i_high, TString fname );
-float GetPulseIntegral(int peak, short *a, std::string option = "");
+float GetPulseIntegral(int peak, short *a, std::string option = "", int nsamplesL=20, int nsamplesR=40);
 float GetPulseIntegral(int peak, int nsamplesL, int nsamplesR, short *a, float *t);
 float ConstantThresholdTime(TGraphErrors * pulse, const float threshold);
 bool isRinging( int peak, short *a );

@@ -105,14 +105,18 @@ int main(int argc, char* argv[]) {
 
 	    float amp[36];
 	    float integral[36];
+	    bool isRinging[36];
 	    float x1;
-            inputTree->SetBranchStatus("*",0);
-            inputTree->SetBranchStatus("amp",1);
-	    inputTree->SetBranchStatus("integral",1);
-	    inputTree->SetBranchStatus("x1",1);
-            inputTree->SetBranchAddress("amp",amp);	    
+	    
+            // inputTree->SetBranchStatus("*",0);
+            // inputTree->SetBranchStatus("amp",1);
+	    // inputTree->SetBranchStatus("integral",1);
+	    // inputTree->SetBranchStatus("x1",1);
+ 	    // inputTree->SetBranchStatus("isRinging",1);
+	    inputTree->SetBranchAddress("amp",amp);	    
             inputTree->SetBranchAddress("integral",integral);
 	    inputTree->SetBranchAddress("x1",&x1);
+	    inputTree->SetBranchAddress("isRinging",&isRinging);
 	    
             //store the weights
             for (int n=0;n<inputTree->GetEntries();n++) { 
@@ -120,7 +124,7 @@ int main(int argc, char* argv[]) {
                 inputTree->GetEntry(n);
 
 		bool passSkim = false;
-		passSkim = ( x1 > 0 && amp[0] > 0.1 && (amp[1] > 0.02 || amp[2] > 0.02) );
+		passSkim = (  (!isRinging[1]&&!isRinging[2]) );
 
 		if (passSkim) {
 		  EventsPassed++;

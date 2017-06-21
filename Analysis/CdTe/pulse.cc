@@ -604,9 +604,9 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
   //------------------
   //Define initial positions and step size, all units are in microns
   //-------------------
-  float x_init    = 10000.;//microns
-  float y_init    = 10000.;//microns
-  int niterations = (int)((30000.-10000.)/binWidth);//microns
+  float x_init    = 0.;//microns
+  float y_init    = 0.;//microns
+  int niterations = (int)((30000.-0.)/binWidth);//microns
 
   float x_pos[niterations];//x-positions
   float x_pos_un[niterations];//x-position uncertainty
@@ -870,13 +870,14 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
 						  float photek_low, float photek_high)
 {
   if ( channel < 0 ) return std::pair<float,float>(-999,0);
-  if ( dut <= 0 || dut > 2 )
+  if ( !(dut == 0 || dut ==1 || dut == 10) )
     {
       std::cerr << "[ERROR]: please provide a valid dut = <1,2>" << std::endl;
       return std::pair<float,float>(-999,0);
     }
   
   fChain->SetBranchStatus("*", 0);
+  fChain->SetBranchStatus("amp", 1);
   fChain->SetBranchStatus("ampRestricted", 1);
   fChain->SetBranchStatus("gauspeak", 1);
   fChain->SetBranchStatus("linearTime0", 1);
@@ -898,14 +899,16 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
   
   cout << "Running MPV_vs_Position Analysis\n";
   cout << "Total Events: " << nentries << "\n";
-  TH1F* h_deltaT = new TH1F("h_delta_T", "h_delta_T", 1000, -10, 10);
+  TH1F* h_deltaT = new TH1F("h_delta_T", "h_delta_T", 800, -20, 20);
   for (Long64_t jentry=0; jentry<nentries;jentry++)
     {
       Long64_t ientry = LoadTree(jentry);
       if (ientry < 0) break;
       if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
       nb = fChain->GetEntry(jentry);   nbytes += nb;
-      
+
+      // std::cout << "test: " << ampRestricted[channel] << " " << amp[0] << " : " << linearTime45[channel]-gauspeak[0] << "\n";
+
       if ( ampRestricted[channel] >= AmpLowCut && ampRestricted[channel] <= AmpHighCut && amp[0] > photek_low && amp[0] < photek_high )
 	{
 	  if ( dut == 1 )
@@ -920,7 +923,10 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
 	    }
 	  else if (dut == 10) 
 	    {
-	      if ( (coor == "x" || coor == "X") && xIntercept + xSlope*2e6 >= coorLow && xIntercept + xSlope*2e6 < (coorLow + step) && yIntercept + ySlope*2e6 > other_corr_low && yIntercept + ySlope*2e6 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
+	      if ( (coor == "x" || coor == "X") && xIntercept + xSlope*2e6 >= coorLow && xIntercept + xSlope*2e6 < (coorLow + step) && yIntercept + ySlope*2e6 > other_corr_low && yIntercept + ySlope*2e6 < other_corr_high ) {
+		h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
+		// std::cout << "test: " << linearTime45[channel]-gauspeak[0] << "\n";
+	      }
 	      if ( (coor == "y" || coor == "Y") && yIntercept + ySlope*2e6 >= coorLow && yIntercept + ySlope*2e6 < (coorLow + step) && xIntercept + xSlope*2e6 > other_corr_low && xIntercept + xSlope*2e6 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
 	    }
 	}

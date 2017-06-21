@@ -38,10 +38,13 @@ int main( int argc, char** argv)
   // MIP studies
   //----------------------
   //myPulse->CreateMPV_vs_PositionHisto(10, 5, 82.0, 500, 0.003, 0.1, 11000., 18500., 6500, 11300., 0.10, 0.25);
-  myPulse->MakeEfficiencyVsXY(5, 20, 
-			      0.003, //0.04e-3*82.0, 
-			      11000., 18500., 6500, 11300., 0.10, 0.25);
-   //myPulse->CreateDeltaT_vs_PositionHisto(1, 1, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., true, 0.13, 0.32);
+
+  // myPulse->MakeEfficiencyVsXY(5, 20, 
+  // 			      0.003, //0.04e-3*82.0, 
+  // 			      11000., 18500., 6500, 11300., 0.10, 0.25);
+
+  myPulse->CreateDeltaT_vs_PositionHisto(10, 5, 500, 0.003, 0.1, 11000., 18500., 6500, 11300., true, 0.10, 0.25);
+  myPulse->CreateDeltaT_vs_PositionHisto(10, 5, 500, 0.003, 0.1, 11000., 18500., 6500, 11300., false, 0.10, 0.25);
 
 
 

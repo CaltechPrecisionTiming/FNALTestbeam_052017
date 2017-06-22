@@ -14,6 +14,7 @@
 //LOCAL INCLUDES
 #include "Aux.hh"
 #include "Config.hh"
+#include "timingAlgorithm.h"
 
 using namespace std;
 
@@ -41,7 +42,7 @@ int main(int argc, char **argv) {
   gROOT->SetBatch();
 
   FILE* fp1;
-  char stitle[200];
+  char stitle[200]; 
   int dummy;
 
   //**************************************
@@ -231,9 +232,9 @@ int main(int argc, char **argv) {
   float linearTime15[36];
   float linearTime30[36];
   float linearTime45[36];
-  float linearTime60[36];
-	
+  float linearTime60[36];       
   float fallingTime[36]; // falling exponential timestamp
+  float exactTimeCFD[36]; //algorithm from Nicola Minafra
 	
   float risetime[36]; 
   float constantThresholdTime[36];
@@ -271,6 +272,7 @@ int main(int argc, char **argv) {
   tree->Branch("linearTime45", linearTime45, "linearTime45[36]/F");
   tree->Branch("linearTime60", linearTime60, "linearTime60[36]/F");
   tree->Branch("fallingTime", fallingTime, "fallingTime[36]/F");
+  tree->Branch("exactTimeCFD", exactTimeCFD, "exactTimeCFD[36]/F");
   tree->Branch("risetime", risetime, "risetime[36]/F");
   tree->Branch("constantThresholdTime", constantThresholdTime, "constantThresholdTime[36]/F");
   tree->Branch("isRinging", _isRinging, "isRinging[36]/O");  
@@ -627,10 +629,10 @@ int main(int argc, char **argv) {
       
 	//Compute Amplitude : use units V
 	Double_t tmpAmp = 0.0;
-	Double_t tmpMin = 0.0;
-	pulse->GetPoint(index_min, tmpMin, tmpAmp);
+	Double_t tmpTime = 0.0;
+	pulse->GetPoint(index_min, tmpTime, tmpAmp);
 	amp[totalIndex] = tmpAmp * (1.0 / 4096.0); 
-	pulse->GetPoint(index_min_restricted, tmpMin, tmpAmp);
+	pulse->GetPoint(index_min_restricted, tmpTime, tmpAmp);
 	ampRestricted[totalIndex] = tmpAmp * (1.0 / 4096.0); 
 
 	// Get pulse integral
@@ -656,11 +658,13 @@ int main(int argc, char **argv) {
 			       || totalIndex == 26 || totalIndex == 35 );
 	float fs[6]; // constant-fraction fit output
 	float fs_falling[6]; // falling exp timestapms
+	float cft_low_range  = 0.30;
+	float cft_high_range = 0.70;
 	if ( !isTrigChannel ) {
 	  if( drawDebugPulses ) {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName); 
-	      RisingEdgeFitTime( pulse, index_min, 0.1, 0.60, fs, event, "linearFit_" + pulseName, true );
+	      RisingEdgeFitTime( pulse, index_min, cft_low_range, cft_high_range, fs, event, "linearFit_" + pulseName, true );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, true );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
 	      //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, true );
@@ -669,7 +673,7 @@ int main(int argc, char **argv) {
 	  else {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge); 
-	      RisingEdgeFitTime( pulse, index_min, 0.1, 0.60, fs, event, "linearFit_" + pulseName, false );
+	      RisingEdgeFitTime( pulse, index_min, cft_low_range, cft_high_range, fs, event, "linearFit_" + pulseName, false );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, false );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );
 	      //fullFitTime[totalIndex] = FullFitScint( pulse, index_min, event, "fullFit_" + pulseName, false );
@@ -700,7 +704,20 @@ int main(int argc, char **argv) {
 	linearTime45[totalIndex] = fs[4];
 	linearTime60[totalIndex] = fs[5];
 	fallingTime[totalIndex] = fs_falling[0];
-	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 50);
+	constantThresholdTime[totalIndex] = ConstantThresholdTime( pulse, 200);
+
+	//use algorithm ported from Nicola Minafra
+	vector<double> tmpChannelVector;
+	vector<double> tmpTimeVector;
+	AlgorithmParameters par( 0.5, -0.1, -0.01, 700e6, 1e-3,-0.3,0.3,-0.4,0.4);
+	for(int j = 0; j < 1024; j++) {
+	  double tmpAmpSample = 0.0;
+	  double tmpTimeSample = 0.0;
+	  pulse->GetPoint(j, tmpAmpSample,tmpTimeSample);
+	  tmpChannelVector.push_back(tmpAmpSample);
+	  tmpTimeVector.push_back(tmpTimeSample);
+	}
+	exactTimeCFD[totalIndex] = ComputeExactTimeCFD(tmpChannelVector, tmpTimeVector, par);
 
 	delete pulse;
       }

@@ -1,0 +1,3 @@
+pdflatex LGAD_May2017_FNALTB;
+bibtex LGAD_May2017_FNALTB;
+pdflatex LGAD_May2017_FNALTB;

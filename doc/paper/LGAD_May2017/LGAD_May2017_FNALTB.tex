@@ -1,0 +1,304 @@
+%% 
+%% Copyright 2007, 2008, 2009 Elsevier Ltd
+%% 
+%% This file is part of the 'Elsarticle Bundle'.
+%% ---------------------------------------------
+%% 
+%% It may be distributed under the conditions of the LaTeX Project Public
+%% License, either version 1.2 of this license or (at your option) any
+%% later version.  The latest version of this license is in
+%%    http://www.latex-project.org/lppl.txt
+%% and version 1.2 or later is part of all distributions of LaTeX
+%% version 1999/12/01 or later.
+%% 
+%% The list of all files belonging to the 'Elsarticle Bundle' is
+%% given in the file `manifest.txt'.
+%% 
+
+%% Template article for Elsevier's document class `elsarticle'
+%% with numbered style bibliographic references
+%% SP 2008/03/01
+
+\documentclass[preprint,1p]{elsarticle}
+\biboptions{numbers,sort&compress}
+
+%% Use the option review to obtain double line spacing
+%% \documentclass[authoryear,preprint,review,12pt]{elsarticle}
+
+%% Use the options 1p,twocolumn; 3p; 3p,twocolumn; 5p; or 5p,twocolumn
+%% for a journal layout:
+%% \documentclass[final,1p,times]{elsarticle}
+%% \documentclass[final,1p,times,twocolumn]{elsarticle}
+%% \documentclass[final,3p,times]{elsarticle}
+%% \documentclass[final,3p,times,twocolumn]{elsarticle}
+%% \documentclass[final,5p,times]{elsarticle}
+%% \documentclass[final,5p,times,twocolumn]{elsarticle}
+
+%% For including figures, graphicx.sty has been loaded in
+%% elsarticle.cls. If you prefer to use the old commands
+%% please give \usepackage{epsfig}
+
+%% The amssymb package provides various useful mathematical symbols
+\usepackage{amssymb}
+\usepackage{lineno}
+\usepackage{hyperref}
+%% The amsthm package provides extended theorem environments
+%% \usepackage{amsthm}
+
+%% The lineno packages adds line numbers. Start line numbering with
+%% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
+%% for the whole article with \linenumbers.
+%% \usepackage{lineno}
+
+\journal{Nucl. Instrum. Meth. A}
+
+\begin{document}
+\linenumbers
+
+\begin{frontmatter}
+
+%% Title, authors and addresses
+
+%% use the tnoteref command within \title for footnotes;
+%% use the tnotetext command for theassociated footnote;
+%% use the fnref command within \author or \address for footnotes;
+%% use the fntext command for theassociated footnote;
+%% use the corref command within \author for corresponding author footnotes;
+%% use the cortext command for theassociated footnote;
+%% use the ead command for the email address,
+%% and the form \ead[url] for the home page:
+%% \title{Title\tnoteref{label1}}
+%% \tnotetext[label1]{}
+%% \author{Name\corref{cor1}\fnref{label2}}
+%% \ead{email address}
+%% \ead[url]{home page}
+%% \fntext[label2]{}
+%% \cortext[cor1]{}
+%% \address{Address\fnref{label3}}
+%% \fntext[label3]{}
+
+\title{Test Beam Studies Of 50$\mu m$ LGAD sensors.}
+
+%% use optional labels to link authors explicitly to addresses:
+%% \author[label1,label2]{}
+%% \address[label1]{}
+%% \address[label2]{}
+
+\author[1]{A.~Apresyan\corref{cor}}\ead{apresyan@fnal.gov}
+\author[5]{R.~Arcidiacono}
+\author[5]{N.~Cartiglia}
+\author[1]{G.~Derylo}
+\author[5]{M.~Ferrero}
+\author[4]{P.~Freeman}
+\author[4]{Z.~Galloway}
+\author[4]{Y.~Ghao}
+\author[3]{H.~Al Ghoul}
+\author[1]{L.~Gray}
+\author[4]{C.~Labitan}
+\author[1]{S.~Los}
+\author[4]{Z.~Luce}
+\author[5]{M.~Mandurrino}
+\author[2]{A.~Mangu}
+\author[4]{F.~Martinez-Mckinney}
+\author[3]{N.~Minafra}
+\author[2]{C.~Pena}
+\author[1]{A.~Prosser}
+\author[1]{R.~Rivera}
+\author[3]{C.~Royon}
+\author[4]{H.~Sadrozinski}
+\author[4]{A.~Seiden}
+\author[5]{V.~Sola}
+\author[2]{M.~Spiropulu}
+\author[4]{E.~Spencer}
+\author[5]{A.~Staiano}
+\author[1]{L.~Uplegger}
+\author[4]{M.~Wilder}
+\author[2]{S.~Xie}
+
+\address[1]{Fermi National Accelerator Laboratory, Batavia, IL, USA}
+\address[2]{California Institute of Technology, Pasadena, CA, USA}
+\address[3]{University of Kansas, KS, USA}
+\address[4]{SCIPP, University of California Santa Cruz, CA, USA}
+\address[5]{Università di Torino, Torino, Italy}
+
+\cortext[cor]{Corresponding author}
+
+\begin{abstract}
+%% Text of abstract
+The high luminosity upgrade of the Large Hadron Collider (HL-LHC) at CERN is
+expected to provide instantaneous luminosities of $5\times 10^{34}$ cm$^{-2}$
+s$^{-1}$. The high luminosities expected at the HL-LHC will be accompanied by a
+factor of $5$ to $10$ more pileup compared with LHC conditions in $2015$,
+further increasing the challenge for particle identification and event
+reconstruction. Precision timing allows to extend calorimetric measurements into
+such a high density environment by subtracting the energy deposits from pileup
+interactions. Calorimeters employing silicon as the active component have
+recently become a viable choice for the HL-LHC and future collider experiments
+which face very high radiation environments. In this article, we present studies
+of basic calorimetric and precision timing measurements using a prototype
+composed of tungsten absorber and silicon sensor as the active medium. We show
+that for the bulk of electromagnetic showers induced by electrons in the range
+of $20$~GeV to $30$~GeV, we can achieve time resolutions better than $25$~ps per
+single pad sensor. 
+
+\end{abstract}
+
+\begin{keyword}
+%% keywords here, in the form: keyword \sep keyword
+
+%% PACS codes here, in the form: \PACS code \sep code
+Silicon \sep Timing \sep LGAD
+%% MSC codes here, in the form: \MSC code \sep code
+%% or \MSC[2008] code \sep code (2000 is the default)
+
+\end{keyword}
+
+\end{frontmatter}
+
+%% \linenumbers
+
+%% main text
+\section{Introduction} \section{Test-beam Setup and Experimental Apparatus} 
+
+We performed the test-beam measurements at the Fermilab Test-beam Facility
+(FTBF) which provided a proton beam from the Fermilab Main Injector accelerator
+at $120$~GeV. The Devices Under Test (DUT) were mounted on a remotely operated
+motorized stage, placed inside the pixel telescope detector~\cite{KWAN2016162}
+which provides better than 10~$\mu$m position resolution for the particles
+impinging on the DUT. Finally, a Photek 240 micro-channel plate photomultiplier
+detector~\cite{Anderson:2015gha, MCPFastCaloNIMA, Ronzhin2015288,Ronzhin201552}
+is placed furthest downstream, and serves to provide a very precise reference
+timestamp. Its precision was previously measured to be less than
+$10$~psec~\cite{Ronzhin2015288}. A photograph of the experimental area is shown
+in Fig.~\ref{fig:DragonBox}. 
+
+The DAQ system for the DUTs and the Photek MCP-PMT is based on a CAEN V1742
+digitizer board~\cite{CAENDRS}, which provides digitized waveforms sampled at 5
+GS/s, and one ADC count corresponds to 0.25~mV. The CAEN digitizer is voltage-
+and time-calibrated using the procedure described in Ref.~\cite{Kim201467}. The
+electronic time resolution of the CAEN V1742 digitizer was measured to be
+$\sim$4~ps, and its impact on the timing measurements presented in this studies
+can be neglected. The DAQ for the pixel telescope is based on the CAPTAN system
+developed at Fermilab~\cite{KWAN2016162}. The track-reconstruction is performed
+using the Monicelli software package developed specifically for the testbeam
+application. 
+
+The beam is resonantly extracted in a slow spill for each Main Injector cycle
+delivering a single 4.2 sec long spill per minute. The primary beam (bunched at
+53 MHz) consists of high energy protons (120 GeV) at variable intensities
+between 1 and 300 kHz. The trigger to both the CAEN V1742 and to the pixel
+telescope was provided by a scintillator mounted on a photomultiplier tube,
+placed upstream of the DUTs in the beam-line. Due to the limited buffer depth of
+the CAEN V1742 board, special care had to be taken in the design of the DAQ
+system to ensure that both the DUT and telescope DAQs collect exactly the same
+amount of triggers. This was achieved by limiting the trigger rate by
+introducting an adjustable dead-time using a custom-designed FPGA board. We
+found that at a rate of about 1,500 triggers per spill the CAEN V1742 and pixel
+telescope were maintained fully synchronized. Processed data from the pixel
+telescope and the DUTs were merged offline by matching the trigger counters
+recorded by the two systems.
+
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.75\textwidth]{figs/TB_dragonBox.pdf} 
+\caption{A picture of the experimental area. Thea pixel telescope detectors are placed inside the ESD shielded boxes on the two sides of the DUT area. Cooling liquid for the Peltier elements inside the DUT area is provided by the two pipes shown in the picture.} 
+\label{fig:DragonBox} 
+\end{figure} 
+
+
+\section{Properties of the tested LGAD sensors}
+
+Sensors manufactured by Hamamatsu (HPK) and CNM were tested during the test beam
+experiments. All sensors have active thickness of about 50 $\mu$m. 
+
+{\bf FIXME NICOLO OR HARTMUT: FILL IN DETAILS OF CNM AND HPK SENSORS, PRODUCTION
+PROCESS ETC} Details on CNM sensors can be found in Ref.~\cite{CNMSensors,
+Cartiglia201783}. Hamamatsu sensors have the following properties... 
+
+Sensors in both single- and four-channel configurations were tested during the
+measurements. The CNM single-channel sensors had an active area of 1 mm$^2$ {\bf
+FIXME: IS THIS CORRECT SIZE OF CNM SINGLE CHANNEL SENSORS?}, and the HPK
+single-channel sensors had a diameter of 1~mm. The dimensions of the four
+channel sensors from HPK are shown in Fig.~\ref{fig:Sensors}
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.45\textwidth]{figs/HPK-50DPix.pdf} 
+\includegraphics[width=0.45\textwidth]{figs/HPK-50D.pdf} 
+\caption{A picture of HPK and CNM sensors.} 
+\label{fig:Sensors} 
+\end{figure} 
+
+
+\section{Read-out boards}
+\section{Study of the uniformity of the LGAD sensors}
+\section{Comparison of the boards}
+\section{Comparison of HPK doping profiles}
+\section{Comparison of HPK 50 $\mu$m with 80 $\mu$m}
+\section{Temperature dependence of the LGAD sensors}
+\section{Radiation tolerance of the LGADs up to 6$\times 10^{14}$}
+
+
+\section{Conclusion}
+\label{sec:conclusion} 
+
+All is good!
+
+%% The Appendices part is started with the command \appendix;
+%% appendix sections are then done as normal sections
+%% \appendix
+
+%% \section{}
+%% \label{}
+
+%% If you have bibdatabase file and want bibtex to generate the
+%% bibitems, please use
+%%
+%%  \bibliographystyle{elsarticle-num} 
+%%  \bibliography{<your bibdatabase>}
+
+%% else use the following coding to input the bibitems directly in the
+%% TeX file.
+
+\bibliography{LGAD_May2017_FNALTB}{}
+\bibliographystyle{ieeetr} 
+
+%\begin{thebibliography}{00}
+
+%% \bibitem{label}
+%% Text of bibliographic item
+
+%\bibitem{}
+
+%\end{thebibliography}
+\end{document}
+\endinput
+%%
+%% End of file `elsarticle-template-num.tex'.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

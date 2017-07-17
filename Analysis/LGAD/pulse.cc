@@ -581,8 +581,11 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
 };
 
 
-void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float binWidth, float threshold_low, float threshold_high,
-					   float xmin, float xmax, float ymin, float ymax, bool _isMean,
+void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, int timestampOption, 
+					   float binWidth, float threshold_low, float threshold_high,
+					   float xmin, float xmax, float ymin, float ymax, 
+					   float deltaTMin, float deltaTMax,
+					   bool _isMean,
 					   float photek_low, float photek_high)
 {
    if ( dut <= 0 || dut > 2 )
@@ -592,7 +595,7 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
      }
   //x_init, y_init, and steps are in microns
   //const int npoints = 30;
-   
+     
 
   //------------------
   //Define initial positions and step size, all units are in microns
@@ -603,13 +606,12 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
 
   float x_pos[niterations];//x-positions
   float x_pos_un[niterations];//x-position uncertainty
-  float mpv_x[niterations];//mpv amplitude for x
-  float mpv_x_un[niterations];//uncertainty on mpv amplitude x
+  float deltaT_x[niterations];//deltaT amplitude for x
+  float deltaT_x_un[niterations];//uncertainty on deltaT amplitude x
   float y_pos[niterations];//y-positions
   float y_pos_un[niterations];//y-position uncertainty
-  float mpv_y[niterations];//mpv amplitude for x
-  float mpv_y_un[niterations];//uncertainty on mpv amplitude y
-
+  float deltaT_y[niterations];//deltaT amplitude for x
+  float deltaT_y_un[niterations];//uncertainty on deltaT amplitude y
 
   const float um_to_mm = 0.001;
   const float ns_to_ps = 1000.;
@@ -621,59 +623,60 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
     {
       x_pos[i] = x_init + binWidth*(float)i;
       x_pos_un[i] = 0;
-      std::pair<float,float> MPVAndError_X;
+      std::pair<float,float> DeltaTAndError_X;
+
       if ( _isMean )
 	{
-	  MPVAndError_X = DeltaT_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax, true, photek_low, photek_high );
+	  DeltaTAndError_X = DeltaT_vs_Position( dut, "X", channelNumber, timestampOption, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax, true, photek_low, photek_high );
 	}
       else
 	{
-	  MPVAndError_X = DeltaT_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax, false, photek_low, photek_high );
+	  DeltaTAndError_X = DeltaT_vs_Position( dut, "X", channelNumber, timestampOption, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax, false, photek_low, photek_high );
 	}
       x_pos[i] = x_pos[i]*um_to_mm;
-      mpv_x[i] = MPVAndError_X.first*ns_to_ps;
-      mpv_x_un[i] = MPVAndError_X.second*ns_to_ps;
-      if ( mpv_x_un[i]/mpv_x[i] > 0.9 )
+      deltaT_x[i] = DeltaTAndError_X.first*ns_to_ps;
+      deltaT_x_un[i] = DeltaTAndError_X.second*ns_to_ps;
+      if ( deltaT_x_un[i]/deltaT_x[i] > 0.9 )
 	{
-	  mpv_x[i]    = 0;
-	  mpv_x_un[i] = 0;
+	  deltaT_x[i]    = 0;
+	  deltaT_x_un[i] = 0;
 	}
-      if ( mpv_x[i] > -10000 && mpv_x[i] < 10000)
+      if ( deltaT_x[i] > -10000 && deltaT_x[i] < 10000)
 	{
 	  npoints_above_zero_x++;
-	  average_x += mpv_x[i];
+	  average_x += deltaT_x[i];
 	}
       
       
       y_pos[i] = y_init + binWidth*(float)i;
       y_pos_un[i] = 0;
-      std::pair<float,float> MPVAndError_Y;
+      std::pair<float,float> DeltaTAndError_Y;
       if ( _isMean )
 	{
-	  MPVAndError_Y = DeltaT_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax, true, photek_low, photek_high );
+	  DeltaTAndError_Y = DeltaT_vs_Position( dut, "Y", channelNumber, timestampOption, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax, true, photek_low, photek_high );
 	}
       else
 	{
-	  MPVAndError_Y = DeltaT_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax, false, photek_low, photek_high );
+	  DeltaTAndError_Y = DeltaT_vs_Position( dut, "Y", channelNumber, timestampOption, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax, false, photek_low, photek_high );
 	}
       y_pos[i] = y_pos[i]*um_to_mm;
-      mpv_y[i] = MPVAndError_Y.first*ns_to_ps;
-      mpv_y_un[i] = MPVAndError_Y.second*ns_to_ps;
-      if ( mpv_y_un[i]/mpv_y[i] > 0.9 )
+      deltaT_y[i] = DeltaTAndError_Y.first*ns_to_ps;
+      deltaT_y_un[i] = DeltaTAndError_Y.second*ns_to_ps;
+      if ( deltaT_y_un[i]/deltaT_y[i] > 0.9 )
 	{
-	  mpv_y[i]    = 0;
-	  mpv_y_un[i] = 0;
+	  deltaT_y[i]    = 0;
+	  deltaT_y_un[i] = 0;
 	}
-      if ( mpv_y[i] > -10000 && mpv_y[i] < 10000)
+      if ( deltaT_y[i] > -10000 && deltaT_y[i] < 10000)
 	{
 	  npoints_above_zero_y++;
-	  average_y += mpv_y[i];
+	  average_y += deltaT_y[i];
 	}
       
     }
 
-  TGraphErrors* gr_mpv_x = new TGraphErrors(niterations, x_pos, mpv_x, x_pos_un, mpv_x_un);
-  TGraphErrors* gr_mpv_y = new TGraphErrors(niterations, y_pos, mpv_y, y_pos_un, mpv_y_un);
+  TGraphErrors* gr_deltaT_x = new TGraphErrors(niterations, x_pos, deltaT_x, x_pos_un, deltaT_x_un);
+  TGraphErrors* gr_deltaT_y = new TGraphErrors(niterations, y_pos, deltaT_y, y_pos_un, deltaT_y_un);
   average_x = average_x/((float)npoints_above_zero_x);
   average_y = average_y/((float)npoints_above_zero_y);
   std::cout << "x: " <<  average_x << " y: " << average_y << std::endl;
@@ -685,74 +688,73 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
    //For X
    for ( int i = 1; i <= niterations; i++ )
      {
-       gr_mpv_x->GetPoint( i, x_eff_low, dummy_eff );
+       gr_deltaT_x->GetPoint( i, x_eff_low, dummy_eff );
        if( dummy_eff > 0.8*average_x ) break;
      }
    
    for ( int i = 1; i <= niterations; i++ )
      {
-       gr_mpv_x->GetPoint( niterations-i, x_eff_high, dummy_eff );
+       gr_deltaT_x->GetPoint( niterations-i, x_eff_high, dummy_eff );
        if( dummy_eff > 0.8*average_x ) break;
      }
 
    //For Y
    for ( int i = 1; i <= niterations; i++ )
      {
-       gr_mpv_y->GetPoint( i, y_eff_low, dummy_eff );
+       gr_deltaT_y->GetPoint( i, y_eff_low, dummy_eff );
        if( dummy_eff > 0.8*average_y ) break;
      }
    
    for ( int i = 1; i <= niterations; i++ )
      {
-       gr_mpv_y->GetPoint( niterations-i, y_eff_high, dummy_eff );
+       gr_deltaT_y->GetPoint( niterations-i, y_eff_high, dummy_eff );
        if( dummy_eff > 0.8*average_y ) break;
      }
   
    //Cosmetics
-   gr_mpv_x->GetYaxis()->SetRangeUser(0,1.2*max(average_x,average_y));
-   //gr_mpv_x->GetYaxis()->SetRangeUser(-10000,10000);
-   gr_mpv_x->GetXaxis()->SetRangeUser(x_eff_low-1.0,x_eff_high+1.0);
-   gr_mpv_x->SetTitle("");
-   gr_mpv_x->GetXaxis()->SetTitle("x-coordinate [mm]");
-   if ( _isMean ) gr_mpv_x->GetYaxis()->SetTitle("#Delta t [ps]");
-   else gr_mpv_x->GetYaxis()->SetTitle("Time resolution [ps]");
-   gr_mpv_x->GetXaxis()->SetTitleSize(0.05);
-   gr_mpv_x->GetXaxis()->SetTitleOffset(0.87);
-   gr_mpv_x->GetYaxis()->SetTitleSize(0.05);
-   gr_mpv_x->GetYaxis()->SetTitleOffset(0.83);
-   gr_mpv_x->SetMarkerStyle(20);
-   gr_mpv_x->SetMarkerStyle(kBlue);
-   gr_mpv_x->SetMarkerSize(1.1);
-   gr_mpv_x->SetMarkerColor(kBlue);
-   gr_mpv_x->SetLineColor(kBlue);
-   gr_mpv_x->SetMarkerStyle(20);
+   gr_deltaT_x->GetYaxis()->SetRangeUser(deltaTMin, deltaTMax);
+   gr_deltaT_x->GetXaxis()->SetRangeUser(xmin*um_to_mm,xmax*um_to_mm);
+   gr_deltaT_x->SetTitle("");
+   gr_deltaT_x->GetXaxis()->SetTitle("x-coordinate [mm]");
+   if ( _isMean ) gr_deltaT_x->GetYaxis()->SetTitle("#Delta t [ps]");
+   else gr_deltaT_x->GetYaxis()->SetTitle("Time resolution [ps]");
+   gr_deltaT_x->GetXaxis()->SetTitleSize(0.05);
+   gr_deltaT_x->GetXaxis()->SetTitleOffset(0.87);
+   gr_deltaT_x->GetYaxis()->SetTitleSize(0.05);
+   gr_deltaT_x->GetYaxis()->SetTitleOffset(0.83);
+   gr_deltaT_x->SetMarkerStyle(20);
+   gr_deltaT_x->SetMarkerStyle(kBlue);
+   gr_deltaT_x->SetMarkerSize(1.1);
+   gr_deltaT_x->SetMarkerColor(kBlue);
+   gr_deltaT_x->SetLineColor(kBlue);
+   gr_deltaT_x->SetMarkerStyle(20);
    
-   gr_mpv_y->GetYaxis()->SetRangeUser(0,1.2*max(average_x,average_y));
-   //gr_mpv_y->GetYaxis()->SetRangeUser(-10000,10000);
-   gr_mpv_y->GetXaxis()->SetRangeUser(y_eff_low-1.0,y_eff_high+1.0);
-   gr_mpv_y->SetTitle("");
-   gr_mpv_y->GetXaxis()->SetTitle("y-coordinate [mm]");
-   if ( _isMean ) gr_mpv_y->GetYaxis()->SetTitle("#Delta t [ps]");
-   else gr_mpv_y->GetYaxis()->SetTitle("Time resolution [ps]");
-   gr_mpv_y->GetXaxis()->SetTitleSize(0.05);
-   gr_mpv_y->GetXaxis()->SetTitleOffset(0.87);
-   gr_mpv_y->GetYaxis()->SetTitleSize(0.05);
-   gr_mpv_y->GetYaxis()->SetTitleOffset(0.83);
-   gr_mpv_y->SetMarkerStyle(20);
-   gr_mpv_y->SetMarkerStyle(kBlue);
-   gr_mpv_y->SetMarkerSize(1.1);
-   gr_mpv_y->SetMarkerColor(kBlue);
-   gr_mpv_y->SetLineColor(kBlue);
-   gr_mpv_y->SetMarkerStyle(20);
+   gr_deltaT_y->GetYaxis()->SetRangeUser(deltaTMin, deltaTMax);
+   //gr_deltaT_y->GetYaxis()->SetRangeUser(-10000,10000);
+   gr_deltaT_y->GetXaxis()->SetRangeUser(ymin*um_to_mm,ymax*um_to_mm);
+   gr_deltaT_y->SetTitle("");
+   gr_deltaT_y->GetXaxis()->SetTitle("y-coordinate [mm]");
+   if ( _isMean ) gr_deltaT_y->GetYaxis()->SetTitle("#Delta t [ps]");
+   else gr_deltaT_y->GetYaxis()->SetTitle("Time resolution [ps]");
+   gr_deltaT_y->GetXaxis()->SetTitleSize(0.05);
+   gr_deltaT_y->GetXaxis()->SetTitleOffset(0.87);
+   gr_deltaT_y->GetYaxis()->SetTitleSize(0.05);
+   gr_deltaT_y->GetYaxis()->SetTitleOffset(0.83);
+   gr_deltaT_y->SetMarkerStyle(20);
+   gr_deltaT_y->SetMarkerStyle(kBlue);
+   gr_deltaT_y->SetMarkerSize(1.1);
+   gr_deltaT_y->SetMarkerColor(kBlue);
+   gr_deltaT_y->SetLineColor(kBlue);
+   gr_deltaT_y->SetMarkerStyle(20);
    
   TString fname;
   if ( _isMean )
     {
       TCanvas* c = new TCanvas("canvas","canvas",600,400);
-      gr_mpv_x->Draw("AP");
+      gr_deltaT_x->Draw("AP");
       c->SaveAs(Form("MeanTime_vs_X_Ch%d.pdf",channelNumber));
       c->SaveAs(Form("MeanTime_vs_X_Ch%d.C",channelNumber));
-      gr_mpv_y->Draw("AP");
+      gr_deltaT_y->Draw("AP");
       c->SaveAs(Form("MeanTime_vs_Y_Ch%d.pdf",channelNumber));
       c->SaveAs(Form("MeanTime_vs_Y_Ch%d.C",channelNumber));
       delete c;
@@ -761,18 +763,18 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, float bin
   else
     {
       TCanvas* c = new TCanvas("canvas","canvas",600,400);
-      gr_mpv_x->Draw("AP");
+      gr_deltaT_x->Draw("AP");
       c->SaveAs(Form("TimeResolution_vs_X_Ch%d.pdf",channelNumber));
       c->SaveAs(Form("TimeResolution_vs_X_Ch%d.C",channelNumber));
-      gr_mpv_y->Draw("AP");
+      gr_deltaT_y->Draw("AP");
       c->SaveAs(Form("TimeResolution_vs_Y_Ch%d.pdf",channelNumber));
       c->SaveAs(Form("TimeResolution_vs_Y_Ch%d.C",channelNumber));
       delete c;
       fname = Form("deltaT_time_resolution_tgraphs_Channel%d.root", channelNumber);
     }
   TFile* fout = new TFile( fname, "RECREATE");
-  gr_mpv_x->Write("time_x");
-  gr_mpv_y->Write("time_y");
+  gr_deltaT_x->Write("time_x");
+  gr_deltaT_y->Write("time_y");
   fout->Close();
 };
 
@@ -846,7 +848,7 @@ std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int 
 };
 
 
-std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const int channel, const float coorLow, const float step,
+std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const int channel, const int timestampOption, const float coorLow, const float step,
 						  const float AmpLowCut, const float AmpHighCut,
 						  float other_corr_low, float other_corr_high, bool _isMean,
 						  float photek_low, float photek_high)
@@ -884,17 +886,21 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
       if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
       nb = fChain->GetEntry(jentry);   nbytes += nb;
       
+      //timestamp uses algorithm selected by the timestampOption parameter
+      double timestamp = gauspeak[channel];
+      if (timestampOption == 1) timestamp = linearTime45[channel];
+
       if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > photek_low && amp[0] < photek_high )
 	{
 	  if ( dut == 1 )
 	    {
-	      if ( (coor == "x" || coor == "X") && x1 >= coorLow && x1 < (coorLow + step) && y1 > other_corr_low && y1 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
-	      if ( (coor == "y" || coor == "Y") && y1 >= coorLow && y1 < (coorLow + step) && x1 > other_corr_low && x1 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
+	      if ( (coor == "x" || coor == "X") && x1 >= coorLow && x1 < (coorLow + step) && y1 > other_corr_low && y1 < other_corr_high ) h_deltaT->Fill(timestamp-gauspeak[0]);
+	      if ( (coor == "y" || coor == "Y") && y1 >= coorLow && y1 < (coorLow + step) && x1 > other_corr_low && x1 < other_corr_high ) h_deltaT->Fill(timestamp-gauspeak[0]);
 	    }
 	  else if ( dut == 2 )
 	    {
-	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
-	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high ) h_deltaT->Fill(linearTime45[channel]-gauspeak[0]);
+	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high ) h_deltaT->Fill(timestamp-gauspeak[0]);
+	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high ) h_deltaT->Fill(timestamp-gauspeak[0]);
 	    }
 	}
     }

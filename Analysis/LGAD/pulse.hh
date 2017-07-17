@@ -107,7 +107,8 @@ public :
 						  float other_corr_low = 0, float other_corr_high = 99999,
 						  float photek_low = 0.1, float photek_high = 0.3);
   
-  virtual std::pair<float,float> DeltaT_vs_Position( int dut = -1, TString coor = "X", const int channel = -1,
+  virtual std::pair<float,float> DeltaT_vs_Position( int dut = -1, TString coor = "X", const int channel = -1, 
+						     const int timestampOption = 0,
 						     const float coorLow = 0, const float step = 25.,
 						     const float AmpLowCut = 0, const float AmpHighCut = 0.0,
 						     float other_corr_low = 0, float other_corr_high = 99999, bool _isMean = true,
@@ -117,8 +118,11 @@ public :
   virtual void CreateMPV_vs_PositionHisto(  int dut, int channelNumber, float binWidth, float threshold_low, float threshold_high,
 					    float xmin, float xmax, float ymin, float ymax,
 					    float photek_low = 0.1, float photek_high = 0.3);
-  virtual void CreateDeltaT_vs_PositionHisto(  int dut, int channelNumber, float binWidth, float threshold_low, float threshold_high,
-					       float xmin, float xmax, float ymin, float ymax, bool _isMean = true,
+  virtual void CreateDeltaT_vs_PositionHisto(  int dut, int channelNumber, int timestampOption,
+					       float binWidth, float threshold_low, float threshold_high,
+					       float xmin, float xmax, float ymin, float ymax, 
+					       float deltaTMin, float deltaTMax,
+					       bool _isMean = true,
 					       float photek_low = 0.1, float photek_high = 0.3);
   void MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, float xmin, float xmax, float ymin, float ymax,
 			  float photek_low = 0.1, float photek_high = 0.3);

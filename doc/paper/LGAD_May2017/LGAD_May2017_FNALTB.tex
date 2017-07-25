@@ -158,7 +158,9 @@ Silicon \sep Timing \sep LGAD
 %% \linenumbers
 
 %% main text
-\section{Introduction} \section{Test-beam Setup and Experimental Apparatus} 
+\section{Introduction} 
+
+\section{Test-beam Setup} 
 
 We performed the test-beam measurements at the Fermilab Test-beam Facility
 (FTBF) which provided a proton beam from the Fermilab Main Injector accelerator
@@ -198,6 +200,21 @@ telescope were maintained fully synchronized. Processed data from the pixel
 telescope and the DUTs were merged offline by matching the trigger counters
 recorded by the two systems.
 
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.75\textwidth]{figs/BeamSetup.pdf} 
+\caption{A schematic diagram of the test-beam setup is shown. The $t_0$ and $t_1$ are defined in Section 4.} 
+\label{fig:DragonBox} 
+\end{figure} 
+
+The devices under test (DUT) were placed inside the telescope box described in
+Ref.\cite{KWAN2016162}, and mounted on aluminum mechanical support structure.
+The telescope box can be moved remotely in both horizontal and vertical
+directions, in order to align the DUTs with the beam. The aluminum support
+structures for DUT provide both a mechanical stability for the DUTs, and are
+equipped with Peltier cooling elements that were used in this study to operate
+the DUTs at $-10^{\circ}$ and $-20^{\circ}$~C.
 
 \begin{figure}[htbp] 
 \centering
@@ -247,12 +264,39 @@ was also used in results presented in Ref.~\cite{Cartiglia201783}
 
 and their detailed description is presented below.  
 
-\section{Study of the uniformity of the LGAD sensors}
-\section{Comparison of the boards}
-\section{Comparison of HPK doping profiles}
-\section{Comparison of HPK 50 $\mu$m with 80 $\mu$m}
-\section{Temperature dependence of the LGAD sensors}
-\section{Radiation tolerance of the LGADs up to 6$\times 10^{14}$}
+\textbf {FIXME SERGEY} a paragraph describing the FNAL board. 
+
+\textbf {FIXME NICOLA} a paragraph describing the 2-ch KU board. 
+
+The USCS board 1-channel board is desdcibed in details in Ref.~\cite{Cartiglia201783}. This board uses discrete components and contains several features which allow maintaining a wide bandwidth ($\sim$ 2 GHz) and a low noise even in noisy environments. The inverting amplifier uses a high-speed SiGe transistor whcih has a trans-impedance of about 470~$\Omega$. 
+
+\textbf {FIXME HARTMUT} a paragraph describing the 4-ch UCSC board. 
+
+
+\section{Beam test results}
+
+\subsection{Analysis procedure}
+
+The CAEN digitizer is voltage and time calibrated using the procedure described
+in Ref.~\cite{Kim201467}. The time for the reference Photek MCP-PMT detector is
+obtained by fitting the peak region of the pulse to a Gaussian function and the
+mean parameter of the Gaussian is assigned as the timestamp $t_0$. The time for
+signals from the LGAD sensors is obtained by performing a linear fit to the
+rising edge of the pulse and the time at which the pulse reaches 30\% of the
+maximum amplitude is assigned as its timestamp $t1$ \textbf{FIXME DESCRIBE THE
+ALGORITHMS FOR LGADS}. We measured the electronic time resolution of the CAEN
+V1742 digitizer as $\sim$4~ps and neglected its impact on the timing
+measurements described below. 
+
+Events are required to have a signal in the Photek MCP-PMT consistent with a MIP
+signal, 
+
+\subsection{Study of the uniformity of the LGAD sensors}
+\subsection{Comparison of the boards}
+\subsection{Comparison of HPK doping profiles}
+\subsection{Comparison of HPK 50 $\mu$m with 80 $\mu$m}
+\subsection{Temperature dependence of the LGAD sensors}
+\subsection{Radiation tolerance of the LGADs up to 6$\times 10^{14}$}
 
 
 \section{Conclusion}

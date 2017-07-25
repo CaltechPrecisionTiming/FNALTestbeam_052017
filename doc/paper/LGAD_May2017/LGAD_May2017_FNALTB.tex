@@ -289,9 +289,24 @@ V1742 digitizer as $\sim$4~ps and neglected its impact on the timing
 measurements described below. 
 
 Events are required to have a signal in the Photek MCP-PMT consistent with a MIP
-signal, 
+signal, and a signal above the noise in LGAD sensors. The MIP signal selection
+in Photek MCP-PMT is the same for all runs, since it was always read out
+directly by the CAEN digitizer. The signal selection for LGAD boards was
+optimized for each board individually, by selecting the MIP signal peak fitted
+with a Landau function. 
 
 \subsection{Study of the uniformity of the LGAD sensors}
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.35\textwidth, angle=270]{figs/HPK-50DPix.pdf} 
+\includegraphics[width=0.48\textwidth, angle=90]{figs/HPK-50D.pdf} 
+\caption{A picture of HPK 50DPix 2x2 array sensor (top), and 50D-GR single sensor (bottom).} 
+\label{fig:Sensors} 
+\end{figure} 
+
+
+
 \subsection{Comparison of the boards}
 \subsection{Comparison of HPK doping profiles}
 \subsection{Comparison of HPK 50 $\mu$m with 80 $\mu$m}

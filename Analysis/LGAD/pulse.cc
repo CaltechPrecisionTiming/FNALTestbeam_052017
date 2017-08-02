@@ -174,6 +174,10 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
       if ( !(fabs(xSlope) < 1e-3 && (fabs(ySlope) < 4e-3) && fabs(ySlope) > 3e-3)) continue;
       if ( !(amp[channelNumber] < 0.45 )) continue;//No saturation
 
+
+      //For irradiated 50D sensor on UCSC board (ch1), require that the particle is within the sensor circular region
+      //if (!(sqrt(pow(x1 - 13930,2) + pow(y1 - 21830 ,2)) < 400)) continue;
+
       if ( y1 > ymin && y1 < ymax ) {
 	histX_den->Fill( 0.001*x1);
 	if ( amp[channelNumber] > threshold ) {

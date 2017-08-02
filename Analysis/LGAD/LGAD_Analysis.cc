@@ -187,43 +187,166 @@ int main( int argc, char** argv)
   
   // //------------------------
   // //Runs 1657-1681 1-channelCNM 1mm2 on UCSC board (ch2)
+  // //Ch1, 3, 4, 5, are the FNAL Board 80C sensor
   // //------------------------
   // //Efficiency
   // myPulse->MakeEfficiencyVsXY(2, 400, 0.012, 16700., 17200., 21300, 21800., 0.08, 0.14);
+  //myPulse->MakeEfficiencyVsXY(1, 400, 0.012, 15400., 18200., 19600, 22300., 0.08, 0.14);
+  //myPulse->MakeEfficiencyVsXY(3, 400, 0.012, 14000., 15100., 19500, 22300., 0.08, 0.14);
+  //myPulse->MakeEfficiencyVsXY(4, 400, 0.012, 15400., 18100., 22600, 25300., 0.08, 0.14);
+  //myPulse->MakeEfficiencyVsXY(5, 400, 0.012, 14000., 15100., 22500, 25300., 0.08, 0.14);
+  
+
   // //MPV
   // myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.012, 0.040, 16700., 17200., 21300, 21800., 0.08, 0.14);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.012, 0.040, 15400., 18200., 19600, 22300., 0.08, 0.14);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 3, 200, 0.012, 0.040, 14000., 15100., 19500, 22300., 0.08, 0.14);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 4, 200, 0.012, 0.040, 15400., 18100., 22600, 25300., 0.08, 0.14);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 5, 200, 0.012, 0.040, 14000., 15100., 22500, 25300., 0.08, 0.14);
+
   // //--------------------
   // // Mean Time
   // //--------------------
   // myPulse->CreateDeltaT_vs_PositionHisto(1, 2, kGausTimestampOption, 200, 0.012, 0.040, 16700., 17200., 21300, 21800., 2700, 2800, true, 0.08, 0.14);
+  //myPulse->CreateDeltaT_vs_PositionHisto(1, 1, kGausTimestampOption, 200, 0.012, 0.040, 15400., 18200., 19600, 22300., -4100, -4000, true, 0.08, 0.14);
+  
   // //--------------------
   // // Time Resolution
   // //--------------------
   // myPulse->CreateDeltaT_vs_PositionHisto(1, 2, kGausTimestampOption, 200, 0.012, 0.040, 16700., 17200., 21300, 21800., 0, 100, false, 0.08, 0.14);
-  
+  //myPulse->CreateDeltaT_vs_PositionHisto(1, 1, kGausTimestampOption, 200, 0.012, 0.040, 15400., 18200., 19600, 22300., 0, 100, false, 0.08, 0.14);
+ 
 
 
-  
-  // //------------------------
-  // //Runs 936-961 (Irradiated) 50D on UCSC board (ch1), CNM W11LGA35 (ch2)
-  // //------------------------
+  //------------------------
+  //Runs 936-961 (Irradiated) 50D (600V) on UCSC board (ch1), CNM W11LGA35 (400V) (ch2)
+  //Runs 963-970 (Irradiated) 50D (635V) on UCSC board (ch1), CNM W11LGA35 (420V) (ch2)
+  //------------------------
   // //Efficiency
   // myPulse->MakeEfficiencyVsXY(1, 400, 0.015, 13600., 14300., 21400, 21900., 0.13, 0.32);
   // myPulse->MakeEfficiencyVsXY(2, 400, 0.010, 15600., 16300., 22100, 22900., 0.13, 0.32);
+
+  // // Efficiency with restricted X/Y range
+  // myPulse->MakeEfficiencyVsXY(1, 400, 0.015, 13800., 14100., 21500, 21800., 0.13, 0.32);
+  // myPulse->MakeEfficiencyVsXY(2, 400, 0.010, 15600., 16300., 22100, 22800., 0.13, 0.32);
+
   // //MPV
   // myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., 0.13, 0.32);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.010, 0.06, 15600., 16300., 22100, 22900., 0.13, 0.32);
-  //--------------------
-  // Mean Time
-  //--------------------
-  myPulse->CreateDeltaT_vs_PositionHisto(1, 1, kGausTimestampOption, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., 2300, 2350, true, 0.13, 0.32);
-  myPulse->CreateDeltaT_vs_PositionHisto(1, 2, kGausTimestampOption, 200, 0.010, 0.06, 15600., 16300., 22100, 22900., 2740, 2790, true, 0.13, 0.32);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.010, 0.06, 15600., 16300., 22100, 22800., 0.13, 0.32);
+
+  // // --------------------
+  // // Mean Time
+  // // --------------------
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 1, kGausTimestampOption, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., 2300, 2350, true, 0.13, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 2, kGausTimestampOption, 200, 0.010, 0.06, 15600., 16300., 22100, 22800., 2740, 2790, true, 0.13, 0.32);
   // //--------------------
   // // Time Resolution
   // //--------------------
-  // myPulse->CreateDeltaT_vs_PositionHisto(1, 1, kGausTimestampOption, 200, 0.015, 0.06, 13600., 14300., 21400, 21900., 0, 100, false, 0.13, 0.32);
-  // myPulse->CreateDeltaT_vs_PositionHisto(1, 2, kGausTimestampOption, 200, 0.010, 0.08, 15600., 16300., 22100, 22900., 0, 100, false, 0.13, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 1, kGausTimestampOption, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., 0, 100, false, 0.13, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 2, kGausTimestampOption, 200, 0.010, 0.06, 15600., 16300., 22100, 22800., 0, 100, false, 0.13, 0.32);
  
+
+
+  //----------------------------------------------------------
+  //50D on FNAL board @ 250V, Temperature Study
+  //Temp 20C : Run 888-889
+  //Temp -10C : Run 897-900
+  //Temp -20C : Run 901-904
+  //----------------------------------------------------------
+  //Temp 20C : Run 888-889
+  //----------------------------------------------------------
+  // //Efficiency
+  // myPulse->MakeEfficiencyVsXY(3, 200, 0.01, 11100., 13500., 20500, 23000., 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(4, 200, 0.01, 11100., 13500., 23500, 26000., 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(5, 200, 0.01, 13800., 16500., 23500, 26000., 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(6, 200, 0.01, 13800., 16500., 20500, 23000., 0.16, 0.32);
   
+  // //MPV
+  // myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.01, 0.1, 11100., 13500., 20500, 23000.);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.01, 0.1, 11100., 13500., 23500, 26000.);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.01, 0.1, 13800., 16500., 23500, 26000.);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.01, 0.1, 13800., 16500., 20500, 23000.);
+
+  // // --------------------
+  // // Mean Time2
+  // // --------------------  
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 3, kGausTimestampOption, 250, 0.01, 0.1, 11100., 13500., 20500, 23000., -5300, -5200, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 4, kGausTimestampOption, 250, 0.01, 0.1, 11100., 13500., 23500, 26000., -5550, -5450, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 5, kGausTimestampOption, 250, 0.01, 0.1, 13800., 16500., 23500, 26000., -5650, -5550, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 6, kGausTimestampOption, 250, 0.01, 0.1, 13800., 16500., 20500, 23000., -5470, -5370, true, 0.16, 0.32);
+
+  // // --------------------
+  // // Time Resolution
+  // // --------------------
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 3, kGausTimestampOption, 250, 0.01, 0.1, 11100., 13500., 20500, 23000., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 4, kGausTimestampOption, 250, 0.01, 0.1, 11100., 13500., 23500, 26000., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 5, kGausTimestampOption, 250, 0.01, 0.1, 13800., 16500., 23500, 26000., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 6, kGausTimestampOption, 250, 0.01, 0.1, 13800., 16500., 20500, 23000., 0, 100, false, 0.16, 0.32);
+  
+
+  //----------------------------------------------------------
+  //Temp -10C : Run 897-900
+  //----------------------------------------------------------
+  // //Efficiency
+  // myPulse->MakeEfficiencyVsXY(3, 200, 0.01, 11600., 14000., 20500, 23000., 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(4, 200, 0.01, 11600., 14000., 23500, 26000., 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(5, 200, 0.01, 14600., 17100., 23500, 26000., 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(6, 200, 0.01, 14600., 17100., 20500, 23000., 0.16, 0.32);
+  
+  // //MPV
+  // myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.01, 0.1, 11600., 14000., 20500, 23000.);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.01, 0.1, 11600., 14000., 23500, 26000.);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.01, 0.1, 14600., 17100., 23500, 26000.);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.01, 0.1, 14600., 17100., 20500, 23000.);
+
+  // // --------------------
+  // // Mean Time2
+  // // --------------------  
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 3, kGausTimestampOption, 250, 0.01, 0.1, 11600., 14000., 20500, 23000., -5330, -5230, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 4, kGausTimestampOption, 250, 0.01, 0.1, 11600., 14000., 23500, 26000., -5580, -5480, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 5, kGausTimestampOption, 250, 0.01, 0.1, 14600., 17100., 23500, 26000., -5680, -5580, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 6, kGausTimestampOption, 250, 0.01, 0.1, 14600., 17100., 20500, 23000., -5520, -5420, true, 0.16, 0.32);
+
+  // // --------------------
+  // // Time Resolution
+  // // --------------------
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 3, kGausTimestampOption, 250, 0.01, 0.1, 11600., 14000., 20500, 23000., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 4, kGausTimestampOption, 250, 0.01, 0.1, 11600., 14000., 23500, 26000., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 5, kGausTimestampOption, 250, 0.01, 0.1, 14600., 17100., 23500, 26000., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 6, kGausTimestampOption, 250, 0.01, 0.1, 14600., 17100., 20500, 23000., 0, 100, false, 0.16, 0.32);
+  
+  //----------------------------------------------------------
+  //Temp -20C : Run 901-904
+  //----------------------------------------------------------
+  // //Efficiency
+  // myPulse->MakeEfficiencyVsXY(3, 200, 0.01, 11600., 14000., 20500, 23000., 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(4, 200, 0.01, 11600., 14000., 23500, 26000., 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(5, 200, 0.01, 14600., 17100., 23500, 26000., 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(6, 200, 0.01, 14600., 17100., 20500, 23000., 0.16, 0.32);
+  
+  // //MPV
+  // myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.01, 0.1, 11600., 14000., 20500, 23000.);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.01, 0.1, 11600., 14000., 23500, 26000.);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.01, 0.1, 14600., 17100., 23500, 26000.);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.01, 0.1, 14600., 17100., 20500, 23000.);
+
+  // // --------------------
+  // // Mean Time2
+  // // --------------------  
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 3, kGausTimestampOption, 250, 0.01, 0.1, 11600., 14000., 20500, 23000., -5330, -5230, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 4, kGausTimestampOption, 250, 0.01, 0.1, 11600., 14000., 23500, 26000., -5580, -5480, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 5, kGausTimestampOption, 250, 0.01, 0.1, 14600., 17100., 23500, 26000., -5680, -5580, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 6, kGausTimestampOption, 250, 0.01, 0.1, 14600., 17100., 20500, 23000., -5520, -5420, true, 0.16, 0.32);
+
+  // // --------------------
+  // // Time Resolution
+  // // --------------------
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 3, kGausTimestampOption, 250, 0.01, 0.1, 11600., 14000., 20500, 23000., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 4, kGausTimestampOption, 250, 0.01, 0.1, 11600., 14000., 23500, 26000., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 5, kGausTimestampOption, 250, 0.01, 0.1, 14600., 17100., 23500, 26000., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 6, kGausTimestampOption, 250, 0.01, 0.1, 14600., 17100., 20500, 23000., 0, 100, false, 0.16, 0.32);
+  
+
+
   return 0;
 }

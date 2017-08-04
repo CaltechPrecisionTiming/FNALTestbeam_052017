@@ -437,18 +437,24 @@ void MeanTime_vs_X_50A()
    Graph_Graph1001->GetXaxis()->SetTitleFont(42);
    Graph_Graph1001->GetYaxis()->SetTitle("#Delta t [ns]");
    Graph_Graph1001->GetYaxis()->SetLabelFont(42);
-   Graph_Graph1001->GetYaxis()->SetLabelSize(0.08);
-   Graph_Graph1001->GetYaxis()->SetTitleSize(0.11);
+   Graph_Graph1001->GetYaxis()->SetLabelSize(0.10);
+   Graph_Graph1001->GetYaxis()->SetTitleSize(0.12);
    Graph_Graph1001->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1001->GetYaxis()->SetTitleFont(42);
    Graph_Graph1001->GetZaxis()->SetLabelFont(42);
-   Graph_Graph1001->GetYaxis()->SetRangeUser(-0.025,0.085);   
+   Graph_Graph1001->GetYaxis()->SetRangeUser(-0.025,0.05);   
+   Graph_Graph1001->GetYaxis()->SetNdivisions(505);
    Graph_Graph1001->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph1001->GetZaxis()->SetTitleSize(0.035);
    Graph_Graph1001->GetZaxis()->SetTitleFont(42);
    gre->SetHistogram(Graph_Graph1001);
    
    gre->Draw("ap");
+
+   TLatex *   tex = new TLatex(13, 0.041,"HPK 50A-PIX");
+   tex->SetTextSize(0.12);
+   tex->Draw(); 
+
 }
 
 void MeanTime_vs_X_50B()
@@ -889,11 +895,12 @@ void MeanTime_vs_X_50B()
    Graph_Graph1001->GetXaxis()->SetTitleFont(42);
    Graph_Graph1001->GetYaxis()->SetTitle("#Delta t [ns]");
    Graph_Graph1001->GetYaxis()->SetLabelFont(42);
-   Graph_Graph1001->GetYaxis()->SetLabelSize(0.08);
-   Graph_Graph1001->GetYaxis()->SetTitleSize(0.11);
+   Graph_Graph1001->GetYaxis()->SetLabelSize(0.10);
+   Graph_Graph1001->GetYaxis()->SetTitleSize(0.12);
    Graph_Graph1001->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1001->GetYaxis()->SetTitleFont(42);
-   Graph_Graph1001->GetYaxis()->SetRangeUser(-0.025,0.085);   
+   Graph_Graph1001->GetYaxis()->SetNdivisions(505);
+   Graph_Graph1001->GetYaxis()->SetRangeUser(-0.025,0.05);   
    Graph_Graph1001->GetZaxis()->SetLabelFont(42);
    Graph_Graph1001->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph1001->GetZaxis()->SetTitleSize(0.035);
@@ -901,6 +908,12 @@ void MeanTime_vs_X_50B()
    gre->SetHistogram(Graph_Graph1001);
    
    gre->Draw("ap");
+
+   TLatex *   tex = new TLatex(13, 0.041,"HPK 50B-PIX");
+   tex->SetTextSize(0.12);
+   tex->Draw(); 
+
+
 }
 
 
@@ -1342,11 +1355,12 @@ void MeanTime_vs_X_50C()
    Graph_Graph1001->GetXaxis()->SetTitleFont(42);
    Graph_Graph1001->GetYaxis()->SetTitle("#Delta t [ns]");
    Graph_Graph1001->GetYaxis()->SetLabelFont(42);
-   Graph_Graph1001->GetYaxis()->SetLabelSize(0.08);
-   Graph_Graph1001->GetYaxis()->SetTitleSize(0.11);
+   Graph_Graph1001->GetYaxis()->SetLabelSize(0.10);
+   Graph_Graph1001->GetYaxis()->SetTitleSize(0.12);
    Graph_Graph1001->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1001->GetYaxis()->SetTitleFont(42);
-   Graph_Graph1001->GetYaxis()->SetRangeUser(-0.025,0.085);   
+   Graph_Graph1001->GetYaxis()->SetNdivisions(505);
+   Graph_Graph1001->GetYaxis()->SetRangeUser(-0.025,0.05);   
    Graph_Graph1001->GetZaxis()->SetLabelFont(42);
    Graph_Graph1001->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph1001->GetZaxis()->SetTitleSize(0.035);
@@ -1354,6 +1368,13 @@ void MeanTime_vs_X_50C()
    gre->SetHistogram(Graph_Graph1001);
    
    gre->Draw("ap");
+
+   TLatex *   tex = new TLatex(13, 0.041,"HPK 50C-PIX");
+   tex->SetTextSize(0.12);
+   tex->Draw(); 
+
+
+
 }
 
 void MeanTime_vs_X_50D()
@@ -1787,62 +1808,73 @@ void MeanTime_vs_X_50D()
    Graph_Graph1001->GetXaxis()->SetTitle("x-coordinate [mm]");
    Graph_Graph1001->GetXaxis()->SetRangeUser(10.5,18.);
    Graph_Graph1001->GetXaxis()->SetLabelFont(42);
-   Graph_Graph1001->GetXaxis()->SetLabelSize(0.08);
-   Graph_Graph1001->GetXaxis()->SetTitleSize(0.12);
-   Graph_Graph1001->GetXaxis()->SetTitleOffset(0.65);
+   Graph_Graph1001->GetXaxis()->SetLabelSize(0.12);
+   Graph_Graph1001->GetXaxis()->SetTitleSize(0.15);
+   Graph_Graph1001->GetXaxis()->SetTitleOffset(0.80);
    Graph_Graph1001->GetXaxis()->SetTitleFont(42);
    Graph_Graph1001->GetYaxis()->SetTitle("#Delta t [ns]");
    Graph_Graph1001->GetYaxis()->SetLabelFont(42);
-   Graph_Graph1001->GetYaxis()->SetLabelSize(0.08);
-   Graph_Graph1001->GetYaxis()->SetTitleSize(0.11);
+   Graph_Graph1001->GetYaxis()->SetLabelSize(0.10);
+   Graph_Graph1001->GetYaxis()->SetTitleSize(0.12);
    Graph_Graph1001->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1001->GetYaxis()->SetTitleFont(42);
-   Graph_Graph1001->GetYaxis()->SetRangeUser(-0.025,0.085);   
+   Graph_Graph1001->GetYaxis()->SetRangeUser(-0.025,0.03);   
+   Graph_Graph1001->GetYaxis()->SetNdivisions(505);
    Graph_Graph1001->GetZaxis()->SetLabelFont(42);
    Graph_Graph1001->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph1001->GetZaxis()->SetTitleSize(0.035);
    Graph_Graph1001->GetZaxis()->SetTitleFont(42);
    gre->SetHistogram(Graph_Graph1001);
-   
+  
    gre->Draw("ap");
+
+   TLatex *   tex = new TLatex(13, 0.021,"HPK 50D-PIX");
+   tex->SetTextSize(0.12);
+   tex->Draw(); 
+
 }
 
 
 void MeanTime_vs_X_50ABCD()
 {
   gROOT->Reset();
-  TCanvas c1("c1","multipads",700,700);
+  TCanvas *c1 = new TCanvas("c1","multipads",700,700);
   gStyle->SetPadBorderMode(0);
   gStyle->SetFrameBorderMode(0);
-  Float_t small = 1e-5;
-  Float_t large = 2.;
+  Float_t small = 0.002;
+  Float_t large = 0.25;
 
-  c1.Divide(1,4,small,small);
+ c1->Divide(1,4,small,small);
   
-  c1.cd(1);
+ c1->cd(1);
   gPad->SetBottomMargin(small);
   gPad->SetGridy();
+  gPad->SetRightMargin(0.02);
   MeanTime_vs_X_50A();
 
-  c1.cd(2);
+ c1->cd(2);
   gPad->SetTopMargin(small);
   gPad->SetBottomMargin(small);
+  gPad->SetRightMargin(0.02);
   gPad->SetGridy();
   MeanTime_vs_X_50B();  
   
-  c1.cd(3);
+ c1->cd(3);
   gPad->SetTopMargin(small);
   gPad->SetBottomMargin(small);
+  gPad->SetRightMargin(0.02);
   gPad->SetGridy();
   MeanTime_vs_X_50C();  
 
-  c1.cd(4);
+ c1->cd(4);
   gPad->SetTopMargin(small);
   gPad->SetBottomMargin(large);
-  gPad->SetTickx();
+  gPad->SetRightMargin(0.02);
+  //gPad->SetTickx();
   gPad->SetGridy();
   MeanTime_vs_X_50D();    
 
-  c1.Draw();
- 
+ c1->Draw();
+ c1->SaveAs("KUBoard_50ABCD_MeanTime.pdf");
+
 }

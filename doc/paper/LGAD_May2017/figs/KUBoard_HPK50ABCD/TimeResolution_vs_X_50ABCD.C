@@ -437,9 +437,9 @@ void TimeResolution_vs_X_50A()
    Graph_Graph1005->GetXaxis()->SetTitleFont(42);
    Graph_Graph1005->GetYaxis()->SetTitle("Time resolution [ps]");
    Graph_Graph1005->GetYaxis()->SetLabelFont(42);
-   Graph_Graph1005->GetYaxis()->SetLabelSize(0.08);
-   Graph_Graph1005->GetYaxis()->SetTitleSize(0.09);
-   Graph_Graph1005->GetYaxis()->SetTitleOffset(0.3);
+   Graph_Graph1005->GetYaxis()->SetLabelSize(0.10);
+   Graph_Graph1005->GetYaxis()->SetTitleSize(0.10);
+   Graph_Graph1005->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1005->GetYaxis()->SetTitleFont(42);
    Graph_Graph1005->GetZaxis()->SetLabelFont(42);
    Graph_Graph1005->GetYaxis()->SetRangeUser(22,82);   
@@ -449,6 +449,13 @@ void TimeResolution_vs_X_50A()
    gre->SetHistogram(Graph_Graph1005);
    
    gre->Draw("ap");
+
+   TLatex *   tex = new TLatex(16.5, 73,"HPK 50A-PIX");
+   tex->SetTextSize(0.12);
+   tex->Draw(); 
+
+
+
 }
 
 void TimeResolution_vs_X_50B()
@@ -889,9 +896,9 @@ void TimeResolution_vs_X_50B()
    Graph_Graph1005->GetXaxis()->SetTitleFont(42);
    Graph_Graph1005->GetYaxis()->SetTitle("Time resolution [ps]");
    Graph_Graph1005->GetYaxis()->SetLabelFont(42);
-   Graph_Graph1005->GetYaxis()->SetLabelSize(0.08);
-   Graph_Graph1005->GetYaxis()->SetTitleSize(0.09);
-   Graph_Graph1005->GetYaxis()->SetTitleOffset(0.3);
+   Graph_Graph1005->GetYaxis()->SetLabelSize(0.10);
+   Graph_Graph1005->GetYaxis()->SetTitleSize(0.10);
+   Graph_Graph1005->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1005->GetYaxis()->SetTitleFont(42);
    Graph_Graph1005->GetYaxis()->SetRangeUser(22,82);   
    Graph_Graph1005->GetZaxis()->SetLabelFont(42);
@@ -901,6 +908,12 @@ void TimeResolution_vs_X_50B()
    gre->SetHistogram(Graph_Graph1005);
    
    gre->Draw("ap");
+
+   TLatex *   tex = new TLatex(16.5, 73,"HPK 50B-PIX");
+   tex->SetTextSize(0.12);
+   tex->Draw(); 
+
+
 }
 
 
@@ -1342,9 +1355,9 @@ void TimeResolution_vs_X_50C()
    Graph_Graph1005->GetXaxis()->SetTitleFont(42);
    Graph_Graph1005->GetYaxis()->SetTitle("Time resolution [ps]");
    Graph_Graph1005->GetYaxis()->SetLabelFont(42);
-   Graph_Graph1005->GetYaxis()->SetLabelSize(0.08);
-   Graph_Graph1005->GetYaxis()->SetTitleSize(0.09);
-   Graph_Graph1005->GetYaxis()->SetTitleOffset(0.3);
+   Graph_Graph1005->GetYaxis()->SetLabelSize(0.10);
+   Graph_Graph1005->GetYaxis()->SetTitleSize(0.10);
+   Graph_Graph1005->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1005->GetYaxis()->SetTitleFont(42);
    Graph_Graph1005->GetYaxis()->SetRangeUser(22,82);   
    Graph_Graph1005->GetZaxis()->SetLabelFont(42);
@@ -1354,6 +1367,13 @@ void TimeResolution_vs_X_50C()
    gre->SetHistogram(Graph_Graph1005);
    
    gre->Draw("ap");
+
+   TLatex *   tex = new TLatex(16.5, 73,"HPK 50C-PIX");
+   tex->SetTextSize(0.12);
+   tex->Draw(); 
+
+
+
 }
 
 void TimeResolution_vs_X_50D()
@@ -1788,62 +1808,69 @@ void TimeResolution_vs_X_50D()
    Graph_Graph1005->GetXaxis()->SetTitle("x-coordinate [mm]");
    Graph_Graph1005->GetXaxis()->SetRangeUser(10.5,18.);
    Graph_Graph1005->GetXaxis()->SetLabelFont(42);
-   Graph_Graph1005->GetXaxis()->SetLabelSize(0.08);
-   Graph_Graph1005->GetXaxis()->SetTitleSize(0.12);
-   Graph_Graph1005->GetXaxis()->SetTitleOffset(0.65);
+   Graph_Graph1005->GetXaxis()->SetLabelSize(0.12);
+   Graph_Graph1005->GetXaxis()->SetTitleSize(0.15);
+   Graph_Graph1005->GetXaxis()->SetTitleOffset(0.80);
    Graph_Graph1005->GetXaxis()->SetTitleFont(42);
    Graph_Graph1005->GetYaxis()->SetTitle("Time resolution [ps]");
    Graph_Graph1005->GetYaxis()->SetLabelFont(42);
-   Graph_Graph1005->GetYaxis()->SetLabelSize(0.08);
-   Graph_Graph1005->GetYaxis()->SetTitleSize(0.09);
-   Graph_Graph1005->GetYaxis()->SetTitleOffset(0.3);
+   Graph_Graph1005->GetYaxis()->SetLabelSize(0.10);
+   Graph_Graph1005->GetYaxis()->SetTitleSize(0.10);
+   Graph_Graph1005->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1005->GetYaxis()->SetTitleFont(42);
-   Graph_Graph1005->GetYaxis()->SetRangeUser(22,82);   
+   Graph_Graph1005->GetYaxis()->SetRangeUser(22,62); 
+   Graph_Graph1005->GetYaxis()->SetNdivisions(507);
    Graph_Graph1005->GetZaxis()->SetLabelFont(42);
    Graph_Graph1005->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph1005->GetZaxis()->SetTitleSize(0.035);
    Graph_Graph1005->GetZaxis()->SetTitleFont(42);
    gre->SetHistogram(Graph_Graph1005);
-   
    gre->Draw("ap");
+
+   TLatex *   tex = new TLatex(16.5, 53,"HPK 50D-PIX");
+   tex->SetTextSize(0.12);
+   tex->Draw(); 
+
+
 }
 
 
 void TimeResolution_vs_X_50ABCD()
 {
   gROOT->Reset();
-  TCanvas c1("c1","multipads",700,700);
+  TCanvas *c1 = new TCanvas("c1","multipads",700,700);
   gStyle->SetPadBorderMode(0);
   gStyle->SetFrameBorderMode(0);
-  Float_t small = 1e-5;
-  Float_t large = 2.;
+  Float_t small = 0.002;
+  Float_t large = 0.25;
 
-  c1.Divide(1,4,small,small);
+  c1->Divide(1,4,small,small);
   
-  c1.cd(1);
+  c1->cd(1);
   gPad->SetBottomMargin(small);
   gPad->SetGridy();
   TimeResolution_vs_X_50A();
 
-  c1.cd(2);
+  c1->cd(2);
   gPad->SetTopMargin(small);
   gPad->SetBottomMargin(small);
   gPad->SetGridy();
   TimeResolution_vs_X_50B();  
   
-  c1.cd(3);
+  c1->cd(3);
   gPad->SetTopMargin(small);
   gPad->SetBottomMargin(small);
   gPad->SetGridy();
   TimeResolution_vs_X_50C();  
 
-  c1.cd(4);
+  c1->cd(4);
   gPad->SetTopMargin(small);
   gPad->SetBottomMargin(large);
-  gPad->SetTickx();
+  //gPad->SetTickx();
   gPad->SetGridy();
   TimeResolution_vs_X_50D();    
 
-  c1.Draw();
- 
+  c1->Draw();
+  c1->SaveAs("KUBoard_50ABCD_TimeResolution.pdf");
+
 }

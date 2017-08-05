@@ -451,7 +451,8 @@ void TimeResolution_vs_X_50A()
    
    gre->Draw("ap");
 
-   TLatex *   tex = new TLatex(16.5, 73,"HPK 50A-PIX");
+   TLatex *   tex = new TLatex(0.165, 0.73,"HPK 50A-PIX");
+   tex->SetNDC();
    tex->SetTextSize(0.12);
    tex->Draw(); 
 
@@ -911,7 +912,8 @@ void TimeResolution_vs_X_50B()
    
    gre->Draw("ap");
 
-   TLatex *   tex = new TLatex(16.5, 73,"HPK 50B-PIX");
+   TLatex *   tex = new TLatex(0.165, 0.73,"HPK 50B-PIX");
+   tex->SetNDC();
    tex->SetTextSize(0.12);
    tex->Draw(); 
 
@@ -1371,7 +1373,8 @@ void TimeResolution_vs_X_50C()
    
    gre->Draw("ap");
 
-   TLatex *   tex = new TLatex(16.5, 73,"HPK 50C-PIX");
+   TLatex *   tex = new TLatex(0.165, 0.73,"HPK 50C-PIX");
+   tex->SetNDC();
    tex->SetTextSize(0.12);
    tex->Draw(); 
 
@@ -1831,7 +1834,8 @@ void TimeResolution_vs_X_50D()
    gre->SetHistogram(Graph_Graph1003);
    gre->Draw("ap");
 
-   TLatex *   tex = new TLatex(16.5, 53,"HPK 50D-PIX");
+   TLatex *   tex = new TLatex(0.165, 0.83,"HPK 50D-PIX");
+   tex->SetNDC();
    tex->SetTextSize(0.12);
    tex->Draw(); 
 

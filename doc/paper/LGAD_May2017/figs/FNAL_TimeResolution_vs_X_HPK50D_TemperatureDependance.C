@@ -10,7 +10,8 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    c1->SetGridy();
    c1->SetFrameBorderMode(0);
    c1->SetFrameBorderMode(0);
-   
+   c1->SetLeftMargin(0.12);
+
    Double_t Graph0_fx1001[80] = {
    10,
    10.25,
@@ -97,29 +98,29 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    -999000,
    -999000,
    -999000,
-   46.8827,
-   50.71804,
-   57.32318,
-   54.96303,
-   63.86689,
-   55.73508,
-   55.01198,
-   49.48808,
-   54.7729,
-   55.01543,
-   74.54198,
-   53.49198,
-   57.14819,
-   55.7103,
-   46.73851,
-   59.34167,
-   50.76402,
-   49.52528,
-   61.61386,
-   49.44018,
-   54.86837,
-   53.41026,
-   58.64341,
+   -999000,
+   -999000,
+   52.60285,//From CH3
+   52.43151,
+   62.61277,
+   55.66352,
+   58.43248,
+   53.20759,
+   58.41677,
+   56.8171,
+   63.92535,
+   51.74381,//From CH6
+   48.80502,
+   61.67495,
+   54.0512,
+   59.47741,
+   57.01632,
+   59.26156,
+   57.60491,
+   51.93502,
+   54.48795,
+   50.88239,
+   -999000,
    -999000,
    -999000,
    -999000,
@@ -259,29 +260,29 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    0,
    0,
    0,
-   7.888561,
-   5.150953,
-   4.889086,
-   4.970455,
-   4.037133,
-   4.259565,
-   4.054784,
-   3.19814,
-   4.008366,
-   3.754574,
-   14.15956,
-   3.302475,
-   4.296057,
-   3.578827,
-   3.007181,
-   3.523851,
-   3.931412,
-   2.93682,
-   5.372831,
-   2.902426,
-   2.889124,
-   3.634066,
-   7.745064,
+   0,
+   0,
+   4.869704,//From CH3
+   5.211845,
+   4.790397,
+   3.311273,
+   4.143011,
+   3.874487,
+   5.176766,
+   3.793431,
+   7.487855,
+   2.883718,//From CH6
+   2.834643,
+   4.108504,
+   3.822891,
+   4.519158,
+   3.180488,
+   4.790975,
+   5.269691,
+   4.14087,
+   3.937836,
+   4.671264,
+   0,
    0,
    0,
    0,
@@ -335,18 +336,19 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    0,
    0,
    0};
-   TGraphErrors *gre = new TGraphErrors(80,Graph0_fx1001,Graph0_fy1001,Graph0_fex1001,Graph0_fey1001);
-   gre->SetName("Graph0");
-   gre->SetTitle("");
-   gre->SetFillColor(1);
-   gre->SetLineColor(4);
-   gre->SetMarkerColor(4);
-   gre->SetMarkerStyle(20);
-   gre->SetMarkerSize(1.1);
+   TGraphErrors *gre1 = new TGraphErrors(80,Graph0_fx1001,Graph0_fy1001,Graph0_fex1001,Graph0_fey1001);
+   gre1->SetName("Graph0");
+   gre1->SetTitle("");
+   gre1->SetFillColor(1);
+   gre1->SetLineColor(kRed);
+   gre1->SetLineWidth(2);
+   gre1->SetMarkerColor(kRed);
+   gre1->SetMarkerStyle(21);
+   gre1->SetMarkerSize(1.3);
    
    TH1F *Graph_Graph_Graph10191001 = new TH1F("Graph_Graph_Graph10191001","",100,8.025,31.725);
-   Graph_Graph_Graph10191001->SetMinimum(10);
-   Graph_Graph_Graph10191001->SetMaximum(100);
+   Graph_Graph_Graph10191001->SetMinimum(25);
+   Graph_Graph_Graph10191001->SetMaximum(75);
    Graph_Graph_Graph10191001->SetDirectory(0);
    Graph_Graph_Graph10191001->SetStats(0);
 
@@ -357,7 +359,7 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    Graph_Graph_Graph10191001->GetXaxis()->SetTitle("x-coordinate [mm]");
    Graph_Graph_Graph10191001->GetXaxis()->SetRange(11,41);
    Graph_Graph_Graph10191001->GetXaxis()->SetLabelFont(42);
-   Graph_Graph_Graph10191001->GetXaxis()->SetLabelSize(0.035);
+   Graph_Graph_Graph10191001->GetXaxis()->SetLabelSize(0.04);
    Graph_Graph_Graph10191001->GetXaxis()->SetTitleSize(0.05);
    Graph_Graph_Graph10191001->GetXaxis()->SetTitleOffset(0.87);
    Graph_Graph_Graph10191001->GetXaxis()->SetTitleFont(42);
@@ -365,17 +367,18 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    Graph_Graph_Graph10191001->GetYaxis()->SetNdivisions(508);
    Graph_Graph_Graph10191001->GetYaxis()->SetLabelFont(42);
    Graph_Graph_Graph10191001->GetYaxis()->SetLabelOffset(0.006);
-   Graph_Graph_Graph10191001->GetYaxis()->SetLabelSize(0.03);
+   Graph_Graph_Graph10191001->GetYaxis()->SetLabelSize(0.04);
    Graph_Graph_Graph10191001->GetYaxis()->SetTitleSize(0.05);
-   Graph_Graph_Graph10191001->GetYaxis()->SetTitleOffset(0.7);
+   Graph_Graph_Graph10191001->GetYaxis()->SetTitleOffset(1.0);
    Graph_Graph_Graph10191001->GetYaxis()->SetTitleFont(42);
    Graph_Graph_Graph10191001->GetZaxis()->SetLabelFont(42);
    Graph_Graph_Graph10191001->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph_Graph10191001->GetZaxis()->SetTitleSize(0.035);
    Graph_Graph_Graph10191001->GetZaxis()->SetTitleFont(42);
-   gre->SetHistogram(Graph_Graph_Graph10191001);
-   
-   gre->Draw("ap");
+   gre1->SetHistogram(Graph_Graph_Graph10191001);
+  
+  
+   gre1->Draw("ap");
    
    Double_t Graph0_fx1002[80] = {
    10,
@@ -464,31 +467,31 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    -999000,
    -999000,
    -999000,
-   41.79047,
-   35.92224,
-   42.71203,
-   43.06581,
-   39.8162,
-   43.00736,
-   42.41136,
-   41.09643,
-   43.17335,
-   42.00027,
-   40.23204,
-   40.13575,
-   32.44719,
-   42.19546,
-   42.17623,
-   42.83572,
-   43.55915,
-   41.4981,
-   43.61125,
-   39.97095,
-   40.15153,
-   42.94444,
-   42.55556,
-   37.8332,
-   35.19183,
+   -999000, //47.01359, //From CH3
+   43.22812,
+   39.92607,
+   44.01024,
+   41.33953,
+   43.33187,
+   42.92662,
+   40.35025,
+   45.70132,
+   47.88445,
+   42.95768,
+   39.85056,
+   -999000, //40.55444, //From CH6
+   41.14801,
+   36.58237,
+   45.10297,
+   40.46547,
+   37.17227,
+   40.88081,
+   42.10093,
+   42.67832,
+   37.17654,
+   39.023,
+   36.31713,
+   -999000, //42.67486,
    -999000,
    -999000,
    -999000,
@@ -626,31 +629,31 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    0,
    0,
    0,
-   6.886924,
-   2.519912,
-   3.20433,
-   2.705837,
-   2.164748,
-   1.972211,
-   2.428434,
-   2.278702,
-   2.251966,
-   2.678117,
-   2.359157,
-   2.670528,
-   6.087414,
-   2.584869,
-   2.27205,
-   2.852783,
-   2.231633,
-   2.947152,
-   3.354925,
-   2.575963,
-   3.293101,
-   3.975723,
-   3.201559,
-   2.906836,
-   4.707219,
+   0, //9.42252, //From CH3
+   3.248598,
+   2.067953,
+   3.884742,
+   1.924628,
+   2.698233,
+   2.183184,
+   2.516154,
+   2.320631,
+   3.166121,
+   2.337478,
+   2.163042,
+   0, //5.29263, //From CH6
+   2.680438,
+   2.36858,
+   2.308624,
+   2.478714,
+   1.830921,
+   2.342052,
+   2.693539,
+   3.167565,
+   2.590368,
+   2.483544,
+   2.087598,
+   0, //4.927089,
    0,
    0,
    0,
@@ -701,17 +704,18 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    0,
    0,
    0};
-   gre = new TGraphErrors(80,Graph0_fx1002,Graph0_fy1002,Graph0_fex1002,Graph0_fey1002);
-   gre->SetName("Graph0");
-   gre->SetTitle("");
-   gre->SetFillColor(1);
-   gre->SetLineColor(2);
+   gre2 = new TGraphErrors(80,Graph0_fx1002,Graph0_fy1002,Graph0_fex1002,Graph0_fey1002);
+   gre2->SetName("Graph0");
+   gre2->SetTitle("");
+   gre2->SetFillColor(1);
+   gre2->SetLineColor(kBlue);
+   gre2->SetLineWidth(2);
 
    ci = 1180;
    color = new TColor(ci, 1, 0, 0, " ", 0.988);
-   gre->SetMarkerColor(ci);
-   gre->SetMarkerStyle(20);
-   gre->SetMarkerSize(1.1);
+   gre2->SetMarkerColor(kBlue);
+   gre2->SetMarkerStyle(20);
+   gre2->SetMarkerSize(1.3);
    
    TH1F *Graph_Graph_Graph10191002 = new TH1F("Graph_Graph_Graph10191002","",100,8.025,31.725);
    Graph_Graph_Graph10191002->SetMinimum(0);
@@ -739,10 +743,14 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    Graph_Graph_Graph10191002->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph_Graph10191002->GetZaxis()->SetTitleSize(0.035);
    Graph_Graph_Graph10191002->GetZaxis()->SetTitleFont(42);
-   gre->SetHistogram(Graph_Graph_Graph10191002);
+   gre2->SetHistogram(Graph_Graph_Graph10191002);
+   gre2->SetLineWidth(2);
+   gre2->Draw("P");
    
-   gre->Draw("P");
-   
+
+
+
+
    Double_t Graph0_fx1003[80] = {
    10,
    10.25,
@@ -830,31 +838,31 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    -999000,
    -999000,
    -999000,
-   44.53798,
-   37.31806,
-   41.61182,
-   35.55514,
-   36.97291,
-   38.68546,
-   35.82727,
-   42.68242,
-   40.73521,
-   38.01249,
-   39.84151,
-   34.58645,
-   48.41792,
-   34.96035,
-   36.64561,
-   39.11565,
-   41.95913,
-   42.58967,
-   37.47549,
-   39.19389,
-   34.42378,
-   35.22222,
-   32.38668,
-   37.73994,
-   37.83408,
+   -999000, //35.42611, //From CH3
+   33.8081,
+   36.39647,
+   34.54403,
+   42.64494,
+   36.51563,
+   38.86783,
+   38.51265,
+   37.36446,
+   40.82499,
+   36.68188,
+   35.2178,
+   -999000,
+   34.72432, //From CH6
+   36.45294,
+   38.90191,
+   38.01936,
+   37.55637,
+   41.46838,
+   34.6434,
+   32.83292,
+   36.47297,
+   36.94978,
+   38.03934,
+   -999000, //37.20394,
    -999000,
    -999000,
    -999000,
@@ -992,31 +1000,31 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    0,
    0,
    0,
-   5.861302,
-   1.763205,
-   2.237698,
-   1.800417,
-   1.635379,
-   1.888299,
-   1.797207,
-   1.819681,
-   2.053968,
-   2.123599,
-   1.975015,
-   1.600057,
-   9.359721,
-   2.085285,
-   1.748061,
-   1.945162,
-   2.322348,
-   2.208008,
-   1.636404,
-   2.272674,
-   1.991692,
-   2.208495,
-   2.334498,
-   2.285018,
-   3.640752,
+   0, //6.395916, //From CH3
+   2.348773,
+   1.612094,
+   1.635071,
+   2.036408,
+   1.719345,
+   1.918336,
+   1.539303,
+   1.560517,
+   1.708668,
+   1.294981,
+   1.315442,
+   2.909904,
+   1.464219, //From CH6
+   1.745221,
+   2.007208,
+   2.093087,
+   1.917464,
+   2.122837,
+   1.918549,
+   1.411348,
+   1.688458,
+   2.257662,
+   1.993315,
+   0, //3.198605,
    0,
    0,
    0,
@@ -1067,14 +1075,15 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    0,
    0,
    0};
-   gre = new TGraphErrors(80,Graph0_fx1003,Graph0_fy1003,Graph0_fex1003,Graph0_fey1003);
-   gre->SetName("Graph0");
-   gre->SetTitle("");
-   gre->SetFillColor(1);
-   gre->SetLineColor(3);
-   gre->SetMarkerColor(3);
-   gre->SetMarkerStyle(20);
-   gre->SetMarkerSize(1.1);
+   gre3 = new TGraphErrors(80,Graph0_fx1003,Graph0_fy1003,Graph0_fex1003,Graph0_fey1003);
+   gre3->SetName("Graph0");
+   gre3->SetTitle("");
+   gre3->SetFillColor(1);
+   gre3->SetLineWidth(2);
+   gre3->SetLineColor(kViolet);
+   gre3->SetMarkerColor(kViolet);
+   gre3->SetMarkerStyle(34);
+   gre3->SetMarkerSize(1.5);
    
    TH1F *Graph_Graph_Graph10191003 = new TH1F("Graph_Graph_Graph10191003","",100,8.025,31.725);
    Graph_Graph_Graph10191003->SetMinimum(0);
@@ -1102,10 +1111,26 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    Graph_Graph_Graph10191003->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph_Graph10191003->GetZaxis()->SetTitleSize(0.035);
    Graph_Graph_Graph10191003->GetZaxis()->SetTitleFont(42);
-   gre->SetHistogram(Graph_Graph_Graph10191003);
+   gre3->SetHistogram(Graph_Graph_Graph10191003);
    
-   gre->Draw("P");
+   gre3->Draw("P");
    c1->Modified();
    c1->cd();
    c1->SetSelected(c1);
+
+   TLegend *legend = new TLegend(0.60,0.75,0.90,0.90);
+   legend->SetTextSize(0.035);
+   legend->SetBorderSize(1);
+   legend->SetFillStyle(1001);
+   legend->AddEntry( gre1, "20 degrees C","LP");
+   legend->AddEntry( gre2, "-10 degrees C","LP");
+   legend->AddEntry( gre3, "-20 degrees C","LP");
+   legend->Draw();
+
+   TLatex *   tex = new TLatex(0.165, 0.93,"LGAD Sensor: HPK 50D-PIX");
+   tex->SetNDC();
+   tex->SetTextSize(0.05);
+   tex->Draw(); 
+
+   c1->SaveAs("FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance.pdf");
 }

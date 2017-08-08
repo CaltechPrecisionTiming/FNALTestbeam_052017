@@ -170,8 +170,15 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(1, 400, 0.04, 11800., 14250., 25600, 28200., 0.10, 0.23);
   // myPulse->MakeEfficiencyVsXY(2, 400, 0.04, 14850., 17250., 25600, 28200., 0.10, 0.23);
   // //MPV
-  // myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.040, 0.18, 11800., 14250., 25600, 28200., 0.10, 0.23);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.040, 0.18, 14850., 17250., 25600, 28200., 0.10, 0.23);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 1, 10, 0.040, 0.18, 11800., 14250., 25600, 28200., 0.10, 0.23);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 2, 10, 0.040, 0.18, 14850., 17250., 25600, 28200., 0.10, 0.23);
+
+  // //For the zoom-in plots of the gap between pixels, use 5 micron bins, and reduced amp cut of 20mV
+  // myPulse->MakeEfficiencyVsXY(1, 4000, 0.02, 11800., 14250., 25600, 28200., 0.10, 0.23);
+  // myPulse->MakeEfficiencyVsXY(2, 4000, 0.02, 14850., 17250., 25600, 28200., 0.10, 0.23);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 1, 10, 0.020, 0.18, 11800., 14250., 25600, 28200., 0.10, 0.23);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 2, 10, 0.020, 0.18, 14850., 17250., 25600, 28200., 0.10, 0.23);
+
   // //--------------------
   // // Mean Time
   // //--------------------

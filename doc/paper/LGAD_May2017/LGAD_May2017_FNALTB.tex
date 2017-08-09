@@ -166,19 +166,19 @@ Silicon \sep Timing \sep LGAD
 
 %We performed the test-beam measurements at the Fermilab Test-beam
 %Facility%
-Test-beam measurements were performed at the Fermilab Test-beam Facility
-(FTBF) which provided a $120$~GeV proton beam from the Fermilab Main Injector accelerator. The Devices Under Test (DUTs) were mounted on a remotely operated
-motorized stage, placed inside the pixel telescope
-detector~\cite{KWAN2016162}. The latter provides better than 10~$\mu$m
-position resolution for charged particles impinging on the
-DUT. Additionally, a Photek 240 microchannel plate
-photomultiplier tube (MCP-PMT)%detector%
-~\cite{Anderson:2015gha, MCPFastCaloNIMA, Ronzhin2015288,Ronzhin201552}
-was placed furthest downstream, and provided a very precise reference
-timestamp. Its precision %was%
- has been previously measured to be less than
-$10$~psec~\cite{Ronzhin2015288}. A schematic diagram and photograph of the experimental area are shown
-in Fig.~\ref{fig:DragonBoxDiagram} and Fig.~\ref{fig:DragonBox}, respectively. 
+
+Test-beam measurements were performed at the Fermilab Test-beam Facility (FTBF)
+which provided a $120$~GeV proton beam from the Fermilab Main Injector
+accelerator. The Devices Under Test (DUTs) were mounted on a remotely operated
+motorized stage, placed inside the pixel telescope detector~\cite{KWAN2016162}.
+The latter provides better than 10~$\mu$m position resolution for charged
+particles impinging on the DUT. Additionally, a Photek 240 microchannel plate
+photomultiplier tube (MCP-PMT)%detector% ~\cite{Anderson:2015gha,
+MCPFastCaloNIMA, Ronzhin2015288,Ronzhin201552} was placed furthest downstream,
+and provided a very precise reference timestamp. Its precision %was% has been
+previously measured to be less than $10$~psec~\cite{Ronzhin2015288}. A schematic
+diagram and photograph of the experimental area are shown in
+Fig.~\ref{fig:DragonBoxDiagram} and Fig.~\ref{fig:DragonBox}, respectively. 
 
 The DAQ system for the DUTs and the Photek MCP-PMT is based on a CAEN V1742
 digitizer board~\cite{CAENDRS}, which provides digitized waveforms sampled at 5
@@ -200,11 +200,27 @@ placed upstream of the DUTs in the beam-line. Due to the limited buffer depth of
 the CAEN V1742 board, special care had to be taken in the design of the DAQ
 system to ensure that both the DUT and telescope DAQs collect exactly the same
 amount of triggers. This was achieved by limiting the trigger rate by
-introducting an adjustable dead-time using a custom-designed FPGA board. We
-found that at a rate of about 1,500 triggers per spill the CAEN V1742 and pixel
-telescope were maintained fully synchronized. Processed data from the pixel
-telescope and the DUTs were merged offline by matching the trigger counters
-recorded by the two systems.
+introducting an adjustable dead-time using a custom-designed trigger board. This
+trigger board is the combination of a custom FPGA board (the CAPTAN+x, equipped
+with multiple FPGA Mezzanine Card connectors and gigabit ethernet connectivity)
+mated to a front end board (the NIM+, with multiple inputs and outputs, each
+supporting a variety of interface levels such as NIM, LVDS, and TTL). The
+combined board is shown in Fig.~\ref{fig:NIM+Captan} and was used to interface to
+photomultiplier signals through on-board programmable discriminators, and to form
+trigger signals with software configurable time-based veto and pre-scaler event
+filtering. We found that at a rate of about 1,500 triggers per spill the CAEN
+V1742 and pixel telescope were maintained fully synchronized. Processed data
+from the pixel telescope and the DUTs were merged offline by matching the
+trigger counters recorded by the two systems.
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.5\textwidth, angle=270]{figs/CAPTAN_NIM_Plus.JPG} 
+\caption{The custom-made trigger board composed of NIM+ and CAPTAN+x boards.} 
+\label{fig:NIM+Captan} 
+\end{figure} 
+
+
 
 
 \begin{figure}[htbp] 

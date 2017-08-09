@@ -164,24 +164,28 @@ Silicon \sep Timing \sep LGAD
 
 \section{Test-beam Setup} 
 
-We performed the test-beam measurements at the Fermilab Test-beam Facility
-(FTBF) which provided a proton beam from the Fermilab Main Injector accelerator
-at $120$~GeV. The Devices Under Test (DUT) were mounted on a remotely operated
-motorized stage, placed inside the pixel telescope detector~\cite{KWAN2016162}
-which provides better than 10~$\mu$m position resolution for the particles
-impinging on the DUT. Finally, a Photek 240 micro-channel plate photomultiplier
-detector~\cite{Anderson:2015gha, MCPFastCaloNIMA, Ronzhin2015288,Ronzhin201552}
-is placed furthest downstream, and serves to provide a very precise reference
-timestamp. Its precision was previously measured to be less than
-$10$~psec~\cite{Ronzhin2015288}. A photograph of the experimental area is shown
-in Fig.~\ref{fig:DragonBox}. 
+%We performed the test-beam measurements at the Fermilab Test-beam
+%Facility%
+Test-beam measurements were performed at the Fermilab Test-beam Facility
+(FTBF) which provided a $120$~GeV proton beam from the Fermilab Main Injector accelerator. The Devices Under Test (DUTs) were mounted on a remotely operated
+motorized stage, placed inside the pixel telescope
+detector~\cite{KWAN2016162}. The latter provides better than 10~$\mu$m
+position resolution for charged particles impinging on the
+DUT. Additionally, a Photek 240 microchannel plate
+photomultiplier tube (MCP-PMT)%detector%
+~\cite{Anderson:2015gha, MCPFastCaloNIMA, Ronzhin2015288,Ronzhin201552}
+was placed furthest downstream, and provided a very precise reference
+timestamp. Its precision %was%
+ has been previously measured to be less than
+$10$~psec~\cite{Ronzhin2015288}. A schematic diagram and photograph of the experimental area are shown
+in Fig.~\ref{fig:DragonBoxDiagram} and Fig.~\ref{fig:DragonBox}, respectively. 
 
 The DAQ system for the DUTs and the Photek MCP-PMT is based on a CAEN V1742
 digitizer board~\cite{CAENDRS}, which provides digitized waveforms sampled at 5
-GS/s, and one ADC count corresponds to 0.25~mV. The CAEN digitizer is voltage-
+GS/s, and with one ADC count corresponding to 0.25~mV. The CAEN digitizer was voltage-
 and time-calibrated using the procedure described in Ref.~\cite{Kim201467}. The
-electronic time resolution of the CAEN V1742 digitizer was measured to be
-$\sim$4~ps, and its impact on the timing measurements presented in this studies
+electronic time resolution of the CAEN V1742 digitizer was
+measured to be less than 4~ps, and thus, its impact on the timing measurements presented in these studies
 can be neglected. The DAQ for the pixel telescope is based on the CAPTAN system
 developed at Fermilab~\cite{KWAN2016162}. The track-reconstruction is performed
 using the Monicelli software package developed specifically for the testbeam
@@ -207,7 +211,7 @@ recorded by the two systems.
 \centering
 \includegraphics[width=0.75\textwidth]{figs/BeamSetup.pdf} 
 \caption{A schematic diagram of the test-beam setup is shown. The $t_0$ and $t_1$ are defined in Section 4.} 
-\label{fig:DragonBox} 
+\label{fig:DragonBoxDiagram} 
 \end{figure} 
 
 The devices under test (DUT) were placed inside the telescope box described in
@@ -303,7 +307,7 @@ with a Landau function.
 
 \subsection{Study of the uniformity of the LGAD sensors}
 
-The uniformity of the characteristics of the HPK 50D-PIX sensors was studied
+The characteristic uniformity of the HPK 50D-PIX sensors was studied
 using the FNAL readout board. Here, and in the remainder of this article,
 whenever a scan of a certain characteristic of the array sensors is presented,
 we show the X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and
@@ -311,7 +315,7 @@ we show the X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and
 across pixels 3 and 4, and Y-axis scans across pixels 2 and 4 shown
 qualitatevely the same features, and are not shown here. 
 
-Measurements of the charged particle detection efficiency are shown in
+The measurements of the particle detection efficiency are shown in
 Fig.~\ref{fig:FNAL_HPK50_effXY}. Efficiency is defined as the ratio of events
 that register a signal above the noise level in the LGAD sensor to those that
 contain a track identified by the pixel telescope pointing at the LGAD sensor.
@@ -327,21 +331,21 @@ efficiency is significantly lower in the transition region between the pixels.
 \centering
 \includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/Eff_vs_X_Ch4_5.pdf} 
 \includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/Eff_vs_Y_Ch3_4.pdf} 
-\caption{Efficiency measurement across the X- and Y-axes of the HPK 50D-PIX sensor mounted on the FNAL board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\caption{Efficiency measurement across the X- and Y-axes of the HPK 50D-PIX sensor mounted on the FNAL board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:FNAL_HPK50_effXY} 
 \end{figure} 
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.48\textwidth]{figs/KUBoard_HPK50DPix_Run638-781/EfficiencyInGap_HPK50DPix.pdf} 
-\caption{A zoomed version of the efficiency measurement across the X-axis of the HPK 50D-PIX sensor with 10~$\mu$m binning to show the inter-pixel gap area. Pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\caption{A zoomed version of the efficiency measurement across the X-axis of the HPK 50D-PIX sensor with 10~$\mu$m binning to show the inter-pixel gap area. Pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:FNAL_HPK50_ZoomeffXY} 
 \end{figure} 
 
 An important characteristic of the sensors is the unofmity of the signal size
 across the sensor surface, which directly impacts the timing characteristics of
 the sensor. The distribution of the LGAD signal amplitudes is fit with a Landau
-distribution, and the Most Probable Value (MPV) of the fitted function is
+distribution. The post-fit Most Probable Value (MPV) is
 plotted in Fig.~\ref{fig:FNAL_HPK50_MPVXY}. A flat response with a uniform
 signal size is observed over the whole sensor area.
 
@@ -358,9 +362,10 @@ signal size is observed over the whole sensor area.
 The measurement of the time difference between the Photek 240 MCP-PMT time stamp,
 and that of the LGAD sensors is shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}. The
 micro-bonding scheme of the HPK PIX $2\times 2$ sensors arrays is shown in
-Fig.~\ref{fig:HPK_Sensors}. The $\Delta t$ distribution has a distinct shape
-where the area under the metalization on top of the sensor shows a shift of
-about $20--30$~psec with respect to non-metalized area. 
+Fig.~\ref{fig:HPK_Sensors}. The $\Delta t = t_{1}-t_{0}$ distribution has a distinct shape
+where the area under the metalization on top of the sensor -- the gray
+area in the center of it -- shows a shift of
+about $20$--$30$~psec with respect to non-metalized area. 
 
 \begin{figure}[htbp] 
 \centering

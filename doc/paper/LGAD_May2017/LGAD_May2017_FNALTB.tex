@@ -89,7 +89,19 @@
 \author[1]{A.~Apresyan\corref{cor}}\ead{apresyan@fnal.gov}
 \author[2]{S.~Xie}
 \author[2]{C.~Pena}
-\author[5,7]{R.~Arcidiacono}\author[5]{N.~Cartiglia}\author[1]{G.~Derylo}\author[5]{M.~Ferrero}\author[4]{P.~Freeman}\author[4]{Z.~Galloway}%\author[4]{Y.~Ghao}\author[3]{H.~Al Ghoul}\author[1]{L.~Gray}%\author[4]{C.~Labitan}\author[1]{S.~Los}%\author[4]{Z.~Luce}\author[5]{M.~Mandurrino}%\author[2]{A.~Mangu}%\author[4]{F.~Martinez-Mckinney}\author[3]{N.~Minafra}%\author[1]{A.~Prosser}%\author[1]{R.~Rivera}\author[3]{C.~Royon}\author[4]{H.~Sadrozinski}\author[4]{A.~Seiden}\author[5]{V.~Sola}\author[2]{M.~Spiropulu}%\author[4]{E.~Spencer}\author[5]{A.~Staiano}\author[1]{L.~Uplegger}%\author[4]{M.~Wilder}\address[1]{Fermi National Accelerator Laboratory, Batavia, IL, USA}\address[2]{California Institute of Technology, Pasadena, CA, USA}\address[3]{University of Kansas, KS, USA}\address[4]{SCIPP, University of California Santa Cruz, CA, USA}\address[5]{INFN, Torino, Italy}\address[6]{Universit\`a di Torino, Torino, Italy}\address[7]{Universit\`a del Piemonte Orientale, Italy}
+\author[5,7]{R.~Arcidiacono}\author[5]{N.~Cartiglia}
+\author[8]{M.~Carulla}\author[1]{G.~Derylo}\author[5]{M.~Ferrero}
+\author[8]{D.~Flores}\author[4]{P.~Freeman}\author[4]{Z.~Galloway}%\author[4]{Y.~Ghao}
+\author[9]{A.~Ghassemi}\author[3]{H.~Al Ghoul}\author[1]{L.~Gray}
+\author[8]{S.~Hidalgo}%\author[4]{C.~Labitan}
+\author[9]{S.~Kamada}\author[1]{S.~Los}%\author[4]{Z.~Luce}\author[5]{M.~Mandurrino}
+\author[8]{A.~Merlos}%\author[2]{A.~Mangu}%\author[4]{F.~Martinez-Mckinney}\author[3]{N.~Minafra}%\author[1]{A.~Prosser}%\author[1]{R.~Rivera}
+\author[8]{G.~Pellegrini}
+\author[8]{D.~Quirion}\author[3]{C.~Royon}\author[4]{H.~Sadrozinski}\author[4]{A.~Seiden}\author[5]{V.~Sola}\author[2]{M.~Spiropulu}%\author[4]{E.~Spencer}\author[5]{A.~Staiano}\author[1]{L.~Uplegger}
+\author[9]{K.~Yamamoto}
+\author[9]{K.~Yamamura}%\author[4]{M.~Wilder}\address[1]{Fermi National Accelerator Laboratory, Batavia, IL, USA}\address[2]{California Institute of Technology, Pasadena, CA, USA}\address[3]{University of Kansas, KS, USA}\address[4]{SCIPP, University of California Santa Cruz, CA, USA}\address[5]{INFN, Torino, Italy}\address[6]{Universit\`a di Torino, Torino, Italy}\address[7]{Universit\`a del Piemonte Orientale, Italy}
+\address[8]{Centro Nacional de Microelectr\`onica (IMB-CNM-CSIC), Barcelona, Spain}
+\address[9]{Hamamatsu Photonics (HPK), Hamamatsu, Japan}
 \cortext[cor]{Corresponding author}
 
 \begin{abstract}
@@ -277,7 +289,11 @@ The USCS board 1-channel board is desdcibed in details in
 Ref.~\cite{Cartiglia201783}. This board uses discrete components and contains
 several features which allow maintaining a wide bandwidth ($\sim$ 2 GHz) and a
 low noise even in noisy environments. The inverting amplifier uses a high-speed
-SiGe transistor whcih has a trans-impedance of about 470~$\Omega$. 
+SiGe transistor whcih has a trans-impedance of about 470~$\Omega$. A commercial
+inverting amplifier with gain 10x is used to boost the signal. The 4-channel
+UCSC board has two stages: the first one is identical to the UCSC single channel
+board, and is followed by an inverting stage. The total trans-impedance is 10.7
+k$\Omega$.
 
 %\textbf {FIXME HARTMUT} a paragraph describing the 4-ch UCSC board. 
 
@@ -358,13 +374,15 @@ signal size is observed over the whole sensor area.
 
 
 
-The measurement of the time difference between the Photek 240 MCP-PMT time stamp,
-and that of the LGAD sensors is shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}. The
-micro-bonding scheme of the HPK PIX $2\times 2$ sensors arrays is shown in
-Fig.~\ref{fig:HPK_Sensors}. The $\Delta t = t_{1}-t_{0}$ distribution has a distinct shape
-where the area under the metalization on top of the sensor -- the gray
-area in the center of it -- shows a shift of
-about $20$--$30$~psec with respect to non-metalized area. 
+The measurement of the time difference between the Photek 240 MCP-PMT time
+stamp, and that of the LGAD sensors is shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}.
+The micro-bonding scheme of the HPK PIX $2\times 2$ sensors arrays is shown in
+Fig.~\ref{fig:HPK_Sensors}. The $\Delta t = t_{1}-t_{0}$ distribution has a
+distinct shape where the area under the metalization on top of the sensor -- the
+gray area in the center of it -- shows a shift of about $20$--$30$~psec with
+respect to non-metalized area. A possible explanation for this small effect is
+an observed slight difference in the rise time of pulse from the metallized and
+un-metallized areas. 
 
 \begin{figure}[htbp] 
 \centering
@@ -511,12 +529,53 @@ splits. All measurements were performed using 2-channel KU readout board.
 \section{Conclusion}
 \label{sec:conclusion} 
 
-All is good!
+In a beam test at FNAL with tracking information, we compared the performance of
+low-gain avalanche detectors (LGAD) produced by CNM Barcelona and HPK Hamamatsu,
+both single pads and 2x2 arrays with pad size varying from 1 mm to 3 mm diameter
+and a thickness of about 50 and 80 $\mu$m. Four different readout boards were
+used, and their performance characteristics will be detailed in an upcoming
+paper. The uniformity of the sensor response in pulse height, efficiency and
+timing resolution were tested and found to be good pre-radiation with the
+exceptions of the area between pads which exhibit a ``no-response'' width of
+72.5~$\mu$m for CNM and 112.7~$\mu$m for HPK. A small timing shift across the
+HPK sensor of the order 20--30~ps can be explained by the observed change in
+pulse shape when comparing metallized and non-metallized sensor areas. After a
+neutron fluence of $6\times 10^{14}$~n/cm$^2$, the single pad CNM sensor
+exhibits a large gain variation of a factor 2.5 when comparing metallized and
+non-metallized sensor areas. 
+
+For an un-irradiated 50~$\mu$m thick LGAD with 3~mm pads we find the following timing results: 
+\begin{itemize}
+  \item at a temperature of $+20$~C$^{\circ}$, the timing resolution ranges from
+        40~ps to 50~ps depending on the readout board. This number worsens by
+        10~ps for a 80~$\mu$m sensor.
+  \item cooling the LGAD improves the timing resolution from 55~ps at
+        $+20$~C$^{\circ}$ to 43~ps at $-10$~C$^{\circ}$ to 36 ps at
+        $-20$~C$^{\circ}$  
+\end{itemize}For an 50~$\mu$m thick LGAD with 1~mm pads irradiated $6\times 10^{14}$~n/cm$^2$ we find the
+following timing results when operated at $-20$~C$^{\circ}$: 
+\begin{itemize}
+  \item for the HPK LGAD the highest bias voltage reached is $\sim$600V and the timing resolution is 30~ps; 
+  \item for the CNM LGAD the highest bias voltage reached is $\sim$400V and the
+        timing resolution is 30~ps for the metallized part and~40 ps for the
+        un-metallized area.
+  
+\end{itemize}
 
 \section*{Acknowledgement}
 
 We would like to thank Alan Prosser and Ryan Rivera for their critical help in
 setting up the DAQ and trigger chain. 
+
+We thank Ned Spencer, Max Wilder, and Forest McKinney-Martinez for their
+technical assistance, and the CNM and HPK manufacturing team. We acknowledge the
+help of V. Cindro and I. Mandic with the neutron irradiations. Part of this work
+has been performed within the framework of the CERN RD50 Collaboration. The work
+was supported by the United States Department of Energy, grant
+DE-FG02-04ER41286. Part of this work has been financed by the European Union’s
+Horizon 2020 Research and Innovation funding program, under Grant Agreement no.
+654168 (AIDA-2020) and Grant Agreement no. 669529 (ERC UFSD669529), and by the
+Italian Ministero degli Affari Esteri and INFN Gruppo V.
 
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections

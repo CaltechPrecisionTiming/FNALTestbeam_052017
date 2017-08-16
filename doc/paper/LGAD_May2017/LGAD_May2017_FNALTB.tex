@@ -43,6 +43,7 @@
 \usepackage{lineno}
 \usepackage{hyperref}
 \usepackage[percent]{overpic}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
@@ -256,13 +257,36 @@ Each channel in the 2x2 HPK array is 3x3~mm$^2$. The CNM single-channel sensors
 are square pads with an active area of 1.7 mm$^2$ while the HPK single-channel
 sensors are circular pads with an active area of 0.8~mm$^2$.
 
-\begin{figure}[htbp] 
+\begin{figure}[!htbp] 
 \centering
-\includegraphics[width=0.35\textwidth]{figs/HPK-50DPix.pdf} 
-\includegraphics[width=0.48\textwidth]{figs/HPK-50D.pdf} 
+\includegraphics[width=0.3\textwidth]{figs/HPK-50DPix.pdf} 
+\includegraphics[width=0.41\textwidth]{figs/HPK-50D.pdf} 
 \caption{A picture of HPK 50D-PIX 2x2 array sensor (top), and 50D-GR single sensor (bottom). The pixel labels overlayed on top of the left image are used in the text to identify pixels on the array. Signals from the pixels are read out by the micro-bonds that are connected to the signal pads on the sensors. Signal pads can be seen on the left photograph as four small circles in the center of each pixel. } 
 \label{fig:HPK_Sensors} 
 \end{figure} 
+
+The list of sensors studied in this article, as well as the temperature and the
+sensor bias voltage used during their operation are listed in
+Tab.~\ref{tab:DataConditions}. 
+
+\begin{table}[h]
+\begin{center}
+  \begin{tabular}{ |c | c | c| c | }
+    \hline
+    Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
+    HPK 50A-PIX & {\textbf{-630 V} & -- & -- \\ \hline
+    HPK 50B-PIX & \begin{tabular}{@{}c@{}}{\textbf{-450 V, -550V, -600 V }\\ \underline{-510 V} \\ \textit{-510V, -570 V}\end{tabular}  & -- & -- \\ \hline
+    HPK 50C-PIX & {\textbf{-400 V} & {\textbf{-410 V, -470 V} & -- \\ \hline
+    HPK 50D-PIX & \begin{tabular}{@{}c@{}}{\textbf{-100 V, -200V, -250 V,} \\ \textbf{-300 V, -325 V} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}{\textbf{-250 V, -300V,} \\ \underline{-210 V, -250 V} \\ \textit{-250 V, -280 V}\end{tabular} {\color{red}} \\ \hline
+    CNM W9HG11 & -- & {\textbf{-140 V, -160V} & -- \\ \hline
+    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & {\textit{-600 V, -635V} & -- \\ \hline
+    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & {\textit{-400 V, -420V} \\ \hline
+    \hline
+  \end{tabular}
+\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
+\label{tab:DataConditions}
+\end{center}
+\end{table}
 
 
 \section{Read-out boards}
@@ -320,6 +344,7 @@ directly by the CAEN digitizer. The signal selection for LGAD boards was
 optimized for each board individually, by selecting the MIP signal peak fitted
 with a Landau function. 
 
+
 \subsection{Study of the uniformity of the LGAD sensors}
 
 The characteristic uniformity of the HPK 50D-PIX sensors was studied
@@ -353,8 +378,16 @@ efficiency is significantly lower in the transition region between the pixels.
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.48\textwidth]{figs/KUBoard_HPK50DPix_Run638-781/EfficiencyInGap_HPK50DPix.pdf} 
-\caption{A zoomed version of the efficiency measurement across the X-axis of the HPK 50D-PIX sensor with 10~$\mu$m binning to show the inter-pixel gap area. Pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\caption{A zoomed version of the efficiency measurement across the X-axis of the HPK 50D-PIX sensor operated at -300 V bias voltage. Pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:FNAL_HPK50_ZoomeffXY} 
+\end{figure} 
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.48\textwidth]{figs/HPK_CNM_gap_Xscan.pdf} 
+\includegraphics[width=0.48\textwidth]{figs/HPK_CNM_gap_Yscan.pdf} 
+\caption{A zoomed version of the efficiency measurement across the X-axis (left) and Y-axis (right) of the HPK 50C-PIX and CNM W9HG11 sensors with 10~$\mu$m binning to show the inter-pixel gap area. Pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\label{fig:FNAL_HPK50C_CNMPIX_ZoomeffXY} 
 \end{figure} 
 
 An important characteristic of the sensors is the uniformity of the signal size

@@ -43,6 +43,7 @@
 \usepackage{lineno}
 \usepackage{hyperref}
 \usepackage[percent]{overpic}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
@@ -79,7 +80,7 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{Test Beam Studies Of 50~$\mu m$ LGAD sensors.}
+\title{Test Beam Studies of 50~$\mu m$ LGAD sensors.}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{}
@@ -89,40 +90,19 @@
 \author[1]{A.~Apresyan\corref{cor}}\ead{apresyan@fnal.gov}
 \author[2]{S.~Xie}
 \author[2]{C.~Pena}
-%\author[5]{R.~Arcidiacono}
-\author[5]{N.~Cartiglia}
-\author[1]{G.~Derylo}
-%\author[5]{M.~Ferrero}
-\author[4]{P.~Freeman}
-\author[4]{Z.~Galloway}
-%\author[4]{Y.~Ghao}
-\author[3]{H.~Al Ghoul}
-\author[1]{L.~Gray}
-%\author[4]{C.~Labitan}
-\author[1]{S.~Los}
-%\author[4]{Z.~Luce}
-%\author[5]{M.~Mandurrino}
-%\author[2]{A.~Mangu}
-%\author[4]{F.~Martinez-Mckinney}
-\author[3]{N.~Minafra}
-%\author[1]{A.~Prosser}
-%\author[1]{R.~Rivera}
-\author[3]{C.~Royon}
-\author[4]{H.~Sadrozinski}
-\author[4]{A.~Seiden}
-%\author[5]{V.~Sola}
-\author[2]{M.~Spiropulu}
-%\author[4]{E.~Spencer}
-%\author[5]{A.~Staiano}
-\author[1]{L.~Uplegger}
-%\author[4]{M.~Wilder}
-
-\address[1]{Fermi National Accelerator Laboratory, Batavia, IL, USA}
-\address[2]{California Institute of Technology, Pasadena, CA, USA}
-\address[3]{University of Kansas, KS, USA}
-\address[4]{SCIPP, University of California Santa Cruz, CA, USA}
-\address[5]{Università di Torino, Torino, Italy}
-
+\author[5,7]{R.~Arcidiacono}\author[5]{N.~Cartiglia}
+\author[8]{M.~Carulla}\author[1]{G.~Derylo}\author[5]{M.~Ferrero}
+\author[8]{D.~Flores}\author[4]{P.~Freeman}\author[4]{Z.~Galloway}%\author[4]{Y.~Ghao}
+\author[9]{A.~Ghassemi}\author[3]{H.~Al Ghoul}\author[1]{L.~Gray}
+\author[8]{S.~Hidalgo}%\author[4]{C.~Labitan}
+\author[9]{S.~Kamada}\author[1]{S.~Los}%\author[4]{Z.~Luce}\author[5]{M.~Mandurrino}
+\author[8]{A.~Merlos}%\author[2]{A.~Mangu}%\author[4]{F.~Martinez-Mckinney}\author[3]{N.~Minafra}%\author[1]{A.~Prosser}%\author[1]{R.~Rivera}
+\author[8]{G.~Pellegrini}
+\author[8]{D.~Quirion}\author[3]{C.~Royon}\author[4]{H.~Sadrozinski}\author[4]{A.~Seiden}\author[5]{V.~Sola}\author[2]{M.~Spiropulu}%\author[4]{E.~Spencer}\author[5]{A.~Staiano}\author[1]{L.~Uplegger}
+\author[9]{K.~Yamamoto}
+\author[9]{K.~Yamamura}%\author[4]{M.~Wilder}\address[1]{Fermi National Accelerator Laboratory, Batavia, IL, USA}\address[2]{California Institute of Technology, Pasadena, CA, USA}\address[3]{University of Kansas, KS, USA}\address[4]{SCIPP, University of California Santa Cruz, CA, USA}\address[5]{INFN, Torino, Italy}\address[6]{Universit\`a di Torino, Torino, Italy}\address[7]{Universit\`a del Piemonte Orientale, Italy}
+\address[8]{Centro Nacional de Microelectr\`onica (IMB-CNM-CSIC), Barcelona, Spain}
+\address[9]{Hamamatsu Photonics (HPK), Hamamatsu, Japan}
 \cortext[cor]{Corresponding author}
 
 \begin{abstract}
@@ -164,28 +144,32 @@ Silicon \sep Timing \sep LGAD
 
 \section{Test-beam Setup} 
 
-We performed the test-beam measurements at the Fermilab Test-beam Facility
-(FTBF) which provided a proton beam from the Fermilab Main Injector accelerator
-at $120$~GeV. The Devices Under Test (DUT) were mounted on a remotely operated
-motorized stage, placed inside the pixel telescope detector~\cite{KWAN2016162}
-which provides better than 10~$\mu$m position resolution for the particles
-impinging on the DUT. Finally, a Photek 240 micro-channel plate photomultiplier
-detector~\cite{Anderson:2015gha, MCPFastCaloNIMA, Ronzhin2015288,Ronzhin201552}
-is placed furthest downstream, and serves to provide a very precise reference
-timestamp. Its precision was previously measured to be less than
-$10$~psec~\cite{Ronzhin2015288}. A photograph of the experimental area is shown
-in Fig.~\ref{fig:DragonBox}. 
+%We performed the test-beam measurements at the Fermilab Test-beam
+%Facility%
+
+Test-beam measurements were performed at the Fermilab Test-beam Facility (FTBF)
+which provided a $120$~GeV proton beam from the Fermilab Main Injector
+accelerator. The Devices Under Test (DUTs) were mounted on a remotely operated
+motorized stage, placed inside the pixel telescope detector~\cite{KWAN2016162}.
+The latter provides better than 10~$\mu$m position resolution for charged
+particles impinging on the DUT. Additionally, a Photek 240 microchannel plate
+photomultiplier tube (MCP-PMT)%detector% ~\cite{Anderson:2015gha,
+MCPFastCaloNIMA, Ronzhin2015288,Ronzhin201552} was placed furthest downstream,
+and provided a very precise reference timestamp. Its precision %was% has been
+previously measured to be less than $10$~psec~\cite{Ronzhin2015288}. A schematic
+diagram and photograph of the experimental area are shown in
+Fig.~\ref{fig:DragonBoxDiagram} and Fig.~\ref{fig:DragonBox}, respectively. 
 
 The DAQ system for the DUTs and the Photek MCP-PMT is based on a CAEN V1742
 digitizer board~\cite{CAENDRS}, which provides digitized waveforms sampled at 5
-GS/s, and one ADC count corresponds to 0.25~mV. The CAEN digitizer is voltage-
-and time-calibrated using the procedure described in Ref.~\cite{Kim201467}. The
-electronic time resolution of the CAEN V1742 digitizer was measured to be
-$\sim$4~ps, and its impact on the timing measurements presented in this studies
-can be neglected. The DAQ for the pixel telescope is based on the CAPTAN system
-developed at Fermilab~\cite{KWAN2016162}. The track-reconstruction is performed
-using the Monicelli software package developed specifically for the testbeam
-application. 
+GS/s, and with one ADC count corresponding to 0.25~mV. The CAEN digitizer was
+voltage- and time-calibrated using the procedure described in
+Ref.~\cite{Kim201467}. The electronic time resolution of the CAEN V1742
+digitizer was measured to be less than 4~ps, and thus, its impact on the timing
+measurements presented in these studies can be neglected. The DAQ for the pixel
+telescope is based on the CAPTAN system developed at
+Fermilab~\cite{KWAN2016162}. The track-reconstruction is performed using the
+Monicelli software package developed specifically for the testbeam application. 
 
 The beam is resonantly extracted in a slow spill for each Main Injector cycle
 delivering a single 4.2 sec long spill per minute. The primary beam (bunched at
@@ -196,18 +180,34 @@ placed upstream of the DUTs in the beam-line. Due to the limited buffer depth of
 the CAEN V1742 board, special care had to be taken in the design of the DAQ
 system to ensure that both the DUT and telescope DAQs collect exactly the same
 amount of triggers. This was achieved by limiting the trigger rate by
-introducting an adjustable dead-time using a custom-designed FPGA board. We
-found that at a rate of about 1,500 triggers per spill the CAEN V1742 and pixel
-telescope were maintained fully synchronized. Processed data from the pixel
-telescope and the DUTs were merged offline by matching the trigger counters
-recorded by the two systems.
+introducting an adjustable dead-time using a custom-designed trigger board. This
+trigger board is the combination of a custom FPGA board (the CAPTAN+x, equipped
+with multiple FPGA Mezzanine Card connectors and gigabit ethernet connectivity)
+mated to a front end board (the NIM+, with multiple inputs and outputs, each
+supporting a variety of interface levels such as NIM, LVDS, and TTL). The
+combined board is shown in Fig.~\ref{fig:NIM+Captan} and was used to interface to
+photomultiplier signals through on-board programmable discriminators, and to form
+trigger signals with software configurable time-based veto and pre-scaler event
+filtering. We found that at a rate of about 1,500 triggers per spill the CAEN
+V1742 and pixel telescope were maintained fully synchronized. Processed data
+from the pixel telescope and the DUTs were merged offline by matching the
+trigger counters recorded by the two systems.
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.5\textwidth, angle=270]{figs/CAPTAN_NIM_Plus.JPG} 
+\caption{The custom-made trigger board composed of NIM+ and CAPTAN+x boards.} 
+\label{fig:NIM+Captan} 
+\end{figure} 
+
+
 
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.75\textwidth]{figs/BeamSetup.pdf} 
 \caption{A schematic diagram of the test-beam setup is shown. The $t_0$ and $t_1$ are defined in Section 4.} 
-\label{fig:DragonBox} 
+\label{fig:DragonBoxDiagram} 
 \end{figure} 
 
 The devices under test (DUT) were placed inside the telescope box described in
@@ -228,55 +228,98 @@ the DUTs at $-10^{\circ}$ and $-20^{\circ}$~C.
 
 \section{Properties of the tested LGAD sensors}
 
+
 Sensors manufactured by Hamamatsu (HPK) and CNM were tested during the test beam
-experiments. All sensors have active thickness of about 50 $\mu$m. 
+experiments. Sensors in both single- and four-channel configurations were tested
+during the measurements. Most of the tested sensors have active thickness of
+about 50 $\mu$m, apart from the comparison of the 50 and 80 $\mu$m sensors that
+is presented in Sec.~\ref{sec:HPK50vs80}.
 
-{\bf FIXME NICOLO OR HARTMUT: FILL IN DETAILS OF CNM AND HPK SENSORS, PRODUCTION
-PROCESS ETC} Details on CNM sensors can be found in Ref.~\cite{CNMSensors,
-Cartiglia201783}. Hamamatsu sensors have the following properties... 
+CNM sensors have active thickness of about 45 $\mu$m, they were
+produced on 4-inch Silicon-on-Insulator wafers with a 45 $\mu$m thick high
+resistivity float zone (FZ) active layer on top of a 1 $\mu$m buried oxide and a
+300 $\mu$m support wafer. The back-side contact is done through wet-etched deep
+access holes through the insulator. Details on CNM sensors can be found in
+Ref.~\cite{CNMSensors, Cartiglia201783}. 
 
-Sensors in both single- and four-channel configurations were tested during the
-measurements. The CNM single-channel sensors had an active area of 1 mm$^2$ {\bf
-FIXME: IS THIS CORRECT SIZE OF CNM SINGLE CHANNEL SENSORS?}, and the HPK
-single-channel sensors had a diameter of 1~mm. The dimensions of the four
-channel sensors from HPK are shown in Fig.~\ref{fig:Sensors}
+The HPK sensors were manufactured on 6-inch silicon wafers of 150 $\mu$m total
+thickness with a 50 $\mu$m or 80 $\mu$m thick high resistivity float zone (FZ)
+active layer. Four gain splits, identified with the letters A (lowest gain) to D
+(highest gain), were produced, identical in the mask design but with a different
+$p^+$ dose of the gain layer, to study the optimum parameters of the charge
+multiplication mechanism. The pads were produced in three versions: two with
+guard ring (GR and GBGR) and one without guard ring. Four-channel sensors in 2x2
+array were produced with all 4 gain-splits, and are identified with the PIX
+identifier, e.g. the 2x2 array of the 50 $\mu$m sensor split D is labelled as
+50D-PIX. 
 
-\begin{figure}[htbp] 
+Each channel in the 2x2 HPK array is 3x3~mm$^2$. The CNM single-channel sensors
+are square pads with an active area of 1.7 mm$^2$ while the HPK single-channel
+sensors are circular pads with an active area of 0.8~mm$^2$.
+
+\begin{figure}[!htbp] 
 \centering
-\includegraphics[width=0.35\textwidth]{figs/HPK-50DPix.pdf} 
-\includegraphics[width=0.48\textwidth]{figs/HPK-50D.pdf} 
-\caption{A picture of HPK 50DPix 2x2 array sensor (top), and 50D-GR single sensor (bottom). The pixel labels overlayed on top of the left image are used in the text to identify pixels on the array. Signals from the pixels are read out by the micro-bonds that are connected to the signal pads on the sensors. Signal pads can be seen on the left photograph as four small circles in the center of each pixel. } 
+\includegraphics[width=0.3\textwidth]{figs/HPK-50DPix.pdf} 
+\includegraphics[width=0.41\textwidth]{figs/HPK-50D.pdf} 
+\caption{A picture of HPK 50D-PIX 2x2 array sensor (top), and 50D-GR single sensor (bottom). The pixel labels overlayed on top of the left image are used in the text to identify pixels on the array. Signals from the pixels are read out by the micro-bonds that are connected to the signal pads on the sensors. Signal pads can be seen on the left photograph as four small circles in the center of each pixel. } 
 \label{fig:HPK_Sensors} 
 \end{figure} 
+
+The list of sensors studied in this article, as well as the temperature and the
+sensor bias voltage used during their operation are listed in
+Tab.~\ref{tab:DataConditions}. 
+
+\begin{table}[h]
+\begin{center}
+  \begin{tabular}{ |c | c | c| c | }
+    \hline
+    Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
+    HPK 50A-PIX & {\textbf{-630 V} & -- & -- \\ \hline
+    HPK 50B-PIX & \begin{tabular}{@{}c@{}}{\textbf{-450 V, -550V, -600 V }\\ \underline{-510 V} \\ \textit{-510V, -570 V}\end{tabular}  & -- & -- \\ \hline
+    HPK 50C-PIX & {\textbf{-400 V} & {\textbf{-410 V, -470 V} & -- \\ \hline
+    HPK 50D-PIX & \begin{tabular}{@{}c@{}}{\textbf{-100 V, -200V, -250 V,} \\ \textbf{-300 V, -325 V} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}{\textbf{-250 V, -300V,} \\ \underline{-210 V, -250 V} \\ \textit{-250 V, -280 V}\end{tabular} {\color{red}} \\ \hline
+    CNM W9HG11 & -- & {\textbf{-140 V, -160V} & -- \\ \hline
+    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & {\textit{-600 V, -635V} & -- \\ \hline
+    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & {\textit{-400 V, -420V} \\ \hline
+    \hline
+  \end{tabular}
+\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
+\label{tab:DataConditions}
+\end{center}
+\end{table}
 
 
 \section{Read-out boards}
 
-Four boards were used in various measurements presented in this paper, which
+Three boards were used in various measurements presented in this paper, which
 were developed at the University of California Santa Cruz (UCSC), University of
 Kansas (KU), and at FNAL:
 
-\begin{itemize}
-  \item A single-channel USCS board that
-was also used in results presented in Ref.~\cite{Cartiglia201783}
-\item A four-channel USCS readout board
-\item A two-channel KU readout board
-\item A 4-channel FNAL readout board.
-\end{itemize}
-
-and their detailed description is presented below.  
-
 \textbf {FIXME SERGEY} a paragraph describing the FNAL board. 
 
-\textbf {FIXME NICOLA} a paragraph describing the 2-ch KU board. 
+The 2-channel KU board, designed and produced by the University of Kansas, can
+accommodate different types of sensors, i.e. diamond, silicon, LGAD or APDs. The
+sensor is hosted on the board itself and the electronics of the version used for
+this work was optimized for precise timing measurements. In particular, the
+amplifier, made with discrete components, has an input impedance of 700 Ohm, an
+output noise of 4 mV and a gain in transresistance of about 50 mV/$\mu$A with
+a 3 dB bandwidth of 100 MHz. Those values were simulated for an input
+capacitance of 20 pF, which corresponds roughly to a UFSD of 9 mm$^2$. The power
+consumption of the board is about 130 mW per channel. Similar electronics is
+available in different configurations with 1, 2 (used in this work) or 8
+channels.
 
 The USCS board 1-channel board is desdcibed in details in
 Ref.~\cite{Cartiglia201783}. This board uses discrete components and contains
 several features which allow maintaining a wide bandwidth ($\sim$ 2 GHz) and a
 low noise even in noisy environments. The inverting amplifier uses a high-speed
-SiGe transistor whcih has a trans-impedance of about 470~$\Omega$. 
+SiGe transistor whcih has a trans-impedance of about 470~$\Omega$. A commercial
+inverting amplifier with gain 10x is used to boost the signal. The 4-channel
+UCSC board has two stages: the first one is identical to the UCSC single channel
+board, and is followed by an inverting stage. The total trans-impedance is 10.7
+k$\Omega$.
 
-\textbf {FIXME HARTMUT} a paragraph describing the 4-ch UCSC board. 
+%\textbf {FIXME HARTMUT} a paragraph describing the 4-ch UCSC board. 
 
 
 \section{Beam test results}
@@ -301,9 +344,10 @@ directly by the CAEN digitizer. The signal selection for LGAD boards was
 optimized for each board individually, by selecting the MIP signal peak fitted
 with a Landau function. 
 
+
 \subsection{Study of the uniformity of the LGAD sensors}
 
-The uniformity of the characteristics of the HPK 50D-PIX sensors was studied
+The characteristic uniformity of the HPK 50D-PIX sensors was studied
 using the FNAL readout board. Here, and in the remainder of this article,
 whenever a scan of a certain characteristic of the array sensors is presented,
 we show the X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and
@@ -311,7 +355,7 @@ we show the X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and
 across pixels 3 and 4, and Y-axis scans across pixels 2 and 4 shown
 qualitatevely the same features, and are not shown here. 
 
-Measurements of the charged particle detection efficiency are shown in
+The measurements of the particle detection efficiency are shown in
 Fig.~\ref{fig:FNAL_HPK50_effXY}. Efficiency is defined as the ratio of events
 that register a signal above the noise level in the LGAD sensor to those that
 contain a track identified by the pixel telescope pointing at the LGAD sensor.
@@ -327,21 +371,33 @@ efficiency is significantly lower in the transition region between the pixels.
 \centering
 \includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/Eff_vs_X_Ch4_5.pdf} 
 \includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/Eff_vs_Y_Ch3_4.pdf} 
-\caption{Efficiency measurement across the X- and Y-axes of the HPK 50D-PIX sensor mounted on the FNAL board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\caption{Efficiency measurement across the X- and Y-axes of the HPK 50D-PIX sensor mounted on the FNAL board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:FNAL_HPK50_effXY} 
 \end{figure} 
 
 \begin{figure}[htbp] 
 \centering
-\includegraphics[width=0.48\textwidth]{figs/KUBoard_HPK50DPix_Run638-781/EfficiencyInGap_HPK50DPix.pdf} 
-\caption{A zoomed version of the efficiency measurement across the X-axis of the HPK 50D-PIX sensor with 10~$\mu$m binning to show the inter-pixel gap area. Pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\includegraphics[width=0.48\textwidth]{figs/KUBoard_HPK50DPix_Run638-781/EfficiencyInGap_HPK50DPix_fit.pdf} 
+\caption{A zoomed version of the efficiency measurement across the X-axis of the HPK 50D-PIX sensor operated at -300 V bias voltage. Pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:FNAL_HPK50_ZoomeffXY} 
 \end{figure} 
 
-An important characteristic of the sensors is the unofmity of the signal size
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.48\textwidth]{figs/UCSCBoard_HPK50CPix_CNM_W9HG11_Runs838-839-841/Eff_vs_X_Ch1_4_fit.pdf} 
+\includegraphics[width=0.48\textwidth]{figs/UCSCBoard_HPK50CPix_CNM_W9HG11_Runs838-839-841/Eff_vs_Y_Ch3_4_fit.pdf} 
+\includegraphics[width=0.48\textwidth]{figs/UCSCBoard_HPK50CPix_CNM_W9HG11_Runs838-839-841/Eff_vs_X_Ch10-13_fit.pdf} 
+\includegraphics[width=0.48\textwidth]{figs/UCSCBoard_HPK50CPix_CNM_W9HG11_Runs838-839-841/Eff_vs_Y_Ch12-13_fit.pdf} 
+
+\caption{A zoomed version of the efficiency measurement across the X- and Y-axes of the HPK 50D-PIX (top) and CNM W9HG11 (bottom) sensors. HPK sensor is operated at -450 V, and CNM sensor is at -180 V bias voltage. Data points in blue are those from one pixel, and red points are those from the neighboring pixel. The red curves are fitted to the data points as described in the text. Arrows indicate the distance between half-maximum points of fitted curves.} 
+\label{fig:FNAL_HPK50_ZoomeffXY} 
+\end{figure} 
+
+
+An important characteristic of the sensors is the uniformity of the signal size
 across the sensor surface, which directly impacts the timing characteristics of
 the sensor. The distribution of the LGAD signal amplitudes is fit with a Landau
-distribution, and the Most Probable Value (MPV) of the fitted function is
+distribution. The post-fit Most Probable Value (MPV) is
 plotted in Fig.~\ref{fig:FNAL_HPK50_MPVXY}. A flat response with a uniform
 signal size is observed over the whole sensor area.
 
@@ -355,12 +411,15 @@ signal size is observed over the whole sensor area.
 
 
 
-The measurement of the time difference between the Photek 240 MCP-PMT time stamp,
-and that of the LGAD sensors is shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}. The
-micro-bonding scheme of the HPK PIX $2\times 2$ sensors arrays is shown in
-Fig.~\ref{fig:HPK_Sensors}. The $\Delta t$ distribution has a distinct shape
-where the area under the metalization on top of the sensor shows a shift of
-about $20--30$~psec with respect to non-metalized area. 
+The measurement of the time difference between the Photek 240 MCP-PMT time
+stamp, and that of the LGAD sensors is shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}.
+The micro-bonding scheme of the HPK PIX $2\times 2$ sensors arrays is shown in
+Fig.~\ref{fig:HPK_Sensors}. The $\Delta t = t_{1}-t_{0}$ distribution has a
+distinct shape where the area under the metalization on top of the sensor -- the
+gray area in the center of it -- shows a shift of about $20$--$30$~psec with
+respect to non-metalized area. A possible explanation for this small effect is
+an observed slight difference in the rise time of pulse from the metallized and
+un-metallized areas. 
 
 \begin{figure}[htbp] 
 \centering
@@ -390,7 +449,9 @@ observe a uniform time resolution around 40~psec across the whole sensor area.
 
 \subsection{Comparison of HPK doping profiles}
 
-KU boards only, ABCD, time resolution, DeltaT, and MPV plots. 
+Studies of the dependence of the timing sensors characteristics on the sensor
+doping were performed by comparing the 50~$\mu$m PIX sensors of different gain
+splits. All measurements were performed using 2-channel KU readout board. 
 
 \begin{figure}[htbp] 
 \centering
@@ -416,6 +477,7 @@ KU boards only, ABCD, time resolution, DeltaT, and MPV plots.
 
 
 \subsection{Comparison of HPK 50 $\mu$m with 80 $\mu$m}
+\label{sec:HPK50vs80}
 
 \begin{figure}[htbp] 
 \centering
@@ -501,18 +563,56 @@ KU boards only, ABCD, time resolution, DeltaT, and MPV plots.
 \end{figure} 
  
 
-
-
-\clearpage
 \section{Conclusion}
 \label{sec:conclusion} 
 
-All is good!
+In a beam test at FNAL with tracking information, we compared the performance of
+low-gain avalanche detectors (LGAD) produced by CNM Barcelona and HPK Hamamatsu,
+both single pads and 2x2 arrays with pad size varying from 1 mm to 3 mm diameter
+and a thickness of about 50 and 80 $\mu$m. Four different readout boards were
+used, and their performance characteristics will be detailed in an upcoming
+paper. The uniformity of the sensor response in pulse height, efficiency and
+timing resolution were tested and found to be good pre-radiation with the
+exceptions of the area between pads which exhibit a ``no-response'' width of
+72.5~$\mu$m for CNM and 112.7~$\mu$m for HPK. A small timing shift across the
+HPK sensor of the order 20--30~ps can be explained by the observed change in
+pulse shape when comparing metallized and non-metallized sensor areas. After a
+neutron fluence of $6\times 10^{14}$~n/cm$^2$, the single pad CNM sensor
+exhibits a large gain variation of a factor 2.5 when comparing metallized and
+non-metallized sensor areas. 
+
+For an un-irradiated 50~$\mu$m thick LGAD with 3~mm pads we find the following timing results: 
+\begin{itemize}
+  \item at a temperature of $+20$~C$^{\circ}$, the timing resolution ranges from
+        40~ps to 50~ps depending on the readout board. This number worsens by
+        10~ps for a 80~$\mu$m sensor.
+  \item cooling the LGAD improves the timing resolution from 55~ps at
+        $+20$~C$^{\circ}$ to 43~ps at $-10$~C$^{\circ}$ to 36 ps at
+        $-20$~C$^{\circ}$  
+\end{itemize}For an 50~$\mu$m thick LGAD with 1~mm pads irradiated $6\times 10^{14}$~n/cm$^2$ we find the
+following timing results when operated at $-20$~C$^{\circ}$: 
+\begin{itemize}
+  \item for the HPK LGAD the highest bias voltage reached is $\sim$600V and the timing resolution is 30~ps; 
+  \item for the CNM LGAD the highest bias voltage reached is $\sim$400V and the
+        timing resolution is 30~ps for the metallized part and~40 ps for the
+        un-metallized area.
+  
+\end{itemize}
 
 \section*{Acknowledgement}
 
 We would like to thank Alan Prosser and Ryan Rivera for their critical help in
 setting up the DAQ and trigger chain. 
+
+We thank Ned Spencer, Max Wilder, and Forest McKinney-Martinez for their
+technical assistance, and the CNM and HPK manufacturing team. We acknowledge the
+help of V. Cindro and I. Mandic with the neutron irradiations. Part of this work
+has been performed within the framework of the CERN RD50 Collaboration. The work
+was supported by the United States Department of Energy, grant
+DE-FG02-04ER41286. Part of this work has been financed by the European Union’s
+Horizon 2020 Research and Innovation funding program, under Grant Agreement no.
+654168 (AIDA-2020) and Grant Agreement no. 669529 (ERC UFSD669529), and by the
+Italian Ministero degli Affari Esteri and INFN Gruppo V.
 
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections

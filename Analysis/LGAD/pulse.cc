@@ -170,8 +170,10 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
 
       //reject events with more than 1 track
       if ( !(ntracks == 1 && chi2 < 10 )) continue;
+      
       //if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-4)) continue;
       if ( !(fabs(xSlope) < 1e-3 && (fabs(ySlope) < 4e-3) && fabs(ySlope) > 3e-3)) continue;
+      //if ( !(fabs(xSlope + 1.12687e-04) < 5e-4 && fabs(ySlope + 3.546e-3) < 5e-4)) continue; //For CNM W9HG11 Run 838-839-841
       if ( !(amp[channelNumber] < 0.45 )) continue;//No saturation
 
 
@@ -444,6 +446,9 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
   float x_init    = 10000.;//microns
   float y_init    = 10000.;//microns
   int niterations = (int)((30000.-10000.)/binWidth);//microns
+
+ 
+
 
   float x_pos[niterations];//x-positions
   float x_pos_un[niterations];//x-position uncertainty

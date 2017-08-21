@@ -170,7 +170,7 @@ void MakeGap_HPKVsX_UCSCBoard() {
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
    leg->AddEntry(g1, "Channel 1", "LP");
-   leg->AddEntry(g2, "Channel 4", "LP");
+   leg->AddEntry(g2, "Channel 2", "LP");
    leg->Draw();
 
    c->SaveAs("Eff_vs_X_HPK50DPIX_Ch1_4_fit.pdf");
@@ -262,8 +262,8 @@ void MakeGap_HPKVsY() {
    leg->SetLineWidth(2);
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
-   leg->AddEntry(g1, "Channel 3", "LP");
-   leg->AddEntry(g2, "Channel 4", "LP");
+   leg->AddEntry(g1, "Channel 1", "LP");
+   leg->AddEntry(g2, "Channel 3", "LP");
    leg->Draw();
 
    c->SaveAs("Eff_vs_Y_HPK50DPIX_Ch3_4_fit.pdf");
@@ -355,8 +355,8 @@ void MakeGap_CNMVsX() {
    leg->SetLineWidth(2);
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
-   leg->AddEntry(g1, "Channel 10", "LP");
-   leg->AddEntry(g2, "Channel 13", "LP");
+   leg->AddEntry(g1, "Channel 1", "LP");
+   leg->AddEntry(g2, "Channel 2", "LP");
    leg->Draw();
 
    c->SaveAs("Eff_vs_X_CNM_Ch10_13_fit.pdf");
@@ -447,8 +447,8 @@ void MakeGap_CNMVsY() {
    leg->SetLineWidth(2);
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
-   leg->AddEntry(g1, "Channel 13", "LP");
-   leg->AddEntry(g2, "Channel 12", "LP");
+   leg->AddEntry(g1, "Channel 1", "LP");
+   leg->AddEntry(g2, "Channel 3", "LP");
    leg->Draw();
 
    c->SaveAs("Eff_vs_Y_CNM_Ch13_12_fit.pdf");

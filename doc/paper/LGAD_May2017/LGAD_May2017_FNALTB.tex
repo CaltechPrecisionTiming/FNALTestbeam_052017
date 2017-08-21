@@ -281,7 +281,9 @@ Sensors manufactured by Hamamatsu (HPK) and CNM were tested during the test beam
 experiments. Sensors in both single- and four-channel configurations were tested
 during the measurements. Most of the tested sensors have active thickness of
 about 50 $\mu$m, apart from the comparison of the 50 and 80 $\mu$m sensors that
-is presented in Sec.~\ref{sec:HPK50vs80}.
+is presented in Sec.~\ref{sec:HPK50vs80}. The list of sensors studied in this
+article, as well as the temperature and the sensor bias voltage used during
+their operation are listed in Tab.~\ref{tab:DataConditions}. 
 
 CNM sensors have active thickness of about 45 $\mu$m, they were
 produced on 4-inch Silicon-on-Insulator wafers with a 45 $\mu$m thick high
@@ -313,28 +315,8 @@ sensors are circular pads with an active area of 0.8~mm$^2$.
 \label{fig:HPK_Sensors} 
 \end{figure} 
 
-The list of sensors studied in this article, as well as the temperature and the
-sensor bias voltage used during their operation are listed in
-Tab.~\ref{tab:DataConditions}. 
 
-\begin{table}[h]
-\begin{center}
-  \begin{tabular}{ |c | c | c| c | }
-    \hline
-    Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
-    HPK 50A-PIX & {\textbf{-630 V} & -- & -- \\ \hline
-    HPK 50B-PIX & \begin{tabular}{@{}c@{}}{\textbf{-450 V, -550V, -600 V }\\ \underline{-510 V} \\ \textit{-510V, -570 V}\end{tabular}  & -- & -- \\ \hline
-    HPK 50C-PIX & {\textbf{-400 V} & {\textbf{-410 V, -470 V} & -- \\ \hline
-    HPK 50D-PIX & \begin{tabular}{@{}c@{}}{\textbf{-100 V, -200V, -250 V,} \\ \textbf{-300 V, -325 V} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}{\textbf{-250 V, -300V,} \\ \underline{-210 V, -250 V} \\ \textit{-250 V, -280 V}\end{tabular} {\color{red}} \\ \hline
-    CNM W9HG11 & -- & {\textbf{-140 V, -160V} & -- \\ \hline
-    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & {\textit{-600 V, -635V} & -- \\ \hline
-    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & {\textit{-400 V, -420V} \\ \hline
-    \hline
-  \end{tabular}
-\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
-\label{tab:DataConditions}
-\end{center}
-\end{table}
+
 
 
 \section{Read-out boards}
@@ -397,11 +379,11 @@ with a Landau function.
 
 \subsection{Study of the uniformity of the LGAD sensors}
 
-The characteristic uniformity of the HPK 50D-PIX sensors was studied
-using the FNAL readout board. Here, and in the remainder of this article,
-whenever a scan of a certain characteristic of the array sensors is presented,
-we show the X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and
-3, as defined on the left picture in Fig.~\ref{fig:HPK_Sensors}. The X-axis scan
+The uniformity of the HPK 50D-PIX sensors was studied using the FNAL readout
+board. Here, and in the remainder of this article, whenever a scan of a certain
+characteristic quantity (e.g. time resolution) sensors is presented, we show the
+X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and 3, as
+defined on the left picture in Fig.~\ref{fig:HPK_Sensors}. The X-axis scan
 across pixels 3 and 4, and Y-axis scans across pixels 2 and 4 shown
 qualitatively the same features, and are not shown here. 
 
@@ -411,11 +393,16 @@ that register a signal above the noise level in the LGAD sensor to those that
 contain a track identified by the pixel telescope pointing at the LGAD sensor.
 We observe a flat 100\% efficiency across the whole sensor area. The left edge
 of the pixel 1 in Fig.~\ref{fig:FNAL_HPK50_effXY} is outside the acceptance of
-the pixel telescope, hence the efficiency curve does not fully cover its surface.
-A clear drop in efficiency is observed in the transition region between the two
-pixels. The area between two pixels is shown in more detail in
-Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}, and as can be seen, particle detection
-efficiency is significantly lower in the transition region between the pixels.
+the pixel telescope, hence the efficiency curve does not fully cover its
+surface. A clear drop in efficiency is observed in the transition region between
+the two pixels. The area between two pixels is shown in more detail in
+Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. In order to estimate the area with no
+response between the pixels, the efficiency curves of the two neighboring pixels
+are fitted with an S-curve function of the form $y=p_1\times
+\mathrm{erf}\left\{\pm(p_2-x)/p_3)\}+p_4$, where $\mathrm{erf}}$ is the error
+function, and $p_i$ are floated in the fit. We define as the width of the
+``no-response'' area the distance between the half-maxima of the two fitted
+S-curves, as shown in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}
 
 \begin{figure}[htbp] 
 \centering
@@ -440,7 +427,7 @@ efficiency is significantly lower in the transition region between the pixels.
 \includegraphics[width=0.48\textwidth]{figs/UCSCBoard_HPK50CPix_CNM_W9HG11_Runs838-839-841/Eff_vs_Y_Ch12-13_fit.pdf} 
 
 \caption{A zoomed version of the efficiency measurement across the X- and Y-axes of the HPK 50D-PIX (top) and CNM W9HG11 (bottom) sensors. HPK sensor is operated at -450 V, and CNM sensor is at -180 V bias voltage. Data points in blue are those from one pixel, and red points are those from the neighboring pixel. The red curves are fitted to the data points as described in the text. Arrows indicate the distance between half-maximum points of fitted curves.} 
-\label{fig:FNAL_HPK50_ZoomeffXY} 
+\label{fig:UCSC_HPK50C_CNM_ZoomeffXY} 
 \end{figure} 
 
 
@@ -466,7 +453,7 @@ stamp, and that of the LGAD sensors is shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}.
 The micro-bonding scheme of the HPK PIX $2\times 2$ sensors arrays is shown in
 Fig.~\ref{fig:HPK_Sensors}. The $\Delta t = t_{1}-t_{0}$ distribution has a
 distinct shape where the area under the metallization on top of the sensor -- the
-gray area in the center of it -- shows a shift of about $20$--$30$~ps with
+gray area in the center of the image -- shows a shift of about $20$--$30$~ps with
 respect to non-metallized area. A possible explanation for this small effect is
 an observed slight difference in the rise time of pulse from the metallized and
 un-metallized areas. 
@@ -664,9 +651,36 @@ Horizon 2020 Research and Innovation funding program, under Grant Agreement no.
 654168 (AIDA-2020) and Grant Agreement no. 669529 (ERC UFSD669529), and by the
 Italian Ministero degli Affari Esteri and INFN Gruppo V.
 
+
+
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
-%% \appendix
+
+\appendix
+\section{Appendix A}
+
+The list of sensors studied in this article, as well as the temperature and the
+sensor bias voltage used during their operation are listed in
+Tab.~\ref{tab:DataConditions}. 
+
+\begin{table}[h]
+\begin{center}
+  \begin{tabular}{ |c | c | c| c | }
+    \hline
+    Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
+    HPK 50A-PIX & {\textbf{-630 V} & -- & -- \\ \hline
+    HPK 50B-PIX & \begin{tabular}{@{}c@{}}{\textbf{-450 V, -550V, -600 V }\\ \underline{-510 V} \\ \textit{-510V, -570 V}\end{tabular}  & -- & -- \\ \hline
+    HPK 50C-PIX & {\textbf{-400 V} & {\textbf{-410 V, -470 V} & -- \\ \hline
+    HPK 50D-PIX & \begin{tabular}{@{}c@{}}{\textbf{-100 V, -200V, -250 V,} \\ \textbf{-300 V, -325 V} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}{\textbf{-250 V, -300V,} \\ \underline{-210 V, -250 V} \\ \textit{-250 V, -280 V}\end{tabular} {\color{red}} \\ \hline
+    CNM W9HG11 & -- & {\textbf{-140 V, -160V} & -- \\ \hline
+    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & {\textit{-600 V, -635V} & -- \\ \hline
+    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & {\textit{-400 V, -420V} \\ \hline
+    \hline
+  \end{tabular}
+\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
+\label{tab:DataConditions}
+\end{center}
+\end{table}
 
 %% \section{}
 %% \label{}

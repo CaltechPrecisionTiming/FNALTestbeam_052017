@@ -80,7 +80,7 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{Test Beam Studies of 50~$\mu m$ LGAD sensors.}
+\title{Studies of uniformity of 50~$\mu$m UFSD sensors at the Fermilab test beam.}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{}
@@ -118,14 +118,14 @@ detector. UFSD sensors based on the Low-Gain Avalanche Detector (LGAD) design
 were manufactured by the the Centro Nacional de Microelectr\`onica (CNM) and
 Hamamatsu Photonics (HPK) were tested in the experiments. The uniformity of the
 sensor response in pulse height, efficiency and timing resolution were found to
-be good pre-radiation, with time resolution around 30-40 psec depending on
-operating conditions. A ``no-response'' area between pads which exhibitwas
+be good pre-radiation, with time resolution around 30-40~ps depending on
+operating conditions. A ``no-response'' area between pads which exhibit was
 measured to be around 70~$\mu$m for CNM and 110$\mu$m for HPK sensors. After a
 neutron fluence of $6\times 10^{14}$~n/cm$^2$ the CNM sensor exhibits a large
 gain variation of a factor 2.5 when comparing metallized and non-metallized
-sensor areas. Irradiate CNM sensor achieved time resolution of 30~psec for the
-metallized part, and 40~psec for the non-metallized area, while the time
-resolution of the HPK sensor was measured to be 30~psec.
+sensor areas. Irradiated CNM sensor achieved time resolution of 30~ps for the
+metallized part, and 40~ps for the non-metallized area, while the time
+resolution of the HPK sensor was measured to be 30~ps.
 
 \end{abstract}
 
@@ -146,7 +146,51 @@ Silicon \sep Timing \sep LGAD
 %% main text
 \section{Introduction} 
 
+Future colliders, including the high luminosity upgrade of the Large Hadron
+Collider (HL-LHC) at CERN, will operate with an order of magnitude higher
+instantaneous luminosity compared to what has been achieved at the LHC so far.
+With the increased instantaneous luminosity the rate of simultaneous
+interactions per bunch crossing (pileup) is projected to reach an average of 140
+to 200. The large amount of pileup increases the likelihood of confusion in the
+reconstruction of particles from the hard scatter interaction with those
+produced in different pileup interactions. The ability to discriminate between
+jets produced in the events of interests, especially those associated with the
+vector boson fusion processes, and jets produced by pileup interactions will be
+degraded. The efficiency of identifying high $p_{\mathrm{T}}$ isolated electrons
+and muons will be severely reduced due to the high density of pileup particles
+in their vicinity. The missing transverse energy resolution will deteriorate, and several
+other physics objects performance metrics will suffer.
+
+One way to mitigate the pileup confusion effects, complementary to precision
+tracking methods, is to perform a time of arrival measurement associated with
+each particle. Such a measurement with a precision of about 20-30~ps, will
+reduce the effective amount of pileup by a factor of 10, given that the spread
+in collision time of the pileup interactions at HL-LHC is foreseen to be
+approximately 200~ps. We have previosuly shown that a precision of better than
+$20$~ps can be achieved for electromagnetic showers measured with silicon
+sampling calorimeters~\cite{Apresyan201662,Apresyan2017_NSSMIC,AKCHURIN201731}
+using traditional planar silicon detectors. In this paper we report results of
+beam test measurements with thin UFSD sensors that have been shown to achieve
+time resolution around 30~ps~\cite{Cartiglia201783}. UFSD are envisioned to be
+used in the CMS and ATLAS experiment upgrades for HL-LHC in order to reduce the
+pileup contamination in the region of pseudorapidity beyond $\eta>1.5$ for CMS,
+and $\eta>3.0$ for ATLAS. In order to satisfy the needs of a high precision
+timing across a large area of the detectors for HL-LHC, the sensors will need to
+be provide high uniformity of signal response and timing resolution. In this
+paper we perform detailed measurements of the performance of UFSD sensors from
+CNM and HPK exposed to the 120~GeV proton beams at Fermilab. Utilizing the high
+precision tracking detector we extract position dependence of the timing
+resolution, signal pulse height, signal time stamp, and charged particle
+detection efficiency, as well as we compare the 50 and 80~$\mu$m UFSD sensors,
+and the performance of the HPK and CNM sensors irradiated to $6\times
+10^{14}$~n/cm$^2$.
+
+The paper is organized as follows: the experimental setup is described in
+Sec.~\ref{sec:setup}, the tested UFSD sensors and their operating conditions are
+listed in Sec.~\ref{sec:sensors}, readout boards used in the measurements are described in Sec.~\ref{sec:boards}, beam test results are presented in Sec.~\ref{sec:results}, followed by the conclusion in Sec.~\ref{sec:conclusion}.
+
 \section{Test-beam Setup} 
+\label{sec:setup}
 
 %We performed the test-beam measurements at the Fermilab Test-beam
 %Facility%
@@ -156,13 +200,13 @@ which provided a $120$~GeV proton beam from the Fermilab Main Injector
 accelerator. The Devices Under Test (DUTs) were mounted on a remotely operated
 motorized stage, placed inside the pixel telescope detector~\cite{KWAN2016162}.
 The latter provides better than 10~$\mu$m position resolution for charged
-particles impinging on the DUT. Additionally, a Photek 240 microchannel plate
-photomultiplier tube (MCP-PMT)%detector% ~\cite{Anderson:2015gha,
-MCPFastCaloNIMA, Ronzhin2015288,Ronzhin201552} was placed furthest downstream,
-and provided a very precise reference timestamp. Its precision %was% has been
-previously measured to be less than $10$~psec~\cite{Ronzhin2015288}. A schematic
-diagram and photograph of the experimental area are shown in
-Fig.~\ref{fig:DragonBoxDiagram} and Fig.~\ref{fig:DragonBox}, respectively. 
+particles impinging on the DUT. Additionally, a Photek~240 micro-channel plate
+(MCP-PMT) detector~\cite{Anderson:2015gha, MCPFastCaloNIMA,
+Ronzhin2015288,Ronzhin201552} was placed furthest downstream, and provided a
+very precise reference timestamp. Its precision has been previously
+measured to be less than $10$~ps~\cite{Ronzhin2015288}. A schematic diagram and
+photograph of the experimental area are shown in Fig.~\ref{fig:DragonBoxDiagram}
+and Fig.~\ref{fig:DragonBox}, respectively. 
 
 The DAQ system for the DUTs and the Photek MCP-PMT is based on a CAEN V1742
 digitizer board~\cite{CAENDRS}, which provides digitized waveforms sampled at 5
@@ -173,7 +217,7 @@ digitizer was measured to be less than 4~ps, and thus, its impact on the timing
 measurements presented in these studies can be neglected. The DAQ for the pixel
 telescope is based on the CAPTAN system developed at
 Fermilab~\cite{KWAN2016162}. The track-reconstruction is performed using the
-Monicelli software package developed specifically for the testbeam application. 
+Monicelli software package developed specifically for the test-beam application. 
 
 The beam is resonantly extracted in a slow spill for each Main Injector cycle
 delivering a single 4.2 sec long spill per minute. The primary beam (bunched at
@@ -184,7 +228,7 @@ placed upstream of the DUTs in the beam-line. Due to the limited buffer depth of
 the CAEN V1742 board, special care had to be taken in the design of the DAQ
 system to ensure that both the DUT and telescope DAQs collect exactly the same
 amount of triggers. This was achieved by limiting the trigger rate by
-introducting an adjustable dead-time using a custom-designed trigger board. This
+introducing an adjustable dead-time using a custom-designed trigger board. This
 trigger board is the combination of a custom FPGA board (the CAPTAN+x, equipped
 with multiple FPGA Mezzanine Card connectors and gigabit ethernet connectivity)
 mated to a front end board (the NIM+, with multiple inputs and outputs, each
@@ -231,13 +275,15 @@ the DUTs at $-10^{\circ}$ and $-20^{\circ}$~C.
 
 
 \section{Properties of the tested LGAD sensors}
-
+\label{sec:sensors}
 
 Sensors manufactured by Hamamatsu (HPK) and CNM were tested during the test beam
 experiments. Sensors in both single- and four-channel configurations were tested
 during the measurements. Most of the tested sensors have active thickness of
 about 50 $\mu$m, apart from the comparison of the 50 and 80 $\mu$m sensors that
-is presented in Sec.~\ref{sec:HPK50vs80}.
+is presented in Sec.~\ref{sec:HPK50vs80}. The list of sensors studied in this
+article, as well as the temperature and the sensor bias voltage used during
+their operation are listed in Tab.~\ref{tab:DataConditions}. 
 
 CNM sensors have active thickness of about 45 $\mu$m, they were
 produced on 4-inch Silicon-on-Insulator wafers with a 45 $\mu$m thick high
@@ -265,35 +311,16 @@ sensors are circular pads with an active area of 0.8~mm$^2$.
 \centering
 \includegraphics[width=0.3\textwidth]{figs/HPK-50DPix.pdf} 
 \includegraphics[width=0.41\textwidth]{figs/HPK-50D.pdf} 
-\caption{A picture of HPK 50D-PIX 2x2 array sensor (top), and 50D-GR single sensor (bottom). The pixel labels overlayed on top of the left image are used in the text to identify pixels on the array. Signals from the pixels are read out by the micro-bonds that are connected to the signal pads on the sensors. Signal pads can be seen on the left photograph as four small circles in the center of each pixel. } 
+\caption{A picture of HPK 50D-PIX 2x2 array sensor (top), and 50D-GR single sensor (bottom). The pixel labels overlaid on top of the left image are used in the text to identify pixels on the array. Signals from the pixels are read out by the micro-bonds that are connected to the signal pads on the sensors. Signal pads can be seen on the left photograph as four small circles in the center of each pixel. } 
 \label{fig:HPK_Sensors} 
 \end{figure} 
 
-The list of sensors studied in this article, as well as the temperature and the
-sensor bias voltage used during their operation are listed in
-Tab.~\ref{tab:DataConditions}. 
 
-\begin{table}[h]
-\begin{center}
-  \begin{tabular}{ |c | c | c| c | }
-    \hline
-    Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
-    HPK 50A-PIX & {\textbf{-630 V} & -- & -- \\ \hline
-    HPK 50B-PIX & \begin{tabular}{@{}c@{}}{\textbf{-450 V, -550V, -600 V }\\ \underline{-510 V} \\ \textit{-510V, -570 V}\end{tabular}  & -- & -- \\ \hline
-    HPK 50C-PIX & {\textbf{-400 V} & {\textbf{-410 V, -470 V} & -- \\ \hline
-    HPK 50D-PIX & \begin{tabular}{@{}c@{}}{\textbf{-100 V, -200V, -250 V,} \\ \textbf{-300 V, -325 V} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}{\textbf{-250 V, -300V,} \\ \underline{-210 V, -250 V} \\ \textit{-250 V, -280 V}\end{tabular} {\color{red}} \\ \hline
-    CNM W9HG11 & -- & {\textbf{-140 V, -160V} & -- \\ \hline
-    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & {\textit{-600 V, -635V} & -- \\ \hline
-    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & {\textit{-400 V, -420V} \\ \hline
-    \hline
-  \end{tabular}
-\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
-\label{tab:DataConditions}
-\end{center}
-\end{table}
+
 
 
 \section{Read-out boards}
+\label{sec:boards}
 
 Three boards were used in various measurements presented in this paper, which
 were developed at the University of California Santa Cruz (UCSC), University of
@@ -313,11 +340,11 @@ consumption of the board is about 130 mW per channel. Similar electronics is
 available in different configurations with 1, 2 (used in this work) or 8
 channels.
 
-The USCS board 1-channel board is desdcibed in details in
+The USCS board 1-channel board is described in details in
 Ref.~\cite{Cartiglia201783}. This board uses discrete components and contains
 several features which allow maintaining a wide bandwidth ($\sim$ 2 GHz) and a
 low noise even in noisy environments. The inverting amplifier uses a high-speed
-SiGe transistor whcih has a trans-impedance of about 470~$\Omega$. A commercial
+SiGe transistor which has a trans-impedance of about 470~$\Omega$. A commercial
 inverting amplifier with gain 10x is used to boost the signal. The 4-channel
 UCSC board has two stages: the first one is identical to the UCSC single channel
 board, and is followed by an inverting stage. The total trans-impedance is 10.7
@@ -327,6 +354,7 @@ k$\Omega$.
 
 
 \section{Beam test results}
+\label{sec:results}
 
 \subsection{Analysis procedure}
 
@@ -351,13 +379,13 @@ with a Landau function.
 
 \subsection{Study of the uniformity of the LGAD sensors}
 
-The characteristic uniformity of the HPK 50D-PIX sensors was studied
-using the FNAL readout board. Here, and in the remainder of this article,
-whenever a scan of a certain characteristic of the array sensors is presented,
-we show the X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and
-3, as defined on the left picture in Fig.~\ref{fig:HPK_Sensors}. The X-axis scan
+The uniformity of the HPK 50D-PIX sensors was studied using the FNAL readout
+board. Here, and in the remainder of this article, whenever a scan of a certain
+characteristic quantity (e.g. time resolution) sensors is presented, we show the
+X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and 3, as
+defined on the left picture in Fig.~\ref{fig:HPK_Sensors}. The X-axis scan
 across pixels 3 and 4, and Y-axis scans across pixels 2 and 4 shown
-qualitatevely the same features, and are not shown here. 
+qualitatively the same features, and are not shown here. 
 
 The measurements of the particle detection efficiency are shown in
 Fig.~\ref{fig:FNAL_HPK50_effXY}. Efficiency is defined as the ratio of events
@@ -365,11 +393,16 @@ that register a signal above the noise level in the LGAD sensor to those that
 contain a track identified by the pixel telescope pointing at the LGAD sensor.
 We observe a flat 100\% efficiency across the whole sensor area. The left edge
 of the pixel 1 in Fig.~\ref{fig:FNAL_HPK50_effXY} is outside the acceptance of
-the pixel telescop, hence the efficiency curve does not fully cover its surface.
-A clear drop in efficiency is observed in the transition region between the two
-pixels. The area between two pixels is shown in more detail in
-Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}, and as can be seen, particle detection
-efficiency is significantly lower in the transition region between the pixels.
+the pixel telescope, hence the efficiency curve does not fully cover its
+surface. A clear drop in efficiency is observed in the transition region between
+the two pixels. The area between two pixels is shown in more detail in
+Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. In order to estimate the area with no
+response between the pixels, the efficiency curves of the two neighboring pixels
+are fitted with an S-curve function of the form $y=p_1\times
+\mathrm{erf}\left\{\pm(p_2-x)/p_3)\}+p_4$, where $\mathrm{erf}}$ is the error
+function, and $p_i$ are floated in the fit. We define as the width of the
+``no-response'' area the distance between the half-maxima of the two fitted
+S-curves, as shown in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}
 
 \begin{figure}[htbp] 
 \centering
@@ -394,7 +427,7 @@ efficiency is significantly lower in the transition region between the pixels.
 \includegraphics[width=0.48\textwidth]{figs/UCSCBoard_HPK50CPix_CNM_W9HG11_Runs838-839-841/Eff_vs_Y_Ch12-13_fit.pdf} 
 
 \caption{A zoomed version of the efficiency measurement across the X- and Y-axes of the HPK 50D-PIX (top) and CNM W9HG11 (bottom) sensors. HPK sensor is operated at -450 V, and CNM sensor is at -180 V bias voltage. Data points in blue are those from one pixel, and red points are those from the neighboring pixel. The red curves are fitted to the data points as described in the text. Arrows indicate the distance between half-maximum points of fitted curves.} 
-\label{fig:FNAL_HPK50_ZoomeffXY} 
+\label{fig:UCSC_HPK50C_CNM_ZoomeffXY} 
 \end{figure} 
 
 
@@ -419,9 +452,9 @@ The measurement of the time difference between the Photek 240 MCP-PMT time
 stamp, and that of the LGAD sensors is shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}.
 The micro-bonding scheme of the HPK PIX $2\times 2$ sensors arrays is shown in
 Fig.~\ref{fig:HPK_Sensors}. The $\Delta t = t_{1}-t_{0}$ distribution has a
-distinct shape where the area under the metalization on top of the sensor -- the
-gray area in the center of it -- shows a shift of about $20$--$30$~psec with
-respect to non-metalized area. A possible explanation for this small effect is
+distinct shape where the area under the metallization on top of the sensor -- the
+gray area in the center of the image -- shows a shift of about $20$--$30$~ps with
+respect to non-metallized area. A possible explanation for this small effect is
 an observed slight difference in the rise time of pulse from the metallized and
 un-metallized areas. 
 
@@ -437,7 +470,7 @@ The measurement of the time resolution scan across the sensor is shown in
 Fig.~\ref{fig:FNAL_HPK50_SigmaTXY}. The $\Delta t$ distribution between LGAD
 sensor and the Photek 240 MCP-PMT sensor is fitted with a Gaus function, and its
 spread $\sigma$ is referred to in the following as the time resolution. We
-observe a uniform time resolution around 40~psec across the whole sensor area. 
+observe a uniform time resolution around 40~ps across the whole sensor area. 
 
 \begin{figure}[htbp] 
 \centering
@@ -618,9 +651,36 @@ Horizon 2020 Research and Innovation funding program, under Grant Agreement no.
 654168 (AIDA-2020) and Grant Agreement no. 669529 (ERC UFSD669529), and by the
 Italian Ministero degli Affari Esteri and INFN Gruppo V.
 
+
+
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
-%% \appendix
+
+\appendix
+\section{Appendix A}
+
+The list of sensors studied in this article, as well as the temperature and the
+sensor bias voltage used during their operation are listed in
+Tab.~\ref{tab:DataConditions}. 
+
+\begin{table}[h]
+\begin{center}
+  \begin{tabular}{ |c | c | c| c | }
+    \hline
+    Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
+    HPK 50A-PIX & {\textbf{-630 V} & -- & -- \\ \hline
+    HPK 50B-PIX & \begin{tabular}{@{}c@{}}{\textbf{-450 V, -550V, -600 V }\\ \underline{-510 V} \\ \textit{-510V, -570 V}\end{tabular}  & -- & -- \\ \hline
+    HPK 50C-PIX & {\textbf{-400 V} & {\textbf{-410 V, -470 V} & -- \\ \hline
+    HPK 50D-PIX & \begin{tabular}{@{}c@{}}{\textbf{-100 V, -200V, -250 V,} \\ \textbf{-300 V, -325 V} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}{\textbf{-250 V, -300V,} \\ \underline{-210 V, -250 V} \\ \textit{-250 V, -280 V}\end{tabular} {\color{red}} \\ \hline
+    CNM W9HG11 & -- & {\textbf{-140 V, -160V} & -- \\ \hline
+    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & {\textit{-600 V, -635V} & -- \\ \hline
+    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & {\textit{-400 V, -420V} \\ \hline
+    \hline
+  \end{tabular}
+\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
+\label{tab:DataConditions}
+\end{center}
+\end{table}
 
 %% \section{}
 %% \label{}

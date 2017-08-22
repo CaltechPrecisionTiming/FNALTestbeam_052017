@@ -1,4 +1,4 @@
-void MakeGap_HPKVsX() {
+void MakeGap_HPK50DPIXVsX() {
 
   TFile *_file1 = TFile::Open("eff_Channel1_Run638-781.root");
   TFile *_file2 = TFile::Open("eff_Channel2_Run638-781.root");
@@ -88,7 +88,7 @@ void MakeGap_HPKVsX() {
 
 }
 
-void MakeGap_HPKVsX_UCSCBoard() {
+void MakeGap_HPK50CPIXVsX() {
 
   TFile *_file1 = TFile::Open("eff_Channel1_Run838+839+842.root");
   TFile *_file2 = TFile::Open("eff_Channel4_Run838+839+842.root");
@@ -180,7 +180,7 @@ void MakeGap_HPKVsX_UCSCBoard() {
 
 
 
-void MakeGap_HPKVsY() {
+void MakeGap_HPK50CPIXVsY() {
 
   TFile *_file1 = TFile::Open("eff_Channel3_Run838+839+842.root");
   TFile *_file2 = TFile::Open("eff_Channel4_Run838+839+842.root");
@@ -460,9 +460,9 @@ void MakeGap_CNMVsY() {
 
 void plotLGADGaps () {
 
-  MakeGap_HPKVsX();
-  MakeGap_HPKVsX_UCSCBoard();
-  MakeGap_HPKVsY();
+  MakeGap_HPK50DPIXVsX();
+  MakeGap_HPK50CPIXVsX();
+  MakeGap_HPK50CPIXVsY();
   MakeGap_CNMVsX();
   MakeGap_CNMVsY();
 

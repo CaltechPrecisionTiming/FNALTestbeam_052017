@@ -1,8 +1,8 @@
 void Eff_vs_Y_HPK50CPIX_Ch3_4_fit()
 {
 //=========Macro generated from canvas: c/c
-//=========  (Mon Aug 21 23:14:01 2017) by ROOT version6.08/05
-   TCanvas *c = new TCanvas("c", "c",52,51,800,800);
+//=========  (Mon Aug 21 16:44:26 2017) by ROOT version6.08/02
+   TCanvas *c = new TCanvas("c", "c",0,45,800,800);
    c->Range(21.73532,-0.13875,22.23288,1.24875);
    c->SetFillColor(0);
    c->SetBorderMode(0);
@@ -12253,7 +12253,7 @@ tex->SetNDC();
    leg->SetLineWidth(2);
    leg->SetFillColor(0);
    leg->SetFillStyle(1001);
-   TLegendEntry *entry=leg->AddEntry("Graph0","Channel 3","LP");
+   TLegendEntry *entry=leg->AddEntry("Graph0","Channel 1","LP");
 
    ci = TColor::GetColor("#0000ff");
    entry->SetLineColor(ci);
@@ -12265,7 +12265,7 @@ tex->SetNDC();
    entry->SetMarkerStyle(20);
    entry->SetMarkerSize(1.2);
    entry->SetTextFont(42);
-   entry=leg->AddEntry("Graph0","Channel 4","LP");
+   entry=leg->AddEntry("Graph0","Channel 3","LP");
 
    ci = TColor::GetColor("#ff0000");
    entry->SetLineColor(ci);

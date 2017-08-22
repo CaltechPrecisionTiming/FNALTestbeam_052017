@@ -1,8 +1,8 @@
 void Eff_vs_X_HPK50CPIX_Ch1_4_fit()
 {
 //=========Macro generated from canvas: c/c
-//=========  (Mon Aug 21 23:14:01 2017) by ROOT version6.08/05
-   TCanvas *c = new TCanvas("c", "c",52,51,800,800);
+//=========  (Mon Aug 21 16:44:26 2017) by ROOT version6.08/02
+   TCanvas *c = new TCanvas("c", "c",0,45,800,800);
    c->Range(13.48693,-0.13875,13.92595,1.24875);
    c->SetFillColor(0);
    c->SetBorderMode(0);
@@ -6076,17 +6076,17 @@ void Eff_vs_X_HPK50CPIX_Ch1_4_fit()
    f13006->GetYaxis()->SetLabelSize(0.035);
    f13006->GetYaxis()->SetTitleSize(0.035);
    f13006->GetYaxis()->SetTitleFont(42);
-   f13006->SetParameter(0,0.4775753);
-   f13006->SetParError(0,0.01448749);
+   f13006->SetParameter(0,0.4775815);
+   f13006->SetParError(0,0.01448743);
    f13006->SetParLimits(0,0,0);
    f13006->SetParameter(1,13.6827);
-   f13006->SetParError(1,0.00706762);
+   f13006->SetParError(1,0.007067464);
    f13006->SetParLimits(1,0,0);
-   f13006->SetParameter(2,0.01964183);
-   f13006->SetParError(2,0.01121636);
+   f13006->SetParameter(2,0.01964064);
+   f13006->SetParError(2,0.01121612);
    f13006->SetParLimits(2,0,0);
-   f13006->SetParameter(3,0.5089732);
-   f13006->SetParError(3,0.01431721);
+   f13006->SetParameter(3,0.5089785);
+   f13006->SetParError(3,0.01431716);
    f13006->SetParLimits(3,0,0);
    grae->GetListOfFunctions()->Add(f13006);
    grae->Draw("ap");
@@ -12186,17 +12186,17 @@ void Eff_vs_X_HPK50CPIX_Ch1_4_fit()
    f13009->GetYaxis()->SetLabelSize(0.035);
    f13009->GetYaxis()->SetTitleSize(0.035);
    f13009->GetYaxis()->SetTitleFont(42);
-   f13009->SetParameter(0,0.4775753);
-   f13009->SetParError(0,0.01448749);
+   f13009->SetParameter(0,0.4775815);
+   f13009->SetParError(0,0.01448743);
    f13009->SetParLimits(0,0,0);
    f13009->SetParameter(1,13.6827);
-   f13009->SetParError(1,0.00706762);
+   f13009->SetParError(1,0.007067464);
    f13009->SetParLimits(1,0,0);
-   f13009->SetParameter(2,0.01964183);
-   f13009->SetParError(2,0.01121636);
+   f13009->SetParameter(2,0.01964064);
+   f13009->SetParError(2,0.01121612);
    f13009->SetParLimits(2,0,0);
-   f13009->SetParameter(3,0.5089732);
-   f13009->SetParError(3,0.01431721);
+   f13009->SetParameter(3,0.5089785);
+   f13009->SetParError(3,0.01431716);
    f13009->SetParLimits(3,0,0);
    f13009->Draw("same");
    
@@ -12230,7 +12230,7 @@ void Eff_vs_X_HPK50CPIX_Ch1_4_fit()
    f23010->SetParError(3,0.02048389);
    f23010->SetParLimits(3,0,0);
    f23010->Draw("same");
-   TArrow *arrow = new TArrow(13.68302,0.5,13.77879,0.5,0.03,"<|>");
+   TArrow *arrow = new TArrow(13.68303,0.5,13.77879,0.5,0.03,"<|>");
    arrow->SetFillColor(1);
    arrow->SetFillStyle(1001);
    arrow->SetLineWidth(2);
@@ -12265,7 +12265,7 @@ tex->SetNDC();
    entry->SetMarkerStyle(20);
    entry->SetMarkerSize(1.2);
    entry->SetTextFont(42);
-   entry=leg->AddEntry("Graph0","Channel 4","LP");
+   entry=leg->AddEntry("Graph0","Channel 2","LP");
 
    ci = TColor::GetColor("#ff0000");
    entry->SetLineColor(ci);

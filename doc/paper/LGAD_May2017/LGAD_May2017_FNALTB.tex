@@ -382,11 +382,7 @@ optimized for each board individually, by selecting the MIP signal peak fitted
 with a Landau function. 
 
 All measurements other than those described in Sec.~\ref{sec:temp_dependance}
-and ~\ref{sec:rad_tolerance} were performed at room temperature.
-
-
-\subsection{Study of the uniformity of the LGAD sensors}
-
+and ~\ref{sec:rad_tolerance} were performed at room temperature. 
 
 Here, and in the remainder of this article, whenever a scan of a certain
 characteristic quantity (e.g. time resolution) sensors is presented, we show the
@@ -395,23 +391,9 @@ defined on the left picture in Fig.~\ref{fig:HPK_Sensors}. The X-axis scan
 across pixels 3 and 4, and Y-axis scans across pixels 2 and 4 shown
 qualitatively the same features, and are not shown here. 
 
-\begin{figure}[htbp] 
-\centering
-\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/Eff_vs_X_Ch4_5.pdf} 
-\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/Eff_vs_Y_Ch3_4.pdf} 
-\caption{Efficiency measurement across the X- and Y-axes of the HPK 50D-PIX sensor mounted on the FNAL board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
-\label{fig:FNAL_HPK50_effXY} 
-\end{figure} 
 
-The measurements of the particle detection efficiency performed with the FNAL
-board are shown in Fig.~\ref{fig:FNAL_HPK50_effXY}. Efficiency is defined as the
-ratio of events that register a signal above the noise level in the LGAD sensor
-to those that contain a track identified by the pixel telescope pointing at the
-LGAD sensor. We observe a flat 100\% efficiency across the whole sensor area.
-The left edge of the pixel 1 in Fig.~\ref{fig:FNAL_HPK50_effXY} is outside the
-acceptance of the pixel telescope, hence the efficiency curve does not fully
-cover its surface. A clear drop in efficiency is observed in the transition
-region between the two pixels. 
+\subsection{Measurement of the no-response area between two neighboring pixels}
+
 
 In order to precisely measure the no-response area between two neighboring
 pixels, a large statistics sample of about 350,000 events was collected with the
@@ -454,6 +436,32 @@ CNM W9HG11 have an uncertainty of 10~$\mu$m.
 \caption{A zoomed version of the efficiency measurement across the X- and Y-axes of the HPK 50D-PIX (top) and CNM W9HG11 (bottom) sensors. HPK sensor is operated at -450 V, and CNM sensor is at -180 V bias voltage. Data points in blue are those from one pixel, and red points are those from the neighboring pixel. The red curves are fitted to the data points as described in the text. Arrows indicate the distance between half-maximum points of fitted curves.} 
 \label{fig:UCSC_HPK50C_CNM_ZoomeffXY} 
 \end{figure} 
+
+
+\subsection{Study of the uniformity of the LGAD sensors}
+
+
+
+
+The measurements of the particle detection efficiency performed with the FNAL
+board are shown in Fig.~\ref{fig:FNAL_HPK50_effXY}. Efficiency is defined as the
+ratio of events that register a signal above the noise level in the LGAD sensor
+to those that contain a track identified by the pixel telescope pointing at the
+LGAD sensor. We observe a flat 100\% efficiency across the whole sensor area.
+The left edge of the pixel 1 in Fig.~\ref{fig:FNAL_HPK50_effXY} is outside the
+acceptance of the pixel telescope, hence the efficiency curve does not fully
+cover its surface. A clear drop in efficiency is observed in the transition
+region between the two pixels. 
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/Eff_vs_X_Ch4_5.pdf} 
+\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/Eff_vs_Y_Ch3_4.pdf} 
+\caption{Efficiency measurement across the X- and Y-axes of the HPK 50D-PIX sensor mounted on the FNAL board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\label{fig:FNAL_HPK50_effXY} 
+\end{figure} 
+
+
 
 An important characteristic of the sensors is the uniformity of the signal size
 across the sensor surface, which directly impacts the timing characteristics of

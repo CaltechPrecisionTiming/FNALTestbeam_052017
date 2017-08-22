@@ -368,19 +368,27 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(12, 1000, 0.02, 15100., 17900., 22900, 25400., 0.16, 0.32);
   // myPulse->MakeEfficiencyVsXY(13, 1000, 0.02, 15200., 18000., 19900, 22400., 0.16, 0.32);
   
-  // //MPV
-  // myPulse->CreateMPV_vs_PositionHisto(1, 3, 200, 0.018, 0.10, 11100., 13000., 22900, 25300., 0.16, 0.32);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 4, 200, 0.018, 0.10, 13500., 16000., 26100, 28400., 0.16, 0.32);
-  // //--------------------
-  // // Mean Time
-  // //--------------------
-   // myPulse->CreateDeltaT_vs_PositionHisto(1, 3, kLinearTime45TimestampOption, 200, 0.018, 0.10, 11100., 13000., 22900, 25300., -6650, -6550, true, 0.16, 0.32);
-   // myPulse->CreateDeltaT_vs_PositionHisto(1, 4, kLinearTime45TimestampOption, 200, 0.018, 0.10, 13500., 16000., 26100, 28400., -6700, -6600, true, 0.16, 0.32);
-  // //--------------------
-  // // Time Resolution
-  // //--------------------
-   // myPulse->CreateDeltaT_vs_PositionHisto(1, 3, kLinearTime45TimestampOption, 200, 0.018, 0.10, 11100., 13000., 22900, 25300., 0, 100, false, 0.16, 0.32);
-   // myPulse->CreateDeltaT_vs_PositionHisto(1, 4, kLinearTime45TimestampOption, 200, 0.018, 0.10, 13500., 16000., 26100, 28400., 0, 100, false, 0.16, 0.32);
+  //MPV
+  // myPulse->CreateMPV_vs_PositionHisto(1, 10, 200, 0.03, 0.10, 12100., 14900., 19600, 22400., 0.16, 0.32);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 11, 200, 0.03, 0.10, 12200., 14500., 23000, 24500., 0.16, 0.32);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 12, 200, 0.03, 0.10, 15100., 17900., 22900, 25400., 0.16, 0.32);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 13, 200, 0.03, 0.10, 15200., 18000., 19900, 22400., 0.16, 0.32);
+
+  //--------------------
+  // Mean Time
+  //--------------------
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 10, kGausTimestampOption, 200, 0.03, 0.10, 12100., 14900., 19600, 22400., -5950, -5750, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 11, kGausTimestampOption, 200, 0.03, 0.10, 12200., 14500., 23000, 24500., -6170, -5970, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 12, kGausTimestampOption, 200, 0.03, 0.10, 15100., 17900., 22900, 25400., -6000, -5800, true, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 13, kGausTimestampOption, 200, 0.03, 0.10, 15200., 18000., 19900, 22400., -5700, -5500, true, 0.16, 0.32);
+  
+  //--------------------
+  // Time Resolution
+  //--------------------
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 10, kGausTimestampOption, 200, 0.03, 0.10, 12100., 14900., 19600, 22400., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 11, kGausTimestampOption, 200, 0.03, 0.10, 12200., 14500., 23000, 24500., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 12, kGausTimestampOption, 200, 0.03, 0.10, 15100., 17900., 22900, 25400., 0, 100, false, 0.16, 0.32);
+  // myPulse->CreateDeltaT_vs_PositionHisto(1, 13, kGausTimestampOption, 200, 0.03, 0.10, 15200., 18000., 19900, 22400., 0, 100, false, 0.16, 0.32);
   
 
   

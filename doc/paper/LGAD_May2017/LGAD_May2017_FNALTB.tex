@@ -368,11 +368,10 @@ in Ref.~\cite{Kim201467}. The time for the reference Photek MCP-PMT detector is
 obtained by fitting the peak region of the pulse to a Gaussian function and the
 mean parameter of the Gaussian is assigned as the timestamp $t_0$. The time for
 signals from the LGAD sensors is obtained by performing a linear fit to the
-rising edge of the pulse and the time at which the pulse reaches 30\% of the
-maximum amplitude is assigned as its timestamp $t1$ \textbf{FIXME DESCRIBE THE
-ALGORITHMS FOR LGADS}. We measured the electronic time resolution of the CAEN
-V1742 digitizer as $\sim$4~ps and neglected its impact on the timing
-measurements described below. 
+rising edge of the pulse and the time at which the pulse reaches 45\% of the
+maximum amplitude is assigned as its timestamp $t1$. We measured the electronic
+time resolution of the CAEN V1742 digitizer as $\sim$4~ps and neglected its
+impact on the timing measurements described below. 
 
 Events are required to have a signal in the Photek MCP-PMT consistent with a MIP
 signal, and a signal above the noise in LGAD sensors. The MIP signal selection
@@ -392,16 +391,17 @@ across pixels 3 and 4, and Y-axis scans across pixels 2 and 4 shown
 qualitatively the same features, and are not shown here. 
 
 
-\subsection{Measurement of the no-response area between two neighboring pixels}
+\subsection{Measurement of the ``no-response'' area between two neighboring pixels}
+\label{sec:HPK_50D_gap}
 
-
-In order to precisely measure the no-response area between two neighboring
-pixels, a large statistics sample of about 350,000 events was collected with the
-HPK 50D-PIX sensor mounted on a 2-channel KU board. Such a large data sample
-allowed us to perform a detailed scan in the area between the two pixels as shown in
-Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. In order to estimate the area with no
-response between the pixels, the efficiency curves of the two neighboring pixels
-are fitted with an S-curve function of the form $y=p_1\times
+In order to precisely measure the width of the no-response area between two
+neighboring pixels, a large statistics sample of about 350,000 events was
+collected with the HPK 50D-PIX sensor mounted on a 2-channel KU board, and the
+bias voltage set to -300~V. Such a large data sample allowed us to perform a
+detailed scan in the area between the two pixels as shown in
+Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. In order to estimate the width of the
+no-response between the pixels, the efficiency curves of the two neighboring
+pixels are fitted with an S-curve function of the form $y=p_1\times
 \mathrm{erf}\left\{\pm(p_2-x)/p_3)\}+p_4$, where $\mathrm{erf}}$ is the error
 function, and $p_i$ are floated in the fit. We define the width of the
 ``no-response'' area as the distance between the half-maxima of the two fitted
@@ -420,7 +420,7 @@ We compare the width of the no-response area of the CNM and HPK sensors in
 Fig.~\ref{fig:UCSC_HPK50C_CNM_ZoomeffXY}. Both sensors in this comparison were
 mounted on 4-channel UCSC boards, and both boards were tested in the beam
 simultaneously. The HPK 50C-PIX sensor was operated at -450~V, and CNM W9HG11
-sensor at -180~V. While the statistics in this data sample was significantly
+sensor at -180~V. While the statistics in this data sample is significantly
 lower than that shown in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}, we measure the
 no-response width to be around 110~$\mu$m on the HPK 50C-PIX, which is
 compatible with the HPK 50D-PIX sensor. The measurement of the no-response width
@@ -440,8 +440,10 @@ CNM W9HG11 have an uncertainty of 10~$\mu$m.
 
 \subsection{Study of the uniformity of the LGAD sensors}
 
-
-
+We studied the response uniformity of the HPK 50D-PIX sensor mounted on the
+4-channel FNAL board, and CNM CNM W9HG11 mounted on the 4-channel UCSC board.
+The HPK sensor was biased to -300~V, and CNM sensor was biased to -180~V. Both
+sensors were operated at the room temperature.
 
 The measurements of the particle detection efficiency performed with the FNAL
 board are shown in Fig.~\ref{fig:FNAL_HPK50_effXY}. Efficiency is defined as the
@@ -499,7 +501,7 @@ un-metallized areas.
 
 The measurement of the time resolution across the sensor is shown in
 Fig.~\ref{fig:FNAL_HPK50_SigmaTXY}. The $\Delta t$ distribution between LGAD
-sensor and the Photek 240 MCP-PMT sensor is fitted with a Gaus function, and its
+sensor and the Photek 240 MCP-PMT sensor is fitted with a Gaussian function, and its
 spread $\sigma$ is referred to in the following as the time resolution. We
 observe a uniform time resolution around 40~ps across the whole sensor area. 
 
@@ -519,12 +521,21 @@ observe a uniform time resolution around 40~ps across the whole sensor area.
 
 Studies of the dependence of the timing sensors characteristics on the sensor
 doping were performed by comparing the 50~$\mu$m PIX sensors of different gain
-splits. All measurements were performed using 2-channel KU readout board. 
+splits. In order to reduce the impact of the variations between different
+readout boards, all measurements presented in this section were performed using
+only 2-channel KU readout boards. Four readout boards were prepared, each with
+an HPK sensor mounted on it, and tested in the beam. Data taken with the HPK
+50D-PIX is the same as that presented in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY},
+which is the largest data sample collected during this test beam campaign.
+Therefore, the statistical uncertainties in the measurements of the HPK 50A-,
+B-, and C-PIX sensors are larger than those of 50D-PIX.
+
+
 
 \begin{figure}[htbp] 
 \centering
-\includegraphics[width=0.9\textwidth]{figs/KUBoard_HPK50ABCD/KUBoard_50ABCD_TimeResolution.pdf} 
-\caption{Time resolution on KU board with 50A, B, C, D } 
+\includegraphics[width=0.9\textwidth]{figs/KUBoard_HPK50ABCD/KUBoard_50ABCD_MPV.pdf} 
+\caption{MPV on KU board with 50A, B, C, D } 
 \label{fig:Sensors} 
 \end{figure} 
 
@@ -537,10 +548,11 @@ splits. All measurements were performed using 2-channel KU readout board.
 
 \begin{figure}[htbp] 
 \centering
-\includegraphics[width=0.9\textwidth]{figs/KUBoard_HPK50ABCD/KUBoard_50ABCD_MPV.pdf} 
-\caption{MPV on KU board with 50A, B, C, D } 
+\includegraphics[width=0.9\textwidth]{figs/KUBoard_HPK50ABCD/KUBoard_50ABCD_TimeResolution.pdf} 
+\caption{Time resolution on KU board with 50A, B, C, D } 
 \label{fig:Sensors} 
 \end{figure} 
+
 
 
 

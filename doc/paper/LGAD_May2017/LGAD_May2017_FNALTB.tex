@@ -439,6 +439,7 @@ CNM W9HG11 have an uncertainty of 10~$\mu$m.
 
 
 \subsection{Study of the uniformity of the LGAD sensors}
+\label{sec:HPK_CNM_uniformity}
 
 We studied the response uniformity of the HPK 50D-PIX sensor mounted on the
 4-channel FNAL board, and CNM CNM W9HG11 mounted on the 4-channel UCSC board.
@@ -528,15 +529,28 @@ an HPK sensor mounted on it, and tested in the beam. Data taken with the HPK
 50D-PIX is the same as that presented in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY},
 which is the largest data sample collected during this test beam campaign.
 Therefore, the statistical uncertainties in the measurements of the HPK 50A-,
-B-, and C-PIX sensors are larger than those of 50D-PIX.
+B-, and C-PIX sensors are larger than those of 50D-PIX. In the studies presented
+in this section sensors were operated at the room temperature, and their bias
+voltages were set to the following values: HPK 50A-PIX was operated at -630~V,
+50B-PIX at -550~V, HPK 50C-PIX at -400~V, and 50D-PIX at -300~V. 
 
-
+The distribution of MPV of signal amplitudes across the sensor area is shown in
+Fig.~\ref{fig:KUBoard_50ABCD_MPV}, where the MPV is extracted as described in
+Sec.~\ref{sec:HPK_CNM_uniformity}. Comparing the signal amplitudes between the
+two pixels one observes that the gain varies between the two channels. However,
+comparing the MPV distribution of the HPK 50D-PIX sensors shown in
+Fig.~\ref{fig:KUBoard_50ABCD_MPV} with the one shown in
+Fig.~\ref{fig:FNAL_HPK50_MPVXY} it is clear that the difference in the gain
+observed in these two channels are not due to the variations in the sensor gain.
+These differences in the signal size between two channels on the KU board are
+attributed to imperfections in the manufacturing process of the custom-designed
+pre-amplifiers used in this boards.
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.9\textwidth]{figs/KUBoard_HPK50ABCD/KUBoard_50ABCD_MPV.pdf} 
-\caption{MPV on KU board with 50A, B, C, D } 
-\label{fig:Sensors} 
+\caption{Signal amplitude MPV measurement across the X-axis of the HPK 50A-, 50B-, 50C-, and 50D-PIX sensors mounted on the KU board. The scan of pixels 1 and 2 along the X-axis, and pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\label{fig:KUBoard_50ABCD_MPV} 
 \end{figure} 
 
 \begin{figure}[htbp] 

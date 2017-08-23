@@ -358,6 +358,16 @@ int main( int argc, char** argv)
   // //------------------------
   // //Runs 838,839,842 UCSC board: HPK50C-PIX (ch1-ch4)  , CNM W9HG11 (ch10-ch13)
   // //------------------------
+  // //Efficiency 
+  // myPulse->MakeEfficiencyVsXY(1, 200, 0.02, 11200., 13600., 19100, 21900, 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(2, 200, 0.02, 11300., 13900., 22100, 24800, 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(3, 200, 0.02, 13900., 16600., 22100, 24800, 0.16, 0.32);
+  // myPulse->MakeEfficiencyVsXY(4, 200, 0.02, 13800., 16700., 19100, 21900, 0.16, 0.32);
+  myPulse->MakeEfficiencyVsXY(10, 200, 0.02, 12100., 14900., 19600, 22400., 0.16, 0.32);
+  myPulse->MakeEfficiencyVsXY(11, 200, 0.02, 12200., 14500., 23000, 24500., 0.16, 0.32);
+  myPulse->MakeEfficiencyVsXY(12, 200, 0.02, 15100., 17900., 22900, 25400., 0.16, 0.32);
+  myPulse->MakeEfficiencyVsXY(13, 200, 0.02, 15200., 18000., 19900, 22400., 0.16, 0.32);
+
   // //Efficiency (use 20 micron bins)
   // myPulse->MakeEfficiencyVsXY(1, 1000, 0.02, 11200., 13600., 19100, 21900, 0.16, 0.32);
   // myPulse->MakeEfficiencyVsXY(2, 1000, 0.02, 11300., 13900., 22100, 24800, 0.16, 0.32);

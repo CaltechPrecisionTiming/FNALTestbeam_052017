@@ -751,8 +751,8 @@ void FNAL_TimeResolution_vs_X_HPK50CVs80C()
    legend->SetTextSize(0.035);
    legend->SetBorderSize(1);
    legend->SetFillStyle(1001);
-   legend->AddEntry( gre1, "HPK 80C-PIX LGAD","LP");
-   legend->AddEntry( gre2, "HPK 50C-PIX LGAD","LP");
+   legend->AddEntry( gre1, "HPK 50C-PIX LGAD","LP");
+   legend->AddEntry( gre2, "HPK 80C-PIX LGAD","LP");
    legend->Draw();
 
    c1->SaveAs("FNAL_TimeResolution_vs_X_HPK50CVs80C.pdf");

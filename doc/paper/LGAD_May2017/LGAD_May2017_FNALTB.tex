@@ -520,19 +520,20 @@ observe a uniform time resolution around 40~ps across the whole sensor area.
 
 \subsection{Comparison of HPK doping profiles}
 
-Studies of the dependence of the timing sensors characteristics on the sensor
-doping were performed by comparing the 50~$\mu$m PIX sensors of different gain
-splits. In order to reduce the impact of the variations between different
-readout boards, all measurements presented in this section were performed using
-only 2-channel KU readout boards. Four readout boards were prepared, each with
-an HPK sensor mounted on it, and tested in the beam. Data taken with the HPK
-50D-PIX is the same as that presented in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY},
-which is the largest data sample collected during this test beam campaign.
-Therefore, the statistical uncertainties in the measurements of the HPK 50A-,
-B-, and C-PIX sensors are larger than those of 50D-PIX. In the studies presented
-in this section sensors were operated at the room temperature, and their bias
-voltages were set to the following values: HPK 50A-PIX was operated at -630~V,
-50B-PIX at -550~V, HPK 50C-PIX at -400~V, and 50D-PIX at -300~V. 
+Studies of the dependence of the sensors' characteristics on the doping
+concentrations were performed by comparing the 50~$\mu$m HPK PIX sensors of
+different gain splits. In order to reduce the impact of the variations between
+different readout boards, all measurements presented in this section were
+performed using only 2-channel KU readout boards. Four readout boards were
+prepared, each with an HPK sensor mounted on it, and tested in the beam. Data
+taken with the HPK 50D-PIX is the same as that presented in
+Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}, which is the largest data sample collected
+during this test beam campaign. Therefore, the statistical uncertainties in the
+measurements of the HPK 50A-, B-, and C-PIX sensors are larger than those of
+50D-PIX. In the studies presented in this section sensors were operated at the
+room temperature, and their bias voltages were set to the following values: HPK
+50A-PIX was operated at -630~V, 50B-PIX at -550~V, HPK 50C-PIX at -400~V, and
+50D-PIX at -300~V. 
 
 The distribution of MPV of signal amplitudes across the sensor area is shown in
 Fig.~\ref{fig:KUBoard_50ABCD_MPV}, where the MPV is extracted as described in
@@ -544,7 +545,8 @@ Fig.~\ref{fig:FNAL_HPK50_MPVXY} it is clear that the difference in the gain
 observed in these two channels are not due to the variations in the sensor gain.
 These differences in the signal size between two channels on the KU board are
 attributed to imperfections in the manufacturing process of the custom-designed
-pre-amplifiers used in this boards.
+pre-amplifiers used in these boards. Signal MPV within a pixel is highly uniform
+for all tested samples. 
 
 \begin{figure}[htbp] 
 \centering
@@ -553,31 +555,49 @@ pre-amplifiers used in this boards.
 \label{fig:KUBoard_50ABCD_MPV} 
 \end{figure} 
 
+The measurement of the time difference between the Photek 240 MCP-PMT time
+stamp, and that of the HPK sensors is shown in
+Fig.~\ref{fig:KUBoard_50ABCD_MeanTime}. As was shown in
+Fig.~\ref{fig:FNAL_HPK50_DTXY}, the $\Delta t$ distribution has a distinct shape
+where the area under the metallization shows a shift of about $20$--$30$~ps with
+respect to non-metallized area. The feature is present in all 4 types of the HPK
+PIX sensors, and within the available statistics the feautres appear to have
+consistent shape and magnitude. 
+
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.9\textwidth]{figs/KUBoard_HPK50ABCD/KUBoard_50ABCD_MeanTime.pdf} 
-\caption{DeltaT on KU board with 50A, B, C, D } 
-\label{fig:Sensors} 
+\caption{$\Delta t$ measurement across the X-axis of the HPK 50A-, 50B-, 50C-, and 50D-PIX sensors mounted on the KU board. The scan of pixels 1 and 2 along the X-axis, and pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\label{fig:KUBoard_50ABCD_MeanTime} 
 \end{figure} 
+
+The measurements of the time resolution across the sensors is shown in
+Fig.~\ref{fig:KUBoard_50ABCD_TimeResolution}. We observe a uniform time
+resolution around 40~ps across the whole sensor area. \textbf {FIXME explanation for the difference in resolution on two pixels. I suspect this is due to difference in gain in two pre-amps on KU board}.
+
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.9\textwidth]{figs/KUBoard_HPK50ABCD/KUBoard_50ABCD_TimeResolution.pdf} 
-\caption{Time resolution on KU board with 50A, B, C, D } 
-\label{fig:Sensors} 
+\caption{Time resolution measurement across the X-axis of the HPK 50A-, 50B-, 50C-, and 50D-PIX sensors mounted on the KU board. The scan of pixels 1 and 2 along the X-axis, and pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\label{fig:KUBoard_50ABCD_TimeResolution} 
 \end{figure} 
-
-
 
 
 \subsection{Comparison of HPK 50 $\mu$m with 80 $\mu$m}
 \label{sec:HPK50vs80}
 
+The comparison between the 50 and 80 $\mu$m HPK sensors in terms of their time
+resolution uniformity is shown in Fig.~\ref{fig:HPK50CVs80C}. We compared two
+HPK sensors with the same dopant concentration from the C-PIX series: HPK
+50C-PIX and HPK 80C-PIX. The HPK 80C-PIX sensor was operated at -610~V bias
+voltage, and the 50C-PIX 
+
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.7\textwidth]{figs/FNAL_TimeResolution_vs_X_HPK50CVs80C.pdf} 
 \caption{Comparison of time resolution in FNAL 80C versus KU 50C sensors } 
-\label{fig:Sensors} 
+\label{fig:HPK50CVs80C} 
 \end{figure} 
 
 

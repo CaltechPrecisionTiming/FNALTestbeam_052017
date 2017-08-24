@@ -44,6 +44,7 @@
 \usepackage{hyperref}
 \usepackage[percent]{overpic}
 \usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+%\usepackage{cleveref}
 
 %% The amsthm package provides extended theorem environments
 %% \usepackage{amsthm}
@@ -309,9 +310,11 @@ sensors are circular pads with an active area of 0.8~mm$^2$.
 
 \begin{figure}[!htbp] 
 \centering
-\includegraphics[width=0.3\textwidth]{figs/HPK-50DPix.pdf} 
-\includegraphics[width=0.41\textwidth]{figs/HPK-50D.pdf} 
-\caption{A picture of HPK 50D-PIX 2x2 array sensor (top), and 50D-GR single sensor (bottom). The pixel labels overlaid on top of the left image are used in the text to identify pixels on the array. Signals from the pixels are read out by the micro-bonds that are connected to the signal pads on the sensors. Signal pads can be seen on the left photograph as four small circles in the center of each pixel. } 
+\includegraphics[width=0.3\textwidth]{figs/HPK-50D-PIX.pdf} 
+\includegraphics[width=0.34\textwidth]{figs/CNM-W9HG11.pdf} \\
+\includegraphics[width=0.32\textwidth]{figs/HPK-50D-GR.pdf} 
+\includegraphics[width=0.32\textwidth]{figs/CNM-singlechannel.pdf} 
+\caption{A picture of the HPK 50D-PIX 2x2 array sensor (top left), the CNM-W9HG11 2x2 array (top left), 50D-GR single sensor (bottom left), and CNM W11LGA35 single sensor (bottom right). The pixel labels overlaid on top of the array sensors are used in the text to identify pixels on the array. Signals from the pixels are read out by the micro-bonds that are connected to the signal pads on the sensors. \textbf {FIXME better quality images for CNM sensors} } 
 \label{fig:HPK_Sensors} 
 \end{figure} 
 
@@ -402,7 +405,7 @@ detailed scan in the area between the two pixels as shown in
 Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. In order to estimate the width of the
 no-response between the pixels, the efficiency curves of the two neighboring
 pixels are fitted with an S-curve function of the form $y=p_1\times
-\mathrm{erf}\left\{\pm(p_2-x)/p_3)\}+p_4$, where $\mathrm{erf}}$ is the error
+\mathrm{erf}\left\{\pm(p_2-x)/p_3)\right\}+p_4$, where $\mathrm{erf}$ is the error
 function, and $p_i$ are floated in the fit. We define the width of the
 ``no-response'' area as the distance between the half-maxima of the two fitted
 S-curves, as shown in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. We measure the width
@@ -446,71 +449,75 @@ We studied the response uniformity of the HPK 50D-PIX sensor mounted on the
 The HPK sensor was biased to -300~V, and CNM sensor was biased to -180~V. Both
 sensors were operated at the room temperature.
 
-The measurements of the particle detection efficiency performed with the FNAL
-board are shown in Fig.~\ref{fig:FNAL_HPK50_effXY}. Efficiency is defined as the
-ratio of events that register a signal above the noise level in the LGAD sensor
-to those that contain a track identified by the pixel telescope pointing at the
-LGAD sensor. We observe a flat 100\% efficiency across the whole sensor area.
-The left edge of the pixel 1 in Fig.~\ref{fig:FNAL_HPK50_effXY} is outside the
-acceptance of the pixel telescope, hence the efficiency curve does not fully
-cover its surface. A clear drop in efficiency is observed in the transition
-region between the two pixels. 
+The measurements of the particle detection efficiency are shown in
+Fig.~\ref{fig:FNAL_HPK50_effXY}. Efficiency is defined as the ratio of events
+that register a signal above the noise level in the LGAD sensor to those that
+contain a track identified by the pixel telescope pointing at the LGAD sensor.
+We observe a flat 100\% efficiency across the whole sensor area. The left edge
+in the X-axis scan of pixel 1 on HPK 50D-PIX sensor in
+Fig.~\ref{fig:FNAL_HPK50_effXY} is outside the acceptance of the pixel
+telescope, hence the efficiency curve does not fully cover its surface. A clear
+drop in efficiency is observed in the transition region between the two pixels,
+and the width of the no-response area is studied in detail in
+Sec.~\ref{sec:HPK_50D_gap}.
 
 \begin{figure}[htbp] 
 \centering
-\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/Eff_vs_X_Ch4_5.pdf} 
-\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/Eff_vs_Y_Ch3_4.pdf} 
-\caption{Efficiency measurement across the X- and Y-axes of the HPK 50D-PIX sensor mounted on the FNAL board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\includegraphics[width=0.49\textwidth]{figs/HPK50DVsCNM_Efficiency_vs_X.pdf} 
+\includegraphics[width=0.49\textwidth]{figs/HPK50DVsCNM_Efficiency_vs_Y.pdf} 
+\caption{Efficiency measurement across the X-axis (left) and Y-axes (right) of the HPK 50D-PIX sensor mounted on the FNAL board, and the CNM W9HG11 on UCSC board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:FNAL_HPK50_effXY} 
 \end{figure} 
 
 
-
 An important characteristic of the sensors is the uniformity of the signal size
 across the sensor surface, which directly impacts the timing characteristics of
-the sensor. The distribution of the LGAD signal amplitudes is fit with a Landau
-distribution. The post-fit Most Probable Value (MPV) is
-plotted in Fig.~\ref{fig:FNAL_HPK50_MPVXY}. A flat response with a uniform
-signal size is observed over the whole sensor area.
+the sensor. We use the signal amplitude as the metric to characterize the signal
+size uniformity. The distribution of the LGAD signal amplitudes is fit with a
+Landau distribution. The post-fit Most Probable Value (MPV) is plotted in
+Fig.~\ref{fig:FNAL_HPK50_MPVXY}. A flat response with a uniform signal size is
+observed over the whole sensor area.
 
 \begin{figure}[htbp] 
 \centering
-\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/MPV_vs_X_Ch4_5.pdf} 
-\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/MPV_vs_Y_Ch3_4.pdf} 
-\caption{Signal amplitude MPV measurement across the X- and Y-axes of the HPK 50D-PIX sensor mounted on the FNAL board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\includegraphics[width=0.49\textwidth]{figs/HPK50DVsCNM_MPV_vs_X.pdf} 
+\includegraphics[width=0.49\textwidth]{figs/HPK50DVsCNM_MPV_vs_Y.pdf} 
+\caption{Signal amplitude MPV measurement across the X-axis (left) and Y-axes (right) of the HPK 50D-PIX sensor mounted on the FNAL board, and the CNM W9HG11 on UCSC board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:FNAL_HPK50_MPVXY} 
 \end{figure} 
 
 
-The measurement of the time difference between the Photek 240 MCP-PMT time
-stamp, and that of the LGAD sensors is shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}.
-The micro-bonding scheme of the HPK PIX $2\times 2$ sensors arrays is shown in
-Fig.~\ref{fig:HPK_Sensors}. The $\Delta t = t_{1}-t_{0}$ distribution has a
-distinct shape where the area under the metallization on top of the sensor -- the
-gray area in the center of the image -- shows a shift of about $20$--$30$~ps with
-respect to non-metallized area. A possible explanation for this small effect is
-an observed slight difference in the rise time of pulse from the metallized and
-un-metallized areas. 
+The measurement of the time difference $\Delta t = t_{1}-t_{0}$ between the
+Photek 240 MCP-PMT time stamp ($t_0$), and that of the LGAD sensors ($t_1$) is
+shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}. The micro-bonding scheme of the HPK PIX
+$2\times 2$ sensors arrays is shown in Fig.~\ref{fig:HPK_Sensors}, and \textbf
+{FIXME NEED to add CNM array image similar to HPK one}. The $\Delta t$
+distribution on the HPK sensor has a distinct shape where the area under the
+metallization on top of the sensor -- the gray area in the center of the image
+-- shows a shift of about $20$--$30$~ps with respect to non-metallized area. A
+possible explanation for this small effect is an observed slight difference in
+the rise time of pulse from the metallized and un-metallized areas. \textbf {FIXME CNM has some features too, need an image of the CNM metalization area to check.}
 
 \begin{figure}[htbp] 
 \centering
-\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/MeanTime_vs_X_Ch4_5.pdf} 
-\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/MeanTime_vs_Y_Ch3_4.pdf} 
+\includegraphics[width=0.48\textwidth]{figs/HPK50DVsCNM_MeanTime_vs_X.pdf}
+\includegraphics[width=0.48\textwidth]{figs/HPK50DVsCNM_MeanTime_vs_Y.pdf}
 \caption{$\Delta t$ measurement across the X- and Y-axes of the HPK 50D-PIX sensor mounted on the FNAL board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:FNAL_HPK50_DTXY} 
 \end{figure} 
 
-The measurement of the time resolution across the sensor is shown in
+The measurement of the time resolution across the sensor surface is shown in
 Fig.~\ref{fig:FNAL_HPK50_SigmaTXY}. The $\Delta t$ distribution between LGAD
-sensor and the Photek 240 MCP-PMT sensor is fitted with a Gaussian function, and its
-spread $\sigma$ is referred to in the following as the time resolution. We
-observe a uniform time resolution around 40~ps across the whole sensor area. 
+sensor and the Photek 240 MCP-PMT sensor is fitted with a Gaussian function, and
+the spread $\sigma$ of the fitted function is referred to in the following as
+the time resolution. We observe a uniform time resolution around 40~ps across
+the whole surface area for HPK, and around 55~ps for CNM sensors.
 
 \begin{figure}[htbp] 
 \centering
-\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/TimeResolution_vs_X_Ch4_5.pdf} 
-\includegraphics[width=0.48\textwidth]{figs/FNALBoard_HPK50DPix_Run847-891/TimeResolution_vs_Y_Ch3_4.pdf} 
-\caption{Time resolution measurement across the X- and Y-axes of the HPK 50D-PIX sensor mounted on the FNAL board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+\includegraphics[width=0.48\textwidth]{figs/HPK50DVsCNM_TimeResolution_vs_X.pdf} 
+\includegraphics[width=0.48\textwidth]{figs/HPK50DVsCNM_TimeResolution_vs_Y.pdf} 
+\caption{Time resolution measurement across the X-axis (left) and Y-axes (right) of the HPK 50D-PIX sensor mounted on the FNAL board, and the CNM W9HG11 on UCSC board. The scan of pixels 1 and 2 along the X-axis, and pixels 1 and 3 along the Y-axis is shown, and pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:FNAL_HPK50_SigmaTXY} 
 \end{figure} 
 
@@ -573,7 +580,9 @@ consistent shape and magnitude.
 
 The measurements of the time resolution across the sensors is shown in
 Fig.~\ref{fig:KUBoard_50ABCD_TimeResolution}. We observe a uniform time
-resolution around 40~ps across the whole sensor area. \textbf {FIXME explanation for the difference in resolution on two pixels. I suspect this is due to difference in gain in two pre-amps on KU board}.
+resolution around 40~ps across the whole sensor area. \textbf {FIXME explanation
+for the difference in resolution on two pixels of A and C. I suspect this is due
+to difference in gain in two pre-amps on KU board}.
 
 
 \begin{figure}[htbp] 
@@ -607,39 +616,105 @@ across the sensor area around 45-50~ps.
 \subsection{Temperature dependence of the LGAD sensors}
 \label{sec:temp_dependance}
 
+In order to maintain their optimal performance at the highest fluences
+envisioned at the HL-LHC, the UFSD sensors will be cooled to temperatures below
+$-20^{\circ}$C degrees. Operation at such low temperatures will allow to
+significantly reduce the leakage current, and additionally improve the timing
+characteristics of the sensors. In this section we describe the measurements of
+the UFSD sensors performed at $-10$ and $-20^{\circ}$C degrees, and compare the
+results to those at the room temperature. These measurements were performed with
+the HPK 50D-PIX sensors mounted on the FNAL 4-channel board. In order to
+maintain all operating conditions the same, and only change the sensor
+temperature, the sensor was biased at -250~V in these measurements. 
+
+The distribution of the signal MPV across the sensor surface is shown in
+Fig.~\ref{fig:MPV_vs_X_HPK50D_TemperatureDependance}. We observe that the signal
+MPV more than doubles when the temperature is reduced from $+20^{\circ}$C to
+$-20^{\circ}$C. While the MPV distributions at room temperature across the two
+channels are within 2\% of each other, at lower temperatures one of the pixels
+shows about 5\% difference of the MPV with respect to its neighbor. 
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.9\textwidth]{figs/FNAL_MPV_vs_X_HPK50D_TemperatureDependance.pdf} 
+\caption{Temperature dependance of the signal amplitude MPV uniformity across
+the X-axis of the HPK 50D-PIX sensors mounted on the FNAL board. The scan of
+pixels 1 and 2 along the X-axis is shown, and pixel numberng scheme is defined
+in Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at -250~V.} 
+\label{fig:MPV_vs_X_HPK50D_TemperatureDependance} 
+\end{figure} 
+
+The distribution of the $\Delta t$ between the Photek 240 MCP-PMT and the HPK
+50D-PIX sensor is shown in
+Fig.~\ref{fig:MeanTime_vs_X_HPK50D_TemperatureDependance}. We observe no
+significant changes in the behavior of the $\Delta t$ as the temperature varies. 
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.9\textwidth]{figs/FNAL_MeanTime_vs_X_HPK50D_TemperatureDependance.pdf} 
+\caption{Temperature dependance of the $\Delta t$ uniformity across
+the X-axis of the HPK 50D-PIX sensors mounted on the FNAL board. The scan of
+pixels 1 and 2 along the X-axis is shown, and pixel numberng scheme is defined
+in Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at -250~V.} 
+\label{fig:MeanTime_vs_X_HPK50D_TemperatureDependance} 
+\end{figure} 
+
+The distribution of the time resolution measured with the HPK 50D-PIX sensor is
+shown in Fig.~\ref{fig:TimeResolution_vs_X_HPK50D_TemperatureDependance}. The
+measured noise was observed to stay constant at 1.2~mV for both $+20$ and
+$-20^{\circ}$C. We observe a significant improvement in the time resolution as
+the temperature is lowered from $+20^{\circ}$C to $-20^{\circ}$C degrees, due to
+the improved signal-to-noise ratio. Time resolution measured was measured to
+improve from around 55-60~ps at the room temperature, down to 35-40~ps at
+$-20^{\circ}$C.
 
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.9\textwidth]{figs/FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance.pdf} 
-\caption{Time resolution on FNAL board with 50D at +20, -10, -20C} 
-\label{fig:Sensors} 
-\end{figure} 
-
-\begin{figure}[htbp] 
-\centering
-\includegraphics[width=0.9\textwidth]{figs/FNAL_MeanTime_vs_X_HPK50D_TemperatureDependance.pdf} 
-\caption{DeltaT on FNAL board with 50D at +20, -10, -20C} 
-\label{fig:Sensors} 
+\caption{Temperature dependance of the time resolution uniformity across the
+X-axis of the HPK 50D-PIX sensors mounted on the FNAL board. The scan of pixels
+1 and 2 along the X-axis is shown, and pixel numberng scheme is defined in
+Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at -250~V.} 
+\label{fig:TimeResolution_vs_X_HPK50D_TemperatureDependance} 
 \end{figure} 
 
 
-\begin{figure}[htbp] 
-\centering
-\includegraphics[width=0.9\textwidth]{figs/FNAL_MPV_vs_X_HPK50D_TemperatureDependance.pdf} 
-\caption{MPV on FNAL board with 50D at +20, -10, -20C} 
-\label{fig:Sensors} 
-\end{figure} 
 
-\subsection{Radiation tolerance of the LGADs up to 6$\times 10^{14}$}
+
+\subsection{Radiation tolerance of the LGADs}
 \label{sec:rad_tolerance}
+
+In this section we present the studies of the irradiated HPK and CNM sensors,
+which were exposed to neutron irradiation at the Ljubljana TRIGA reactor. The
+neutron spectrum and flux are well known and the fluence is quoted in 1 MeV
+equivalent neutrons per cm$^2$ (n$_{\mathrm{eq.}}$/cm$^2$ or shortened
+n/cm$^2$). After $6\times 10^{14}$~n/cm$^2$ irradiation, the devices were
+annealed for 80 min at 60$^{\circ}$C. Afterward the devices were kept in
+$-20^{\circ}$C degree storage.
+
+The two-dimensional distribution of the signal amplitudes on the surface of the
+irradiated sensors are shown in Figs.~\ref{fig:CNM_irradiated_amp_Map} and
+\ref{fig:HPK_irradiated_amp_Map}. From the comparison with the image of the CNM
+sensor shown in Fig.~\ref{fig:HPK_Sensors} and the distribution in
+Fig.~\ref{fig:CNM_irradiated_amp_Map}, it is clear that two distinct regions can
+be identified on the sensor based on the signal amplitude: the region under the
+aluminum metalization on the periphery of the sensor, and the region without
+aluminum metalization in the center. The distribution on the right of
+Fig.~\ref{fig:CNM_irradiated_amp_Map} shows that the amplitude under the
+aluminum is about 2.5 times larger than that in the center. The amplitude scan
+of the irradiated HPK 50D sensor is shown in
+Fig.~\ref{fig:HPK_irradiated_amp_Map}, and a unifortm amplitude across the
+sensor sufrace is observed. In contrast to the CNM sensor, the HPK sensor does
+not contain any portions that have active area covered with metalization.
+
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/CNM_irradiated_amp_Map.pdf} \hfill
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/CNM_irradiated_amp_1D.pdf} 
 \caption{(Left) The map of the amplitude distribution on the irradiated CNM W11LGA35 sensor across X and Y coordinates. Two distinct regions on the sensor surface can be identified according to the amplitude distribution: the center of the sensor (area within the red circle), and the periphery of the sensor (area between the black circle and black square). (Right) Amplitude distribution in the two areas of the irradiated CNM W11LGA35 sensor.} 
-\label{fig:Sensors} 
+\label{fig:CNM_irradiated_amp_Map} 
 \end{figure} 
 
 \begin{figure}[htbp] 
@@ -647,7 +722,7 @@ across the sensor area around 45-50~ps.
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/HPK_irradiated_amp_Map.pdf} \hfill
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/HPK_irradiated_amp_1D.pdf} 
 \caption{(Left) The map of the amplitude distribution on the irradiated HPK 50D sensor across X and Y coordinates. Two distinct regions on the sensor surface can be identified according to the amplitude distribution: the center of the sensor (area within the red circle), and the periphery of the sensor (area between the black circle and black square). (Right) Amplitude distribution in the two areas of the irradiated HPK 50D sensor.} 
-\label{fig:Sensors} 
+\label{fig:HPK_irradiated_amp_Map} 
 \end{figure} 
 
 \begin{figure}[htbp] 
@@ -752,13 +827,13 @@ Tab.~\ref{tab:DataConditions}.
   \begin{tabular}{ |c | c | c| c | }
     \hline
     Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
-    HPK 50A-PIX & {\textbf{-630 V} & -- & -- \\ \hline
-    HPK 50B-PIX & \begin{tabular}{@{}c@{}}{\textbf{-450 V, -550V, -600 V }\\ \underline{-510 V} \\ \textit{-510V, -570 V}\end{tabular}  & -- & -- \\ \hline
-    HPK 50C-PIX & {\textbf{-400 V} & {\textbf{-410 V, -470 V} & -- \\ \hline
-    HPK 50D-PIX & \begin{tabular}{@{}c@{}}{\textbf{-100 V, -200V, -250 V,} \\ \textbf{-300 V, -325 V} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}{\textbf{-250 V, -300V,} \\ \underline{-210 V, -250 V} \\ \textit{-250 V, -280 V}\end{tabular} {\color{red}} \\ \hline
-    CNM W9HG11 & -- & {\textbf{-140 V, -160V} & -- \\ \hline
-    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & {\textit{-600 V, -635V} & -- \\ \hline
-    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & {\textit{-400 V, -420V} \\ \hline
+    HPK 50A-PIX & \textbf{-630 V} & -- & -- \\ \hline
+    HPK 50B-PIX & \begin{tabular}{@{}c@{}}\textbf{-450 V, -550V, -600 V }\\ \underline{-510 V} \\ \textit{-510V, -570 V}\end{tabular}  & -- & -- \\ \hline
+    HPK 50C-PIX & \textbf{-400 V} & \textbf{-410 V, -470 V} & -- \\ \hline
+    HPK 50D-PIX & \begin{tabular}{@{}c@{}}\textbf{-100 V, -200V, -250 V,} \\ \textbf{-300 V, -325 V} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}\textbf{-250 V, -300V,} \\ \underline{-210 V, -250 V} \\ \textit{-250 V, -280 V}\end{tabular} {\color{red}} \\ \hline
+    CNM W9HG11 & -- & \textbf{-140 V, -160V} & -- \\ \hline
+    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & \textit{-600 V, -635V} & -- \\ \hline
+    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & \textit{-400 V, -420V} \\ \hline
     \hline
   \end{tabular}
 \caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  

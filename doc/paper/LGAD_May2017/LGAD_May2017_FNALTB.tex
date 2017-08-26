@@ -691,7 +691,7 @@ neutron spectrum and flux are well known and the fluence is quoted in 1 MeV
 equivalent neutrons per cm$^2$ (n$_{\mathrm{eq.}}$/cm$^2$ or shortened
 n/cm$^2$). After $6\times 10^{14}$~n/cm$^2$ irradiation, the devices were
 annealed for 80 min at 60$^{\circ}$C. Afterward the devices were kept in
-$-20^{\circ}$C degree storage.
+$-20^{\circ}$C degree during storage, transportation, and test beam experiments.
 
 The two-dimensional distribution of the signal amplitudes on the surface of the
 irradiated sensors are shown in Figs.~\ref{fig:CNM_irradiated_amp_Map} and
@@ -703,43 +703,68 @@ aluminum metalization on the periphery of the sensor, and the region without
 aluminum metalization in the center. The distribution on the right of
 Fig.~\ref{fig:CNM_irradiated_amp_Map} shows that the amplitude under the
 aluminum is about 2.5 times larger than that in the center. The amplitude scan
-of the irradiated HPK 50D sensor is shown in
+of the irradiated HPK 50D sensor is shown on the left in
 Fig.~\ref{fig:HPK_irradiated_amp_Map}, and a unifortm amplitude across the
-sensor sufrace is observed. In contrast to the CNM sensor, the HPK sensor does
-not contain any portions that have active area covered with metalization.
+sensor sufrace is observed, which can also be seen on the right of
+Fig.~\ref{fig:HPK_irradiated_amp_Map}. In contrast to the CNM sensor, the HPK
+sensor does not contain any portions that have active area covered with
+metalization.
 
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/CNM_irradiated_amp_Map.pdf} \hfill
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/CNM_irradiated_amp_1D.pdf} 
-\caption{(Left) The map of the amplitude distribution on the irradiated CNM W11LGA35 sensor across X and Y coordinates. Two distinct regions on the sensor surface can be identified according to the amplitude distribution: the center of the sensor (area within the red circle), and the periphery of the sensor (area between the black circle and black square). (Right) Amplitude distribution in the two areas of the irradiated CNM W11LGA35 sensor.} 
+\caption{(Left) The map of the amplitude distribution on the irradiated CNM W11LGA35 sensor across X and Y coordinates. Two distinct regions on the sensor surface can be identified according to the amplitude distribution: the center of the sensor (area within the red circle), and the periphery of the sensor (area between the black circle and black square). (Right) Amplitude distribution in the two areas of the irradiated CNM W11LGA35 sensor.  Sensor was irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
 \label{fig:CNM_irradiated_amp_Map} 
 \end{figure} 
+
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/HPK_irradiated_amp_Map.pdf} \hfill
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/HPK_irradiated_amp_1D.pdf} 
-\caption{(Left) The map of the amplitude distribution on the irradiated HPK 50D sensor across X and Y coordinates. Two distinct regions on the sensor surface can be identified according to the amplitude distribution: the center of the sensor (area within the red circle), and the periphery of the sensor (area between the black circle and black square). (Right) Amplitude distribution in the two areas of the irradiated HPK 50D sensor.} 
+\caption{(Left) The map of the amplitude distribution on the irradiated HPK 50D sensor across X and Y coordinates. Two distinct regions on the sensor surface can be identified according to the amplitude distribution: the center of the sensor (area within the red circle), and the periphery of the sensor (area between the black circle and black square). (Right) Amplitude distribution in the two areas of the irradiated HPK 50D sensor. Sensor was irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
 \label{fig:HPK_irradiated_amp_Map} 
 \end{figure} 
+
+Measurements of the particle detection efficiency are shown in
+Fig.~\ref{fig:IrradiatedSensorStudy_Efficiency}. These measurements were
+performed with the HPK sensor biased at -600~V, and the CNM sensor biased at
+-400~V. We observe a flat 100\% efficiency across the whole HPK sensor area, and
+the efficiency of the CNM sensor is also very close to 100\%. As with the
+pixelated array sensors, a clear drop in efficiency is observed near the edges
+of the active area. 
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.90\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_Efficiency_vs_X.pdf} 
 \includegraphics[width=0.90\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_Efficiency_vs_Y.pdf} 
-\caption{Efficiency vs X and Y on CNM and HPK irradiated} 
-\label{fig:Sensors} 
+\caption{Efficiency measurement across the X-axis (top) and Y-axes (bottom) of the HPK 50D and CNM W11LGA35 irradiated sensors. Both sensors were irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
+\label{fig:IrradiatedSensorStudy_Efficiency} 
 \end{figure} 
+
+The distribution of MPV of signal amplitudes across the sensor area is shown in
+Fig.~\ref{fig:IrradiatedSensorStudy_MPV}, where the MPV is extracted as
+described in Sec.~\ref{sec:HPK_CNM_uniformity}. Меаsurements were performed at
+two bias voltage values for both sensors: $-600$ and $-635$~V for HPK, and
+$-400$ and $-420$~V for CNM sensors.
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.90\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MPV_vs_X.pdf} 
 \includegraphics[width=0.90\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MPV_vs_Y.pdf} 
-\caption{MPV vs X and Y on CNM and HPK irradiated} 
-\label{fig:Sensors} 
+\caption{Signal amplitude MPV measurement across the X-axis (top) and Y-axes (bottom) of the HPK 50D and CNM W11LGA35 irradiated sensors. Both sensors were irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
+\label{fig:IrradiatedSensorStudy_MPV} 
 \end{figure}
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.9\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MeanTime_vs_X.pdf} 
+\includegraphics[width=0.9\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MeanTime_vs_Y.pdf} 
+\caption{DeltaT vs X and Y on CNM and HPK irradiated} 
+\label{fig:Sensors} 
+\end{figure} 
 
 
 \begin{figure}[htbp] 
@@ -750,13 +775,6 @@ not contain any portions that have active area covered with metalization.
 \label{fig:Sensors} 
 \end{figure} 
 
-\begin{figure}[htbp] 
-\centering
-\includegraphics[width=0.9\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MeanTime_vs_X.pdf} 
-\includegraphics[width=0.9\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MeanTime_vs_Y.pdf} 
-\caption{DeltaT vs X and Y on CNM and HPK irradiated} 
-\label{fig:Sensors} 
-\end{figure} 
  
 
 \section{Conclusion}

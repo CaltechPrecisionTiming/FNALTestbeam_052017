@@ -452,8 +452,6 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    Graph_Graph_Graph30013001->SetDirectory(0);
    Graph_Graph_Graph30013001->SetStats(0);
 
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
    ci = TColor::GetColor("#000099");
    Graph_Graph_Graph30013001->SetLineColor(ci);
    Graph_Graph_Graph30013001->GetXaxis()->SetTitle("y-coordinate [mm]");
@@ -463,7 +461,7 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    Graph_Graph_Graph30013001->GetXaxis()->SetTitleSize(0.15);
    Graph_Graph_Graph30013001->GetXaxis()->SetTitleOffset(0.87);
    Graph_Graph_Graph30013001->GetXaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30013001->GetYaxis()->SetTitle("Time Resolution [ps]");
+   Graph_Graph_Graph30013001->GetYaxis()->SetTitle("MIP MPV [V]");
    Graph_Graph_Graph30013001->GetYaxis()->SetNdivisions(503);
    Graph_Graph_Graph30013001->GetYaxis()->SetLabelFont(42);
    Graph_Graph_Graph30013001->GetYaxis()->SetLabelOffset(0.006);
@@ -901,8 +899,6 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    Graph_Graph_Graph30013002->SetDirectory(0);
    Graph_Graph_Graph30013002->SetStats(0);
 
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
    ci = TColor::GetColor("#000099");
    Graph_Graph_Graph30013002->SetLineColor(ci);
    Graph_Graph_Graph30013002->GetXaxis()->SetTitle("y-coordinate [mm]");
@@ -912,7 +908,7 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    Graph_Graph_Graph30013002->GetXaxis()->SetTitleSize(0.15);
    Graph_Graph_Graph30013002->GetXaxis()->SetTitleOffset(0.87);
    Graph_Graph_Graph30013002->GetXaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30013002->GetYaxis()->SetTitle("Time Resolution [ps]");
+   Graph_Graph_Graph30013002->GetYaxis()->SetTitle("MIP MPV [V]");
    Graph_Graph_Graph30013002->GetYaxis()->SetNdivisions(503);
    Graph_Graph_Graph30013002->GetYaxis()->SetLabelFont(42);
    Graph_Graph_Graph30013002->GetYaxis()->SetLabelOffset(0.006);
@@ -1355,21 +1351,19 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    0,
    0};
 
-  TGraphErrors *gre = new TGraphErrors(100,Graph0_fx1003,Graph0_fy1003,Graph0_fex1003,Graph0_fey1003);
-   gre->SetName("Graph0");
-   gre->SetTitle("");
-   gre->SetFillColor(1);
-   gre->SetLineWidth(2);
-
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
-   ci = TColor::GetColor("#0000ff");
-   gre->SetLineColor(ci);
+  TGraphErrors *gre2 = new TGraphErrors(100,Graph0_fx1003,Graph0_fy1003,Graph0_fex1003,Graph0_fey1003);
+   gre2->SetName("Graph0");
+   gre2->SetTitle("");
+   gre2->SetFillColor(1);
+   gre2->SetLineWidth(2);
 
    ci = TColor::GetColor("#0000ff");
-   gre->SetMarkerColor(ci);
-   gre->SetMarkerStyle(20);
-   gre->SetMarkerSize(1.1);
+   gre2->SetLineColor(ci);
+
+   ci = TColor::GetColor("#0000ff");
+   gre2->SetMarkerColor(ci);
+   gre2->SetMarkerStyle(20);
+   gre2->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph_Graph30013003 = new TH1F("Graph_Graph_Graph30013003","",100,8.02,31.78);
    Graph_Graph_Graph30013003->SetMinimum(0.015);
@@ -1386,7 +1380,7 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    Graph_Graph_Graph30013003->GetXaxis()->SetTitleSize(0.15);
    Graph_Graph_Graph30013003->GetXaxis()->SetTitleOffset(0.75);
    Graph_Graph_Graph30013003->GetXaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30013003->GetYaxis()->SetTitle("Time Resolution [ps]");
+   Graph_Graph_Graph30013003->GetYaxis()->SetTitle("MIP MPV [V]");
    Graph_Graph_Graph30013003->GetYaxis()->SetLabelFont(42);
    Graph_Graph_Graph30013003->GetYaxis()->SetLabelSize(0.10);
    Graph_Graph_Graph30013003->GetYaxis()->SetTitleSize(0.10);
@@ -1397,9 +1391,9 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    Graph_Graph_Graph30013003->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph_Graph30013003->GetZaxis()->SetTitleSize(0.035);
    Graph_Graph_Graph30013003->GetZaxis()->SetTitleFont(42);
-   gre->SetHistogram(Graph_Graph_Graph30013003);  
-   gre->SetLineWidth(2);
-   gre->Draw("ap");
+   gre2->SetHistogram(Graph_Graph_Graph30013003);  
+   gre2->SetLineWidth(2);
+   gre2->Draw("ap");
 
 
 
@@ -1809,48 +1803,46 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    0,
    0};
 
-   TGraphErrors *gre1 = new TGraphErrors(100,Graph0_fx1004,Graph0_fy1004,Graph0_fex1004,Graph0_fey1004);
-   gre1->SetName("Graph0");
-   gre1->SetTitle("");
-   gre1->SetFillColor(1);
-   gre1->SetLineColor(kRed);
-   gre1->SetMarkerColor(kRed);
-   gre1->SetLineWidth(2);
-   gre1->SetMarkerStyle(21);
-   gre1->SetMarkerSize(1.1);
+   TGraphErrors *gre3 = new TGraphErrors(100,Graph0_fx1004,Graph0_fy1004,Graph0_fex1004,Graph0_fey1004);
+   gre3->SetName("Graph0");
+   gre3->SetTitle("");
+   gre3->SetFillColor(1);
+   gre3->SetLineColor(kRed);
+   gre3->SetMarkerColor(kRed);
+   gre3->SetLineWidth(2);
+   gre3->SetMarkerStyle(21);
+   gre3->SetMarkerSize(1.1);
    
-   TH1F *Graph_Graph_Graph30013002 = new TH1F("Graph_Graph_Graph30013002","",100,8.02,31.78);
-   Graph_Graph_Graph30013002->SetMinimum(0.015);
-   Graph_Graph_Graph30013002->SetMaximum(0.035);
-   Graph_Graph_Graph30013002->SetDirectory(0);
-   Graph_Graph_Graph30013002->SetStats(0);
+   TH1F *Graph_Graph_Graph300130023 = new TH1F("Graph_Graph_Graph300130023","",100,8.02,31.78);
+   Graph_Graph_Graph300130023->SetMinimum(0.015);
+   Graph_Graph_Graph300130023->SetMaximum(0.035);
+   Graph_Graph_Graph300130023->SetDirectory(0);
+   Graph_Graph_Graph300130023->SetStats(0);
 
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
    ci = TColor::GetColor("#000099");
-   Graph_Graph_Graph30013002->SetLineColor(ci);
-   Graph_Graph_Graph30013002->GetXaxis()->SetTitle("y-coordinate [mm]");
-   Graph_Graph_Graph30013002->GetXaxis()->SetRange(52,66);
-   Graph_Graph_Graph30013002->GetXaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30013002->GetXaxis()->SetLabelSize(0.12);
-   Graph_Graph_Graph30013002->GetXaxis()->SetTitleSize(0.15);
-   Graph_Graph_Graph30013002->GetXaxis()->SetTitleOffset(0.87);
-   Graph_Graph_Graph30013002->GetXaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30013002->GetYaxis()->SetTitle("Time Resolution [ps]");
-   Graph_Graph_Graph30013002->GetYaxis()->SetNdivisions(503);
-   Graph_Graph_Graph30013002->GetYaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30013002->GetYaxis()->SetLabelOffset(0.006);
-   Graph_Graph_Graph30013002->GetYaxis()->SetLabelSize(0.10);
-   Graph_Graph_Graph30013002->GetYaxis()->SetTitleSize(0.10);
-   Graph_Graph_Graph30013002->GetYaxis()->SetTitleOffset(0.45);
-   Graph_Graph_Graph30013002->GetYaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30013002->GetZaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30013002->GetZaxis()->SetLabelSize(0.035);
-   Graph_Graph_Graph30013002->GetZaxis()->SetTitleSize(0.035);
-   Graph_Graph_Graph30013002->GetZaxis()->SetTitleFont(42);
-   gre1->SetHistogram(Graph_Graph_Graph30013002);
+   Graph_Graph_Graph300130023->SetLineColor(ci);
+   Graph_Graph_Graph300130023->GetXaxis()->SetTitle("y-coordinate [mm]");
+   Graph_Graph_Graph300130023->GetXaxis()->SetRange(52,66);
+   Graph_Graph_Graph300130023->GetXaxis()->SetLabelFont(42);
+   Graph_Graph_Graph300130023->GetXaxis()->SetLabelSize(0.12);
+   Graph_Graph_Graph300130023->GetXaxis()->SetTitleSize(0.15);
+   Graph_Graph_Graph300130023->GetXaxis()->SetTitleOffset(0.87);
+   Graph_Graph_Graph300130023->GetXaxis()->SetTitleFont(42);
+   Graph_Graph_Graph300130023->GetYaxis()->SetTitle("Time Resolution [ps]");
+   Graph_Graph_Graph300130023->GetYaxis()->SetNdivisions(503);
+   Graph_Graph_Graph300130023->GetYaxis()->SetLabelFont(42);
+   Graph_Graph_Graph300130023->GetYaxis()->SetLabelOffset(0.006);
+   Graph_Graph_Graph300130023->GetYaxis()->SetLabelSize(0.10);
+   Graph_Graph_Graph300130023->GetYaxis()->SetTitleSize(0.10);
+   Graph_Graph_Graph300130023->GetYaxis()->SetTitleOffset(0.45);
+   Graph_Graph_Graph300130023->GetYaxis()->SetTitleFont(42);
+   Graph_Graph_Graph300130023->GetZaxis()->SetLabelFont(42);
+   Graph_Graph_Graph300130023->GetZaxis()->SetLabelSize(0.035);
+   Graph_Graph_Graph300130023->GetZaxis()->SetTitleSize(0.035);
+   Graph_Graph_Graph300130023->GetZaxis()->SetTitleFont(42);
+   gre3->SetHistogram(Graph_Graph_Graph300130023);
   
-   gre1->Draw("p");
+   gre3->Draw("p");
 
 
 

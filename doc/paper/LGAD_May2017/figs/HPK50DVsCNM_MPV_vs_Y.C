@@ -845,7 +845,7 @@ void HPK50DVsCNM_MPV_vs_Y()
    Graph_Graph_Graph30013003->GetXaxis()->SetTitleSize(0.15);
    Graph_Graph_Graph30013003->GetXaxis()->SetTitleOffset(0.75);
    Graph_Graph_Graph30013003->GetXaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30013003->GetYaxis()->SetTitle("Time Resolution [ps]");
+   Graph_Graph_Graph30013003->GetYaxis()->SetTitle("MIP MPV [V]");
    Graph_Graph_Graph30013003->GetYaxis()->SetLabelFont(42);
    Graph_Graph_Graph30013003->GetYaxis()->SetLabelSize(0.10);
    Graph_Graph_Graph30013003->GetYaxis()->SetTitleSize(0.10);

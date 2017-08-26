@@ -496,7 +496,11 @@ distribution on the HPK sensor has a distinct shape where the area under the
 metallization on top of the sensor -- the gray area in the center of the image
 -- shows a shift of about $20$--$30$~ps with respect to non-metallized area. A
 possible explanation for this small effect is an observed slight difference in
-the rise time of pulse from the metallized and un-metallized areas. \textbf {FIXME CNM has some features too, need an image of the CNM metalization area to check.}
+the rise time of pulse from the metallized and un-metallized areas. \textbf
+{Both HPK and CNM sensors exhibit a behavior where signals originitaing in the
+metalized areas arrive earlier than those in the non-metalized areas. This is
+probably due to the field in the gain region under the metalization being
+higher. }
 
 \begin{figure}[htbp] 
 \centering
@@ -748,7 +752,10 @@ The distribution of MPV of signal amplitudes across the sensor area is shown in
 Fig.~\ref{fig:IrradiatedSensorStudy_MPV}, where the MPV is extracted as
 described in Sec.~\ref{sec:HPK_CNM_uniformity}. Меаsurements were performed at
 two bias voltage values for both sensors: $-600$ and $-635$~V for HPK, and
-$-400$ and $-420$~V for CNM sensors.
+$-400$ and $-420$~V for CNM sensors. \textbf{FIXME HARTMUT what are the gains at
+these voltage values?}. A uniform signal amplitude is observed across the HPK
+sensor, while for the CNM sensor the amplitude varies across the sensor surface,
+as observed also in Fig.~\ref{fig:CNM_irradiated_amp_Map}. 
 
 \begin{figure}[htbp] 
 \centering
@@ -758,12 +765,25 @@ $-400$ and $-420$~V for CNM sensors.
 \label{fig:IrradiatedSensorStudy_MPV} 
 \end{figure}
 
+The distribution of the $\Delta{t}$ between the Photek 240 MCP-PMT and the
+irradiated HPK and CNM sensors are shown in
+Fig.~\ref{fig:IrradiatedSensorStudy_MeanTime}. Measurements at both bias voltage
+values are presented. We measured a uniform distribution of the $\Delta{t}$
+values across the HPK sensor. The CNM sensor exhibits a non-uniformity across
+the sensor surface, where the signals from the central, non-metalized area
+arrive are about 10~ps faster than those from the peripheral, metalized area.
+\textbf {This behavior is opposite of that observed in the non-irradiated
+sensors, both CNM and HPK. However, given that the signals in the non-metalized
+area of the irradiated CNM sensor are much larger than those in the periphery,
+this behavior is expected (is it?).}
+
+
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.9\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MeanTime_vs_X.pdf} 
 \includegraphics[width=0.9\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MeanTime_vs_Y.pdf} 
 \caption{DeltaT vs X and Y on CNM and HPK irradiated} 
-\label{fig:Sensors} 
+\label{fig:IrradiatedSensorStudy_MeanTime} 
 \end{figure} 
 
 

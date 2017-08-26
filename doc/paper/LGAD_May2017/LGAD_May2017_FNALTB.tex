@@ -57,6 +57,7 @@
 \journal{Nucl. Instrum. Meth. A}
 
 \begin{document}
+
 \linenumbers
 
 \begin{frontmatter}
@@ -81,7 +82,8 @@
 %% \address{Address\fnref{label3}}
 %% \fntext[label3]{}
 
-\title{Studies of uniformity of 50~$\mu$m UFSD sensors at the Fermilab test beam.}
+\title{Studies of uniformity of 50~$\mu$m low-gain avalanche detectors sensors
+at the Fermilab test beam.}
 
 %% use optional labels to link authors explicitly to addresses:
 %% \author[label1,label2]{}
@@ -110,12 +112,12 @@
 %% Text of abstract
 In this paper we report measurements of uniformity of time resolution, signal
 amplitude, and charged particle detection efficiency across the sensor surface
-of Ultra-Fast Silicon Detectors (UFSD). Comparisons of performance of sensors
+of low-gain avalanche detectors (LGAD). Comparisons of performance of sensors
 with different doping concentrations, and different active thicknesses are
 presented, as well as their temperature dependance and radiation tolerance up to
 $6\times 10^{14}$~n/cm$^2$. Results were obtained at the Fermilab test beam
 facility using 120 GeV proton beams, and a high precision pixel tracking
-detector. UFSD sensors based on the Low-Gain Avalanche Detector (LGAD) design
+detector. LGAD sensors based on the Low-Gain Avalanche Detector (LGAD) design
 were manufactured by the the Centro Nacional de Microelectr\`onica (CNM) and
 Hamamatsu Photonics (HPK) were tested in the experiments. The uniformity of the
 sensor response in pulse height, efficiency and timing resolution were found to
@@ -141,6 +143,8 @@ Silicon \sep Timing \sep LGAD
 \end{keyword}
 
 \end{frontmatter}
+
+\tableofcontents
 
 %% \linenumbers
 
@@ -171,23 +175,23 @@ approximately 200~ps. We have previosuly shown that a precision of better than
 $20$~ps can be achieved for electromagnetic showers measured with silicon
 sampling calorimeters~\cite{Apresyan201662,Apresyan2017_NSSMIC,AKCHURIN201731}
 using traditional planar silicon detectors. In this paper we report results of
-beam test measurements with thin UFSD sensors that have been shown to achieve
-time resolution around 30~ps~\cite{Cartiglia201783}. UFSD are envisioned to be
-used in the CMS and ATLAS experiment upgrades for HL-LHC in order to reduce the
-pileup contamination in the region of pseudorapidity beyond $\eta>1.5$ for CMS,
-and $\eta>3.0$ for ATLAS. In order to satisfy the needs of a high precision
-timing across a large area of the detectors for HL-LHC, the sensors will need to
-be provide high uniformity of signal response and timing resolution. In this
-paper we perform detailed measurements of the performance of UFSD sensors from
-CNM and HPK exposed to the 120~GeV proton beams at Fermilab. Utilizing the high
-precision tracking detector we extract position dependence of the timing
-resolution, signal pulse height, signal time stamp, and charged particle
-detection efficiency, as well as we compare the 50 and 80~$\mu$m UFSD sensors,
-and the performance of the HPK and CNM sensors irradiated to $6\times
+beam test measurements with thin low-gain avalanche detectors (LGAD) that have
+been shown to achieve time resolution around 30~ps~\cite{Cartiglia201783}. LGAD
+are envisioned to be used in the CMS and ATLAS experiment upgrades for HL-LHC in
+order to reduce the pileup contamination in the region of pseudorapidity beyond
+$\eta>1.5$ for CMS, and $\eta>3.0$ for ATLAS. In order to satisfy the needs of a
+high precision timing across a large area of the detectors for HL-LHC, the
+sensors will need to be provide high uniformity of signal response and timing
+resolution. In this paper we perform detailed measurements of the performance of
+LGAD sensors from CNM and HPK exposed to the 120~GeV proton beams at Fermilab.
+Utilizing the high precision tracking detector we extract position dependence of
+the timing resolution, signal pulse height, signal time stamp, and charged
+particle detection efficiency, as well as we compare the 50 and 80~$\mu$m LGAD
+sensors, and the performance of the HPK and CNM sensors irradiated to $6\times
 10^{14}$~n/cm$^2$.
 
 The paper is organized as follows: the experimental setup is described in
-Sec.~\ref{sec:setup}, the tested UFSD sensors and their operating conditions are
+Sec.~\ref{sec:setup}, the tested LGAD sensors and their operating conditions are
 listed in Sec.~\ref{sec:sensors}, readout boards used in the measurements are described in Sec.~\ref{sec:boards}, beam test results are presented in Sec.~\ref{sec:results}, followed by the conclusion in Sec.~\ref{sec:conclusion}.
 
 \section{Test-beam Setup} 
@@ -343,7 +347,7 @@ this work was optimized for precise timing measurements. In particular, the
 amplifier, made with discrete components, has an input impedance of 700 Ohm, an
 output noise of 4 mV and a gain in transresistance of about 50 mV/$\mu$A with
 a 3 dB bandwidth of 100 MHz. Those values were simulated for an input
-capacitance of 20 pF, which corresponds roughly to a UFSD of 9 mm$^2$. The power
+capacitance of 20 pF, which corresponds roughly to a LGAD of 9 mm$^2$. The power
 consumption of the board is about 130 mW per channel. Similar electronics is
 available in different configurations with 1, 2 (used in this work) or 8
 channels.
@@ -607,7 +611,8 @@ HPK sensors with the same dopant concentration from the C-PIX series: HPK
 voltage. The distribution shown in Fig.~\ref{fig:HPK50CVs80C} is the same as
 that shown in Fig.~\ref{fig:KUBoard_50ABCD_TimeResolution}. The comparison of
 the 50 and 80~$\mu$m sensors shows a similar level uniformity of time resolution
-across the sensor area around 45-50~ps.
+across the sensor area, and we measure around $40$~ps with the $50~\mu$m
+sensors, and around $50$~ps with the $80~\mu$m sensors.
 
 \begin{figure}[htbp] 
 \centering
@@ -621,11 +626,11 @@ across the sensor area around 45-50~ps.
 \label{sec:temp_dependance}
 
 In order to maintain their optimal performance at the highest fluences
-envisioned at the HL-LHC, the UFSD sensors will be cooled to temperatures below
+envisioned at the HL-LHC, the LGAD sensors will be cooled to temperatures below
 $-20^{\circ}$C degrees. Operation at such low temperatures will allow to
 significantly reduce the leakage current, and additionally improve the timing
 characteristics of the sensors. In this section we describe the measurements of
-the UFSD sensors performed at $-10$ and $-20^{\circ}$C degrees, and compare the
+the LGAD sensors performed at $-10$ and $-20^{\circ}$C degrees, and compare the
 results to those at the room temperature. These measurements were performed with
 the HPK 50D-PIX sensors mounted on the FNAL 4-channel board. In order to
 maintain all operating conditions the same, and only change the sensor
@@ -694,7 +699,7 @@ which were exposed to neutron irradiation at the Ljubljana TRIGA reactor. The
 neutron spectrum and flux are well known and the fluence is quoted in 1 MeV
 equivalent neutrons per cm$^2$ (n$_{\mathrm{eq.}}$/cm$^2$ or shortened
 n/cm$^2$). After $6\times 10^{14}$~n/cm$^2$ irradiation, the devices were
-annealed for 80 min at 60$^{\circ}$C. Afterward the devices were kept in
+annealed for 80 min at $60^{\circ}$C. Afterward the devices were kept in
 $-20^{\circ}$C degree during storage, transportation, and test beam experiments.
 
 The two-dimensional distribution of the signal amplitudes on the surface of the
@@ -775,24 +780,32 @@ arrive are about 10~ps faster than those from the peripheral, metalized area.
 \textbf {This behavior is opposite of that observed in the non-irradiated
 sensors, both CNM and HPK. However, given that the signals in the non-metalized
 area of the irradiated CNM sensor are much larger than those in the periphery,
-this behavior is expected (is it?).}
+this behavior is expected, since the gain in this region is larger (is it?).}
 
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.9\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MeanTime_vs_X.pdf} 
 \includegraphics[width=0.9\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MeanTime_vs_Y.pdf} 
-\caption{DeltaT vs X and Y on CNM and HPK irradiated} 
+\caption{$\Delta{t}$ measurement across the X-axis (top) and Y-axes (bottom) of the HPK 50D and CNM W11LGA35 irradiated sensors. Both sensors were irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
 \label{fig:IrradiatedSensorStudy_MeanTime} 
 \end{figure} 
 
+Distributions of the time resolution across the surface of the irradiated
+sensors are shown in Fig.~\ref{fig:IrradiatedSensorStudy_TimeResolution}. Time
+resolution measured with the HPK sensor slightly improves with the incrrease of
+the bias voltage, and shows a uniform distribution across the sensor surface. In
+contrast, the CNM sensor shows a non-uniform distribution of time resolution,
+which is a consequence of the variations of the signal amplitude across the
+sensor. We do not observe an improvement in the time resolution measured with
+the CNM sensor with the increase in the bias voltage.
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.90\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_TimeResolution_vs_X.pdf} 
 \includegraphics[width=0.90\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_TimeResolution_vs_Y.pdf} 
-\caption{Time Resolution vs X and Y on CNM and HPK irradiated} 
-\label{fig:Sensors} 
+\caption{Time resolution measurement across the X-axis (top) and Y-axes (bottom) of the HPK 50D and CNM W11LGA35 irradiated sensors. Both sensors were irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
+\label{fig:IrradiatedSensorStudy_TimeResolution} 
 \end{figure} 
 
  
@@ -801,83 +814,96 @@ this behavior is expected (is it?).}
 \label{sec:conclusion} 
 
 In a beam test at FNAL with tracking information, we compared the performance of
-low-gain avalanche detectors (LGAD) produced by CNM Barcelona and HPK Hamamatsu,
-both single pads and 2x2 arrays with pad size varying from 1 mm to 3 mm diameter
-and a thickness of about 50 and 80 $\mu$m. Four different readout boards were
-used, and their performance characteristics will be detailed in an upcoming
-paper. The uniformity of the sensor response in pulse height, efficiency and
-timing resolution were tested and found to be good pre-radiation with the
-exceptions of the area between pads which exhibit a ``no-response'' width of
-72.5~$\mu$m for CNM and 112.7~$\mu$m for HPK. A small timing shift across the
-HPK sensor of the order 20--30~ps can be explained by the observed change in
-pulse shape when comparing metallized and non-metallized sensor areas. After a
-neutron fluence of $6\times 10^{14}$~n/cm$^2$, the single pad CNM sensor
-exhibits a large gain variation of a factor 2.5 when comparing metallized and
-non-metallized sensor areas. 
+LGAD produced by CNM Barcelona and HPK Hamamatsu, both single pads and 2x2
+arrays with pad size varying from 1 mm to 3 mm diameter and a thickness of about
+50 and 80 $\mu$m. Four different readout boards were used, and their performance
+characteristics will be detailed in an upcoming paper. The uniformity of the
+sensor response in pulse height, efficiency and timing resolution were tested
+and found to be good pre-radiation with the exceptions of the area between pads
+which exhibit a ``no-response'' width of about 70~$\mu$m for CNM and 110~$\mu$m
+for HPK. A small timing shift across the HPK sensor of the order 20--30~ps can
+be explained by the observed change in pulse shape when comparing metallized and
+non-metallized sensor areas. Uniform signal detection efficiency of 100\% is
+observed on all sensors, both before and after irradiation. 
 
-For an un-irradiated 50~$\mu$m thick LGAD with 3~mm pads we find the following timing results: 
+For an un-irradiated 50~$\mu$m thick LGADs with 3~mm pads we find the following timing results: 
 \begin{itemize}
-  \item at a temperature of $+20$~C$^{\circ}$, the timing resolution ranges from
+  \item at a temperature of $+20^{\circ}$C, the timing resolution ranges from
         40~ps to 50~ps depending on the readout board. This number worsens by
         10~ps for a 80~$\mu$m sensor.
-  \item cooling the LGAD improves the timing resolution from 55~ps at
-        $+20$~C$^{\circ}$ to 43~ps at $-10$~C$^{\circ}$ to 36 ps at
-        $-20$~C$^{\circ}$  
-\end{itemize}For an 50~$\mu$m thick LGAD with 1~mm pads irradiated $6\times 10^{14}$~n/cm$^2$ we find the
-following timing results when operated at $-20$~C$^{\circ}$: 
+  \item cooling the LGAD, while keeping the bias voltage the same at $-250$~V
+        (\textbf {what is the gain at -250~V}),
+        improves the timing resolution from 55~ps at $+20^{\circ}$C to 43~ps at
+        $-10^{\circ}$C to 36 ps at $-20^{\circ}$C. \end{itemize}
+
+After a neutron fluence of $6\times 10^{14}$~n/cm$^2$, the single pad CNM sensor
+exhibits a large gain variation of a factor 2.5 when comparing metallized and
+non-metallized sensor areas. For an 50~$\mu$m thick LGAD with 1~mm pads
+irradiated $6\times 10^{14}$~n/cm$^2$ we find the following timing results when
+operated at $-20^{\circ}$C: 
+
 \begin{itemize}
-  \item for the HPK LGAD the highest bias voltage reached is $\sim$600V and the timing resolution is 30~ps; 
-  \item for the CNM LGAD the highest bias voltage reached is $\sim$400V and the
-        timing resolution is 30~ps for the metallized part and~40 ps for the
-        un-metallized area.
+  \item for the HPK LGAD the highest bias voltage reached is 635~V and the timing resolution is 30~ps; 
+  \item for the CNM LGAD the highest bias voltage reached is 420~V and the
+        timing resolution is 30~ps for the metallized part and $40$~ps for the
+        non-metallized area.
   
 \end{itemize}
 
 \section*{Acknowledgement}
 
-We would like to thank Alan Prosser and Ryan Rivera for their critical help in
-setting up the DAQ and trigger chain. 
+We thank the FTBF personnel and Fermilab accelerator's team for very good beam
+conditions during our test beam time. We also appreciate the technical support
+of the Fermilab SiDet department for the rapid production of wirebonded and
+packaged LGAD assemblies. We would like to thank Alan Prosser and Ryan Rivera
+for their critical help in setting up the DAQ and trigger chain. We thank Ned
+Spencer, Max Wilder, and Forest McKinney-Martinez for their technical
+assistance, and the CNM and HPK manufacturing team. We acknowledge the help of
+V. Cindro and I. Mandic with the neutron irradiations. 
 
-We thank Ned Spencer, Max Wilder, and Forest McKinney-Martinez for their
-technical assistance, and the CNM and HPK manufacturing team. We acknowledge the
-help of V. Cindro and I. Mandic with the neutron irradiations. Part of this work
-has been performed within the framework of the CERN RD50 Collaboration. The work
-was supported by the United States Department of Energy, grant
-DE-FG02-04ER41286. Part of this work has been financed by the European Union’s
-Horizon 2020 Research and Innovation funding program, under Grant Agreement no.
-654168 (AIDA-2020) and Grant Agreement no. 669529 (ERC UFSD669529), and by the
-Italian Ministero degli Affari Esteri and INFN Gruppo V.
+This document was prepared using the resources of the Fermi National Accelerator
+Laboratory (Fermilab), a U.S. Department of Energy, Office of Science, HEP User
+Facility. Fermilab is managed by Fermi Research Alliance, LLC (FRA), acting
+under Contract No. DE-AC02-07CH11359.
+
+Part of this work has been performed within the framework of the CERN RD50
+Collaboration. The work was supported by the United States Department of Energy,
+grant DE-FG02-04ER41286, and Fermilab LDRD 2017.027. Part of this work has been
+financed by the European Union’s Horizon 2020 Research and Innovation funding
+program, under Grant Agreement no. 654168 (AIDA-2020) and Grant Agreement no.
+669529 (ERC UFSD669529), and by the Italian Ministero degli Affari Esteri and
+INFN Gruppo V.
 
 
 
 %% The Appendices part is started with the command \appendix;
 %% appendix sections are then done as normal sections
 
-\appendix
-\section{Appendix A}
-
-The list of sensors studied in this article, as well as the temperature and the
-sensor bias voltage used during their operation are listed in
-Tab.~\ref{tab:DataConditions}. 
-
-\begin{table}[h]
-\begin{center}
-  \begin{tabular}{ |c | c | c| c | }
-    \hline
-    Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
-    HPK 50A-PIX & \textbf{-630 V} & -- & -- \\ \hline
-    HPK 50B-PIX & \begin{tabular}{@{}c@{}}\textbf{-450 V, -550V, -600 V }\\ \underline{-510 V} \\ \textit{-510V, -570 V}\end{tabular}  & -- & -- \\ \hline
-    HPK 50C-PIX & \textbf{-400 V} & \textbf{-410 V, -470 V} & -- \\ \hline
-    HPK 50D-PIX & \begin{tabular}{@{}c@{}}\textbf{-100 V, -200V, -250 V,} \\ \textbf{-300 V, -325 V} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}\textbf{-250 V, -300V,} \\ \underline{-210 V, -250 V} \\ \textit{-250 V, -280 V}\end{tabular} {\color{red}} \\ \hline
-    CNM W9HG11 & -- & \textbf{-140 V, -160V} & -- \\ \hline
-    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & \textit{-600 V, -635V} & -- \\ \hline
-    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & \textit{-400 V, -420V} \\ \hline
-    \hline
-  \end{tabular}
-\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
-\label{tab:DataConditions}
-\end{center}
-\end{table}
+%\appendix
+%\section{Appendix A}
+%
+%The list of sensors studied in this article, as well as the temperature and the
+%sensor bias voltage used during their operation are listed in
+%Tab.~\ref{tab:DataConditions}. 
+%
+%\begin{table}[h]
+%\begin{center}
+%  \begin{tabular}{ |c | c | c| c | }
+%    \hline
+%    Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
+%    HPK 50A-PIX & \textbf{-630 V} & -- & -- \\ \hline
+%    HPK 50B-PIX & \begin{tabular}{@{}c@{}}\textbf{-450 V, -550V, -600 V }\\ \underline{-510 V} \\ \textit{-510V, -570 V}\end{tabular}  & -- & -- \\ \hline
+%    HPK 50C-PIX & \textbf{-400 V} & \textbf{-410 V, -470 V} & -- \\ \hline
+%    HPK 50D-PIX & \begin{tabular}{@{}c@{}}\textbf{-100 V, -200V, -250 V,} \\ \textbf{-300 V, -325 V} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}\textbf{-250 V, -300V,} \\ \underline{-210 V, -250 V} \\ \textit{-250 V, -280 V}\end{tabular} {\color{red}} \\ \hline
+%    CNM W9HG11 & -- & \textbf{-140 V, -160V} & -- \\ \hline
+%    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & \textit{-600 V, -635V} & -- \\ \hline
+%    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & \textit{-400 V, -420V} \\ \hline
+%    \hline
+%  \end{tabular}
+%\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
+%\label{tab:DataConditions}
+%\end{center}
+%\end{table}
 
 %% \section{}
 %% \label{}

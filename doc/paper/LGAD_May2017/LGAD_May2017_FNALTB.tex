@@ -110,25 +110,24 @@ at the Fermilab test beam.}
 
 \begin{abstract}
 %% Text of abstract
-In this paper we report measurements of uniformity of time resolution, signal
+In this paper we report measurements of the uniformity of time resolution, signal
 amplitude, and charged particle detection efficiency across the sensor surface
-of low-gain avalanche detectors (LGAD). Comparisons of performance of sensors
-with different doping concentrations, and different active thicknesses are
+of low-gain avalanche detectors (LGAD). Comparisons of the performance of sensors
+with different doping concentrations and different active thicknesses are
 presented, as well as their temperature dependance and radiation tolerance up to
 $6\times 10^{14}$~n/cm$^2$. Results were obtained at the Fermilab test beam
 facility using 120 GeV proton beams, and a high precision pixel tracking
-detector. LGAD sensors based on the Low-Gain Avalanche Detector (LGAD) design
-were manufactured by the the Centro Nacional de Microelectr\`onica (CNM) and
-Hamamatsu Photonics (HPK) were tested in the experiments. The uniformity of the
+detector. LGAD sensors manufactured by the Centro Nacional de Microelectr\`onica (CNM) and
+Hamamatsu Photonics (HPK) were studied. The uniformity of the
 sensor response in pulse height, efficiency and timing resolution were found to
-be good pre-radiation, with time resolution around 30-40~ps depending on
-operating conditions. A ``no-response'' area between pads which exhibit was
-measured to be around 70~$\mu$m for CNM and 110$\mu$m for HPK sensors. After a
+be good before irradiation, with time resolution around 30-40~ps depending on
+operating conditions. A ``no-response'' area between pads was
+measured to be about 70~$\mu$m for CNM and 110$\mu$m for HPK sensors. After a
 neutron fluence of $6\times 10^{14}$~n/cm$^2$ the CNM sensor exhibits a large
-gain variation of a factor 2.5 when comparing metallized and non-metallized
+gain variation of a factor of $2.5$ when comparing metallized and non-metallized
 sensor areas. Irradiated CNM sensor achieved time resolution of 30~ps for the
-metallized part, and 40~ps for the non-metallized area, while the time
-resolution of the HPK sensor was measured to be 30~ps.
+metallized part and 40~ps for the non-metallized area, while the HPK sensor 
+achieved 30~ps time resolution.
 
 \end{abstract}
 
@@ -175,24 +174,26 @@ approximately 200~ps. We have previously shown that a precision of better than
 $20$~ps can be achieved for electromagnetic showers measured with silicon
 sampling calorimeters~\cite{Apresyan201662,Apresyan2017_NSSMIC,AKCHURIN201731}
 using traditional planar silicon detectors. In this paper we report results of
-beam test measurements with thin low-gain avalanche detectors (LGAD) that have
+particle beam measurements with thin low-gain avalanche detectors (LGAD) that have
 been shown to achieve time resolution around 30~ps~\cite{Cartiglia201783}. LGAD
 are envisioned to be used in the CMS and ATLAS experiment upgrades for HL-LHC in
 order to reduce the pileup contamination in the region of pseudorapidity beyond
-$\eta>1.5$ for CMS, and $\eta>3.0$ for ATLAS. In order to satisfy the needs of a
-high precision timing across a large area of the detectors for HL-LHC, the
-sensors will need to be provide high uniformity of signal response and timing
+$\eta>1.5$ for CMS, and $\eta>3.0$ for ATLAS. In order to achieve
+the desired timing precision across a large area of the detectors, the
+sensors will need to provide high uniformity of signal response and timing
 resolution. In this paper we perform detailed measurements of the performance of
-LGAD sensors from CNM and HPK exposed to the 120~GeV proton beams at Fermilab.
-Utilizing the high precision tracking detector we extract position dependence of
-the timing resolution, signal pulse height, signal time stamp, and charged
-particle detection efficiency, as well as we compare the 50 and 80~$\mu$m LGAD
-sensors, and the performance of the HPK and CNM sensors irradiated to $6\times
-10^{14}$~n/cm$^2$.
+LGAD sensors from CNM and HPK exposed to the 120~GeV proton beam at Fermilab.
+Utilizing high-precision tracking detectors we extract position dependence of
+the charged-particle detection efficiency, signal pulse height, and 
+signal time stamp and resolution. We also compare the performance of 
+50 and 80~$\mu$m LGAD sensors, as well as the HPK and CNM sensors irradiated to 
+an equivalent neutron flux of $6\times 10^{14}$~n/cm$^2$.
 
 The paper is organized as follows: the experimental setup is described in
-Sec.~\ref{sec:setup}, the tested LGAD sensors and their operating conditions are
-listed in Sec.~\ref{sec:sensors}, readout boards used in the measurements are described in Sec.~\ref{sec:boards}, beam test results are presented in Sec.~\ref{sec:results}, followed by the conclusion in Sec.~\ref{sec:conclusion}.
+Sec.~\ref{sec:setup}; the tested LGAD sensors and their operating conditions are
+listed in Sec.~\ref{sec:sensors}; readout boards used in the measurements are 
+described in Sec.~\ref{sec:boards}; beam test results are presented in 
+Sec.~\ref{sec:results}, followed by the conclusion in Sec.~\ref{sec:conclusion}.
 
 \section{Test-beam Setup} 
 \label{sec:setup}
@@ -209,7 +210,7 @@ particles impinging on the DUT. Additionally, a Photek~240 micro-channel plate
 (MCP-PMT) detector~\cite{Anderson:2015gha, MCPFastCaloNIMA,
 Ronzhin2015288,Ronzhin201552} was placed furthest downstream, and provided a
 very precise reference timestamp. Its precision has been previously
-measured to be less than $10$~ps~\cite{Ronzhin2015288}. A schematic diagram and
+measured to be less than $7$~ps~\cite{Ronzhin2015288}. A schematic diagram and
 photograph of the experimental area are shown in Fig.~\ref{fig:DragonBoxDiagram}
 and Fig.~\ref{fig:DragonBox}, respectively. 
 
@@ -217,7 +218,7 @@ The DAQ system for the DUTs and the Photek MCP-PMT is based on a CAEN V1742
 digitizer board~\cite{CAENDRS}, which provides digitized waveforms sampled at 5
 GS/s, and with one ADC count corresponding to 0.25~mV. The CAEN digitizer was
 voltage- and time-calibrated using the procedure described in
-Ref.~\cite{Kim201467}. The electronic time resolution of the CAEN V1742
+Ref.~\cite{Kim201467}. The electronic time resolution of the CAEN V1742
 digitizer was measured to be less than 4~ps, and thus, its impact on the timing
 measurements presented in these studies can be neglected. The DAQ for the pixel
 telescope is based on the CAPTAN system developed at
@@ -242,7 +243,7 @@ combined board is shown in Fig.~\ref{fig:NIM+Captan} and was used to interface t
 photomultiplier signals through on-board programmable discriminators, and to form
 trigger signals with software configurable time-based veto and pre-scaler event
 filtering. We found that at a rate of about 1,500 triggers per spill the CAEN
-V1742 and pixel telescope were maintained fully synchronized. Processed data
+V1742 and pixel telescope maintained full synchronization. Processed data
 from the pixel telescope and the DUTs were merged offline by matching the
 trigger counters recorded by the two systems.
 
@@ -254,8 +255,6 @@ trigger counters recorded by the two systems.
 \end{figure} 
 
 
-
-
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.75\textwidth]{figs/BeamSetup.pdf} 
@@ -264,17 +263,19 @@ trigger counters recorded by the two systems.
 \end{figure} 
 
 The devices under test (DUT) were placed inside the telescope box described in
-Ref.\cite{KWAN2016162}, and mounted on aluminum mechanical support structure.
-The telescope box can be moved remotely in both horizontal and vertical
-directions, in order to align the DUTs with the beam. The aluminum support
-structures for DUT provide both a mechanical stability for the DUTs, and are
+Ref.\cite{KWAN2016162}, and mounted on an aluminum mechanical support structure.
+The telescope box can be moved remotely in both the horizontal and vertical
+directions in order to align the DUTs with the beam. The aluminum support
+structure for the DUTs provide both mechanical stability and are
 equipped with Peltier cooling elements that were used in this study to operate
 the DUTs at $-10^{\circ}$ and $-20^{\circ}$~C.
 
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.75\textwidth]{figs/TB_dragonBox.pdf} 
-\caption{A picture of the experimental area. Thea pixel telescope detectors are placed inside the ESD shielded boxes on the two sides of the DUT area. Cooling liquid for the Peltier elements inside the DUT area is provided by the two pipes shown in the picture.} 
+\caption{A picture of the experimental area. Thea pixel telescope detectors are placed inside the 
+electrostatic-discharge shielded boxes on the two sides of the DUT area. Cooling liquid for 
+the Peltier elements inside the DUT area is provided by the two tubes shown in the picture.} 
 \label{fig:DragonBox} 
 \end{figure} 
 
@@ -282,35 +283,34 @@ the DUTs at $-10^{\circ}$ and $-20^{\circ}$~C.
 \section{Properties of the tested LGAD sensors}
 \label{sec:sensors}
 
-Sensors manufactured by Hamamatsu (HPK) and CNM were tested during the test beam
-experiments. Sensors in both single- and four-channel configurations were tested
-during the measurements. Most of the tested sensors have active thickness of
-about 50 $\mu$m, apart from the comparison of the 50 and 80 $\mu$m sensors that
-is presented in Sec.~\ref{sec:HPK50vs80}. The list of sensors studied in this
+Sensors manufactured by Hamamatsu (HPK) and CNM were measured in the test beam
+experiment. Both single- and four-channel configurations of the sensor were used
+in the measurements. The sensors studied have active thicknesses of
+about 50~$\mu$m and 80~$\mu$m. The list of sensors studied in this
 article, as well as the temperature and the sensor bias voltage used during
 their operation are listed in Tab.~\ref{tab:DataConditions}. 
 
-CNM sensors have active thickness of about 45 $\mu$m, they were
-produced on 4-inch Silicon-on-Insulator wafers with a 45 $\mu$m thick high
-resistivity float zone (FZ) active layer on top of a 1 $\mu$m buried oxide and a
-300 $\mu$m support wafer. The back-side contact is done through wet-etched deep
+CNM sensors have an active thickness of about 45~$\mu$m and were
+produced on 4-inch Silicon-on-Insulator wafers with a 45~$\mu$m thick high
+resistivity float zone (FZ) active layer on top of a 1~$\mu$m buried oxide and a
+300~$\mu$m support wafer. The back-side contact is achieved through wet-etched deep
 access holes through the insulator. Details on CNM sensors can be found in
 Ref.~\cite{CNMSensors, Cartiglia201783}. 
 
-The HPK sensors were manufactured on 6-inch silicon wafers of 150 $\mu$m total
-thickness with a 50 $\mu$m or 80 $\mu$m thick high resistivity float zone (FZ)
+The HPK sensors were manufactured on 6-inch silicon wafers of 150~$\mu$m total
+thickness with a 50~$\mu$m or 80~$\mu$m thick high resistivity float zone (FZ)
 active layer. Four gain splits, identified with the letters A (lowest gain) to D
-(highest gain), were produced, identical in the mask design but with a different
-$p^+$ dose of the gain layer, to study the optimum parameters of the charge
+(highest gain), were produced identical in the mask design but with a different
+$p^+$ dose of the gain layer to study the optimal parameters of the charge
 multiplication mechanism. The pads were produced in three versions: two with
-guard ring (GR and GBGR) and one without guard ring. Four-channel sensors in 2x2
+guard ring (GR and GBGR) and one without guard ring. Four-channel sensors in a $2\times 2$
 array were produced with all 4 gain-splits, and are identified with the PIX
-identifier, e.g. the 2x2 array of the 50 $\mu$m sensor split D is labelled as
-50D-PIX. 
-
-Each channel in the 2x2 HPK array is 3x3~mm$^2$. The CNM single-channel sensors
-are square pads with an active area of 1.7 mm$^2$ while the HPK single-channel
-sensors are circular pads with an active area of 0.8~mm$^2$.
+identifier. For example, the $2\times 2$ array of the 50~$\mu$m sensor split D is labelled as
+50D-PIX. The sensor corresponding to each of the four channels in the array 
+is also referred to as a pixel in this paper. 
+Each pixel in the $2\times 2$ HPK array has dimensions of $3\times 3$~$\mathrm{mm}^{2}$. 
+The CNM single-channel sensors are square pads with an active area of $1.7$~$\mathrm{mm}^{2}$ 
+while the HPK single-channel sensors are circular pads with an active area of $0.8$~$\mathrm{mm}^{2}$.
 
 \begin{figure}[!htbp] 
 \centering
@@ -318,7 +318,12 @@ sensors are circular pads with an active area of 0.8~mm$^2$.
 \includegraphics[width=0.34\textwidth]{figs/CNM-W9HG11.pdf} \\
 \includegraphics[width=0.32\textwidth]{figs/HPK-50D-GR.pdf} 
 \includegraphics[width=0.32\textwidth]{figs/CNM-singlechannel.pdf} 
-\caption{A picture of the HPK 50D-PIX 2x2 array sensor (top left), the CNM-W9HG11 2x2 array (top left), 50D-GR single sensor (bottom left), and CNM W11LGA35 single sensor (bottom right). The pixel labels overlaid on top of the array sensors are used in the text to identify pixels on the array. Signals from the pixels are read out by the micro-bonds that are connected to the signal pads on the sensors. \textbf {FIXME better quality images for CNM sensors} } 
+\caption{Photographs of the HPK 50D-PIX $2\times 2$ array sensor (top left), the CNM-W9HG11 $2\times 2$ 
+array sensor(top left), the 50D-GR single sensor (bottom left), and the CNM W11LGA35 single 
+sensor (bottom right) are shown. The pixel labels overlaid on top of the array sensors are 
+used in the text to identify pixels on the array. Signals from the pixels are read out by 
+the micro-bonds that are connected to the signal pads on the sensors. 
+\textbf {FIXME better quality images for CNM sensors} } 
 \label{fig:HPK_Sensors} 
 \end{figure} 
 

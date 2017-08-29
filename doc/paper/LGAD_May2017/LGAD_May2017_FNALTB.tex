@@ -195,7 +195,7 @@ listed in Sec.~\ref{sec:sensors}; readout boards used in the measurements are
 described in Sec.~\ref{sec:boards}; beam test results are presented in 
 Sec.~\ref{sec:results}, followed by the conclusion in Sec.~\ref{sec:conclusion}.
 
-\section{Test-beam Setup} 
+\section{Experimental Setup} 
 \label{sec:setup}
 
 %We performed the test-beam measurements at the Fermilab Test-beam
@@ -280,7 +280,7 @@ the Peltier elements inside the DUT area is provided by the two tubes shown in t
 \end{figure} 
 
 
-\section{Properties of the tested LGAD sensors}
+\section{LGAD Sensor Properties}
 \label{sec:sensors}
 
 Sensors manufactured by Hamamatsu (HPK) and CNM were measured in the test beam
@@ -328,38 +328,36 @@ the micro-bonds that are connected to the signal pads on the sensors.
 \end{figure} 
 
 
-\section{Read-out boards}
+\section{Read-out Electronics}
 \label{sec:boards}
 
-Three boards were used in various measurements presented in this paper, which
-were developed at the University of California Santa Cruz (UCSC), University of
-Kansas (KU), and at FNAL:
+Three readout electronics boards were used in various measurements presented in this paper.
+They were independently developed at Fermi National Accelerator Laboratory (FNAL),
+at the University of Kansas (KU), and at the University of California Santa Cruz (UCSC).
 
 The 4-channel Fermilab LGAD test board is designed to test sensors up to 8.5~mm
-by 8.5~mm at voltages up to 1~kV. Four wire-bonding pads for allow for signal
-readout via Mini-Circuits GALI-66+ based amplifiers. Amplifiers feature 1:2
-input impedance matching transformers, two stages of amplification and a 500~MHz
-low-pass filter. In this full configuration, the amplifiers feature
+by 8.5~mm at voltages up to 1~kV. Four wire-bonding pads allow for signal
+readout via amplifiers based on Mini-Circuits GALI-66+. The amplifiers feature 
+transformers with 1:2 input impedance matching, two stages of amplification and 
+a 500~MHz low-pass filter. In this full configuration, the amplifiers feature
 12.5~$\Omega$ input impedance, 5~k$\Omega$ transimpedance, 500~MHz bandwidth and
-1~mV rms output noise. If needed the input transformer and/or low-pass filter
-can be jumped changing the input impedance to 50~$\Omega$ (transimpedance to
-10~k$\Omega$) and bandwidth to 2~GHz.
+1~mV rms output noise. If needed it is possible to jump the input transformer 
+and/or the low-pass filter, which would result in an input impedance of 50~$\Omega$,
+transimpedance of 10~k$\Omega$, and bandwidth of 2~GHz.
 
 The 2-channel KU board, designed and produced by the University of Kansas, can
-accommodate different types of sensors, i.e. diamond, silicon, LGAD or APDs. The
-sensor is hosted on the board itself and the electronics of the version used for
-this work was optimized for precise timing measurements. In particular, the
-amplifier, made with discrete components, has an input impedance of 700 Ohm, an
-output noise of 4 mV and a gain in transresistance of about 50 mV/$\mu$A with
-a 3 dB bandwidth of 100 MHz. Those values were simulated for an input
-capacitance of 20 pF, which corresponds roughly to a LGAD of 9 mm$^2$. The power
-consumption of the board is about 130 mW per channel. Similar electronics is
-available in different configurations with 1, 2 (used in this work) or 8
-channels.
+accommodate many types of sensors including diamond, silicon, LGAD or avalanche photodiodes (APD). 
+The sensor is hosted on the board itself and the electronics was optimized for precise 
+timing measurements. In particular, the amplifier, made with discrete components, 
+has an input impedance of 700~$\Omega$, an output noise of 4~mV and a gain in 
+transresistance of about 50 mV/$\mu$A with a 3~dB bandwidth of 100~MHz. 
+Those values were simulated for an input capacitance of 20~pF, 
+which corresponds roughly to an LGAD of $9$~$\mathrm{mm}^{2}$. The power
+consumption of the board is about 130~W per channel. 
 
-The USCS board 1-channel board is described in details in
+The UCSC 1-channel board is described in detail in
 Ref.~\cite{Cartiglia201783}. This board uses discrete components and contains
-several features which allow maintaining a wide bandwidth ($\sim$ 2 GHz) and a
+several features which allow for maintaining a wide bandwidth ($\sim$ 2 GHz) and a
 low noise even in noisy environments. The inverting amplifier uses a high-speed
 SiGe transistor which has a trans-impedance of about 470~$\Omega$. A commercial
 inverting amplifier with gain 10x is used to boost the signal. The 4-channel
@@ -370,37 +368,45 @@ k$\Omega$.
 %\textbf {FIXME HARTMUT} a paragraph describing the 4-ch UCSC board. 
 
 
-\section{Beam test results}
+\section{Sensor Studies and Analysis}
 \label{sec:results}
 
-\subsection{Analysis procedure}
+We present a number of different studies performed on the LGAD sensors 
+described in Section~\ref{sec:sensors}. They include signal response 
+uniformity studies, studies of the gap between adjacent pixels, 
+studies of the doping profile, studies of the sensor thickness,
+temperature studies, and irradiation studies. A brief overview of the
+analysis methods is given below, followed by subsections describing
+the details and results of each study.
 
-The CAEN digitizer is voltage and time calibrated using the procedure described
-in Ref.~\cite{Kim201467}. The time for the reference Photek MCP-PMT detector is
-obtained by fitting the peak region of the pulse to a Gaussian function and the
-mean parameter of the Gaussian is assigned as the timestamp $t_0$. The time for
-signals from the LGAD sensors is obtained by performing a linear fit to the
+As discussed in Section~\ref{sec:setup}, the reference time
+is measured using the Photek MCP-PMT detector. The timestamp
+for this reference detector is obtained by fitting the 
+peak region of the pulse to a Gaussian function and the
+mean parameter of the Gaussian is assigned as the timestamp $t_0$. The timestamp for
+signals from the LGAD sensors is obtained in two different ways depending on
+which read-out board was used. For the KU board, which has a slower decay time,
+the timestamp is obtained by by performing a linear fit to the
 rising edge of the pulse and the time at which the pulse reaches 45\% of the
-maximum amplitude is assigned as its timestamp $t1$. We measured the electronic
-time resolution of the CAEN V1742 digitizer as $\sim$4~ps and neglected its
-impact on the timing measurements described below. 
+maximum amplitude is assigned as its timestamp $t1$. For the FNAL and UCSC boards,
+which have fast decay times, the timestamp is obtained via a fit to a 
+Gaussian function analogous to what is done for the reference detector.
 
-Events are required to have a signal in the Photek MCP-PMT consistent with a MIP
-signal, and a signal above the noise in LGAD sensors. The MIP signal selection
-in Photek MCP-PMT is the same for all runs, since it was always read out
-directly by the CAEN digitizer. The signal selection for LGAD boards was
+Events are required to have a signal in the Photek MCP-PMT consistent with a 
+minimum ionizing particle (MIP), and a signal above the noise in LGAD sensors. 
+The MIP signal selection in the Photek MCP-PMT is the same for all runs
+and requires that the signal amplitude is between $160$~mV and $320$~mV.
+The signal selection for LGAD boards was
 optimized for each board individually, by selecting the MIP signal peak fitted
-with a Landau function. 
-
-All measurements other than those described in Sec.~\ref{sec:temp_dependance}
+with a Landau function. All measurements other than those described in Sec.~\ref{sec:temp_dependance}
 and ~\ref{sec:rad_tolerance} were performed at room temperature. 
 
 Here, and in the remainder of this article, whenever a scan of a certain
 characteristic quantity (e.g. time resolution) sensors is presented, we show the
 X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and 3, as
 defined on the left picture in Fig.~\ref{fig:HPK_Sensors}. The X-axis scan
-across pixels 3 and 4, and Y-axis scans across pixels 2 and 4 shown
-qualitatively the same features, and are not shown here. 
+across pixels 3 and 4, and Y-axis scans across pixels 2 and 4 show
+qualitatively the same features, and are not presented here. 
 
 
 \subsection{Measurement of the ``no-response'' area between two neighboring pixels}

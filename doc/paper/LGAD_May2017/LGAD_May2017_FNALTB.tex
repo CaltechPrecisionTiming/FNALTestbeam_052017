@@ -668,17 +668,19 @@ $-20^{\circ}$C degrees. Operation at such low temperatures will allow to
 significantly reduce the leakage current, and additionally improve the timing
 characteristics of the sensors. In this section we describe the measurements of
 the LGAD sensors performed at $-10$ and $-20^{\circ}$C degrees, and compare the
-results to those at the room temperature. These measurements were performed with
-the HPK 50D-PIX sensors mounted on the FNAL 4-channel board. In order to
-maintain all operating conditions the same, and only change the sensor
-temperature, the sensor was biased at $-250$~V in these measurements. 
+results to those at room temperature. These measurements were performed with
+the HPK 50D-PIX sensors mounted on the FNAL 4-channel board. The sensor was
+biased at the same voltage of $-250$~V for all temperature scenarios.
 
 The distribution of the signal MPV across the sensor surface is shown in
 Fig.~\ref{fig:MPV_vs_X_HPK50D_TemperatureDependance}. We observe that the signal
-MPV more than doubles when the temperature is reduced from $+20^{\circ}$C to
-$-20^{\circ}$C. While the MPV distributions at room temperature across the two
-channels are within 2\% of each other, at lower temperatures one of the pixels
-shows about 5\% difference of the MPV with respect to its neighbor. 
+MPV increases by more than a factor of two when the temperature is reduced 
+from $+20^{\circ}$C to $-20^{\circ}$C. While the MPV uniformity across the two
+channels are within 2\% of each other at room temperature, at lower temperatures 
+one of the pixels shows a difference of about 5\% with respect to its neighboring pixel.
+A more detailed study is needed to understand whether this difference is due to
+non-uniform temperature distribution across the sensor array or due to differences 
+in the signal response between different pixel sensors at colder temperatures.
 
 \begin{figure}[htbp] 
 \centering
@@ -690,8 +692,8 @@ in Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at $-250$~V.}
 \label{fig:MPV_vs_X_HPK50D_TemperatureDependance} 
 \end{figure} 
 
-The distribution of the $\Delta t$ between the Photek 240 MCP-PMT and the HPK
-50D-PIX sensor is shown in
+The distribution of the $\Delta t$ between the reference timestamp and the timestamp
+from the HPK 50D-PIX sensor is shown in
 Fig.~\ref{fig:MeanTime_vs_X_HPK50D_TemperatureDependance}. We observe no
 significant changes in the behavior of the $\Delta t$ as the temperature varies. 
 
@@ -705,12 +707,15 @@ in Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at $-250$~V.}
 \label{fig:MeanTime_vs_X_HPK50D_TemperatureDependance} 
 \end{figure} 
 
-The distribution of the time resolution measured with the HPK 50D-PIX sensor is
-shown in Fig.~\ref{fig:TimeResolution_vs_X_HPK50D_TemperatureDependance}. The
-measured noise was observed to stay constant at 1.2~mV for both $+20$ and
-$-20^{\circ}$C. We observe a significant improvement in the time resolution as
-the temperature is lowered from $+20^{\circ}$C to $-20^{\circ}$C degrees, due to
-the improved signal-to-noise ratio. Time resolution measured was measured to
+The time resolution measured for the HPK 50D-PIX sensor is
+shown in Fig.~\ref{fig:TimeResolution_vs_X_HPK50D_TemperatureDependance}. 
+We observe a significant improvement in the time resolution as
+the temperature is lowered from $+20^{\circ}$C to $-20^{\circ}$C degrees.
+As the temperature is lowered, the signal-to-noise ratio improves as 
+the gain of the LGAD sensor increases and the electronics noise decreases. 
+The noise was observed to remain relatively constant at 1.2~mV for both $+20$ and
+$-20^{\circ}$C. Therefore the improvement comes mainly from the increase in the 
+signal gain. The time resolution was measured to
 improve from around 55-60~ps at the room temperature, down to 35-40~ps at
 $-20^{\circ}$C.
 
@@ -720,7 +725,7 @@ $-20^{\circ}$C.
 \includegraphics[width=0.9\textwidth]{figs/FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance.pdf} 
 \caption{Temperature dependance of the time resolution uniformity across the
 X-axis of the HPK 50D-PIX sensors mounted on the FNAL board. The scan of pixels
-1 and 2 along the X-axis is shown, and pixel numberng scheme is defined in
+1 and 2 along the X-axis is shown. The pixel numberng scheme is defined in
 Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at $-250$~V.} 
 \label{fig:TimeResolution_vs_X_HPK50D_TemperatureDependance} 
 \end{figure} 
@@ -734,9 +739,9 @@ Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at $-250$~V.}
 In this section we present the studies of the irradiated HPK and CNM sensors,
 which were exposed to neutron irradiation at the Ljubljana TRIGA reactor. The
 neutron spectrum and flux are well known and the fluence is quoted in 1 MeV
-equivalent neutrons per cm$^2$ (n$_{\mathrm{eq.}}$/cm$^2$ or shortened
-n/cm$^2$). After $6\times 10^{14}$~n/cm$^2$ irradiation, the devices were
-annealed for 80 min at $60^{\circ}$C. Afterward the devices were kept in
+equivalent neutrons per cm$^2$ (n$_{\mathrm{eq.}}$/cm$^2$ or 
+n/cm$^2$ for short). After $6\times 10^{14}$~n/cm$^2$ irradiation, the devices were
+annealed for 80 min at $60^{\circ}$C. Afterward the devices were kept at
 $-20^{\circ}$C degree during storage, transportation, and test beam experiments.
 
 The two-dimensional distribution of the signal amplitudes on the surface of the
@@ -761,7 +766,7 @@ metallization.
 \centering
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/CNM_irradiated_amp_Map.pdf} \hfill
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/CNM_irradiated_amp_1D.pdf} 
-\caption{(Left) The map of the amplitude distribution on the irradiated CNM W11LGA35 sensor across X and Y coordinates. Two distinct regions on the sensor surface can be identified according to the amplitude distribution: the center of the sensor (area within the red circle), and the periphery of the sensor (area between the black circle and black square). (Right) Amplitude distribution in the two areas of the irradiated CNM W11LGA35 sensor.  Sensor was irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
+\caption{(Left) The map of the amplitude distribution on the irradiated CNM W11LGA35 sensor across X and Y coordinates. Two distinct regions on the sensor surface can be identified according to the amplitude distribution: the center of the sensor (area within the red circle), and the periphery of the sensor (area between the black circle and black square). (Right) Amplitude distribution in the two areas of the irradiated CNM W11LGA35 sensor. The sensor was irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
 \label{fig:CNM_irradiated_amp_Map} 
 \end{figure} 
 
@@ -770,7 +775,7 @@ metallization.
 \centering
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/HPK_irradiated_amp_Map.pdf} \hfill
 \includegraphics[width=0.48\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/HPK_irradiated_amp_1D.pdf} 
-\caption{(Left) The map of the amplitude distribution on the irradiated HPK 50D sensor across X and Y coordinates. Two distinct regions on the sensor surface can be identified according to the amplitude distribution: the center of the sensor (area within the red circle), and the periphery of the sensor (area between the black circle and black square). (Right) Amplitude distribution in the two areas of the irradiated HPK 50D sensor. Sensor was irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
+\caption{(Left) The map of the amplitude distribution on the irradiated HPK 50D sensor across X and Y coordinates. (Right) Signal amplitude distribution for the irradiated HPK 50D sensor. The sensor was irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
 \label{fig:HPK_irradiated_amp_Map} 
 \end{figure} 
 
@@ -786,7 +791,7 @@ of the active area.
 \centering
 \includegraphics[width=0.90\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_Efficiency_vs_X.pdf} 
 \includegraphics[width=0.90\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_Efficiency_vs_Y.pdf} 
-\caption{Efficiency measurement across the X-axis (top) and Y-axes (bottom) of the HPK 50D and CNM W11LGA35 irradiated sensors. Both sensors were irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
+\caption{Efficiency measurements across the X-axis (top) and Y-axes (bottom) of the HPK 50D and CNM W11LGA35 irradiated sensors. Both sensors were irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
 \label{fig:IrradiatedSensorStudy_Efficiency} 
 \end{figure} 
 
@@ -807,8 +812,8 @@ as observed also in Fig.~\ref{fig:CNM_irradiated_amp_Map}.
 \label{fig:IrradiatedSensorStudy_MPV} 
 \end{figure}
 
-The distribution of the $\Delta{t}$ between the Photek 240 MCP-PMT and the
-irradiated HPK and CNM sensors are shown in
+The distribution of the $\Delta{t}$ between the reference timestamp and the
+timestamps of the signals from the irradiated HPK and CNM sensors are shown in
 Fig.~\ref{fig:IrradiatedSensorStudy_MeanTime}. Measurements at both bias voltage
 values are presented. We measured a uniform distribution of the $\Delta{t}$
 values across the HPK sensor. The CNM sensor exhibits a non-uniformity across
@@ -824,13 +829,13 @@ this behavior is expected, since the gain in this region is larger (is it?).}
 \centering
 \includegraphics[width=0.9\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MeanTime_vs_X.pdf} 
 \includegraphics[width=0.9\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_MeanTime_vs_Y.pdf} 
-\caption{$\Delta{t}$ measurement across the X-axis (top) and Y-axes (bottom) of the HPK 50D and CNM W11LGA35 irradiated sensors. Both sensors were irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
+\caption{$\Delta{t}$ measurements across the X-axis (top) and Y-axes (bottom) of the HPK 50D and CNM W11LGA35 irradiated sensors. Both sensors were irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
 \label{fig:IrradiatedSensorStudy_MeanTime} 
 \end{figure} 
 
 Distributions of the time resolution across the surface of the irradiated
-sensors are shown in Fig.~\ref{fig:IrradiatedSensorStudy_TimeResolution}. Time
-resolution measured with the HPK sensor slightly improves with the increase of
+sensors are shown in Fig.~\ref{fig:IrradiatedSensorStudy_TimeResolution}. The time
+resolution measured with the HPK sensor improves slightly with the increase of
 the bias voltage, and shows a uniform distribution across the sensor surface. In
 contrast, the CNM sensor shows a non-uniform distribution of time resolution,
 which is a consequence of the variations of the signal amplitude across the
@@ -841,7 +846,7 @@ the CNM sensor with the increase in the bias voltage.
 \centering
 \includegraphics[width=0.90\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_TimeResolution_vs_X.pdf} 
 \includegraphics[width=0.90\textwidth]{figs/USCSBoard_HPK50DIrradiated-CNMW11LGA35_Run936-961/IrradiatedSensorStudy_TimeResolution_vs_Y.pdf} 
-\caption{Time resolution measurement across the X-axis (top) and Y-axes (bottom) of the HPK 50D and CNM W11LGA35 irradiated sensors. Both sensors were irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
+\caption{Time resolution measurements across the X-axis (top) and Y-axes (bottom) of the HPK 50D and CNM W11LGA35 irradiated sensors. Both sensors were irradiated to $6\times 10^{14}$~n/cm$^2$. Measurements were performed at $-20^{\circ}$C.} 
 \label{fig:IrradiatedSensorStudy_TimeResolution} 
 \end{figure} 
 
@@ -851,14 +856,15 @@ the CNM sensor with the increase in the bias voltage.
 \label{sec:conclusion} 
 
 In a beam test at FNAL with tracking information, we compared the performance of
-LGAD produced by CNM Barcelona and HPK Hamamatsu, both single pads and 2x2
-arrays with pad size varying from 1 mm to 3 mm diameter and a thickness of about
-50 and 80 $\mu$m. Four different readout boards were used, and their performance
-characteristics will be detailed in an upcoming paper. The uniformity of the
-sensor response in pulse height, efficiency and timing resolution were tested
-and found to be good pre-radiation with the exceptions of the area between pads
-which exhibit a ``no-response'' width of about 70~$\mu$m for CNM and 110~$\mu$m
-for HPK. A small timing shift across the HPK sensor of the order 20--30~ps can
+LGAD produced by CNM Barcelona and HPK Hamamatsu. Single pads of diameter 1~mm
+and $2\times 2$ arrays of square pixels of length 3~mm were used. Sensors with
+thicknesses of about 50 and 80 $\mu$m were studied. Four different readout boards 
+were used, and their performance characteristics are to be discussed in detail 
+in an upcoming paper~\cite{}. The uniformity of the
+sensor response in pulse height, efficiency and timing resolution were studied
+and found to be good before irradiation with the exceptions of the gap between pixels
+which have a width of about 70~$\mu$m for CNM sensors and 110~$\mu$m for HPK sensors. 
+A small timing shift across the HPK sensor of the order 20--30~ps can
 be explained by the observed change in pulse shape when comparing metallized and
 non-metallized sensor areas. Uniform signal detection efficiency of 100\% is
 observed on all sensors, both before and after irradiation. 
@@ -866,8 +872,9 @@ observed on all sensors, both before and after irradiation.
 For an un-irradiated 50~$\mu$m thick LGADs with 3~mm pads we find the following timing results: 
 \begin{itemize}
   \item at a temperature of $+20^{\circ}$C, the timing resolution ranges from
-        40~ps to 50~ps depending on the readout board. This number worsens by
-        10~ps for a 80~$\mu$m sensor.
+        40~ps to 50~ps depending on the readout board. %This number worsens by
+        %10~ps for a 80~$\mu$m sensor.
+        %This last statement is not true
   \item cooling the LGAD, while keeping the bias voltage the same at $-250$~V
         (\textbf {what is the gain at $-250$~V}),
         improves the timing resolution from 55~ps at $+20^{\circ}$C to 43~ps at
@@ -901,11 +908,16 @@ V. Cindro and I. Mandic with the neutron irradiations.
 This document was prepared using the resources of the Fermi National Accelerator
 Laboratory (Fermilab), a U.S. Department of Energy, Office of Science, HEP User
 Facility. Fermilab is managed by Fermi Research Alliance, LLC (FRA), acting
-under Contract No. DE-AC02-07CH11359.
+under Contract No. DE-AC02-07CH11359.Supported by funding from California Institute of
+Technology High Energy Physics under Contract DE-SC0011925 with the United
+States Department of Energy.
 
 Part of this work has been performed within the framework of the CERN RD50
 Collaboration. The work was supported by the United States Department of Energy,
-grant DE-FG02-04ER41286, and Fermilab LDRD 2017.027. Part of this work has been
+grant DE-FG02-04ER41286, and Fermilab LDRD 2017.027. Part of this work was supported
+by funding from the California Institute of Technology High Energy Physics under 
+Contract DE-SC0011925 with the United States Department of Energy.
+Part of this work has been
 financed by the European Union’s Horizon 2020 Research and Innovation funding
 program, under Grant Agreement no. 654168 (AIDA-2020) and Grant Agreement no.
 669529 (ERC UFSD669529), and by the Italian Ministero degli Affari Esteri and

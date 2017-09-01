@@ -445,13 +445,11 @@ void IrradiatedSensorStudy_MPV_vs_X()
    gre->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph_Graph30013001 = new TH1F("Graph_Graph_Graph30013001","",100,8.02,31.78);
-   Graph_Graph_Graph30013001->SetMinimum(0.02);
+   Graph_Graph_Graph30013001->SetMinimum(0.025);
    Graph_Graph_Graph30013001->SetMaximum(0.08);
    Graph_Graph_Graph30013001->SetDirectory(0);
    Graph_Graph_Graph30013001->SetStats(0);
 
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
    ci = TColor::GetColor("#000099");
    Graph_Graph_Graph30013001->SetLineColor(ci);
    Graph_Graph_Graph30013001->GetXaxis()->SetTitle("x-coordinate [mm]");
@@ -899,8 +897,6 @@ void IrradiatedSensorStudy_MPV_vs_X()
    Graph_Graph_Graph30013002->SetDirectory(0);
    Graph_Graph_Graph30013002->SetStats(0);
 
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
    ci = TColor::GetColor("#000099");
    Graph_Graph_Graph30013002->SetLineColor(ci);
    Graph_Graph_Graph30013002->GetXaxis()->SetTitle("x-coordinate [mm]");
@@ -1077,11 +1073,11 @@ void IrradiatedSensorStudy_MPV_vs_X()
    -999,
    -999,
    -999,
-   -999,
-   0.02329705,
-   0.02237228,
-   0.023506,
-   -999,
+   0.05114904,//27
+   0.02462375,
+   0.02395881,
+   0.02597307,
+   0.05226844,
    -999,
    -999,
    -999,
@@ -1279,11 +1275,11 @@ void IrradiatedSensorStudy_MPV_vs_X()
    0,
    0,
    0.01607215,
-   0,
-   0.000376713,
-   0.0002636768,
-   0.0004087122,
-   0,
+   0.0006383419,
+   0.0004169162,
+   0.000365128,
+   0.0005797597,
+   0.0007207933,
    0.01071974,
    0,
    0,
@@ -1353,25 +1349,23 @@ void IrradiatedSensorStudy_MPV_vs_X()
    0,
    0};
 
-   TGraphErrors *gre = new TGraphErrors(100,Graph0_fx1003,Graph0_fy1003,Graph0_fex1003,Graph0_fey1003);
-   gre->SetName("Graph0");
-   gre->SetTitle("");
-   gre->SetFillColor(1);
-   gre->SetLineWidth(2);
-
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
-   ci = TColor::GetColor("#0000ff");
-   gre->SetLineColor(ci);
+   TGraphErrors *gre10 = new TGraphErrors(100,Graph0_fx1003,Graph0_fy1003,Graph0_fex1003,Graph0_fey1003);
+   gre10->SetName("Graph0");
+   gre10->SetTitle("");
+   gre10->SetFillColor(1);
+   gre10->SetLineWidth(2);
 
    ci = TColor::GetColor("#0000ff");
-   gre->SetMarkerColor(ci);
-   gre->SetMarkerStyle(20);
-   gre->SetMarkerSize(1.1);
+   gre10->SetLineColor(ci);
+
+   ci = TColor::GetColor("#0000ff");
+   gre10->SetMarkerColor(ci);
+   gre10->SetMarkerStyle(20);
+   gre10->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph_Graph30013003 = new TH1F("Graph_Graph_Graph30013003","",100,8.02,31.78);
    Graph_Graph_Graph30013003->SetMinimum(0.015);
-   Graph_Graph_Graph30013003->SetMaximum(0.035);
+   Graph_Graph_Graph30013003->SetMaximum(0.11);
    Graph_Graph_Graph30013003->SetDirectory(0);
    Graph_Graph_Graph30013003->SetStats(0);
 
@@ -1395,9 +1389,9 @@ void IrradiatedSensorStudy_MPV_vs_X()
    Graph_Graph_Graph30013003->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph_Graph30013003->GetZaxis()->SetTitleSize(0.035);
    Graph_Graph_Graph30013003->GetZaxis()->SetTitleFont(42);
-   gre->SetHistogram(Graph_Graph_Graph30013003);  
-   gre->SetLineWidth(2);
-   gre->Draw("ap");
+   gre10->SetHistogram(Graph_Graph_Graph30013003);  
+   gre10->SetLineWidth(2);
+   gre10->Draw("ap");
 
 
 
@@ -1530,11 +1524,11 @@ void IrradiatedSensorStudy_MPV_vs_X()
    -999,
    -999,
    -999,
-   -999,
-   0.02625071,
-   0.02759183,
-   0.02823809,
-   -999,
+   0.07187951, //27
+   0.02955439,
+   0.02951397,
+   0.03306131,
+   0.06854869,
    -999,
    -999,
    -999,
@@ -1732,11 +1726,11 @@ void IrradiatedSensorStudy_MPV_vs_X()
    0.0006714967,
    0.0005794248,
    0.0005620703,
-   0,
-   0.0008135223,
-   0.0007079603,
-   0.000838637,
-   0.009702711,
+   0.0009026315,
+   0.001426208,
+   0.0007530157,
+   0.001448342,
+   0.001309047,
    0.0006436248,
    0.001080254,
    0.0002612157,
@@ -1807,48 +1801,46 @@ void IrradiatedSensorStudy_MPV_vs_X()
    0};
 
 
-   TGraphErrors *gre1 = new TGraphErrors(100,Graph0_fx1004,Graph0_fy1004,Graph0_fex1004,Graph0_fey1004);
-   gre1->SetName("Graph0");
-   gre1->SetTitle("");
-   gre1->SetFillColor(1);
-   gre1->SetLineColor(kRed);
-   gre1->SetMarkerColor(kRed);
-   gre1->SetLineWidth(2);
-   gre1->SetMarkerStyle(21);
-   gre1->SetMarkerSize(1.1);
+   TGraphErrors *gre11 = new TGraphErrors(100,Graph0_fx1004,Graph0_fy1004,Graph0_fex1004,Graph0_fey1004);
+   gre11->SetName("Graph0");
+   gre11->SetTitle("");
+   gre11->SetFillColor(1);
+   gre11->SetLineColor(kRed);
+   gre11->SetMarkerColor(kRed);
+   gre11->SetLineWidth(2);
+   gre11->SetMarkerStyle(21);
+   gre11->SetMarkerSize(1.1);
    
-   TH1F *Graph_Graph_Graph30013002 = new TH1F("Graph_Graph_Graph30013002","",100,8.02,31.78);
-   Graph_Graph_Graph30013002->SetMinimum(0.015);
-   Graph_Graph_Graph30013002->SetMaximum(0.035);
-   Graph_Graph_Graph30013002->SetDirectory(0);
-   Graph_Graph_Graph30013002->SetStats(0);
+   TH1F *Graph_Graph_Graph30013004 = new TH1F("Graph_Graph_Graph30013004","",100,8.02,31.78);
+   Graph_Graph_Graph30013004->SetMinimum(0.015);
+   Graph_Graph_Graph30013004->SetMaximum(0.08);
+   Graph_Graph_Graph30013004->SetDirectory(0);
+   Graph_Graph_Graph30013004->SetStats(0);
 
-   Int_t ci;      // for color index setting
-   TColor *color; // for color definition with alpha
    ci = TColor::GetColor("#000099");
-   Graph_Graph_Graph30013002->SetLineColor(ci);
-   Graph_Graph_Graph30013002->GetXaxis()->SetTitle("x-coordinate [mm]");
-   Graph_Graph_Graph30013002->GetXaxis()->SetRange(22,36);
-   Graph_Graph_Graph30013002->GetXaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30013002->GetXaxis()->SetLabelSize(0.12);
-   Graph_Graph_Graph30013002->GetXaxis()->SetTitleSize(0.15);
-   Graph_Graph_Graph30013002->GetXaxis()->SetTitleOffset(0.87);
-   Graph_Graph_Graph30013002->GetXaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30013002->GetYaxis()->SetTitle("MIP MPV [V]");
-   Graph_Graph_Graph30013002->GetYaxis()->SetNdivisions(503);
-   Graph_Graph_Graph30013002->GetYaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30013002->GetYaxis()->SetLabelOffset(0.006);
-   Graph_Graph_Graph30013002->GetYaxis()->SetLabelSize(0.10);
-   Graph_Graph_Graph30013002->GetYaxis()->SetTitleSize(0.10);
-   Graph_Graph_Graph30013002->GetYaxis()->SetTitleOffset(0.45);
-   Graph_Graph_Graph30013002->GetYaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30013002->GetZaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30013002->GetZaxis()->SetLabelSize(0.035);
-   Graph_Graph_Graph30013002->GetZaxis()->SetTitleSize(0.035);
-   Graph_Graph_Graph30013002->GetZaxis()->SetTitleFont(42);
-   gre1->SetHistogram(Graph_Graph_Graph30013002);
+   Graph_Graph_Graph30013004->SetLineColor(ci);
+   Graph_Graph_Graph30013004->GetXaxis()->SetTitle("x-coordinate [mm]");
+   Graph_Graph_Graph30013004->GetXaxis()->SetRange(22,36);
+   Graph_Graph_Graph30013004->GetXaxis()->SetLabelFont(42);
+   Graph_Graph_Graph30013004->GetXaxis()->SetLabelSize(0.12);
+   Graph_Graph_Graph30013004->GetXaxis()->SetTitleSize(0.15);
+   Graph_Graph_Graph30013004->GetXaxis()->SetTitleOffset(0.87);
+   Graph_Graph_Graph30013004->GetXaxis()->SetTitleFont(42);
+   Graph_Graph_Graph30013004->GetYaxis()->SetTitle("MIP MPV [V]");
+   Graph_Graph_Graph30013004->GetYaxis()->SetNdivisions(503);
+   Graph_Graph_Graph30013004->GetYaxis()->SetLabelFont(42);
+   Graph_Graph_Graph30013004->GetYaxis()->SetLabelOffset(0.006);
+   Graph_Graph_Graph30013004->GetYaxis()->SetLabelSize(0.10);
+   Graph_Graph_Graph30013004->GetYaxis()->SetTitleSize(0.10);
+   Graph_Graph_Graph30013004->GetYaxis()->SetTitleOffset(0.45);
+   Graph_Graph_Graph30013004->GetYaxis()->SetTitleFont(42);
+   Graph_Graph_Graph30013004->GetZaxis()->SetLabelFont(42);
+   Graph_Graph_Graph30013004->GetZaxis()->SetLabelSize(0.035);
+   Graph_Graph_Graph30013004->GetZaxis()->SetTitleSize(0.035);
+   Graph_Graph_Graph30013004->GetZaxis()->SetTitleFont(42);
+   gre11->SetHistogram(Graph_Graph_Graph30013004);
   
-   gre1->Draw("p");
+   gre11->Draw("p");
 
 
 
@@ -1862,8 +1854,8 @@ void IrradiatedSensorStudy_MPV_vs_X()
    legend->SetTextSize(0.12);
    legend->SetBorderSize(1);
    legend->SetFillStyle(1001);
-   legend->AddEntry( gre, "Bias Voltage: 400V","LP");
-   legend->AddEntry( gre1, "Bias Voltage: 420V","LP");
+   legend->AddEntry( gre10, "Bias Voltage: 400V","LP");
+   legend->AddEntry( gre11, "Bias Voltage: 420V","LP");
    legend->Draw();
 
    TLatex *   tex2 = new TLatex(0.12, 0.86,"LGAD Sensor: CNM W11LGA35");

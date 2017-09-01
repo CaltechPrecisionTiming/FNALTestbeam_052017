@@ -447,7 +447,7 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    gre->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph_Graph30013001 = new TH1F("Graph_Graph_Graph30013001","",100,8.02,31.78);
-   Graph_Graph_Graph30013001->SetMinimum(0.02);
+   Graph_Graph_Graph30013001->SetMinimum(0.025);
    Graph_Graph_Graph30013001->SetMaximum(0.08);
    Graph_Graph_Graph30013001->SetDirectory(0);
    Graph_Graph_Graph30013001->SetStats(0);
@@ -1108,11 +1108,11 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    0,
    0,
    0,
-   0,
-   0.02258278,
-   0.02284787,
-   0.02512253,
-   0,
+   0.03919202,
+   0.02283625,
+   0.02272905,
+   0.02560123,
+   0.05023854,
    -0.09044833,
    0,
    0,
@@ -1310,11 +1310,11 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    0,
    0,
    0,
-   0,
-   0.0003338798,
-   0.0003237039,
-   0.0005816046,
-   0,
+   0.00137228,//
+   0.0003354178,
+   0.0003460345,
+   0.0005694162,
+   0.0007652793,
    0.1825294,
    0,
    0,
@@ -1367,7 +1367,7 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    
    TH1F *Graph_Graph_Graph30013003 = new TH1F("Graph_Graph_Graph30013003","",100,8.02,31.78);
    Graph_Graph_Graph30013003->SetMinimum(0.015);
-   Graph_Graph_Graph30013003->SetMaximum(0.035);
+   Graph_Graph_Graph30013003->SetMaximum(0.11);
    Graph_Graph_Graph30013003->SetDirectory(0);
    Graph_Graph_Graph30013003->SetStats(0);
 
@@ -1560,11 +1560,11 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    0.009553171,
    0.01038958,
    0.007900993,
-   0.4128148,
-   0.02685049,
-   0.02637665,
-   0.02852456,
-   -0.001705925,
+   0.055137,
+   0.02744989,
+   0.02690133,
+   0.03089982,
+   0.06821446,
    0.009144339,
    0.009349586,
    0,
@@ -1762,11 +1762,11 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    0.0008414959,
    0.0006034435,
    0.0009502006,
-   0.05167918,
-   0.0007087733,
-   0.0008923582,
-   0.0009464546,
-   0.008905444,
+   0.003910989,//
+   0.0006502316,
+   0.0007075084,
+   0.001282672,
+   0.001489004,
    0.001009338,
    0.001065057,
    0,
@@ -1815,7 +1815,7 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    
    TH1F *Graph_Graph_Graph300130023 = new TH1F("Graph_Graph_Graph300130023","",100,8.02,31.78);
    Graph_Graph_Graph300130023->SetMinimum(0.015);
-   Graph_Graph_Graph300130023->SetMaximum(0.035);
+   Graph_Graph_Graph300130023->SetMaximum(0.1);
    Graph_Graph_Graph300130023->SetDirectory(0);
    Graph_Graph_Graph300130023->SetStats(0);
 

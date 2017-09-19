@@ -43,6 +43,7 @@
 \usepackage{lineno}
 \usepackage{hyperref}
 \usepackage{siunitx}
+\usepackage{multirow}
 %\usepackage[percent]{overpic}
 %\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 %\usepackage{cleveref}
@@ -374,6 +375,122 @@ k$\Omega$.
 
 %\textbf {FIXME HARTMUT} a paragraph describing the 4-ch UCSC board. 
 
+\section{Timestamp Reconstruction}
+\label{sec:timestampReco}
+
+As discussed in Section~\ref{sec:setup}, the reference time
+is measured using the Photek MCP-PMT detector. The timestamp
+for this reference detector is obtained by fitting the 
+peak region of the pulse to a Gaussian function and the
+mean parameter of the Gaussian is assigned as the timestamp $t_0$. 
+A more detailed description can be found in Ref~\cite{Anderson:2015gha}.
+
+The timestamp for signals from the LGAD sensors is obtained in two different ways depending on
+which read-out board was used. For the KU board, which has a slower decay time,
+the timestamp is obtained by by performing a linear fit to the
+rising edge of the pulse, between $15\%$ and $70\%$ of the maximum amplitude, 
+and the time at which the pulse reaches $45\%$ of the
+maximum amplitude is assigned as its timestamp $t_1$. For the FNAL and UCSC boards,
+which have fast decay times, the timestamp is obtained via a fit to a 
+Gaussian function analogous to what is done for the reference detector.
+
+The above choices of timestamp reconstruction algorithms used
+are motivated by the result of a dedicated study of different
+timestamp reconstruction algorithms for each of the three readout boards.
+The study is performed using signals from the HPK 50D sensor. 
+Constant fraction discriminant (CFD) and constant threshold discriminant (CTD)
+algorithms are used and the time resolution performance is studied as a function
+of the threshold used. In Tables~\ref{tab:KUBoardCFD}~and~\ref{tab:KUBoardCTD}, 
+we show the time resolution obtained
+for different thresholds for the CFD and CTD algorithms respectively, for the KU
+readout board. For the CTD algorithm, the timestamp has a significant dependence
+on the pulse height and requires a correction referred to as a timewalk correction. 
+For most situations, the timewalk correction can be accurately described by a linear
+function, however we do observe that as the CTD threshold increases, the timewalk
+correction because more quadratic. In Table~\ref{tab:KUBoardCTD}, the time resolution 
+is reported for both linear and quadratic timewalk corrections.
+We observe that the best results are obtained for a CFD threshold
+at $45\%$. However the CTD algorithm at a moderate threshold does yield very competitive
+time resolutions. 
+
+\begin{table}[!htb]
+\scriptsize
+\begin{center}
+  \begin{tabular}{ |c | c | }
+    \hline
+    CFD Threshold & Time Resolution \\ \hline
+    $15\%$ & $45$~ps \\       
+    $30\%$ & $40$~ps \\       
+    $45\%$ & $38$~ps \\       
+    $60\%$ & $39$~ps \\       
+    \hline
+  \end{tabular}
+\caption{Time resolution measured for the HPK 50D-PIX sensor on the KU readout board using
+the constant fraction discriminant algorithm.}  
+\label{tab:KUBoardCFD}
+\end{center}
+\end{table}
+
+\begin{table}[!htb]
+\scriptsize
+\begin{center}
+  \begin{tabular}{ |c | c | c | }
+    \hline
+    CTD         & Time Resolution & Time Resolution   \\ 
+    Threshold   & (Linear Timewalk Correction) & (Quadratic Timewalk Correction)  \\ \hline 
+    $12$~mV & $52$~ps & $51$~ps \\       
+    $18$~mV & $46$~ps & $45$~ps \\       
+    $24$~mV & $43$~ps & $42$~ps \\       
+    $37$~mV & $41$~ps & $40$~ps \\       
+    $49$~mV & $43$~ps & $39$~ps \\       
+    $61$~mV & $43$~ps & $39$~ps \\       
+    $73$~mV & $45$~ps & $40$~ps \\       
+    \hline
+  \end{tabular}
+\caption{Time resolution measured for the HPK 50D-PIX sensor on the KU readout board using
+the constant fraction discriminant algorithm.}  
+\label{tab:KUBoardCTD}
+\end{center}
+\end{table}
+
+In Table~\ref{tab:FNALUCSCBoardTimestampRecoStudy}, we show the analogous study performed
+for the FNAL and UCSC readout boards. As signals on these readout boards have fast decay
+times, the Gaussian fit yields the best performance. As for the KU readout board, 
+the CFD and CTD algorithms again give similar performance 
+for the FNAL and UCSC readout boards.
+
+\begin{table}[!htb]
+\scriptsize
+\begin{center}
+  \begin{tabular}{ |c | c | c | }
+    \hline
+    Timestamp   & Time Resolution   & Time Resolution   \\ 
+    Algorithm   & (FNAL Board with  & (UCSC Board with   \\ 
+    Type        & (HPK 50D-PIX Sensor)  & irradated HPK 50D Sensor)  \\ \hline 
+    Gaussian Fit & $42$~ps & $35$~ps \\ \hline       
+    CFD at $15\%$ Threshold & $71$~ps & $47$~ps \\       
+    CFD at $30\%$ Threshold & $60$~ps & $42$~ps \\       
+    CFD at $45\%$ Threshold & $53$~ps & $39$~ps \\       
+    CFD at $60\%$ Threshold & $56$~ps & $44$~ps \\   \hline     
+    CTD at $18$~mV Threshold & \multirow{2}{*}{$55$~ps} & \multirow{2}{*}{$43$~ps} \\       
+    (Linear Timewalk Correction) & &  \\       
+    CTD at $18$~mV Threshold & \multirow{2}{*}{$52$~ps} & \multirow{2}{*}{$37$~ps} \\       
+    (Quadratic Timewalk Correction) & &  \\       
+    %CTD at $24$~mV Threshold & \multirow{2}{*}{$55$~ps} & \multirow{2}{*}{$49$~ps} \\       
+    %(Linear Timewalk Correction) & &  \\       
+    %CTD at $24$~mV Threshold & \multirow{2}{*}{$51$~ps} & \multirow{2}{*}{$41$~ps} \\       
+    %(Quadratic Timewalk Correction) & &  \\       
+    \hline
+  \end{tabular}
+\caption{Time resolution measured for the HPK 50D-PIX sensor on the FNAL readout board
+and the irradiated HPK 50D sensor on the UCSC board for a variety of timestamp reconstruction
+algorithms.}  
+\label{tab:FNALUCSCBoardTimestampRecoStudy}
+\end{center}
+\end{table}
+
+
+
 
 \section{Sensor Studies and Analysis}
 \label{sec:results}
@@ -385,19 +502,6 @@ doping profile and sensor thickness characterization,
 temperature and irradiation dependence, and timing resolution. A brief overview of the
 analysis methods is given below, followed by subsections describing
 the details and results of each study.
-
-As discussed in Section~\ref{sec:setup}, the reference time
-is measured using the Photek MCP-PMT detector. The timestamp
-for this reference detector is obtained by fitting the 
-peak region of the pulse to a Gaussian function and the
-mean parameter of the Gaussian is assigned as the timestamp $t_0$. The timestamp for
-signals from the LGAD sensors is obtained in two different ways depending on
-which read-out board was used. For the KU board, which has a slower decay time,
-the timestamp is obtained by by performing a linear fit to the
-rising edge of the pulse and the time at which the pulse reaches 45\% of the
-maximum amplitude is assigned as its timestamp $t_1$. For the FNAL and UCSC boards,
-which have fast decay times, the timestamp is obtained via a fit to a 
-Gaussian function analogous to what is done for the reference detector.
 
 Events are required to have a signal in the Photek MCP-PMT consistent with a 
 minimum ionizing particle (MIP), and a signal above the noise in LGAD sensors. 
@@ -870,12 +974,9 @@ the CNM sensor with the increase in the bias voltage.
 In a beam test at FNAL with tracking information, we compared the performance of
 LGAD produced by CNM Barcelona and HPK Hamamatsu. Single pads of diameter 1~mm
 and $2\times 2$ arrays of square pixels of 3~mm were used. Sensors with
-thicknesses of about 50 and 80 $\mu$m were studied. Four different readout boards 
-were used, and their performance characteristics are to be discussed in detail 
-in an upcoming paper~\cite{}. The uniformity of the
+thicknesses of about 50 and 80 $\mu$m were studied. The uniformity of the
 sensor response in pulse height, efficiency, and timing resolution
-were studied.
- The uniformity of the
+were studied. The uniformity of the
 sensor response in pulse height before irradiation was found to have a
 2\% spread. The efficiency and timing  resolution before irradiation
 were found to be 100\%  and 30-40~\si{ps}, respectively. The

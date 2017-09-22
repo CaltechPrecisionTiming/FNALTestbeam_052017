@@ -121,10 +121,10 @@ void MakeGap_HPK50CPIXVsX() {
   c->Draw();
 
   g1->Draw("ap");
-  g1->GetXaxis()->SetRangeUser(13.55,13.9);
+  g1->GetXaxis()->SetRangeUser(13.52,13.92);
   g2->Draw("p same");
   
-  TF1 * f1 = new TF1("f1", "[0]*TMath::Erf(([1]-x)/[2])+[3]", 13.5, 13.85);
+  TF1 * f1 = new TF1("f1", "[0]*TMath::Erf(([1]-x)/[2])+[3]", 13.52, 13.92);
   f1->SetParameters(1., 13.6, 1, 0.);
   g1->Fit("f1","R");
 
@@ -307,7 +307,7 @@ void MakeGap_CNMVsX() {
   c->Draw();
 
   g1->Draw("ap");
-  g1->GetXaxis()->SetRangeUser(14.8,15.25);
+  g1->GetXaxis()->SetRangeUser(14.85,15.25);
   g2->Draw("p same");
   
   TF1 * f1 = new TF1("f1", "[0]*TMath::Erf(([1]-x)/[2])+[3]", 14.8, 15.2);
@@ -337,7 +337,7 @@ void MakeGap_CNMVsX() {
   ar3->SetFillColor(1);
   ar3->Draw();
 
-  TLatex *   tex = new TLatex(0.50, 0.5,Form("%4.0f#mum",round(100*(edge2-edge1))*10));
+  TLatex *   tex = new TLatex(0.45, 0.5,Form("%4.0f#mum",round(100*(edge2-edge1))*10));
   tex->SetNDC();
   tex->SetTextSize(0.05);
   tex->Draw();
@@ -460,10 +460,10 @@ void MakeGap_CNMVsY() {
 
 void plotLGADGaps () {
 
-  MakeGap_HPK50DPIXVsX();
-  MakeGap_HPK50CPIXVsX();
-  MakeGap_HPK50CPIXVsY();
-  MakeGap_CNMVsX();
-  MakeGap_CNMVsY();
+  //MakeGap_HPK50DPIXVsX();
+  //MakeGap_HPK50CPIXVsX();
+  //MakeGap_HPK50CPIXVsY();
+  //MakeGap_CNMVsX();
+  //MakeGap_CNMVsY();
 
 }

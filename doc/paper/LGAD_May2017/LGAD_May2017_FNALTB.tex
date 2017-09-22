@@ -171,7 +171,7 @@ detrimental effects of pileup.
 
 One way to mitigate the pileup effects mentioned above, complementary to precision
 tracking methods, is to perform a time of arrival measurement associated with
-each particle. Such a measurement with a precision of about 20-30~\si{ps}, will
+each particle. Such a measurement with a precision of about 30-40~\si{ps}, will
 reduce the effective amount of pileup by a factor of 10, given that the spread
 in collision time of the pileup interactions at HL-LHC is foreseen to be
 approximately 200~\si{ps}. It has been previously shown that a precision of better than
@@ -179,7 +179,7 @@ $20$~\si{ps} can be achieved for electromagnetic showers measured with silicon
 sampling calorimeters~\cite{Apresyan201662,Apresyan2017_NSSMIC,AKCHURIN201731}
 using traditional planar silicon detectors. In this paper, we report results of
 particle beam measurements with thin low-gain avalanche detectors (LGAD) that have
-been shown to achieve time resolutions around 30~\si{ps}~\cite{Cartiglia201783}. LGAD
+been shown to achieve time resolutions around 30~\si{ps}~\cite{Cartiglia201783, PELLEGRINI201412}. LGAD
 are envisioned to be used in the CMS and ATLAS experiment upgrades for HL-LHC in
 order to reduce the pileup contamination. The implemented regions of
 pseudorapidity ($\eta$) are:
@@ -193,7 +193,7 @@ Utilizing high-precision tracking detectors we extract position dependence of
 the charged-particle detection efficiency, signal pulse height, signal
 timestamp, and time resolution. We also compare the performance of 
 50 and 80~$\mu$m LGAD sensors, as well as the HPK and CNM sensors irradiated to 
-an equivalent neutron flux of $6\times 10^{14}$~n/cm$^2$.
+an equivalent neutron flux of $6\times 10^{14}$~n/cm$^2$. Detailed measurements ofirradiated HPK sensors were presented in Ref.~\cite{Galloway:2017gfx}.
 
 The paper is organized as follows: the experimental setup is described in
 Sec.~\ref{sec:setup}; the tested LGAD sensors and their operating conditions are
@@ -231,6 +231,31 @@ telescope is based on the CAPTAN system developed at
 Fermilab~\cite{KWAN2016162}. The track-reconstruction is performed using the
 Monicelli software package developed specifically for the test-beam application. 
 
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.75\textwidth]{figs/BeamSetup.pdf} 
+\caption{A schematic diagram of the test-beam setup is shown. The $t_0$ and $t_1$ are defined in Section 4.} 
+\label{fig:DragonBoxDiagram} 
+\end{figure} 
+
+The DUTs were placed inside the telescope box described in
+Ref.\cite{KWAN2016162}, and mounted on an aluminum mechanical support structure.
+The telescope box can be moved remotely in both the horizontal and vertical
+directions in order to align the DUTs with the beam. The aluminum support
+structure for the DUTs provide both mechanical stability and are
+equipped with Peltier cooling elements that were used in this study to operate
+the DUTs at $-10^{\circ}$ and $-20^{\circ}$~C.
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.75\textwidth]{figs/TB_dragonBox.pdf} 
+\caption{A picture of the experimental area. Thea pixel telescope detectors are placed inside the 
+electrostatic-discharge shielded boxes on the two sides of the DUT area. Cooling liquid for 
+the Peltier elements inside the DUT area is provided by the two tubes shown in the picture.} 
+\label{fig:DragonBox} 
+\end{figure} 
+
+
 The beam is resonantly extracted in a slow spill for each Main Injector cycle
 delivering a single 4.2 sec long spill per minute. The primary beam (bunched at
 53 MHz) consists of high energy protons (120 GeV) at variable intensities
@@ -260,30 +285,6 @@ trigger counters recorded by the two systems.
 \label{fig:NIM+Captan} 
 \end{figure} 
 
-
-\begin{figure}[htbp] 
-\centering
-\includegraphics[width=0.75\textwidth]{figs/BeamSetup.pdf} 
-\caption{A schematic diagram of the test-beam setup is shown. The $t_0$ and $t_1$ are defined in Section 4.} 
-\label{fig:DragonBoxDiagram} 
-\end{figure} 
-
-The DUTs were placed inside the telescope box described in
-Ref.\cite{KWAN2016162}, and mounted on an aluminum mechanical support structure.
-The telescope box can be moved remotely in both the horizontal and vertical
-directions in order to align the DUTs with the beam. The aluminum support
-structure for the DUTs provide both mechanical stability and are
-equipped with Peltier cooling elements that were used in this study to operate
-the DUTs at $-10^{\circ}$ and $-20^{\circ}$~C.
-
-\begin{figure}[htbp] 
-\centering
-\includegraphics[width=0.75\textwidth]{figs/TB_dragonBox.pdf} 
-\caption{A picture of the experimental area. Thea pixel telescope detectors are placed inside the 
-electrostatic-discharge shielded boxes on the two sides of the DUT area. Cooling liquid for 
-the Peltier elements inside the DUT area is provided by the two tubes shown in the picture.} 
-\label{fig:DragonBox} 
-\end{figure} 
 
 
 \section{LGAD Sensor Properties}
@@ -322,16 +323,7 @@ while the HPK single-channel sensors are circular pads with an active area of $0
 
 \begin{figure}[!htbp] 
 \centering
-\includegraphics[width=0.3\textwidth]{figs/HPK-50D-PIX.pdf} 
-\includegraphics[width=0.34\textwidth]{figs/CNM-W9HG11.pdf} \\
-\includegraphics[width=0.32\textwidth]{figs/HPK-50D-GR.pdf} 
-\includegraphics[width=0.32\textwidth]{figs/CNM-singlechannel.pdf} 
-\caption{Photographs of the HPK 50D-PIX $2\times 2$ array sensor (top left), the CNM-W9HG11 $2\times 2$ 
-array sensor(top left), the 50D-GR single sensor (bottom left), and the CNM W11LGA35 single 
-sensor (bottom right) are shown. The pixel labels overlaid on top of the array sensors are 
-used in the text to identify pixels on the array. Signals from the pixels are read out by 
-the micro-bonds that are connected to the signal pads on the sensors. 
-\textbf {FIXME better quality images for CNM sensors} } 
+\includegraphics[width=0.3\textwidth]{figs/HPK-50D-PIX.pdf} \includegraphics[width=0.31\textwidth]{figs/Hgtd_Hg11_a.jpg} \\\includegraphics[width=0.32\textwidth]{figs/HPK-50D-GR.pdf} \includegraphics[width=0.31\textwidth]{figs/Lgad_Lga35_a.jpg} \caption{Photographs of the HPK 50D-PIX $2\times 2$ array sensor (top left), the CNM-W9HG11 $2\times 2$ array sensor (top right), the 50D-GR single sensor (bottom left), and the CNM W11LGA35 single sensor (bottom right) are shown. Numerical labels overlaid on top of the images of the array sensors are used in the text when referring to individual pixels.} 
 \label{fig:HPK_Sensors} 
 \end{figure} 
 
@@ -532,8 +524,7 @@ We present in detail uniformity studies -- including signal detection
 efficiency, most probable value, time difference, and time resolution  -- accross the sensitive
 area of the LGAD. The sensors under study were produced
 by HPK and CNM. The largest dataset was collected for the 
-HPK 50D-PIX sensor and the CNM W9HG11 sensor as they were the best
-performing sensors from HPK and CNM respectively. The 
+HPK 50D-PIX and the CNM W9HG11 sensors. The 
 HPK 50D-PIX sensor was mounted on the 4-channel FNAL board and biased to $-300$~V, while the 
 CNM W9HG11 sensor was mounted on the 4-channel UCSC board and biased to $-180$~V.
 Both sensors were operated at room temperature for these studies. 
@@ -582,9 +573,8 @@ along the Y-axis are shown. The pixel numbering scheme is defined in Fig.~\ref{f
 
 The measurements of the time difference $\Delta t = t_{1}-t_{0}$ between the
 reference timestamp ($t_0$) and the timestamp of the LGAD sensors ($t_1$) are
-shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}. The micro-bonding scheme of the HPK PIX
-$2\times 2$ sensor arrays is shown in Fig.~\ref{fig:HPK_Sensors}, and \textbf
-{FIXME NEED to add CNM array image similar to HPK one}. For the HPK sensor,
+shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}. The micro-bonding scheme of the HPK and CNM 
+$2\times 2$ sensor arrays is shown in Fig.~\ref{fig:HPK_Sensors}. For the HPK sensor,
 the $\Delta t$ dependence on the hit position indicates a shift of 
 about $20$--$30$~ps between the metalized area near the center of the array
 (gray region of the top-left image in Fig.~\ref{fig:HPK_Sensors}) and the non-metalized area.
@@ -765,7 +755,7 @@ HPK 50C-PIX is biased at $-400$~V. The time resolution for the two sensors are s
 in Fig.~\ref{fig:HPK50CVs80C} as a function of position, and exhibit fairly uniform 
 behavior. The measured time resolutions range from $40$~ps to $50$~ps and 
 are relatively similar for these two different sensor
-thicknesses.\textbf{WHAT READOUT BOARD DID WE USE HERE?}
+thicknesses. Measurements of the HPK 50C-PIX sensor were performed on theKU 2-channel board, and those for HPK 80C-PIX used the FNAL 4-channel board.
 
 %need to understand the gain...and then try to make a stronger statement about how optimal 50 micron is.
 
@@ -939,7 +929,7 @@ values are presented. We measured a uniform distribution of the $\Delta{t}$
 values across the HPK sensor. The CNM sensor exhibits a non-uniformity across
 the sensor surface, where the signals from the central, non-metallized area
 are about 10~ps faster than those from the peripheral, metalized area.
-\textbf {This behavior is opposite of that observed in the non-irradiated
+\textbf {FIXME This behavior is opposite of that observed in the non-irradiated
 sensors, both CNM and HPK. However, given that the signals in the non-metallized
 area of the irradiated CNM sensor are much larger than those in the periphery,
 this behavior is expected, since the gain in this region is larger (is it?).}
@@ -980,7 +970,7 @@ LGAD produced by CNM Barcelona and HPK Hamamatsu. Single pads of diameter 1~mm
 and $2\times 2$ arrays of square pixels of 3~mm were used. Sensors with
 thicknesses of about 50 and 80 $\mu$m were studied. The uniformity of the
 sensor response in pulse height, efficiency, and timing resolution
-were studied. The uniformity of the
+were studied. Four different readout boards were used in these studies. The uniformity of the
 sensor response in pulse height before irradiation was found to have a
 2\% spread. The efficiency and timing  resolution before irradiation
 were found to be 100\%  and 30-40~\si{ps}, respectively. The
@@ -1027,24 +1017,7 @@ Spencer, Max Wilder, and Forest McKinney-Martinez for their technical
 assistance, and the CNM and HPK manufacturing team. We acknowledge the help of
 V. Cindro and I. Mandic with the neutron irradiations. 
 
-This document was prepared using the resources of the Fermi National Accelerator
-Laboratory (Fermilab), a U.S. Department of Energy, Office of Science, HEP User
-Facility. Fermilab is managed by Fermi Research Alliance, LLC (FRA), acting
-under Contract No. DE-AC02-07CH11359. Supported by funding from California Institute of
-Technology High Energy Physics under Contract DE-SC0011925 with the United
-States Department of Energy.
-
-Part of this work has been performed within the framework of the CERN RD50
-Collaboration. The work was supported by the United States Department of Energy,
-grant DE-FG02-04ER41286, and Fermilab LDRD 2017.027. Part of this work was supported
-by funding from the California Institute of Technology High Energy Physics under 
-Contract DE-SC0011925 with the United States Department of Energy.
-Part of this work has been
-financed by the European Union’s Horizon 2020 Research and Innovation funding
-program, under Grant Agreement no. 654168 (AIDA-2020) and Grant Agreement no.
-669529 (ERC UFSD669529), and by the Italian Ministero degli Affari Esteri and
-INFN Gruppo V.
-
+This document was prepared using the resources of the Fermi National AcceleratorLaboratory (Fermilab), a U.S. Department of Energy, Office of Science, HEP UserFacility. Fermilab is managed by Fermi Research Alliance, LLC (FRA), actingunder Contract No. DE-AC02-07CH11359. Part of this work was performed within theframework of the CERN RD50 collaboration.This work was supported by the Fermilab LDRD 2017.027; by the United StatesDepartment of Energy grant DE-FG02-04ER41286; by the California Institute ofTechnology High Energy Physics under Contract DE-SC0011925; by the EuropeanUnion's Horizon 2020 Research and Innovation funding program, under GrantAgreement no. 654168 (AIDA-2020) and Grant Agreement no. 669529 (ERCUFSD669529); by the Italian Ministero degli Affari Esteri and INFN Gruppo V; andby the Spanish Ministry of Economy, Industry and Competitiveness through theParticle Physics National Program (ref. FPA2014-55295-C3-2-R andFPA2015-69260-C3-3-R) co-financed with FEDER funds.
 
 
 %% The Appendices part is started with the command \appendix;

@@ -445,8 +445,8 @@ void TimeResolution_vs_X_50A()
    Graph_Graph1003->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1003->GetYaxis()->SetTitleFont(42);
    Graph_Graph1003->GetZaxis()->SetLabelFont(42);
-   Graph_Graph1003->GetYaxis()->SetRangeUser(0, 0.2);   
-   Graph_Graph1003->GetYaxis()->SetNdivisions(508);
+   Graph_Graph1003->GetYaxis()->SetRangeUser(0.02, 0.18);   
+   Graph_Graph1003->GetYaxis()->SetNdivisions(507);
    Graph_Graph1003->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph1003->GetZaxis()->SetTitleSize(0.035);
    Graph_Graph1003->GetZaxis()->SetTitleFont(42);
@@ -905,8 +905,8 @@ void TimeResolution_vs_X_50B()
    Graph_Graph1003->GetYaxis()->SetTitleSize(0.10);
    Graph_Graph1003->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1003->GetYaxis()->SetTitleFont(42);
-   Graph_Graph1003->GetYaxis()->SetRangeUser(0, 0.2); 
-   Graph_Graph1003->GetYaxis()->SetNdivisions(508);
+   Graph_Graph1003->GetYaxis()->SetRangeUser(0.02, 0.18); 
+   Graph_Graph1003->GetYaxis()->SetNdivisions(507);
    Graph_Graph1003->GetZaxis()->SetLabelFont(42);
    Graph_Graph1003->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph1003->GetZaxis()->SetTitleSize(0.035);
@@ -1368,8 +1368,8 @@ void TimeResolution_vs_X_50C()
    Graph_Graph1001->GetYaxis()->SetTitleSize(0.10);
    Graph_Graph1001->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1001->GetYaxis()->SetTitleFont(42);
-   Graph_Graph1001->GetYaxis()->SetRangeUser(0, 0.2);   
-   Graph_Graph1001->GetYaxis()->SetNdivisions(508);
+   Graph_Graph1001->GetYaxis()->SetRangeUser(0.02, 0.18);   
+   Graph_Graph1001->GetYaxis()->SetNdivisions(507);
    Graph_Graph1001->GetZaxis()->SetLabelFont(42);
    Graph_Graph1001->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph1001->GetZaxis()->SetTitleSize(0.035);
@@ -1810,8 +1810,8 @@ void TimeResolution_vs_X_50D()
    gre->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph1003 = new TH1F("Graph_Graph1003","",100,8.02,31.78);
-   Graph_Graph1003->SetMinimum(0);
-   Graph_Graph1003->SetMaximum(0.1279082);
+   Graph_Graph1003->SetMinimum(0.02);
+   Graph_Graph1003->SetMaximum(0.22);
    Graph_Graph1003->SetDirectory(0);
    Graph_Graph1003->SetStats(0);
 
@@ -1830,7 +1830,7 @@ void TimeResolution_vs_X_50D()
    Graph_Graph1003->GetYaxis()->SetTitleSize(0.10);
    Graph_Graph1003->GetYaxis()->SetTitleOffset(0.4);
    Graph_Graph1003->GetYaxis()->SetTitleFont(42);
-   Graph_Graph1003->GetYaxis()->SetRangeUser(0, 0.15); 
+   Graph_Graph1003->GetYaxis()->SetRangeUser(0.02, 0.18); 
    Graph_Graph1003->GetYaxis()->SetNdivisions(507);
    Graph_Graph1003->GetZaxis()->SetLabelFont(42);
    Graph_Graph1003->GetZaxis()->SetLabelSize(0.035);

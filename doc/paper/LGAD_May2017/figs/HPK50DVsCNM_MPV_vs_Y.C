@@ -367,8 +367,8 @@ void HPK50DVsCNM_MPV_vs_Y()
    gre->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph_Graph30013001 = new TH1F("Graph_Graph_Graph30013001","",100,8.02,31.78);
-   Graph_Graph_Graph30013001->SetMinimum(0.027);
-   Graph_Graph_Graph30013001->SetMaximum(0.050);
+   Graph_Graph_Graph30013001->SetMinimum(0.028);
+   Graph_Graph_Graph30013001->SetMaximum(0.063);
    Graph_Graph_Graph30013001->SetDirectory(0);
    Graph_Graph_Graph30013001->SetStats(0);
 
@@ -831,7 +831,7 @@ void HPK50DVsCNM_MPV_vs_Y()
    gre2->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph_Graph30013003 = new TH1F("Graph_Graph_Graph30013003","",100,8.02,31.78);
-   Graph_Graph_Graph30013003->SetMinimum(0.03);
+   Graph_Graph_Graph30013003->SetMinimum(0.028);
    Graph_Graph_Graph30013003->SetMaximum(0.063);
    Graph_Graph_Graph30013003->SetDirectory(0);
    Graph_Graph_Graph30013003->SetStats(0);

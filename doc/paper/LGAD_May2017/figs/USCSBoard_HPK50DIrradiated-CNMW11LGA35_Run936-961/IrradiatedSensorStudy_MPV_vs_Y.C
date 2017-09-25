@@ -447,8 +447,8 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    gre->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph_Graph30013001 = new TH1F("Graph_Graph_Graph30013001","",100,8.02,31.78);
-   Graph_Graph_Graph30013001->SetMinimum(0.025);
-   Graph_Graph_Graph30013001->SetMaximum(0.08);
+   Graph_Graph_Graph30013001->SetMinimum(0.015);
+   Graph_Graph_Graph30013001->SetMaximum(0.11);
    Graph_Graph_Graph30013001->SetDirectory(0);
    Graph_Graph_Graph30013001->SetStats(0);
 
@@ -894,8 +894,8 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    gre1->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph_Graph30013002 = new TH1F("Graph_Graph_Graph30013002","",100,8.02,31.78);
-   Graph_Graph_Graph30013002->SetMinimum(0.02);
-   Graph_Graph_Graph30013002->SetMaximum(0.08);
+   Graph_Graph_Graph30013002->SetMinimum(0.015);
+   Graph_Graph_Graph30013002->SetMaximum(0.11);
    Graph_Graph_Graph30013002->SetDirectory(0);
    Graph_Graph_Graph30013002->SetStats(0);
 
@@ -1815,7 +1815,7 @@ void IrradiatedSensorStudy_MPV_vs_Y()
    
    TH1F *Graph_Graph_Graph300130023 = new TH1F("Graph_Graph_Graph300130023","",100,8.02,31.78);
    Graph_Graph_Graph300130023->SetMinimum(0.015);
-   Graph_Graph_Graph300130023->SetMaximum(0.1);
+   Graph_Graph_Graph300130023->SetMaximum(0.11);
    Graph_Graph_Graph300130023->SetDirectory(0);
    Graph_Graph_Graph300130023->SetStats(0);
 

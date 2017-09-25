@@ -365,8 +365,8 @@ void HPK50DVsCNM_MPV_vs_X()
    gre->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph_Graph30013001 = new TH1F("Graph_Graph_Graph30013001","",100,8.02,31.78);
-   Graph_Graph_Graph30013001->SetMinimum(0.032);
-   Graph_Graph_Graph30013001->SetMaximum(0.05);
+   Graph_Graph_Graph30013001->SetMinimum(0.028);
+   Graph_Graph_Graph30013001->SetMaximum(0.063);
    Graph_Graph_Graph30013001->SetDirectory(0);
    Graph_Graph_Graph30013001->SetStats(0);
 
@@ -380,7 +380,7 @@ void HPK50DVsCNM_MPV_vs_X()
    Graph_Graph_Graph30013001->GetXaxis()->SetTitleOffset(0.87);
    Graph_Graph_Graph30013001->GetXaxis()->SetTitleFont(42);
    Graph_Graph_Graph30013001->GetYaxis()->SetTitle("MIP MPV [V]");
-   Graph_Graph_Graph30013001->GetYaxis()->SetNdivisions(504);
+   Graph_Graph_Graph30013001->GetYaxis()->SetNdivisions(503);
    Graph_Graph_Graph30013001->GetYaxis()->SetLabelFont(42);
    Graph_Graph_Graph30013001->GetYaxis()->SetLabelOffset(0.006);
    Graph_Graph_Graph30013001->GetYaxis()->SetLabelSize(0.10);
@@ -830,7 +830,7 @@ void HPK50DVsCNM_MPV_vs_X()
    gre2->SetMarkerSize(1.1);
    
    TH1F *Graph_Graph_Graph30013003 = new TH1F("Graph_Graph_Graph30013003","",100,8.02,31.78);
-   Graph_Graph_Graph30013003->SetMinimum(0.030);
+   Graph_Graph_Graph30013003->SetMinimum(0.028);
    Graph_Graph_Graph30013003->SetMaximum(0.063);
    Graph_Graph_Graph30013003->SetDirectory(0);
    Graph_Graph_Graph30013003->SetStats(0);
@@ -850,7 +850,7 @@ void HPK50DVsCNM_MPV_vs_X()
    Graph_Graph_Graph30013003->GetYaxis()->SetTitleSize(0.10);
    Graph_Graph_Graph30013003->GetYaxis()->SetTitleOffset(0.45);
    Graph_Graph_Graph30013003->GetYaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30013003->GetYaxis()->SetNdivisions(505);
+   Graph_Graph_Graph30013003->GetYaxis()->SetNdivisions(503);
    Graph_Graph_Graph30013003->GetZaxis()->SetLabelFont(42);
    Graph_Graph_Graph30013003->GetZaxis()->SetLabelSize(0.035);
    Graph_Graph_Graph30013003->GetZaxis()->SetTitleSize(0.035);

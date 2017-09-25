@@ -48120,7 +48120,7 @@ void Eff_vs_X_HPK50DPIX_Ch1_2_fit()
    ci = TColor::GetColor("#000099");
    Graph_Graph_Graph30033003->SetLineColor(ci);
    Graph_Graph_Graph30033003->GetXaxis()->SetTitle("x-coordinate [mm]");
-   Graph_Graph_Graph30033003->GetXaxis()->SetRange(920,1738);
+   Graph_Graph_Graph30033003->GetXaxis()->SetRange(1138,1738);
    Graph_Graph_Graph30033003->GetXaxis()->SetLabelFont(42);
    Graph_Graph_Graph30033003->GetXaxis()->SetLabelSize(0.035);
    Graph_Graph_Graph30033003->GetXaxis()->SetTitleSize(0.05);

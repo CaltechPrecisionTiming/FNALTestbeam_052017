@@ -191,7 +191,7 @@ LGAD sensors produced by Centro Nacional de Microelectr\'{o}nica (CNM) and
 Hamamatsu Photonics (HPK) exposed to the 120~GeV proton beam at Fermilab.
 Utilizing high-precision tracking detectors we extract position dependence of
 the charged-particle detection efficiency, signal pulse height, signal
-timestamp, and time resolution. We also compare the performance of 
+timestamp, and time resolution. We also compare the uniformity of 
 50 and 80~$\mu$m LGAD sensors, as well as the HPK and CNM sensors irradiated to 
 an equivalent neutron flux of $6\times 10^{14}$~n/cm$^2$. Detailed measurements ofirradiated HPK sensors were presented in Ref.~\cite{Galloway:2017gfx}.
 
@@ -407,7 +407,7 @@ function, however we do observe that as the CTD threshold increases, the timewal
 correction because more quadratic. In Table~\ref{tab:KUBoardCTD}, the time resolution 
 is reported for both linear and quadratic timewalk corrections.
 We observe that the best results are obtained for a CFD threshold
-at $45\%$. However the CTD algorithm at a moderate threshold does yield very competitive
+at $45\%$. However the CTD algorithm at a moderate threshold does yield comparable
 time resolutions. 
 
 \begin{table}[!htb]
@@ -737,24 +737,18 @@ defined in Fig.~\ref{fig:HPK_Sensors}.}
 \end{figure} 
 
 
-\subsection{Comparison of HPK 50 $\mu$m with 80 $\mu$m}
+\subsection{Comparison of uniformity of HPK 50 $\mu$m with 80 $\mu$m}
 \label{sec:HPK50vs80}
 
 The thickness of the active area of the sensor is an important design parameter
-when optimizing for time resolution. A thicker sensor will result in a larger
-signal size which may improve the time resolution. However, a thicker sensor
-also increases the size of Landau fluctuations which will tend to degrade the
-time resolution. Therefore, it is an interesting study to understand whether
-increasing the sensor thickness -- from $50$~$\mu$m to $80$~$\mu$m -- will have
-any impact on the measured time resolution. \textbf {FIXME Hartmut what is the gain of 80C Pix sensor at 610 V?}
-
-This study is performed using the HPK C-PIX sensors with the same dopant concentration.
+when optimizing for time resolution. A detailed study of time resolution of HPK
+sensors of 80 and $50$~$\mu$m is presented in ~\cite{Galloway:2017gfx}. Here we
+compare the uniformity of the time resolution across the sensors of these two
+thicknesses. This study is performed using the HPK C-PIX sensors with the same dopant concentration.
 The $80$~$\mu$m sensor HPK 80C-PIX is biased at $-610$~V, while the $50$~$\mu$m sensor 
 HPK 50C-PIX is biased at $-400$~V. The time resolution for the two sensors are shown
 in Fig.~\ref{fig:HPK50CVs80C} as a function of position, and exhibit fairly uniform 
-behavior. The measured time resolutions range from $40$~ps to $50$~ps and 
-are relatively similar for these two different sensor
-thicknesses. Measurements of the HPK 50C-PIX sensor were performed on theKU 2-channel board, and those for HPK 80C-PIX used the FNAL 4-channel board.
+behavior. Measurements of the HPK 50C-PIX sensor were performed on theKU 2-channel board, and those for HPK 80C-PIX used the FNAL 4-channel board. 
 
 %need to understand the gain...and then try to make a stronger statement about how optimal 50 micron is.
 
@@ -764,7 +758,6 @@ thicknesses. Measurements of the HPK 50C-PIX sensor were performed on theKU 2-c
 \caption{Comparison of time resolution in FNAL 80C versus KU 50C sensors } 
 \label{fig:HPK50CVs80C} 
 \end{figure} 
-
 
 \subsection{Temperature dependence of the LGAD sensors}
 \label{sec:temp_dependance}
@@ -927,11 +920,7 @@ Fig.~\ref{fig:IrradiatedSensorStudy_MeanTime}. Measurements at both bias voltage
 values are presented. We measured a uniform distribution of the $\Delta{t}$
 values across the HPK sensor. The CNM sensor exhibits a non-uniformity across
 the sensor surface, where the signals from the central, non-metallized area
-are about 10~ps faster than those from the peripheral, metalized area.
-\textbf {FIXME This behavior is opposite of that observed in the non-irradiated
-sensors, both CNM and HPK. However, given that the signals in the non-metallized
-area of the irradiated CNM sensor are much larger than those in the periphery,
-this behavior is expected, since the gain in this region is larger (is it?).}
+arrive about 10~ps earlier than those from the peripheral, metalized area. 
 
 
 \begin{figure}[htbp] 
@@ -1026,29 +1015,29 @@ This document was prepared using the resources of the Fermi National Accelerator
 %\section{Appendix A}
 %
 
-The list of sensors studied in this article, as well as the temperature and the
-sensor bias voltage used during their operation are listed in
-Tab.~\ref{tab:DataConditions}. 
-
-\begin{table}[!htb]
-\scriptsize
-\begin{center}
-  \begin{tabular}{ |c | c | c| c | }
-    \hline
-    Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
-    HPK 50A-PIX & \textbf{-630 V (13)} & -- & -- \\ \hline
-    HPK 50B-PIX & \begin{tabular}{@{}c@{}}\textbf{-450 V (10), -550 V (25), -600 V (60)}\\ \underline{-510 V} \\ \textit{-510 V, -570 V}\end{tabular}  & -- & -- \\ \hline
-    HPK 50C-PIX & \textbf{-400 V (20)} & \textbf{-410 V (22), -470 V (40)} & -- \\ \hline
-    HPK 50D-PIX & \begin{tabular}{@{}c@{}}\textbf{-100 V (7), -200V (11),} \\ \textbf{ -250 V (17), -300 V (30), } \\ \textbf{-325 V (40)}\end{tabular}  & -- & \begin{tabular}{@{}c@{}}\textbf{-250 V (17), -300 V (30),} \\ \underline{-210 V, -250 V} \\ \textit{-250 V (30), -280 V (40)}\end{tabular} \\ \hline
-    CNM W9HG11 & -- & \textbf{-140 V, -160V} & -- \\ \hline
-    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & \textit{-600 V (20), -635 V (30)} & -- \\ \hline
-    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & \textit{-400 V, -420 V} \\ \hline
-    \hline
-  \end{tabular}
-\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
-\label{tab:DataConditions}
-\end{center}
-\end{table}
+%The list of sensors studied in this article, as well as the temperature and the
+%sensor bias voltage used during their operation are listed in
+%Tab.~\ref{tab:DataConditions}. 
+%
+%\begin{table}[!htb]
+%\scriptsize
+%\begin{center}
+%  \begin{tabular}{ |c | c | c| c | }
+%    \hline
+%    Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
+%    HPK 50A-PIX & \textbf{-630 V (13)} & -- & -- \\ \hline
+%    HPK 50B-PIX & \begin{tabular}{@{}c@{}}\textbf{-450 V (10), -550 V (25), -600 V (60)}\\ \underline{-510 V} \\ \textit{-510 V, -570 V}\end{tabular}  & -- & -- \\ \hline
+%    HPK 50C-PIX & \textbf{-400 V (20)} & \textbf{-410 V (22), -470 V (40)} & -- \\ \hline
+%    HPK 50D-PIX & \begin{tabular}{@{}c@{}}\textbf{-100 V (7), -200V (11),} \\ \textbf{ -250 V (17), -300 V (30), } \\ \textbf{-325 V (40)}\end{tabular}  & -- & \begin{tabular}{@{}c@{}}\textbf{-250 V (17), -300 V (30),} \\ \underline{-210 V, -250 V} \\ \textit{-250 V (30), -280 V (40)}\end{tabular} \\ \hline
+%    CNM W9HG11 & -- & \textbf{-140 V, -160V} & -- \\ \hline
+%    \begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & \textit{-600 V (20), -635 V (30)} & -- \\ \hline
+%    \begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & \textit{-400 V, -420 V} \\ \hline
+%    \hline
+%  \end{tabular}
+%\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
+%\label{tab:DataConditions}
+%\end{center}
+%\end{table}
 
 %% \section{}
 %% \label{}

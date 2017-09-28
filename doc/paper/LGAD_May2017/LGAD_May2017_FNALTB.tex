@@ -44,6 +44,7 @@
 \usepackage{hyperref}
 \usepackage{siunitx}
 \usepackage{multirow}
+\usepackage{wasysym}
 %\usepackage[percent]{overpic}
 %\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
 %\usepackage{cleveref}
@@ -183,7 +184,7 @@ been shown to achieve time resolutions around 30~\si{ps}~\cite{Cartiglia201783, 
 are envisioned to be used in the CMS and ATLAS experiment upgrades for HL-LHC in
 order to reduce the pileup contamination. The implemented regions of
 pseudorapidity ($\eta$) are:
-$|\eta|>1.5$ and $2.4 < |\eta| < 4.2 $ for CMS and ATLAS, respectively. In order to achieve
+$|\eta|>1.5$, and $2.4 < |\eta| < 4.2 $ for CMS and ATLAS, respectively. In order to achieve
 the desired timing precision across a large area of the detectors, the
 sensors will need to provide high uniformity of signal response and timing
 resolution. In this paper, we perform detailed measurements of the performance of
@@ -326,6 +327,27 @@ while the HPK single-channel sensors are circular pads with an active area of $0
 \includegraphics[width=0.3\textwidth]{figs/HPK-50D-PIX.pdf} \includegraphics[width=0.31\textwidth]{figs/Hgtd_Hg11_a.jpg} \\\includegraphics[width=0.32\textwidth]{figs/HPK-50D-GR.pdf} \includegraphics[width=0.31\textwidth]{figs/Lgad_Lga35_a.jpg} \caption{Photographs of the HPK 50D-PIX $2\times 2$ array sensor (top left), the CNM-W9HG11 $2\times 2$ array sensor (top right), the 50D-GR single sensor (bottom left), and the CNM W11LGA35 single sensor (bottom right) are shown. Numerical labels overlaid on top of the images of the array sensors are used in the text when referring to individual pixels.} 
 \label{fig:HPK_Sensors} 
 \end{figure} 
+
+\begin{table}[!htb]
+\scriptsize
+\begin{center}
+  \begin{tabular}{ |c | c | c | }
+    \hline
+    Sensor   & Single channel dimensions &  Capacitance  \\ \hline 
+    HPK 50A-PIX & $3\times 3$~$\mathrm{mm}^{2}$ & X pF \\       
+    HPK 50B-PIX & $3\times 3$~$\mathrm{mm}^{2}$ & X pF \\       
+    HPK 50C-PIX & $3\times 3$~$\mathrm{mm}^{2}$ & X pF \\       
+    HPK 50D-PIX & $3\times 3$~$\mathrm{mm}^{2}$ & X pF \\       
+    HPK 80C-PIX & $3\times 3$~$\mathrm{mm}^{2}$ & X pF \\       
+    HPK 50D     & $\diameter=1.0$~$\mathrm{mm}}$  & X pF \\       
+    CNM-W9HG11  & $X\times Y$~$\mathrm{mm}^{2}$ & X pF \\       
+    CNM W11LGA35& $1\times 1$~$\mathrm{mm}^{2}$ & X pF \\       
+    \hline
+  \end{tabular}
+\caption{Linear dimensions and capacitances of the sensors used in these studies.}  
+\label{tab:KUBoardCTD}
+\end{center}
+\end{table}
 
 
 \section{Readout Electronics}
@@ -573,15 +595,19 @@ along the Y-axis are shown. The pixel numbering scheme is defined in Fig.~\ref{f
 
 The measurements of the time difference $\Delta t = t_{1}-t_{0}$ between the
 reference timestamp ($t_0$) and the timestamp of the LGAD sensors ($t_1$) are
-shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}. The micro-bonding scheme of the HPK and CNM 
-$2\times 2$ sensor arrays is shown in Fig.~\ref{fig:HPK_Sensors}. For the HPK sensor,
-the $\Delta t$ dependence on the hit position indicates a shift of 
+shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}. The micro-bonding scheme of the HPK and
+CNM $2\times 2$ sensor arrays is shown in Fig.~\ref{fig:HPK_Sensors}. For the
+HPK sensor, the $\Delta t$ dependence on the hit position indicates a shift of
 about $20$--$30$~ps between the metalized area near the center of the array
-(gray region of the top-left image in Fig.~\ref{fig:HPK_Sensors}) and the non-metalized area.
-A possible explanation for this effect is a small difference in
-the rise time of the pulses between the metallized and non-metallized areas. 
-The results for the CNM sensor also show hints of this behavior, though the
-larger statistical uncertainties make it less significant.
+(gray region of the top-left image in Fig.~\ref{fig:HPK_Sensors}) and the
+non-metalized area. A possible explanation for this effect is a small difference
+in the rise time of the pulses that originate from the passage of particles in
+the metallized and non-metallized areas. This effect cannot be attributed to the
+algorithm used to time-stamp the events, since the same behavior is observed
+with the CFD and CDT algorithms. Furthermore, the same behabior is observed on
+all HPK sensor varieties mounted on KU board, as presented in
+Sec.~\ref{sec:HPKdoping}. The results for the CNM sensor also show hints of this
+behavior, though the larger statistical uncertainties make it less significant. 
 
 \begin{figure}[htbp] 
 \centering
@@ -666,6 +692,7 @@ between the half-maximum points of the fitted curves.}
 
 %\subsection{Comparison of the boards}
 \subsection{Comparison of HPK doping profiles}
+\label{sec:HPKdoping}
 
 Studies of the dependence of the sensors' characteristics on the doping
 concentrations were performed by comparing the 50~$\mu$m HPK PIX sensors of
@@ -702,12 +729,14 @@ single pixel is highly uniform for all tested samples.
 \label{fig:KUBoard_50ABCD_MPV} 
 \end{figure} 
 
-The measurements of the time difference between the reference timestamp and the timestamps of the HPK sensors are shown in
+The measurements of the time difference between the reference timestamp and the
+timestamps of the HPK sensors are shown in
 Fig.~\ref{fig:KUBoard_50ABCD_MeanTime}. As was shown in
-Fig.~\ref{fig:FNAL_HPK50_DTXY}, the $\Delta t$ exhibits an offset of about $20$~ps 
-between the metalized area and the non-metalized area of the sensor. 
-The feature is present in all 4 types of the HPK PIX sensors, does not depend on the readout board or timestamp
-reconstruction algorithm used, and appears to be statistically consistent in shape and magnitude. 
+Fig.~\ref{fig:FNAL_HPK50_DTXY}, the $\Delta t$ exhibits an offset of about
+$20$~ps between the metalized area and the non-metalized area of the sensor. The
+feature is present in all 4 types of the HPK PIX sensors, does not depend on the
+readout board or timestamp reconstruction algorithm used, and appears to be
+statistically consistent in shape and magnitude. 
 
 \begin{figure}[htbp] 
 \centering
@@ -721,9 +750,7 @@ in Fig.~\ref{fig:HPK_Sensors}.}
 
 The measurements of the time resolution across the sensors are shown in
 Fig.~\ref{fig:KUBoard_50ABCD_TimeResolution}. We observe a uniform time
-resolution around 40~ps across the entire sensor area. \textbf {FIXME Nicola explanation
-for the difference in resolution on two pixels of A and C. I suspect this is due
-to difference in gain in two pre-amps on KU board}.
+resolution around 40~ps across the entire sensor area. 
 
 
 \begin{figure}[htbp] 
@@ -755,7 +782,7 @@ behavior. Measurements of the HPK 50C-PIX sensor were performed on theKU 2-chan
 \begin{figure}[htbp] 
 \centering
 \includegraphics[width=0.7\textwidth]{figs/FNAL_TimeResolution_vs_X_HPK50CVs80C.pdf} 
-\caption{Comparison of time resolution in FNAL 80C versus KU 50C sensors } 
+\caption{Comparison of the uniformity of the measured time resolution of the HPK 80C-PIX versus 50C-PIX sensors. The 80~$\mu$m sensor is mounted on the FNAL board, and is biased at -610~V, and the 50~$\mu$m sensor is mounted on the KU board and is biased at -400~V.} 
 \label{fig:HPK50CVs80C} 
 \end{figure} 
 
@@ -807,18 +834,19 @@ in Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at $-250$~V.}
 \label{fig:MeanTime_vs_X_HPK50D_TemperatureDependance} 
 \end{figure} 
 
-The time resolution measured for the HPK 50D-PIX sensor is
-shown in Fig.~\ref{fig:TimeResolution_vs_X_HPK50D_TemperatureDependance}. 
-We observe a significant improvement in the time resolution as
-the temperature is lowered from $+20^{\circ}$C to $-20^{\circ}$C degrees.
-As the temperature is lowered, the signal-to-noise ratio improves as 
-the gain of the LGAD sensor increases. Generally, the electronic noise may also
-decrease as the temperature is lowered, but in our case it was observed to remain 
-relatively constant at 1.2~mV for both $+20$ and 
-$-20^{\circ}$C. Therefore the improvement comes mainly from the increase in the 
-signal gain. The time resolution was measured to
-improve from around 55-60~ps at the room temperature, down to 35-40~ps at
-$-20^{\circ}$C.
+The time resolution measured for the HPK 50D-PIX sensor is shown in
+Fig.~\ref{fig:TimeResolution_vs_X_HPK50D_TemperatureDependance}. We observe a
+significant improvement in the time resolution as the temperature is lowered
+from $+20^{\circ}$C to $-20^{\circ}$C degrees. As the temperature is lowered,
+the signal-to-noise ratio improves as the gain of the LGAD sensor increases.
+Generally, the electronic noise may also decrease as the temperature is lowered,
+but in our case it was observed to remain relatively constant at 1.2~mV for both
+$+20$ and $-20^{\circ}$C. Therefore the improvement comes mainly from the
+increase in the signal gain. The time resolution was measured to improve from
+around 55-60~ps at the room temperature, down to 35-40~ps at $-20^{\circ}$C. It
+is worth noting that time resolution around 35~ps with pixels of area
+$9$~$\mathrm{mm}^{2}$ is a promising result for cost-effective implementation in
+LHC experiments.
 
 
 \begin{figure}[htbp] 

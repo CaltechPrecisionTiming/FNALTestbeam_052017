@@ -198,9 +198,11 @@ an equivalent neutron flux of $6\times 10^{14}$~n/cm$^2$. Detailed measurements 
 
 The paper is organized as follows: the experimental setup is described in
 Sec.~\ref{sec:setup}; the tested LGAD sensors and their operating conditions are
-listed in Sec.~\ref{sec:sensors}; readout electronics used in the measurements are 
-described in Sec.~\ref{sec:boards}; beam test results are presented in 
-Sec.~\ref{sec:results}, followed by the conclusion in Sec.~\ref{sec:conclusion}.
+listed in Sec.~\ref{sec:sensors}; readout electronics used in the measurements
+are described in Sec.~\ref{sec:boards}; algorithms used in the event
+reconstruction are described in Sec.~\ref{sec:timestampReco}; beam test results
+are presented in Sec.~\ref{sec:results}, followed by the conclusion in
+Sec.~\ref{sec:conclusion}.
 
 \section{Experimental Setup} 
 \label{sec:setup}
@@ -331,17 +333,17 @@ while the HPK single-channel sensors are circular pads with an active area of $0
 \begin{table}[!htb]
 \scriptsize
 \begin{center}
-  \begin{tabular}{ |c | c | c | }
+  \begin{tabular}{ |c | c | c | c | }
     \hline
-    Sensor   & Single channel dimensions &  Capacitance  \\ \hline 
-    HPK 50A-PIX & $3\times 3$~$\mathrm{mm}^{2}$ & X pF \\       
-    HPK 50B-PIX & $3\times 3$~$\mathrm{mm}^{2}$ & X pF \\       
-    HPK 50C-PIX & $3\times 3$~$\mathrm{mm}^{2}$ & X pF \\       
-    HPK 50D-PIX & $3\times 3$~$\mathrm{mm}^{2}$ & X pF \\       
-    HPK 80C-PIX & $3\times 3$~$\mathrm{mm}^{2}$ & X pF \\       
-    HPK 50D     & $\diameter=1.0$~$\mathrm{mm}}$  & X pF \\       
-    CNM-W9HG11  & $X\times Y$~$\mathrm{mm}^{2}$ & X pF \\       
-    CNM W11LGA35& $1\times 1$~$\mathrm{mm}^{2}$ & X pF \\       
+    Sensor      & Number of channels & Single channel dimensions &  Single channel capacitance  \\ \hline 
+    HPK 50A-PIX & 4 & $3\times 3$~$\mathrm{mm}^{2}$ & 20 pF \\       
+    HPK 50B-PIX & 4 & $3\times 3$~$\mathrm{mm}^{2}$ & 20 pF \\       
+    HPK 50C-PIX & 4 & $3\times 3$~$\mathrm{mm}^{2}$ & 20 pF \\       
+    HPK 50D-PIX & 4 & $3\times 3$~$\mathrm{mm}^{2}$ & 20 pF \\       
+    HPK 80C-PIX & 4 & $3\times 3$~$\mathrm{mm}^{2}$ & 12 pF \\       
+    HPK 50D     & 1 & $\diameter=1.0$~$\mathrm{mm}}$  & 2.9 pF \\       
+    CNM-W9HG11  & 4 & $3\times 3$~$\mathrm{mm}^{2}$ & 22 pF \\       
+    CNM-W11LGA35& 1 & $1\times 1$~$\mathrm{mm}^{2}$ & 3.9 pF \\       
     \hline
   \end{tabular}
 \caption{Linear dimensions and capacitances of the sensors used in these studies.}  
@@ -423,11 +425,11 @@ for different thresholds for the CFD and CTD algorithms respectively, for the KU
 readout board. For the CFD algorithm, we observed no significant dependence of
 the timestamp on the pulse height of the signal. However, for the CTD algorithm, 
 the timestamp does depend on the pulse height and requires a 
-correction referred to as a timewalk correction. 
-For most situations, the timewalk correction can be accurately described by a linear
-function, however we do observe that as the CTD threshold increases, the timewalk
-correction because more quadratic. In Table~\ref{tab:KUBoardCTD}, the time resolution 
-is reported for both linear and quadratic timewalk corrections.
+correction referred to as a time-walk correction. 
+For most situations, the time-walk correction can be accurately described by a linear
+function, however we do observe that as the CTD threshold increases, the time-walk
+correction becomes more quadratic. In Table~\ref{tab:KUBoardCTD}, the time resolution 
+is reported for both linear and quadratic time-walk corrections.
 We observe that the best results are obtained for a CFD threshold
 at $45\%$. However the CTD algorithm at a moderate threshold does yield comparable
 time resolutions. 
@@ -456,7 +458,7 @@ the constant fraction discriminant algorithm.}
   \begin{tabular}{ |c | c | c | }
     \hline
     CTD         & Time Resolution & Time Resolution   \\ 
-    Threshold   & (Linear Timewalk Correction) & (Quadratic Timewalk Correction)  \\ \hline 
+    Threshold   & (Linear Time-walk Correction) & (Quadratic Time-walk Correction)  \\ \hline 
     $12$~mV & $52$~ps & $51$~ps \\       
     $18$~mV & $46$~ps & $45$~ps \\       
     $24$~mV & $43$~ps & $42$~ps \\       
@@ -467,7 +469,7 @@ the constant fraction discriminant algorithm.}
     \hline
   \end{tabular}
 \caption{Time resolution measured for the HPK 50D-PIX sensor on the KU readout board using
-the constant fraction discriminant algorithm.}  
+the constant threshold discriminant algorithm.}  
 \label{tab:KUBoardCTD}
 \end{center}
 \end{table}
@@ -485,18 +487,18 @@ for the FNAL and UCSC readout boards.
     \hline
     Timestamp   & Time Resolution   & Time Resolution   \\ 
     Algorithm   & (FNAL Board with  & (UCSC Board with   \\ 
-    Type        & (HPK 50D-PIX Sensor)  & irradated HPK 50D Sensor)  \\ \hline 
+    Type        & (HPK 50D-PIX Sensor)  & irradiated HPK 50D Sensor)  \\ \hline 
     Gaussian Fit & $42$~ps & $35$~ps \\ \hline       
     CFD at $15\%$ Threshold & $71$~ps & $47$~ps \\       
     CFD at $30\%$ Threshold & $60$~ps & $42$~ps \\       
     CFD at $45\%$ Threshold & $53$~ps & $39$~ps \\       
     CFD at $60\%$ Threshold & $56$~ps & $44$~ps \\   \hline     
     CTD at $18$~mV Threshold & \multirow{2}{*}{$55$~ps} & \multirow{2}{*}{$43$~ps} \\       
-    (Linear Timewalk Correction) & &  \\       
+    (Linear Time-walk Correction) & &  \\       
     CTD at $18$~mV Threshold & \multirow{2}{*}{$52$~ps} & \multirow{2}{*}{$37$~ps} \\       
     (Quadratic Timewalk Correction) & &  \\       
     %CTD at $24$~mV Threshold & \multirow{2}{*}{$55$~ps} & \multirow{2}{*}{$49$~ps} \\       
-    %(Linear Timewalk Correction) & &  \\       
+    %(Linear Time-walk Correction) & &  \\       
     %CTD at $24$~mV Threshold & \multirow{2}{*}{$51$~ps} & \multirow{2}{*}{$41$~ps} \\       
     %(Quadratic Timewalk Correction) & &  \\       
     \hline
@@ -543,7 +545,7 @@ qualitatively the same features, and are not presented here.
 \label{sec:HPK_CNM_uniformity}
 
 We present in detail uniformity studies -- including signal detection
-efficiency, most probable value, time difference, and time resolution  -- accross the sensitive
+efficiency, most probable value, time difference, and time resolution  -- across the sensitive
 area of the LGAD. The sensors under study were produced
 by HPK and CNM. The largest dataset was collected for the 
 HPK 50D-PIX and the CNM W9HG11 sensors. The 
@@ -560,7 +562,7 @@ in the X-axis scan of pixel 1 on HPK 50D-PIX sensor in
 Fig.~\ref{fig:FNAL_HPK50_effXY} is outside the acceptance of the pixel
 telescope, hence the efficiency curve does not fully cover its surface. A clear
 drop in efficiency is observed in the transition (``no-response'') region between the two pixels.
-A more detaied study of the ``no-response'' region is given in Sec.~\ref{sec:HPK_50D_gap}.
+A more detailed study of the ``no-response'' region is given in Sec.~\ref{sec:HPK_50D_gap}.
 
 \begin{figure}[htbp] 
 \centering
@@ -598,13 +600,13 @@ reference timestamp ($t_0$) and the timestamp of the LGAD sensors ($t_1$) are
 shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}. The micro-bonding scheme of the HPK and
 CNM $2\times 2$ sensor arrays is shown in Fig.~\ref{fig:HPK_Sensors}. For the
 HPK sensor, the $\Delta t$ dependence on the hit position indicates a shift of
-about $20$--$30$~ps between the metalized area near the center of the array
+about $20$--$30$~ps between the metallized area near the center of the array
 (gray region of the top-left image in Fig.~\ref{fig:HPK_Sensors}) and the
-non-metalized area. A possible explanation for this effect is a small difference
+non-metallized area. A possible explanation for this effect is a small difference
 in the rise time of the pulses that originate from the passage of particles in
 the metallized and non-metallized areas. This effect cannot be attributed to the
 algorithm used to time-stamp the events, since the same behavior is observed
-with the CFD and CDT algorithms. Furthermore, the same behabior is observed on
+with the CFD and CDT algorithms. Furthermore, the same behavior is observed on
 all HPK sensor varieties mounted on KU board, as presented in
 Sec.~\ref{sec:HPKdoping}. The results for the CNM sensor also show hints of this
 behavior, though the larger statistical uncertainties make it less significant. 
@@ -733,7 +735,7 @@ The measurements of the time difference between the reference timestamp and the
 timestamps of the HPK sensors are shown in
 Fig.~\ref{fig:KUBoard_50ABCD_MeanTime}. As was shown in
 Fig.~\ref{fig:FNAL_HPK50_DTXY}, the $\Delta t$ exhibits an offset of about
-$20$~ps between the metalized area and the non-metalized area of the sensor. The
+$20$~ps between the metallized area and the non-metallized area of the sensor. The
 feature is present in all 4 types of the HPK PIX sensors, does not depend on the
 readout board or timestamp reconstruction algorithm used, and appears to be
 statistically consistent in shape and magnitude. 
@@ -771,11 +773,14 @@ The thickness of the active area of the sensor is an important design parameter
 when optimizing for time resolution. A detailed study of time resolution of HPK
 sensors of 80 and $50$~$\mu$m is presented in ~\cite{Galloway:2017gfx}. Here we
 compare the uniformity of the time resolution across the sensors of these two
-thicknesses. This study is performed using the HPK C-PIX sensors with the same dopant concentration.
-The $80$~$\mu$m sensor HPK 80C-PIX is biased at $-610$~V, while the $50$~$\mu$m sensor 
-HPK 50C-PIX is biased at $-400$~V. The time resolution for the two sensors are shown
-in Fig.~\ref{fig:HPK50CVs80C} as a function of position, and exhibit fairly uniform 
-behavior. Measurements of the HPK 50C-PIX sensor were performed on theKU 2-channel board, and those for HPK 80C-PIX used the FNAL 4-channel board. 
+thicknesses. This study is performed using the HPK C-PIX sensors with the same
+dopant concentration. The $80$~$\mu$m sensor HPK 80C-PIX is biased at $-610$~V,
+while the $50$~$\mu$m sensor HPK 50C-PIX is biased at $-400$~V. The sensors's
+gains at these bias voltages are: about 11 for the $80$~$\mu$m sensor, and about
+14 for the $50$~$\mu$m sensor. The time resolution for the two sensors are shown
+in Fig.~\ref{fig:HPK50CVs80C} as a function of position, and exhibit fairly
+uniform behavior. Measurements of the HPK 50C-PIX sensor were performed on the
+KU 2-channel board, and those for HPK 80C-PIX used the FNAL 4-channel board. 
 
 %need to understand the gain...and then try to make a stronger statement about how optimal 50 micron is.
 
@@ -795,9 +800,11 @@ $-20^{\circ}$C degrees. Operation at such low temperatures will allow to
 significantly reduce the leakage current, and additionally improve the timing
 characteristics of the sensors. In this section we describe the measurements of
 the LGAD sensors performed at $-10$ and $-20^{\circ}$C degrees, and compare the
-results to those at room temperature. These measurements were performed with
-the HPK 50D-PIX sensors mounted on the FNAL 4-channel board. The sensor was
-biased at the same voltage of $-250$~V for all temperature scenarios.
+results to those at room temperature. These measurements were performed with the
+HPK 50D-PIX sensors mounted on the FNAL 4-channel board. The sensor was biased
+at the same voltage of $-250$~V for all temperature scenarios. The HPK 50D gain
+at this bias voltage and at $+20^{\circ}$C was measured to be 15, while at
+$-20^{\circ}$C and the same bias voltage it was measured to be 25.
 
 The distribution of the signal MPV across the sensor surface is shown in
 Fig.~\ref{fig:MPV_vs_X_HPK50D_TemperatureDependance}. We observe that the signal
@@ -927,12 +934,12 @@ of the active area.
 
 The distribution of MPV of signal amplitudes across the sensor area is shown in
 Fig.~\ref{fig:IrradiatedSensorStudy_MPV}, where the MPV is extracted as
-described in Sec.~\ref{sec:HPK_CNM_uniformity}. Меаsurements were performed at
-two bias voltage values for both sensors: $-600$ and $-635$~V for HPK, and
-$-400$ and $-420$~V for CNM sensors. \textbf{FIXME HARTMUT what are the gains at
-these voltage values?}. A uniform signal amplitude is observed across the HPK
-sensor, while for the CNM sensor the amplitude varies across the sensor surface,
-as observed also in Fig.~\ref{fig:CNM_irradiated_amp_Map}. 
+described in Sec.~\ref{sec:HPK_CNM_uniformity}. Measurements were performed at
+two bias voltage values for both sensors: $-600$ and $-635$~V for HPK (gain
+equal to 19 and 29, respectively), and $-400$ and $-420$~V for CNM sensors (gain
+equal to 14 and 15, respectively). A uniform signal amplitude is observed across
+the HPK sensor, while for the CNM sensor the amplitude varies across the sensor
+surface, as observed also in Fig.~\ref{fig:CNM_irradiated_amp_Map}. 
 
 \begin{figure}[htbp] 
 \centering
@@ -948,7 +955,7 @@ Fig.~\ref{fig:IrradiatedSensorStudy_MeanTime}. Measurements at both bias voltage
 values are presented. We measured a uniform distribution of the $\Delta{t}$
 values across the HPK sensor. The CNM sensor exhibits a non-uniformity across
 the sensor surface, where the signals from the central, non-metallized area
-arrive about 10~ps earlier than those from the peripheral, metalized area. 
+arrive about 10~ps earlier than those from the peripheral, metallized area. 
 
 
 \begin{figure}[htbp] 

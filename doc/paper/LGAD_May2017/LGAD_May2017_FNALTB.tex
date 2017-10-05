@@ -137,7 +137,7 @@ a HPK sensor irradiated to the same fluence achieved a 30~\si{ps} time resolutio
 %% keywords here, in the form: keyword \sep keyword
 
 %% PACS codes here, in the form: \PACS code \sep code
-Silicon \sep Timing \sep LGAD
+Silicon \sep Timing \sep LGAD \sep Test Beam
 %% MSC codes here, in the form: \MSC code \sep code
 %% or \MSC[2008] code \sep code (2000 is the default)
 
@@ -343,7 +343,7 @@ while the HPK single-channel sensors are circular pads with an active area of $0
     HPK 80C-PIX & 4 & $3\times 3$~$\mathrm{mm}^{2}$ & 12 pF \\       
     HPK 50D     & 1 & $\diameter=1.0$~$\mathrm{mm}}$  & 2.9 pF \\       
     CNM-W9HG11  & 4 & $3\times 3$~$\mathrm{mm}^{2}$ & 22 pF \\       
-    CNM-W11LGA35& 1 & $1\times 1$~$\mathrm{mm}^{2}$ & 3.9 pF \\       
+    CNM-W11LGA35& 1 & $1.3\times 1.3$~$\mathrm{mm}^{2}$ & 3.9 pF \\       
     \hline
   \end{tabular}
 \caption{Linear dimensions and capacitances of the sensors used in these studies.}  
@@ -889,14 +889,13 @@ be identified on the sensor based on the signal amplitude: the region under the
 aluminum metallization on the periphery of the sensor, and the region without
 aluminum metallization in the center. The distribution on the right of
 Fig.~\ref{fig:CNM_irradiated_amp_Map} shows that the amplitude under the
-aluminum (periphery) is about 2.5 times larger than that without
-aluminum (center). The amplitude scan
-of the irradiated HPK 50D sensor is shown on the left panel of
-Fig.~\ref{fig:HPK_irradiated_amp_Map}, and a uniform amplitude across the
-sensor surface is observed, which can also be seen on the right panel of
-Fig.~\ref{fig:HPK_irradiated_amp_Map}. In contrast to the CNM sensor, the HPK
-sensor does not contain any portions that have active area covered with
-aluminum metallization.
+aluminum (periphery) is about 2.5 times larger than that without aluminum
+(center). The amplitude scan of the irradiated HPK 50D sensor is shown on the
+left panel of Fig.~\ref{fig:HPK_irradiated_amp_Map}, and a uniform amplitude
+across the sensor surface is observed, which can also be seen on the right panel
+of Fig.~\ref{fig:HPK_irradiated_amp_Map}. In contrast to the CNM sensor, the
+whole surface of the active area of the HPK 50D sensor is covered with aluminum
+metallization.
 
 
 \begin{figure}[htbp] 
@@ -1009,8 +1008,7 @@ For an un-irradiated 50~$\mu$m thick LGADs with 3~mm pads we find the following 
         40~ps to 50~ps depending on the readout board. %This number worsens by
         %10~ps for a 80~$\mu$m sensor.
         %This last statement is not true
-  \item cooling the LGAD, while keeping the bias voltage the same at $-250$~V
-        (\textbf {what is the gain at $-250$~V}),
+  \item cooling the LGAD, while keeping the bias voltage the same at $-250$~V,
         improves the timing resolution from 55~ps at $+20^{\circ}$C to 43~ps at
         $-10^{\circ}$C to 36 ps at $-20^{\circ}$C. \end{itemize}
 

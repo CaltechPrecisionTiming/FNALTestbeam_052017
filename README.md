@@ -20,7 +20,10 @@ in app/ConvertDat2Root.cc
 
 Here is an example  on how to run the program
 
-```./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat> --outputFileName=<your_output_file.root> --nEvents=<number_of_events_to_be_processed>```
+```./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat>
+--outputFileName=<your_output_file.root>
+--nEvents=<number_of_events_to_be_processed>
+```
 
 By default this program will note save the raw waveform from the CAEN
 DRS4 digitizer and will only stored the analysis level variables:
@@ -29,7 +32,10 @@ amplitudes, timestamps, risetimes, etc.
 To save the raw data you have to add the flag: "--saveRaw". Here is an
 example how to use this option:
 
-```./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat> --outputFileName=<your_output_file.root> --nEvents=<number_of_events_to_be_processed> --saveRaw```
+```./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat>
+--outputFileName=<your_output_file.root>
+--nEvents=<number_of_events_to_be_processed> --saveRaw
+```
 
 There is another option which make is easier to debug if you think
 your results are not correct. Usually this means that the rising edge
@@ -40,7 +46,10 @@ only with a few number of events (about 100) since there will be at
 least nchannelsx100 plots automatically made. Here is an
 example how to use this option:
 
-```./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat> --outputFileName=<your_output_file.root> --nEvents=<number_of_events_to_be_processed> --debug```
+```./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat>
+--outputFileName=<your_output_file.root>
+--nEvents=<number_of_events_to_be_processed> --debug
+```
 
 Please create a directory called "plots" before attempting this
 command. Otherwise you will get no plots.

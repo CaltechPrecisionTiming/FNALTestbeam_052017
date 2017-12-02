@@ -1,1 +1,3 @@
-FNALTestbeam Code
+# FNALTestbeam Code
+Analysis code for CAEN DRS4 readout with/without pixel telescope informtion
+

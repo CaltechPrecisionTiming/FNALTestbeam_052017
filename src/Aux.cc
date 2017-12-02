@@ -882,3 +882,18 @@ bool isRinging( int peak, short *a )
   if ( right_max > 0.5*fabs(a[peak]) ) return true;
   return false;
 };
+
+std::string ParseCommandLine( int argc, char* argv[], std::string opt )
+{
+  for (int i = 1; i < argc; i++ )
+    {
+      std::string tmp( argv[i] );
+      if ( tmp.find( opt ) != std::string::npos )
+        {
+          if ( tmp.find( "=" )  != std::string::npos ) return tmp.substr( tmp.find_last_of("=") + 1 );
+	  if ( tmp.find( "--" ) != std::string::npos && tmp.find( "=" ) == std::string::npos ) return "yes";
+	}
+    }
+  
+  return "";
+};

@@ -46,6 +46,6 @@ float GetPulseIntegral(int peak, short *a, std::string option = "", int nsamples
 float GetPulseIntegral(int peak, int nsamplesL, int nsamplesR, short *a, float *t);
 float ConstantThresholdTime(TGraphErrors * pulse, const float threshold);
 bool isRinging( int peak, short *a );
-
+std::string ParseCommandLine( int argc, char* argv[], std::string opt );
 
 #endif

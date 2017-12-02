@@ -35,7 +35,7 @@ int main(int argc, char **argv) {
 
   int numRequiredArgs = 3;
   if (argc - 1 < numRequiredArgs) {
-      std::cerr << "Usage: dat2root in_file.dat num_events" << std::endl;
+      std::cerr <<  "[ERROR]: Usage --> ./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat> --outputFileName=<your_output_file.root> --nEvents=<number_of_events_to_be_processed>" << std::endl;
       return -1;
   }
 
@@ -128,56 +128,6 @@ int main(int argc, char **argv) {
     std::cerr << "\nFailed to load channel information from config " << configName << std::endl;
     return -1;
   }
-
-  
-  /*
-  std::string inputFilename = argv[1];
-  std::string outputFilename = argv[2];
-  std::cout << "Input file: " << inputFilename << std::endl;
-  std::cout << "Output file: " << outputFilename << std::endl;
-
-  // Check if has valid input file, otherwise exit with error
-  ifstream ifile(inputFilename);
-  if (!ifile) {
-    printf("!USAGE! Input file does not exist. Please enter valid file name"); 
-    exit(0);
-  }
-
-  int nEvents = atoi(argv[3]);
-  std::cout << "Will process " << nEvents << " events" << std::endl;
-
-  // Board number is fixed at 1 for now because we only have one board
-  std::string boardNumber = "1";
-  std::cout << "Will use calibration files for board number " << boardNumber << "\n";
-
-  bool saveRaw = false;
-  std::string _saveRaw = ParseCommandLine( argc, argv, "--saveRaw" );
-  if ( _saveRaw == "yes" ) {
-      saveRaw = true;
-      std::cout << "Will save raw pulses\n";
-  }
-
-  bool drawDebugPulses = false;
-  std::string _drawDebugPulses = ParseCommandLine( argc, argv, "--debug" );
-  if ( _drawDebugPulses == "yes" ) {
-    drawDebugPulses = true;
-    std::cout << "draw: " << drawDebugPulses << std::endl;
-  }
-
-  std::string configName = "config/15may2017.config";
-  //std::string configName = "alignmentTestConfig.config";
-  std::string _configName = ParseCommandLine( argc, argv, "--config" );
-  if ( _configName != "" ) {
-    configName = _configName;
-  }
-  
-  std::cout << "\n=== Parsing configuration file " << configName << " ===\n" << std::endl;
-  Config config(configName);
-  if ( !config.hasChannels() || !config.isValid() ) {
-    std::cerr << "\nFailed to load channel information from config " << configName << std::endl;
-    return -1;
-  }
-  */
 
   
   //**************************************

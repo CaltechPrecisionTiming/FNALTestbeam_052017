@@ -46,7 +46,7 @@ int main(int argc, char **argv) {
 
   int numRequiredArgs = 4;
   if (argc - 1 < numRequiredArgs) {
-      std::cerr << "Usage: dat2root in_file.dat inputPixelFile.root outputFile.root num_events" << std::endl;
+    std::cerr <<  "[ERROR]: Usage --> ./ConvertDat2RootWithPixels --inputFileName=<your_caen_drs4_file.dat> --pixelInputFileName=<your_pixel_file.root> --outputFileName=<your_output_file.root> --nEvents=<number_of_events_to_be_processed>" << std::endl;
       return -1;
   }
   std::cout << "\n=== Beginning program ===\n" << std::endl;

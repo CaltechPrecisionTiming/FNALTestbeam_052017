@@ -20,7 +20,8 @@ in app/ConvertDat2Root.cc
 
 Here is an example  on how to run the program
 
-```./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat>
+```
+./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat>
 --outputFileName=<your_output_file.root>
 --nEvents=<number_of_events_to_be_processed>
 ```
@@ -32,7 +33,8 @@ amplitudes, timestamps, risetimes, etc.
 To save the raw data you have to add the flag: "--saveRaw". Here is an
 example how to use this option:
 
-```./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat>
+```
+./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat>
 --outputFileName=<your_output_file.root>
 --nEvents=<number_of_events_to_be_processed> --saveRaw
 ```
@@ -46,7 +48,8 @@ only with a few number of events (about 100) since there will be at
 least nchannelsx100 plots automatically made. Here is an
 example how to use this option:
 
-```./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat>
+```
+./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat>
 --outputFileName=<your_output_file.root>
 --nEvents=<number_of_events_to_be_processed> --debug
 ```
@@ -62,7 +65,9 @@ in app/ConvertDat2RootWithPixels.cc
 
 Here is an example  on how to run the program
 
-```./ConvertDat2RootWithPixels --inputFileName=<your_caen_drs4_file.dat> --pixelInputFileName=<your_pixel_file.root> --outputFileName=<your_output_file.root> --nEvents=<number_of_events_to_be_processed>```
+```
+./ConvertDat2RootWithPixels --inputFileName=<your_caen_drs4_file.dat> --pixelInputFileName=<your_pixel_file.root> --outputFileName=<your_output_file.root> --nEvents=<number_of_events_to_be_processed>
+```
 
 
 

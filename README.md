@@ -6,9 +6,9 @@ You only need C++11 and  ROOT to be correctly setup to compile this
 repository. If these requirements are satisfaid you can just do:
 
 ```
-> git clone git@github.com:CaltechPrecisionTiming/FNALTestbeam_052017.git
-> cd FNALTestbeam_052017
-> make
+git clone git@github.com:CaltechPrecisionTiming/FNALTestbeam_052017.git
+cd FNALTestbeam_052017
+make
 ```
 
 

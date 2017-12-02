@@ -480,8 +480,8 @@ int main(int argc, char **argv) {
         if ( !isTrigChannel ) {
 	  if( drawDebugPulses ) {
 	    if ( xmin[totalIndex] != 0.0 ) {
-	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, pulseName);
-	      RisingEdgeFitTime( pulse, index_min, 0.2, 0.80, fs, event, "linearFit_" + pulseName, true );
+	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge, "plots/"+pulseName);
+	      RisingEdgeFitTime( pulse, index_min, 0.2, 0.80, fs, event, "plots/linearFit_" + pulseName, true );
 	      //RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, true );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, true );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, true );
@@ -491,7 +491,7 @@ int main(int argc, char **argv) {
 	  else {
 	    if ( xmin[totalIndex] != 0.0 ) {
 	      timepeak =  GausFit_MeanTime(pulse, low_edge, high_edge);
-	      RisingEdgeFitTime( pulse, index_min, 0.2, 0.60, fs, event, "linearFit_" + pulseName, false );
+	      RisingEdgeFitTime( pulse, index_min, 0.2, 0.60, fs, event, "plots/linearFit_" + pulseName, false );
 	      //RisingEdgeFitTime( pulse, index_min, fs, event, "linearFit_" + pulseName, false );
 	      //TailFitTime( pulse, index_min, fs_falling, event, "expoFit_" + pulseName, false );
 	      //sigmoidTime[totalIndex] = SigmoidTimeFit( pulse, index_min, event, "linearFit_" + pulseName, false );

@@ -14,11 +14,16 @@ make
 
 ## Converting CAEN DRS4 file without pixel telescope file
 
-The executable 
+The executable is called: "ConvertDat2Root". The corresponding source
+code is located 
+in app/ConvertDat2Root.cc
+
+Here is an example  on how to run the program
 ```
-if (isAwesome){
-  return true
-}
+./ConvertDat2Root
+--inputFileName=<your_caen_drs4_file.dat>
+--outputFileName=<your_output_file.root>
+--nEvents=<number_of_events_to_be_processed>
 ```
 
 Sometimes you want numbered lists:

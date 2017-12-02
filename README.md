@@ -19,12 +19,8 @@ code is located
 in app/ConvertDat2Root.cc
 
 Here is an example  on how to run the program
-```
-./ConvertDat2Root
---inputFileName=<your_caen_drs4_file.dat>
---outputFileName=<your_output_file.root>
---nEvents=<number_of_events_to_be_processed>
-```
+
+```./ConvertDat2Root --inputFileName=<your_caen_drs4_file.dat> --outputFileName=<your_output_file.root> --nEvents=<number_of_events_to_be_processed>```
 
 Sometimes you want numbered lists:
 

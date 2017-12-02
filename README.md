@@ -123,10 +123,3 @@ You can set the config file by using the optional flag:
 ```
 ./ConvertDat2RootWithPixels --inputFileName=<your_caen_drs4_file.dat> --pixelInputFileName=<your_pixel_file.root> --outputFileName=<your_output_file.root> --nEvents=<number_of_events_to_be_processed> --config=<your_config>
 ```
-
-
-Sometimes you want numbered lists:
-
-1. One
-2. Two
-3. Three

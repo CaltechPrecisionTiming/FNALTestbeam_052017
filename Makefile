@@ -9,16 +9,16 @@ LDFLAGS := $(shell root-config --glibs)
 CPPFLAGS += -g -std=c++14
 
 TARGET = dat2root
-SRC = dat2root.cc src/Aux.cc src/Config.cc
+SRC = app/dat2root.cc src/Aux.cc src/Config.cc
 
 TARGET2 = Rereco
-SRC2 = datroot2root.cc src/Aux.cc src/Config.cc
+SRC2 = app/datroot2root.cc src/Aux.cc src/Config.cc
 
 TARGET3 = dat2rootPixels
-SRC3 = dat2rootPixels.cc src/Aux.cc src/Config.cc
+SRC3 = app/dat2rootPixels.cc src/Aux.cc src/Config.cc
 
 TARGET4 = SkimTree
-SRC4 = SkimTree.cc
+SRC4 = app/SkimTree.cc
 
 OBJ = $(SRC:.cc=.o)
 OBJ2 = $(SRC2:.cc=.o)
@@ -48,4 +48,4 @@ $(TARGET4) : $(OBJ4)
 	@echo $@
 	$(CXX) $(CPPFLAGS) -o $@ -c $<
 clean :
-	rm -f *.o src/*.o $(Aux)/src/*.o $(TARGET) $(TARGET2) $(TARGET3) *~
+	rm -f *.o src/*.o $(Aux)/src/*.o $(TARGET) $(TARGET2) $(TARGET3) $(TARGET4) *~

@@ -103,6 +103,7 @@ at the Fermilab test beam.}
 \author[8]{S.~Hidalgo}%\author[4]{C.~Labitan}
 \author[9]{S.~Kamada}\author[1]{S.~Los}%\author[4]{Z.~Luce}\author[5]{M.~Mandurrino}
 \author[8]{A.~Merlos}%\author[2]{A.~Mangu}%\author[4]{F.~Martinez-Mckinney}\author[3]{N.~Minafra}%\author[1]{A.~Prosser}%\author[1]{R.~Rivera}
+\author[1]{A.~Ronzhin}
 \author[8]{G.~Pellegrini}
 \author[8]{D.~Quirion}\author[3]{C.~Royon}\author[4]{H.~Sadrozinski}\author[4]{A.~Seiden}\author[5]{V.~Sola}\author[2]{M.~Spiropulu}%\author[4]{E.~Spencer}\author[5]{A.~Staiano}\author[1]{L.~Uplegger}
 \author[9]{K.~Yamamoto}
@@ -123,7 +124,7 @@ facility using 120 GeV proton beams, and a high precision pixel tracking
 detector. LGAD sensors manufactured by the Centro Nacional de Microelectr\'{o}nica (CNM) and
 Hamamatsu Photonics (HPK) were studied. The uniformity of the
 sensor response in pulse height before irradiation was found to have a
-2\% spread. The efficiency and timing  resolution before irradiation
+2\% spread. The signal detection efficiency and timing resolution in the sensitive areas before irradiation
 were found to be 100\%  and 30-40~\si{ps}, respectively. A ``no-response'' area between pads was
 measured to be about 70~$\mu$m for CNM and 110$\mu$m for HPK sensors. After a
 neutron fluence of $6\times 10^{14}$~n/cm$^2$ the CNM sensor exhibits a large
@@ -170,31 +171,35 @@ other physics objects performance metrics will also suffer the
 detrimental effects of pileup.
 
 
-One way to mitigate the pileup effects mentioned above, complementary to precision
-tracking methods, is to perform a time of arrival measurement associated with
-each particle. Such a measurement with a precision of about 30-40~\si{ps}, will
-reduce the effective amount of pileup by a factor of 10, given that the spread
-in collision time of the pileup interactions at HL-LHC is foreseen to be
-approximately 200~\si{ps}. It has been previously shown that a precision of better than
-$20$~\si{ps} can be achieved for electromagnetic showers measured with silicon
-sampling calorimeters~\cite{Apresyan201662,Apresyan2017_NSSMIC,AKCHURIN201731}
-using traditional planar silicon detectors. In this paper, we report results of
-particle beam measurements with thin low-gain avalanche detectors (LGAD) that have
-been shown to achieve time resolutions around 30~\si{ps}~\cite{Cartiglia201783, PELLEGRINI201412}. LGAD
-are envisioned to be used in the CMS and ATLAS experiment upgrades for HL-LHC in
-order to reduce the pileup contamination. The implemented regions of
-pseudorapidity ($\eta$) are:
-$|\eta|>1.5$, and $2.4 < |\eta| < 4.2 $ for CMS and ATLAS, respectively. In order to achieve
-the desired timing precision across a large area of the detectors, the
-sensors will need to provide high uniformity of signal response and timing
-resolution. In this paper, we perform detailed measurements of the performance of
-LGAD sensors produced by Centro Nacional de Microelectr\'{o}nica (CNM) and
-Hamamatsu Photonics (HPK) exposed to the 120~GeV proton beam at Fermilab.
-Utilizing high-precision tracking detectors we extract position dependence of
-the charged-particle detection efficiency, signal pulse height, signal
-timestamp, and time resolution. We also compare the uniformity of 
-50 and 80~$\mu$m LGAD sensors, as well as the HPK and CNM sensors irradiated to 
-an equivalent neutron flux of $6\times 10^{14}$~n/cm$^2$. Detailed measurements ofirradiated HPK sensors were presented in Ref.~\cite{Galloway:2017gfx}.
+One way to mitigate the pileup effects mentioned above, complementary to
+precision tracking methods, is to perform a time of arrival measurement
+associated with each particle. Such a measurement with a precision of about
+30-40~\si{ps}, will reduce the effective amount of pileup by a factor of 10,
+given that the spread in collision time of the pileup interactions at HL-LHC is
+foreseen to be approximately 200~\si{ps}. It has been previously shown that a
+precision of better than $20$~\si{ps} can be achieved for electromagnetic
+showers measured with silicon sampling
+calorimeters~\cite{Apresyan201662,Apresyan2017_NSSMIC,AKCHURIN201731} using
+traditional planar silicon detectors. In this paper, we report results of
+particle beam measurements with thin low-gain avalanche detectors (LGAD) that
+have been shown to achieve time resolutions around
+30~\si{ps}~\cite{Cartiglia201783, PELLEGRINI201412}. LGAD are envisioned to be
+used in the CMS and ATLAS experiment upgrades for HL-LHC in order to overcome
+the event reconstruction challenges posed by the high rate of concurrent
+collisions per beam crossing. The implemented regions of pseudorapidity ($\eta$)
+are: $|\eta|>1.5$, and $2.4 < |\eta| < 4.2 $ for CMS and ATLAS, respectively. In
+order to achieve the desired timing precision across a large area of the
+detectors, the sensors will need to provide high uniformity of signal response
+and timing resolution. In this paper, we perform detailed measurements of the
+performance of LGAD sensors produced by Centro Nacional de Microelectr\'{o}nica
+(CNM) and Hamamatsu Photonics (HPK) exposed to the 120~GeV proton beam at
+Fermilab. Utilizing high-precision tracking detectors we extract position
+dependence of the charged-particle detection efficiency, signal pulse height,
+signal timestamp, and time resolution of 50~$\mu$m LGAD sensors. We also compare
+the uniformity of 50 and 80~$\mu$m LGAD sensors. Unoformity and and time
+resolution of the HPK and CNM sensors irradiated to an equivalent neutron
+fluence of $6\times 10^{14}$~n/cm$^2$ are also presented. Detailed measurements
+of irradiated HPK sensors were presented in Ref.~\cite{Galloway:2017gfx}.
 
 The paper is organized as follows: the experimental setup is described in
 Sec.~\ref{sec:setup}; the tested LGAD sensors and their operating conditions are
@@ -261,25 +266,25 @@ the Peltier elements inside the DUT area is provided by the two tubes shown in t
 
 The beam is resonantly extracted in a slow spill for each Main Injector cycle
 delivering a single 4.2 sec long spill per minute. The primary beam (bunched at
-53 MHz) consists of high energy protons (120 GeV) at variable intensities
-between 1 and 300 kHz. The trigger to both the CAEN V1742 and to the pixel
-telescope was provided by a scintillator mounted on a photomultiplier tube,
-placed upstream of the DUTs in the beam-line. Due to the limited buffer depth of
-the CAEN V1742 board, special care had to be taken in the design of the DAQ
-system to ensure that both the DUT and telescope DAQs collect exactly the same
-amount of triggers. This was achieved by limiting the trigger rate by
-introducing an adjustable dead-time using a custom-designed trigger board. This
-trigger board is the combination of a custom FPGA board (the CAPTAN+x, equipped
-with multiple FPGA Mezzanine Card connectors and gigabit ethernet connectivity)
-mated to a front end board (the NIM+, with multiple inputs and outputs, each
-supporting a variety of interface levels such as NIM, LVDS, and TTL). The
-combined board is shown in Fig.~\ref{fig:NIM+Captan} and was used to interface to
-photomultiplier signals through on-board programmable discriminators, and to form
-trigger signals with software configurable time-based veto and pre-scaler event
-filtering. We found that at a rate of about 1,500 triggers per spill the CAEN
-V1742 and pixel telescope maintained full synchronization. Processed data
-from the pixel telescope and the DUTs were merged offline by matching the
-trigger counters recorded by the two systems.
+53 MHz) consists of 120~GeV protons. All measurements presented in this paper
+were taken with the primary beam particles. The trigger to both the CAEN V1742
+and to the pixel telescope was provided by a scintillator mounted on a
+photomultiplier tube, placed upstream of the DUTs in the beam-line. Due to the
+limited buffer depth of the CAEN V1742 board, special care had to be taken in
+the design of the DAQ system to ensure that both the DUT and telescope DAQs
+collect exactly the same amount of triggers. This was achieved by limiting the
+trigger rate by introducing an adjustable dead-time using a custom-designed
+trigger board. This trigger board is the combination of a custom FPGA board (the
+CAPTAN+x, equipped with multiple FPGA Mezzanine Card connectors and gigabit
+ethernet connectivity) mated to a front end board (the NIM+, with multiple
+inputs and outputs, each supporting a variety of interface levels such as NIM,
+LVDS, and TTL). The combined board is shown in Fig.~\ref{fig:NIM+Captan} and was
+used to interface to photomultiplier signals through on-board programmable
+discriminators, and to form trigger signals with software configurable
+time-based veto and pre-scaler event filtering. We found that at a rate of about
+1,500 triggers per spill the CAEN V1742 and pixel telescope maintained full
+synchronization. Processed data from the pixel telescope and the DUTs were
+merged offline by matching the trigger counters recorded by the two systems.
 
 \begin{figure}[htbp] 
 \centering
@@ -313,20 +318,21 @@ The HPK sensors were manufactured on 6-inch silicon wafers of 150~$\mu$m total
 thickness with a 50~$\mu$m or 80~$\mu$m thick high resistivity float zone (FZ)
 active layer. Four gain splits, identified with the letters A (lowest gain) to D
 (highest gain), were produced identical in the mask design but with a different
-$p^+$ dose of the gain layer to study the optimal parameters of the charge
-multiplication mechanism. The pads were produced in three versions: two with
-guard ring (GR and GBGR) and one without guard ring. Four-channel sensors in a $2\times 2$
-array were produced with all 4 gain-splits, and are identified with the PIX
-identifier. For example, the $2\times 2$ array of the 50~$\mu$m sensor split D is labelled as
-50D-PIX. The sensor corresponding to each of the four channels in the array 
-is also referred to as a pixel in this paper. 
-Each pixel in the $2\times 2$ HPK array has dimensions of $3\times 3$~$\mathrm{mm}^{2}$. 
-The CNM single-channel sensors are square pads with an active area of $1.7$~$\mathrm{mm}^{2}$ 
-while the HPK single-channel sensors are circular pads with an active area of $0.8$~$\mathrm{mm}^{2}$.
+$p^+$ dose of the gain layer to study the optimal parameters for fast timing
+detectors. The pads were produced in three versions: two with guard ring (GR and
+GBGR) and one without guard ring. Four-channel sensors in a $2\times 2$ array
+were produced with all 4 gain-splits, and are identified with the PIX
+identifier. For example, the $2\times 2$ array of the 50~$\mu$m sensor split D
+is labelled as 50D-PIX. The sensor corresponding to each of the four channels in
+the array is also referred to as a pixel in this paper. Each pixel in the
+$2\times 2$ HPK array has dimensions of $3\times 3$~$\mathrm{mm}^{2}$. The CNM
+single-channel sensors are square pads with an active area of
+$1.7$~$\mathrm{mm}^{2}$ while the HPK single-channel sensors are circular pads
+with an active area of $0.8$~$\mathrm{mm}^{2}$.
 
 \begin{figure}[!htbp] 
 \centering
-\includegraphics[width=0.3\textwidth]{figs/HPK-50D-PIX.pdf} \includegraphics[width=0.31\textwidth]{figs/Hgtd_Hg11_a.jpg} \\\includegraphics[width=0.32\textwidth]{figs/HPK-50D-GR.pdf} \includegraphics[width=0.31\textwidth]{figs/Lgad_Lga35_a.jpg} \caption{Photographs of the HPK 50D-PIX $2\times 2$ array sensor (top left), the CNM-W9HG11 $2\times 2$ array sensor (top right), the 50D-GR single sensor (bottom left), and the CNM W11LGA35 single sensor (bottom right) are shown. Numerical labels overlaid on top of the images of the array sensors are used in the text when referring to individual pixels.} 
+\includegraphics[width=0.3\textwidth]{figs/HPK-50D-PIX.pdf} \includegraphics[width=0.31\textwidth]{figs/Hgtd_Hg11_a.jpg} \\\includegraphics[width=0.32\textwidth]{figs/HPK-50D-GR.pdf} \includegraphics[width=0.31\textwidth]{figs/Lgad_Lga35_a.jpg} \caption{Photographs of the HPK 50D-PIX $2\times 2$ array sensor (top left), the CNM W9HG11 $2\times 2$ array sensor (top right), the HPK 50D-GR single sensor (bottom left), and the CNM W11LGA35 single sensor (bottom right) are shown. Numerical labels overlaid on top of the images of the array sensors are used in the text when referring to individual pixels.} 
 \label{fig:HPK_Sensors} 
 \end{figure} 
 
@@ -377,7 +383,7 @@ has an input impedance of 700~$\Omega$, an output noise of 4~mV and a gain in
 transresistance of about 50 mV/$\mu$A with a 3~dB bandwidth of 100~MHz. 
 Those values were simulated for an input capacitance of 20~pF, 
 which corresponds roughly to an LGAD of $9$~$\mathrm{mm}^{2}$. The power
-consumption of the board is about 130~W per channel. 
+consumption of the board is about 130~mW per channel. 
 
 The UCSC 1-channel board is described in detail in
 Ref.~\cite{Cartiglia201783}. This board uses discrete components and contains
@@ -413,26 +419,25 @@ Gaussian function analogous to what is done for the reference detector.
 This procedure is slightly different compared to previous studies of LGAD sensors, 
 where the CFD method was used uniformly.
 
-The above choices of timestamp reconstruction algorithms used
-are motivated by the result of a dedicated study of different
-timestamp reconstruction algorithms for each of the three readout boards.
-The study is performed using signals from the HPK 50D sensor. 
-Constant fraction discriminant (CFD) and constant threshold discriminant (CTD)
-algorithms are used and the time resolution performance is studied as a function
-of the threshold used. In Tables~\ref{tab:KUBoardCFD}~and~\ref{tab:KUBoardCTD}, 
-we show the time resolution obtained
-for different thresholds for the CFD and CTD algorithms respectively, for the KU
-readout board. For the CFD algorithm, we observed no significant dependence of
-the timestamp on the pulse height of the signal. However, for the CTD algorithm, 
-the timestamp does depend on the pulse height and requires a 
-correction referred to as a time-walk correction. 
-For most situations, the time-walk correction can be accurately described by a linear
-function, however we do observe that as the CTD threshold increases, the time-walk
-correction becomes more quadratic. In Table~\ref{tab:KUBoardCTD}, the time resolution 
-is reported for both linear and quadratic time-walk corrections.
-We observe that the best results are obtained for a CFD threshold
-at $45\%$. However the CTD algorithm at a moderate threshold does yield comparable
-time resolutions. 
+The choices of the timestamp reconstruction algorithms listed above were
+motivated by the result of a dedicated study of various algorithms for each of
+the three readout boards. The study is performed using signals from the HPK 50D
+sensor. Constant fraction discriminant (CFD) and constant threshold discriminant
+(CTD) algorithms are used and the time resolution performance is studied as a
+function of the threshold used. In
+Tables~\ref{tab:KUBoardCFD}~and~\ref{tab:KUBoardCTD}, we show the time
+resolution obtained for different thresholds for the CFD and CTD algorithms
+respectively, for the KU readout board. For the CFD algorithm, we observed no
+significant dependence of the timestamp on the pulse height of the signal.
+However, for the CTD algorithm, the timestamp does depend on the pulse height
+and requires a correction referred to as a time-walk correction. For most
+situations, the time-walk correction can be accurately described by a linear
+function, however we do observe that as the CTD threshold increases, the
+time-walk correction becomes more quadratic. In Table~\ref{tab:KUBoardCTD}, the
+time resolution is reported for both linear and quadratic time-walk corrections.
+We observe that the best results are obtained for a CFD threshold at $45\%$.
+However the CTD algorithm at a moderate threshold does yield comparable time
+resolutions. 
 
 \begin{table}[!htb]
 \scriptsize
@@ -520,18 +525,18 @@ We present a number of different studies performed on the LGAD sensors
 described in Section~\ref{sec:sensors}. They include signal response 
 uniformity, gap distance between adjacent pixels, 
 doping profile and sensor thickness characterization,
-temperature and irradiation dependence, and timing resolution. A brief overview of the
+temperature and irradiation dependence, and time resolution. A brief overview of the
 analysis methods is given below, followed by subsections describing
 the details and results of each study.
 
-Events are required to have a signal in the Photek MCP-PMT consistent with a 
-minimum ionizing particle (MIP), and a signal above the noise in LGAD sensors. 
-The MIP signal selection in the Photek MCP-PMT is the same for all runs
-and requires that the signal amplitude is between $160$~mV and $320$~mV.
-The signal selection for LGAD boards was
-optimized for each board individually, by selecting the MIP signal peak fitted
-with a Landau function. All measurements other than those described in Sec.~\ref{sec:temp_dependance}
-and ~\ref{sec:rad_tolerance} were performed at room temperature. 
+Events are required to have a signal in the Photek MCP-PMT consistent with a
+minimum ionizing particle (MIP), and a signal above the noise in LGAD sensors.
+The MIP signal selection in the Photek MCP-PMT is the same for all runs and
+requires that the signal amplitude is between $160$~mV and $320$~mV. Signal
+events in LGAD sensors are selected such that they are above the noise levels
+listed for each board in Sec.~\ref{sec:boards}. All measurements other than
+those described in Sec.~\ref{sec:temp_dependance} and ~\ref{sec:rad_tolerance}
+were performed at room temperature. 
 
 Here, and in the remainder of this article, whenever a scan of a certain
 characteristic quantity -- e.g. time resolution --  of the sensor is presented, we show the
@@ -577,8 +582,8 @@ The pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.}
 
 
 An important characteristic is the uniformity of the signal size
-across the surface of the sensor, which directly impacts its timing performance. We use the signal amplitude as the metric to characterize the signal
-size uniformity. The distribution of the LGAD signal amplitudes is fit to a
+across the surface of the sensor, which directly impacts on its timing performance. We use the signal amplitude as the metric to characterize the signal
+size uniformity. The distribution of the LGAD signal amplitudes is fitted to a
 Landau distribution. The most probable value (MPV) parameter of the fitted
 Landau distribution is plotted in Fig.~\ref{fig:FNAL_HPK50_MPVXY}. 
 A flat response with a uniform signal size is observed over the whole sensor area.
@@ -616,7 +621,8 @@ behavior, though the larger statistical uncertainties make it less significant.
 \includegraphics[width=0.48\textwidth]{figs/HPK50DVsCNM_MeanTime_vs_X.pdf}
 \includegraphics[width=0.48\textwidth]{figs/HPK50DVsCNM_MeanTime_vs_Y.pdf}
 \caption{$\Delta t$ measurement across the X- and Y-axes of the HPK 50D-PIX sensor 
-mounted on the FNAL board. The scans of pixels 1 and 2 along the X-axis, and 
+mounted on the FNAL board, and the CNM W9HG11 sensor mounted on the 
+UCSC board. The scans of pixels 1 and 2 along the X-axis, and 
 pixels 1 and 3 along the Y-axis are shown. The pixel numberng scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:FNAL_HPK50_DTXY} 
 \end{figure} 
@@ -1041,8 +1047,8 @@ V. Cindro and I. Mandic with the neutron irradiations.
 This document was prepared using the resources of the Fermi National AcceleratorLaboratory (Fermilab), a U.S. Department of Energy, Office of Science, HEP UserFacility. Fermilab is managed by Fermi Research Alliance, LLC (FRA), actingunder Contract No. DE-AC02-07CH11359. Part of this work was performed within theframework of the CERN RD50 collaboration.This work was supported by the Fermilab LDRD 2017.027; by the United StatesDepartment of Energy grant DE-FG02-04ER41286; by the California Institute ofTechnology High Energy Physics under Contract DE-SC0011925; by the EuropeanUnion's Horizon 2020 Research and Innovation funding program, under GrantAgreement no. 654168 (AIDA-2020) and Grant Agreement no. 669529 (ERCUFSD669529); by the Italian Ministero degli Affari Esteri and INFN Gruppo V; andby the Spanish Ministry of Economy, Industry and Competitiveness through theParticle Physics National Program (ref. FPA2014-55295-C3-2-R andFPA2015-69260-C3-3-R) co-financed with FEDER funds.
 
 
-%% The Appendices part is started with the command \appendix;
-%% appendix sections are then done as normal sections
+% The Appendices part is started with the command \appendix;
+% appendix sections are then done as normal sections
 
 %\appendix
 %\section{Appendix A}
@@ -1071,7 +1077,7 @@ This document was prepared using the resources of the Fermi National Accelerator
 %\label{tab:DataConditions}
 %\end{center}
 %\end{table}
-
+%
 %% \section{}
 %% \label{}
 

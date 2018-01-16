@@ -128,7 +128,7 @@ sensor response in pulse height before irradiation was found to have a
 were found to be 100\%  and 30-40~\si{ps}, respectively. A ``no-response'' area between pads was
 measured to be about 70~$\mu$m for CNM and 110$\mu$m for HPK sensors. After a
 neutron fluence of $6\times 10^{14}$~n/cm$^2$ the CNM sensor exhibits a large
-gain variation of a factor of $2.5$ when comparing metallized and non-metallized
+gain variation of up to a factor of $2.5$ when comparing metallized and non-metallized
 sensor areas. An irradiated CNM sensor achieved a time resolution of 30~ps for the
 metallized area and 40~ps for the non-metallized area, while 
 a HPK sensor irradiated to the same fluence achieved a 30~\si{ps} time resolution.
@@ -232,10 +232,14 @@ The DAQ system for the DUTs and the Photek MCP-PMT is based on a CAEN V1742
 digitizer board~\cite{CAENDRS}, which provides digitized waveforms sampled at 5
 GS/s, and with one ADC count corresponding to 0.25~mV. The CAEN digitizer was
 voltage- and time-calibrated using the procedure described in
-Ref.~\cite{Kim201467}. The electronic time resolution of the CAEN V1742
-digitizer was measured to be less than 4~ps, and thus, its impact on the timing
-measurements presented in these studies can be neglected. The DAQ for the pixel
-telescope is based on the CAPTAN system developed at
+Ref.~\cite{Kim201467}. One of the main parameters of DAQ system for precise time
+measurements is the ``electronic time resolution'', defined as the measured time
+jitter between two signals that are split from the same source. These two
+signals are used as ``start'' and ``stop'' signals to electronic system
+measuring the time interval between them. The electronic time resolution of the
+CAEN V1742 digitizer was measured to be less than 4~ps, and thus, its impact on
+the timing measurements presented in these studies can be neglected. The DAQ for
+the pixel telescope is based on the CAPTAN system developed at
 Fermilab~\cite{KWAN2016162}. The track-reconstruction is performed using the
 Monicelli software package developed specifically for the test-beam application. 
 
@@ -432,7 +436,7 @@ significant dependence of the timestamp on the pulse height of the signal.
 However, for the CTD algorithm, the timestamp does depend on the pulse height
 and requires a correction referred to as a time-walk correction. For most
 situations, the time-walk correction can be accurately described by a linear
-function, however we do observe that as the CTD threshold increases, the
+dependence of timestamp on pulse height, however we do observe that as the CTD threshold increases, the
 time-walk correction becomes more quadratic. In Table~\ref{tab:KUBoardCTD}, the
 time resolution is reported for both linear and quadratic time-walk corrections.
 We observe that the best results are obtained for a CFD threshold at $45\%$.
@@ -561,7 +565,7 @@ Both sensors were operated at room temperature for these studies.
 The measurements of the particle detection efficiency are shown in
 Fig.~\ref{fig:FNAL_HPK50_effXY}. Efficiency is defined as the ratio of events
 that register a signal above the noise level in the LGAD sensor to those that
-contain a track identified by the pixel telescope pointing at the LGAD sensor.
+contain a track identified by the pixel telescope pointing at the LGAD sensor. 
 We observe a flat 100\% efficiency across the whole sensor area. The left edge
 in the X-axis scan of pixel 1 on HPK 50D-PIX sensor in
 Fig.~\ref{fig:FNAL_HPK50_effXY} is outside the acceptance of the pixel
@@ -657,8 +661,13 @@ detailed scan in the area between the two pixels as shown in
 Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. In order to estimate the width of the
 no-response between the pixels, the efficiency curves of the two neighboring
 pixels are fitted with an S-curve function of the form $y=p_1\times
-\mathrm{erf}\left\{\pm(p_2-x)/p_3)\right\}+p_4$, where $\mathrm{erf}$ is the error
-function, and $p_i$ are floated in the fit. We define the width of the
+\mathrm{Erf}\left\{\pm(p_2-x)/p_3)\right\}+p_4$, where $\mathrm{Erf\{x\}}$ is the error
+function defined as:
+
+\begin{equation}
+Erf(x)= \frac{2}{\sqrt{\pi}}\times \int_{0}^{x}e^{-t^2}dt
+\end{equation}
+, and $p_i$ were free parameters of the fit. We define the width of the
 ``no-response'' area as the distance between the half-maxima of the two fitted
 S-curves, as shown in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. We measure the width
 of the no-response area on the HPK 50D-PIX sensor to be 110~$\mu$m, with an

@@ -535,19 +535,25 @@ the details and results of each study.
 
 Events are required to have a signal in the Photek MCP-PMT consistent with a
 minimum ionizing particle (MIP), and a signal above the noise in LGAD sensors.
-The MIP signal selection in the Photek MCP-PMT is the same for all runs and
-requires that the signal amplitude is between $160$~mV and $320$~mV. Signal
-events in LGAD sensors are selected such that they are above the noise levels
-listed for each board in Sec.~\ref{sec:boards}. All measurements other than
-those described in Sec.~\ref{sec:temp_dependance} and ~\ref{sec:rad_tolerance}
-were performed at room temperature. 
+The signal selection in the Photek MCP-PMT is the same for all runs and requires
+that the signal is consistent with a MIP corresponding to amplitude values in
+the range between 160 mV and 320 mV. Signal events in LGAD sensors are selected
+such that they are above the noise levels listed for each board in
+Sec.~\ref{sec:boards}. All measurements other than those described in
+Sec.~\ref{sec:temp_dependance} and ~\ref{sec:rad_tolerance} were performed at
+room temperature. 
 
 Here, and in the remainder of this article, whenever a scan of a certain
-characteristic quantity -- e.g. time resolution --  of the sensor is presented, we show the
-X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and 3, as
-defined on the left picture in Fig.~\ref{fig:HPK_Sensors}. The X-axis scan
-across pixels 3 and 4, and Y-axis scan across pixels 2 and 4 show
-qualitatively the same features, and are not presented here. 
+characteristic quantity -- e.g. time resolution -- of the sensor is presented,
+we show the X-axis scan for pixels 1 and 2, and the Y-axis scan for pixels 1 and
+3, as defined on the left picture in Fig.~\ref{fig:HPK_Sensors}. The X-axis scan
+across pixels 3 and 4, and Y-axis scan across pixels 2 and 4 show qualitatively
+the same features, and are not presented here. Measurements presented for
+various sensors were obtained from different datasets and therefore the
+statistical precision is not always the same. The reason that in some
+measurements the error bars are not the same across either X- or Y-coordinate is
+due to the fact that the beam does not uniformly illuminate the whole sensor
+area, and hence the number of events is not the same across sensor surface.
 
 
 \subsection{Study of the uniformity of the LGAD sensors}
@@ -564,8 +570,15 @@ Both sensors were operated at room temperature for these studies.
 
 The measurements of the particle detection efficiency are shown in
 Fig.~\ref{fig:FNAL_HPK50_effXY}. Efficiency is defined as the ratio of events
-that register a signal above the noise level in the LGAD sensor to those that
-contain a track identified by the pixel telescope pointing at the LGAD sensor. 
+that register a signal above the noise level to those that contain a track
+identified by the pixel telescope pointing at the LGAD sensor. Error bars in all
+efficiency measurements are evaluated as Clopper-Pearson intervals for
+calculating binomial confidence intervals. Noise values for different boards
+used in the experiments are listed in Sec.~\ref{sec:boards}, and were measured
+using dedicated runs with no particles, and data collected using random
+triggers. Signals used in the efficiency measurements were required to have
+amplitude above 20~mV plots, well above the noise level.
+
 We observe a flat 100\% efficiency across the whole sensor area. The left edge
 in the X-axis scan of pixel 1 on HPK 50D-PIX sensor in
 Fig.~\ref{fig:FNAL_HPK50_effXY} is outside the acceptance of the pixel
@@ -580,7 +593,7 @@ A more detailed study of the ``no-response'' region is given in Sec.~\ref{sec:HP
 \caption{Efficiency measurement across the X-axis (left) and Y-axes (right) of the HPK 50D-PIX sensor 
 mounted on the FNAL board, and the CNM W9HG11 sensor mounted on the UCSC board. The scans of pixels 1 and 2 
 along the X-axis, and pixels 1 and 3 along the Y-axis are shown.
-The pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}.} 
+The pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}. } 
 \label{fig:FNAL_HPK50_effXY} 
 \end{figure} 
 
@@ -611,14 +624,14 @@ CNM $2\times 2$ sensor arrays is shown in Fig.~\ref{fig:HPK_Sensors}. For the
 HPK sensor, the $\Delta t$ dependence on the hit position indicates a shift of
 about $20$--$30$~ps between the metallized area near the center of the array
 (gray region of the top-left image in Fig.~\ref{fig:HPK_Sensors}) and the
-non-metallized area. A possible explanation for this effect is a small difference
-in the rise time of the pulses that originate from the passage of particles in
-the metallized and non-metallized areas. This effect cannot be attributed to the
-algorithm used to time-stamp the events, since the same behavior is observed
-with the CFD and CDT algorithms. Furthermore, the same behavior is observed on
-all HPK sensor varieties mounted on KU board, as presented in
-Sec.~\ref{sec:HPKdoping}. The results for the CNM sensor also show hints of this
-behavior, though the larger statistical uncertainties make it less significant. 
+non-metallized area. A possible explanation for this effect is a small
+difference in the rise time of the pulses that originate from the passage of
+particles in the metallized and non-metallized areas. This effect cannot be
+attributed to the algorithm used to time-stamp the events, since the same
+behavior is observed with the CFD and CDT algorithms. Furthermore, the same
+behavior is observed on all HPK sensor varieties mounted on KU board, as
+presented in Sec.~\ref{sec:HPKdoping}. The CNM W9HG11 sensor does not contain metalized
+areas on its surface and we do not observe the same effect.
 
 \begin{figure}[htbp] 
 \centering
@@ -664,14 +677,17 @@ pixels are fitted with an S-curve function of the form $y=p_1\times
 \mathrm{Erf}\left\{\pm(p_2-x)/p_3)\right\}+p_4$, where $\mathrm{Erf\{x\}}$ is the error
 function defined as:
 
-\begin{equation}
-Erf(x)= \frac{2}{\sqrt{\pi}}\times \int_{0}^{x}e^{-t^2}dt
-\end{equation}
-, and $p_i$ were free parameters of the fit. We define the width of the
-``no-response'' area as the distance between the half-maxima of the two fitted
-S-curves, as shown in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. We measure the width
-of the no-response area on the HPK 50D-PIX sensor to be 110~$\mu$m, with an
-uncertainty of 10~$\mu$m.
+\begin{equation} Erf(x)= \frac{2}{\sqrt{\pi}}\times \int_{0}^{x}e^{-t^2}dt
+\end{equation} , and $p_i$ were free parameters of the fit. We define the width
+of the ``no-response'' area as the distance between the half-maxima of the two
+fitted S-curves, as shown in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. We measure the
+width of the no-response area on the HPK 50D-PIX sensor to be 110~$\mu$m, with
+an uncertainty of 10~$\mu$m. Data points outside the sensor area in
+Figs.~\ref{fig:FNAL_HPK50_ZoomeffXY}, \ref{fig:UCSC_HPK50C_CNM_ZoomeffXY}
+actually had hit the sensor active area, but the coordinate of the track is incorrectly
+assigned, due to a small probability ($<1$\%) to misreconstruct the position of
+the track.
+
 
 \begin{figure}[!htbp] 
 \centering
@@ -681,16 +697,14 @@ The HPK 50D-PIX sensor was operated at $-300$ V bias voltage. The pixel numberin
 \label{fig:FNAL_HPK50_ZoomeffXY} 
 \end{figure} 
 
-A further measurement was made on the 4-channel UCSC board for the
-HPK 50C-PIX sensor and the CNM W9HG11 sensor. 
-We compare the width of the gap region of the HPK and CNM sensors in
-Fig.~\ref{fig:UCSC_HPK50C_CNM_ZoomeffXY}. Both sensors in this
-comparison were tested in the beam simultaneously. The HPK 50C-PIX sensor was operated 
-at $-450$~V, and CNM W9HG11 sensor was operated at $-180$~V. We measure the
-size of the ``no-response'' region to be around 110~$\mu$m on the HPK
-50C-PIX -- compatible 
-with the HPK 50D-PIX sensor -- and around 70~$\mu$m for the CNM sensor. Both
-measurements have an uncertainty of 10~$\mu$m.
+A further measurement was made on the 4-channel UCSC board for the HPK 50C-PIX
+sensor and the CNM W9HG11 sensor. We compare the width of the gap region of the
+HPK and CNM sensors in Fig.~\ref{fig:UCSC_HPK50C_CNM_ZoomeffXY}. Both sensors in
+this comparison were tested in the beam simultaneously. The HPK 50C-PIX sensor
+was operated at $-450$~V, and CNM W9HG11 sensor was operated at $-180$~V. We
+measure the size of the ``no-response'' region to be around 110~$\mu$m on the
+HPK 50C-PIX -- compatible with the HPK 50D-PIX sensor -- and around 70~$\mu$m
+for the CNM sensor. Both measurements have an uncertainty of 10~$\mu$m.
 
 \begin{figure}[!htbp] 
 \centering

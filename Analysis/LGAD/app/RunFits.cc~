@@ -1,0 +1,15 @@
+#include <iostream>
+//ROOT INCLUDES
+#include <TFile.h>
+#include <TTree.h>
+#include <TMath.h>
+#include <TH1F.h>
+#include <TROOT.h>
+//LOCAL INCLUDES
+#include "MakeFits.hh"
+
+int main( int argc, char* argv[])
+{
+  gROOT->Reset();
+  
+}

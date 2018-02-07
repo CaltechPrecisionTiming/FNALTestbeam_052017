@@ -6,6 +6,47 @@
 #include <TF1.h>
 #include <TGraphErrors.h>
 #include "EfficiencyUtils.hh"
+#include <TSystem.h>
+#include <TTree.h>
+#include <TLatex.h>
+#include <TString.h>
+#include <TFile.h>
+#include <TH1D.h>
+#include <TF1.h>
+#include <TBox.h>
+#include <TCanvas.h>
+#include <TGraph.h>
+#include <TGraphErrors.h>
+#include <TRandom3.h>
+#include <TLegend.h>
+#include <TMath.h>
+#include <TROOT.h>
+#include <Math/GaussIntegrator.h>
+#include <Math/IntegratorOptions.h>
+//ROOFIT INCLUDES
+#include <RooWorkspace.h>
+#include <RooDataSet.h>
+#include <RooRealVar.h>
+#include <RooExponential.h>
+#include <RooAddPdf.h>
+#include <RooGaussian.h>
+#include <RooLandau.h>
+#include <RooFFTConvPdf.h>
+#include <RooMinimizer.h>
+#include <RooFitResult.h>
+#include <RooPlot.h>
+#include <RooExtendPdf.h>
+#include <RooStats/SPlot.h>
+#include <RooStats/ModelConfig.h>
+#include <RooGenericPdf.h>
+#include <RooFormulaVar.h>
+#include <RooBernstein.h>
+#include <RooMinuit.h>
+#include <RooNLLVar.h>
+#include <RooRandom.h>
+#include <RooDataHist.h>
+#include <RooHistPdf.h>
+#include <RooArgList.h>
 
 using namespace std;
 
@@ -469,12 +510,12 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
     {
       x_pos[i] = x_init + binWidth*(float)i;
       x_pos_un[i] = 0;
-      std::pair<float,float> MPVAndError_X = MPV_vs_Position( dut, "X", channelNumber, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax,
+      std::pair<float,float> MPVAndError_X = MPV_vs_Position_ROOFIT( dut, "X", channelNumber, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax,
 							      photek_low, photek_high );
       x_pos[i] = x_pos[i]*um_to_mm;
       mpv_x[i] = MPVAndError_X.first;
       mpv_x_un[i] = MPVAndError_X.second;
-      if ( mpv_x_un[i]/mpv_x[i] > 0.2 )
+      if ( mpv_x_un[i]/mpv_x[i] > 0.05 )
 	{
 	  mpv_x[i]    = 0;
 	  mpv_x_un[i] = 0;
@@ -488,12 +529,12 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
       
       y_pos[i] = y_init + binWidth*(float)i;
       y_pos_un[i] = 0;
-      std::pair<float,float> MPVAndError_Y = MPV_vs_Position( dut, "Y", channelNumber, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax,
+      std::pair<float,float> MPVAndError_Y = MPV_vs_Position_ROOFIT( dut, "Y", channelNumber, y_pos[i], binWidth, threshold_low, threshold_high, xmin, xmax,
 							      photek_low, photek_high);
       y_pos[i] = y_pos[i]*um_to_mm;
       mpv_y[i] = MPVAndError_Y.first;
       mpv_y_un[i] = MPVAndError_Y.second;
-      if ( mpv_y_un[i]/mpv_y[i] > 0.2 )
+      if ( mpv_y_un[i]/mpv_y[i] > 0.05 )
 	{
 	  mpv_y[i]    = 0;
 	  mpv_y_un[i] = 0;
@@ -856,6 +897,190 @@ std::pair<float,float> pulse::MPV_vs_Position( int dut, TString coor, const int 
   return result;
 };
 
+std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, const int channel, const float coorLow, const float step,
+					       const float AmpLowCut, const float AmpHighCut,
+					       float other_corr_low, float other_corr_high,
+					       float photek_low, float photek_high)
+{
+  if ( channel < 0 ) return std::pair<float,float>(-999,0);
+  if ( dut <= 0 || dut > 2 )
+    {
+      std::cerr << "[ERROR]: please provide a valid dut = <1,2>" << std::endl;
+      return std::pair<float,float>(-999,0);
+    }
+
+  //------------------------------
+  //RooFit Setup
+  //------------------------------
+  RooRealVar Amp( "amplitude", "Amp", 0, 0.5, "V" );
+  Amp.setBins(100);
+  Amp.setRange( "fitRange", 0.02, 0.35 );
+  RooDataSet data( "data", "", RooArgSet(Amp) );
+
+  //---------------
+  //Define Model
+  //---------------
+  // Construct landau(t,ml,sl) ;
+  RooRealVar ml("ml", "mean landau", 4.86717e-02);
+  //RooRealVar ml("ml","mean landau",0.055);
+  ml.setConstant( kFALSE );
+  RooRealVar sl("sl", "sigma landau", 2.67652e-03) ;
+  //RooRealVar sl("sl","sigma landau",0.01);
+  sl.setConstant( kFALSE );
+  RooLandau landau("lx", "lx",Amp,ml,sl);
+  
+  // Construct gauss(t,mg,sg)
+  RooRealVar mg("mg", "mg", 0);
+  RooRealVar sg("sg", "sg", 6.25166e-03);
+  sg.setConstant( kFALSE );
+  RooGaussian gauss("gauss", "gauss", Amp, mg, sg);
+  
+  //--------------------------------------------------
+  // C o n s t r u c t   c o n v o l u t i o n   p d f 
+  // -------------------------------------------------
+  
+  // Construct landau (x) gauss
+  RooFFTConvPdf lxg("lxg", "landau (X) gauss", Amp, landau, gauss) ;
+  //Extended variable
+  RooRealVar* Ns = new RooRealVar( "Ns", "N_{s}", 8000, "events");
+  Ns->setConstant(kFALSE);
+  
+  //------------------------------------
+  //C r e a t e   E x t e n d e d  p.d.f
+  //------------------------------------
+  TString ex_pdf_name          = "lxg_ext";
+  RooAddPdf* ex_lxg = new RooAddPdf( ex_pdf_name, "extLxG", RooArgList(lxg), RooArgList(*Ns) );
+  //RooAddPdf* ex_lxg = new RooAddPdf( ex_pdf_name, "extLxG", RooArgList(landau), RooArgList(*Ns) );
+  
+  fChain->SetBranchStatus("*", 0);
+  fChain->SetBranchStatus("amp", 1);
+  fChain->SetBranchStatus("x1", 1);
+  fChain->SetBranchStatus("y1", 1);
+  fChain->SetBranchStatus("x2", 1);
+  fChain->SetBranchStatus("y2", 1);
+  if (fChain == 0) return std::pair<float,float>(-999,0);
+  Long64_t nentries = fChain->GetEntriesFast();
+  Long64_t nbytes = 0, nb = 0;
+  
+  cout << "Running MPV_vs_Position Analysis\n";
+  cout << "Total Events: " << nentries << "\n";
+  TH1F* h_mpv = new TH1F("h_mpv", "h_mpv", 100, 0, 0.5);
+  for (Long64_t jentry=0; jentry<nentries;jentry++)
+    {
+      Long64_t ientry = LoadTree(jentry);
+      if (ientry < 0) break;
+      if (ientry % 10000 == 0) cout << "Processing Event " << ientry << "\n";
+      nb = fChain->GetEntry(jentry);   nbytes += nb;
+      
+      if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > photek_low && amp[0] < photek_high )
+	{
+	  if ( dut == 1 )
+	    {
+	      if ( (coor == "x" || coor == "X") && x1 >= coorLow && x1 < (coorLow + step) && y1 > other_corr_low && y1 < other_corr_high )
+		{
+		  Amp.setVal( amp[channel] );
+		  data.add(RooArgSet(Amp));
+		}
+	      if ( (coor == "y" || coor == "Y") && y1 >= coorLow && y1 < (coorLow + step) && x1 > other_corr_low && x1 < other_corr_high )
+		{
+		  Amp.setVal( amp[channel] );
+		  data.add(RooArgSet(Amp));
+		}
+	    }
+	  else if ( dut == 2 )
+	    {
+	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high )
+		{
+		  Amp.setVal( amp[channel] );
+		  data.add(RooArgSet(Amp));
+		}
+	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high )
+		{
+		  Amp.setVal( amp[channel] );
+		  data.add(RooArgSet(Amp));
+		}
+	    }
+	  
+	}
+    }
+
+  //Restoring all branches
+  fChain->SetBranchStatus("*", 1);
+
+  if ( data.numEntries() < 50 )
+    {
+      std::cout << "======================" << std::endl;
+      std::cout << "============nofit==========" << std::endl;
+      std::cout << "======================" << std::endl;
+     return std::pair<float,float>(0,999);
+    }
+  // ----------------------------------------------------------------------
+  // f i t   a n d   p l o t   c o n v o l u t e d   p d f 
+  // ----------------------------------------------------------------------
+  std::cout << "======================" << std::endl;
+  std::cout << "============" << data.numEntries() << "==========" << std::endl;
+  std::cout << "======================" << std::endl;
+  Ns->setVal( data.numEntries() );
+  RooMsgService::instance().setGlobalKillBelow(RooFit::FATAL) ;
+  // Fit gxlx to data
+  ex_lxg->fitTo(data, RooFit::Strategy(0), RooFit::Extended( kTRUE ), RooFit::Range("fitRange") );
+  
+  //RooFitResult* sres = ex_lxg->fitTo(data, RooFit::Strategy(2), RooFit::Extended( kTRUE ), RooFit::Save( kTRUE ), RooFit::Range("fitRange") );
+  
+  /*
+  sres->SetName( "sres" );
+  ws->import( *sres );
+  
+  RooPlot* frame = amp.frame();
+  data.plotOn( frame );
+  
+  ex_lxg->plotOn( frame, RooFit::LineColor( kBlue ), RooFit::Range("Full"), RooFit::NormRange("Full") );
+  ws->import( amp );
+  ws->import( data );
+  frame->SetName("MY_frame" );
+  ws->import( *frame );
+  */
+  std::pair<float,float> result;
+  result.first = ml.getVal();
+  result.second = ml.getError();
+
+   std::string myCoor;
+  if ( coor == "X" || coor == "x" ) myCoor = "X";
+  if ( coor == "Y" || coor == "y" ) myCoor = "Y";
+  TString fname = Form("mpv_Channel%d_step%.2f_%s.root", channel,coorLow + step, myCoor.c_str());
+  TFile* fout = new TFile(fname, "recreate");
+  RooWorkspace* ws = new RooWorkspace( "ws", "" );
+  RooPlot* frame = Amp.frame();
+  data.plotOn( frame );
+  
+  ex_lxg->plotOn( frame, RooFit::LineColor( kBlue ), RooFit::Range("Full"), RooFit::NormRange("Full") );
+  ws->import( Amp );
+  ws->import( data );
+  frame->SetName("MY_frame" );
+  ws->import( *frame );
+  ws->Write("myws");
+  fout->Close();
+  
+  /*
+  //Fitting
+  TF1* landau = new TF1( "landau", "landau", AmpLowCut, AmpHighCut );
+  h_mpv->Fit("landau","Q","", AmpLowCut, AmpHighCut);
+  std::pair<float,float> result;
+  result.first = landau->GetParameter(1);
+  result.second = landau->GetParError(1);
+  //Creating output file
+  //Creating output file
+  std::string myCoor;
+  if ( coor == "X" || coor == "x" ) myCoor = "X";
+  if ( coor == "Y" || coor == "y" ) myCoor = "Y";
+  
+  TString fname = Form("mpv_Channel%d_step%.2f_%s.root", channel,coorLow + step, myCoor.c_str());
+  TFile* fout = new TFile(fname, "recreate");
+  h_mpv->Write();
+  fout->Close();
+  */
+  return result;
+};
 
 std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const int channel, const int timestampOption, const float coorLow, const float step,
 						  const float AmpLowCut, const float AmpHighCut,

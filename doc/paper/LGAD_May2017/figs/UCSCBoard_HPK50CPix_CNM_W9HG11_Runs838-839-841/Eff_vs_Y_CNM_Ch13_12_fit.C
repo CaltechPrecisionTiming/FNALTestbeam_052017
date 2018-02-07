@@ -1,8 +1,8 @@
 void Eff_vs_Y_CNM_Ch13_12_fit()
 {
 //=========Macro generated from canvas: c/c
-//=========  (Mon Aug 21 16:44:26 2017) by ROOT version6.08/02
-   TCanvas *c = new TCanvas("c", "c",0,45,800,800);
+//=========  (Tue Feb  6 05:43:35 2018) by ROOT version6.02/05
+   TCanvas *c = new TCanvas("c", "c",8,129,800,800);
    c->Range(22.33532,-0.13875,22.83288,1.24875);
    c->SetFillColor(0);
    c->SetBorderMode(0);
@@ -12,7 +12,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    c->SetFrameBorderMode(0);
    c->SetFrameBorderMode(0);
    
-   Double_t Graph0_fx3017[1000] = {
+   Double_t Graph0_fx3005[1000] = {
    10.01,
    10.03,
    10.05,
@@ -1013,7 +1013,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    29.95,
    29.97,
    29.99};
-   Double_t Graph0_fy3017[1000] = {
+   Double_t Graph0_fy3005[1000] = {
    0,
    0,
    0,
@@ -2014,7 +2014,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    0,
    0,
    0};
-   Double_t Graph0_felx3017[1000] = {
+   Double_t Graph0_felx3005[1000] = {
    0.01,
    0.01,
    0.01,
@@ -3015,7 +3015,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    0.01,
    0.01,
    0.01};
-   Double_t Graph0_fely3017[1000] = {
+   Double_t Graph0_fely3005[1000] = {
    0,
    0,
    0,
@@ -4016,7 +4016,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    0,
    0,
    0};
-   Double_t Graph0_fehx3017[1000] = {
+   Double_t Graph0_fehx3005[1000] = {
    0.01,
    0.01,
    0.01,
@@ -5017,7 +5017,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    0.01,
    0.01,
    0.01};
-   Double_t Graph0_fehy3017[1000] = {
+   Double_t Graph0_fehy3005[1000] = {
    0,
    0,
    0,
@@ -6018,7 +6018,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    0,
    0,
    0};
-   TGraphAsymmErrors *grae = new TGraphAsymmErrors(1000,Graph0_fx3017,Graph0_fy3017,Graph0_felx3017,Graph0_fehx3017,Graph0_fely3017,Graph0_fehy3017);
+   TGraphAsymmErrors *grae = new TGraphAsymmErrors(1000,Graph0_fx3005,Graph0_fy3005,Graph0_felx3005,Graph0_fehx3005,Graph0_fely3005,Graph0_fehy3005);
    grae->SetName("Graph0");
    grae->SetTitle("");
    grae->SetFillColor(1);
@@ -6034,64 +6034,64 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    grae->SetMarkerStyle(20);
    grae->SetMarkerSize(1.2);
    
-   TH1F *Graph_Graph_Graph30163017 = new TH1F("Graph_Graph_Graph30163017","",1000,8,32);
-   Graph_Graph_Graph30163017->SetMinimum(0);
-   Graph_Graph_Graph30163017->SetMaximum(1.11);
-   Graph_Graph_Graph30163017->SetDirectory(0);
-   Graph_Graph_Graph30163017->SetStats(0);
+   TH1F *Graph_Graph_Graph30163005 = new TH1F("Graph_Graph_Graph30163005","",1000,8,32);
+   Graph_Graph_Graph30163005->SetMinimum(0);
+   Graph_Graph_Graph30163005->SetMaximum(1.11);
+   Graph_Graph_Graph30163005->SetDirectory(0);
+   Graph_Graph_Graph30163005->SetStats(0);
 
    ci = TColor::GetColor("#000099");
-   Graph_Graph_Graph30163017->SetLineColor(ci);
-   Graph_Graph_Graph30163017->GetXaxis()->SetTitle("y-coordinate [mm]");
-   Graph_Graph_Graph30163017->GetXaxis()->SetRange(601,617);
-   Graph_Graph_Graph30163017->GetXaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30163017->GetXaxis()->SetLabelOffset(0.02);
-   Graph_Graph_Graph30163017->GetXaxis()->SetTitleOffset(1.2);
-   Graph_Graph_Graph30163017->GetXaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30163017->GetYaxis()->SetTitle("Efficiency");
-   Graph_Graph_Graph30163017->GetYaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30163017->GetYaxis()->SetLabelSize(0.05);
-   Graph_Graph_Graph30163017->GetYaxis()->SetTitleSize(0.05);
-   Graph_Graph_Graph30163017->GetYaxis()->SetTitleOffset(1.1);
-   Graph_Graph_Graph30163017->GetYaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30163017->GetZaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30163017->GetZaxis()->SetLabelSize(0.035);
-   Graph_Graph_Graph30163017->GetZaxis()->SetTitleSize(0.035);
-   Graph_Graph_Graph30163017->GetZaxis()->SetTitleFont(42);
-   grae->SetHistogram(Graph_Graph_Graph30163017);
+   Graph_Graph_Graph30163005->SetLineColor(ci);
+   Graph_Graph_Graph30163005->GetXaxis()->SetTitle("y-coordinate [mm]");
+   Graph_Graph_Graph30163005->GetXaxis()->SetRange(601,617);
+   Graph_Graph_Graph30163005->GetXaxis()->SetLabelFont(42);
+   Graph_Graph_Graph30163005->GetXaxis()->SetLabelOffset(0.02);
+   Graph_Graph_Graph30163005->GetXaxis()->SetTitleOffset(1.2);
+   Graph_Graph_Graph30163005->GetXaxis()->SetTitleFont(42);
+   Graph_Graph_Graph30163005->GetYaxis()->SetTitle("Efficiency");
+   Graph_Graph_Graph30163005->GetYaxis()->SetLabelFont(42);
+   Graph_Graph_Graph30163005->GetYaxis()->SetLabelSize(0.05);
+   Graph_Graph_Graph30163005->GetYaxis()->SetTitleSize(0.05);
+   Graph_Graph_Graph30163005->GetYaxis()->SetTitleOffset(1.1);
+   Graph_Graph_Graph30163005->GetYaxis()->SetTitleFont(42);
+   Graph_Graph_Graph30163005->GetZaxis()->SetLabelFont(42);
+   Graph_Graph_Graph30163005->GetZaxis()->SetLabelSize(0.035);
+   Graph_Graph_Graph30163005->GetZaxis()->SetTitleSize(0.035);
+   Graph_Graph_Graph30163005->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graph_Graph_Graph30163005);
    
    
-   TF1 *f13018 = new TF1("f1","[0]*TMath::Erf(([1]-x)/[2])+[3]",22.3,22.9);
-   f13018->SetFillColor(19);
-   f13018->SetFillStyle(0);
-   f13018->SetLineColor(2);
-   f13018->SetLineWidth(2);
-   f13018->SetChisquare(1.248038);
-   f13018->SetNDF(26);
-   f13018->GetXaxis()->SetLabelFont(42);
-   f13018->GetXaxis()->SetLabelSize(0.035);
-   f13018->GetXaxis()->SetTitleSize(0.035);
-   f13018->GetXaxis()->SetTitleFont(42);
-   f13018->GetYaxis()->SetLabelFont(42);
-   f13018->GetYaxis()->SetLabelSize(0.035);
-   f13018->GetYaxis()->SetTitleSize(0.035);
-   f13018->GetYaxis()->SetTitleFont(42);
-   f13018->SetParameter(0,0.4845541);
-   f13018->SetParError(0,0.02639228);
-   f13018->SetParLimits(0,0,0);
-   f13018->SetParameter(1,22.57358);
-   f13018->SetParError(1,0.009046144);
-   f13018->SetParLimits(1,0,0);
-   f13018->SetParameter(2,0.04075299);
-   f13018->SetParError(2,0.01550863);
-   f13018->SetParLimits(2,0,0);
-   f13018->SetParameter(3,0.4845699);
-   f13018->SetParError(3,0.02540083);
-   f13018->SetParLimits(3,0,0);
-   grae->GetListOfFunctions()->Add(f13018);
+   TF1 *f13006 = new TF1("f1","[0]*TMath::Erf(([1]-x)/[2])+[3]",22.3,22.9);
+   f13006->SetFillColor(19);
+   f13006->SetFillStyle(0);
+   f13006->SetLineColor(2);
+   f13006->SetLineWidth(2);
+   f13006->SetChisquare(1.248038);
+   f13006->SetNDF(26);
+   f13006->GetXaxis()->SetLabelFont(42);
+   f13006->GetXaxis()->SetLabelSize(0.035);
+   f13006->GetXaxis()->SetTitleSize(0.035);
+   f13006->GetXaxis()->SetTitleFont(42);
+   f13006->GetYaxis()->SetLabelFont(42);
+   f13006->GetYaxis()->SetLabelSize(0.035);
+   f13006->GetYaxis()->SetTitleSize(0.035);
+   f13006->GetYaxis()->SetTitleFont(42);
+   f13006->SetParameter(0,0.4845541);
+   f13006->SetParError(0,0.02639228);
+   f13006->SetParLimits(0,0,0);
+   f13006->SetParameter(1,22.57358);
+   f13006->SetParError(1,0.009046144);
+   f13006->SetParLimits(1,0,0);
+   f13006->SetParameter(2,0.04075299);
+   f13006->SetParError(2,0.01550863);
+   f13006->SetParLimits(2,0,0);
+   f13006->SetParameter(3,0.4845699);
+   f13006->SetParError(3,0.02540083);
+   f13006->SetParLimits(3,0,0);
+   grae->GetListOfFunctions()->Add(f13006);
    grae->Draw("ap");
    
-   Double_t Graph0_fx3019[1000] = {
+   Double_t Graph0_fx3007[1000] = {
    10.01,
    10.03,
    10.05,
@@ -7092,7 +7092,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    29.95,
    29.97,
    29.99};
-   Double_t Graph0_fy3019[1000] = {
+   Double_t Graph0_fy3007[1000] = {
    0,
    0,
    0,
@@ -8093,7 +8093,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    0,
    0,
    0};
-   Double_t Graph0_felx3019[1000] = {
+   Double_t Graph0_felx3007[1000] = {
    0.01,
    0.01,
    0.01,
@@ -9094,7 +9094,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    0.01,
    0.01,
    0.01};
-   Double_t Graph0_fely3019[1000] = {
+   Double_t Graph0_fely3007[1000] = {
    0,
    0,
    0,
@@ -10095,7 +10095,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    0,
    0,
    0};
-   Double_t Graph0_fehx3019[1000] = {
+   Double_t Graph0_fehx3007[1000] = {
    0.01,
    0.01,
    0.01,
@@ -11096,7 +11096,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    0.01,
    0.01,
    0.01};
-   Double_t Graph0_fehy3019[1000] = {
+   Double_t Graph0_fehy3007[1000] = {
    0,
    0,
    0,
@@ -12097,7 +12097,7 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    0,
    0,
    0};
-   grae = new TGraphAsymmErrors(1000,Graph0_fx3019,Graph0_fy3019,Graph0_felx3019,Graph0_fehx3019,Graph0_fely3019,Graph0_fehy3019);
+   grae = new TGraphAsymmErrors(1000,Graph0_fx3007,Graph0_fy3007,Graph0_felx3007,Graph0_fehx3007,Graph0_fely3007,Graph0_fehy3007);
    grae->SetName("Graph0");
    grae->SetTitle("");
    grae->SetFillColor(1);
@@ -12111,132 +12111,132 @@ void Eff_vs_Y_CNM_Ch13_12_fit()
    grae->SetMarkerStyle(20);
    grae->SetMarkerSize(1.2);
    
-   TH1F *Graph_Graph_Graph30143019 = new TH1F("Graph_Graph_Graph30143019","",1000,8,32);
-   Graph_Graph_Graph30143019->SetMinimum(0);
-   Graph_Graph_Graph30143019->SetMaximum(1.11);
-   Graph_Graph_Graph30143019->SetDirectory(0);
-   Graph_Graph_Graph30143019->SetStats(0);
+   TH1F *Graph_Graph_Graph30143007 = new TH1F("Graph_Graph_Graph30143007","",1000,8,32);
+   Graph_Graph_Graph30143007->SetMinimum(0);
+   Graph_Graph_Graph30143007->SetMaximum(1.11);
+   Graph_Graph_Graph30143007->SetDirectory(0);
+   Graph_Graph_Graph30143007->SetStats(0);
 
    ci = TColor::GetColor("#000099");
-   Graph_Graph_Graph30143019->SetLineColor(ci);
-   Graph_Graph_Graph30143019->GetXaxis()->SetTitle("y-coordinate [mm]");
-   Graph_Graph_Graph30143019->GetXaxis()->SetRange(569,779);
-   Graph_Graph_Graph30143019->GetXaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30143019->GetXaxis()->SetLabelSize(0.035);
-   Graph_Graph_Graph30143019->GetXaxis()->SetTitleSize(0.05);
-   Graph_Graph_Graph30143019->GetXaxis()->SetTitleOffset(0.87);
-   Graph_Graph_Graph30143019->GetXaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30143019->GetYaxis()->SetTitle("Efficiency");
-   Graph_Graph_Graph30143019->GetYaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30143019->GetYaxis()->SetLabelSize(0.035);
-   Graph_Graph_Graph30143019->GetYaxis()->SetTitleSize(0.05);
-   Graph_Graph_Graph30143019->GetYaxis()->SetTitleOffset(0.83);
-   Graph_Graph_Graph30143019->GetYaxis()->SetTitleFont(42);
-   Graph_Graph_Graph30143019->GetZaxis()->SetLabelFont(42);
-   Graph_Graph_Graph30143019->GetZaxis()->SetLabelSize(0.035);
-   Graph_Graph_Graph30143019->GetZaxis()->SetTitleSize(0.035);
-   Graph_Graph_Graph30143019->GetZaxis()->SetTitleFont(42);
-   grae->SetHistogram(Graph_Graph_Graph30143019);
+   Graph_Graph_Graph30143007->SetLineColor(ci);
+   Graph_Graph_Graph30143007->GetXaxis()->SetTitle("y-coordinate [mm]");
+   Graph_Graph_Graph30143007->GetXaxis()->SetRange(569,779);
+   Graph_Graph_Graph30143007->GetXaxis()->SetLabelFont(42);
+   Graph_Graph_Graph30143007->GetXaxis()->SetLabelSize(0.035);
+   Graph_Graph_Graph30143007->GetXaxis()->SetTitleSize(0.05);
+   Graph_Graph_Graph30143007->GetXaxis()->SetTitleOffset(0.87);
+   Graph_Graph_Graph30143007->GetXaxis()->SetTitleFont(42);
+   Graph_Graph_Graph30143007->GetYaxis()->SetTitle("Efficiency");
+   Graph_Graph_Graph30143007->GetYaxis()->SetLabelFont(42);
+   Graph_Graph_Graph30143007->GetYaxis()->SetLabelSize(0.035);
+   Graph_Graph_Graph30143007->GetYaxis()->SetTitleSize(0.05);
+   Graph_Graph_Graph30143007->GetYaxis()->SetTitleOffset(0.83);
+   Graph_Graph_Graph30143007->GetYaxis()->SetTitleFont(42);
+   Graph_Graph_Graph30143007->GetZaxis()->SetLabelFont(42);
+   Graph_Graph_Graph30143007->GetZaxis()->SetLabelSize(0.035);
+   Graph_Graph_Graph30143007->GetZaxis()->SetTitleSize(0.035);
+   Graph_Graph_Graph30143007->GetZaxis()->SetTitleFont(42);
+   grae->SetHistogram(Graph_Graph_Graph30143007);
    
    
-   TF1 *f23020 = new TF1("f2","[0]*TMath::Erf((x-[1])/[2])+[3]",22.32,22.88);
-   f23020->SetFillColor(19);
-   f23020->SetFillStyle(0);
-   f23020->SetLineColor(2);
-   f23020->SetLineWidth(2);
-   f23020->SetChisquare(2.965865);
-   f23020->SetNDF(24);
-   f23020->GetXaxis()->SetLabelFont(42);
-   f23020->GetXaxis()->SetLabelSize(0.035);
-   f23020->GetXaxis()->SetTitleSize(0.035);
-   f23020->GetXaxis()->SetTitleFont(42);
-   f23020->GetYaxis()->SetLabelFont(42);
-   f23020->GetYaxis()->SetLabelSize(0.035);
-   f23020->GetYaxis()->SetTitleSize(0.035);
-   f23020->GetYaxis()->SetTitleFont(42);
-   f23020->SetParameter(0,0.4759966);
-   f23020->SetParError(0,0.02596777);
-   f23020->SetParLimits(0,0,0);
-   f23020->SetParameter(1,22.63214);
-   f23020->SetParError(1,0.008604372);
-   f23020->SetParLimits(1,0,0);
-   f23020->SetParameter(2,0.03272941);
-   f23020->SetParError(2,0.01231401);
-   f23020->SetParLimits(2,0,0);
-   f23020->SetParameter(3,0.5104413);
-   f23020->SetParError(3,0.02587795);
-   f23020->SetParLimits(3,0,0);
-   grae->GetListOfFunctions()->Add(f23020);
+   TF1 *f23008 = new TF1("f2","[0]*TMath::Erf((x-[1])/[2])+[3]",22.32,22.88);
+   f23008->SetFillColor(19);
+   f23008->SetFillStyle(0);
+   f23008->SetLineColor(2);
+   f23008->SetLineWidth(2);
+   f23008->SetChisquare(2.965865);
+   f23008->SetNDF(24);
+   f23008->GetXaxis()->SetLabelFont(42);
+   f23008->GetXaxis()->SetLabelSize(0.035);
+   f23008->GetXaxis()->SetTitleSize(0.035);
+   f23008->GetXaxis()->SetTitleFont(42);
+   f23008->GetYaxis()->SetLabelFont(42);
+   f23008->GetYaxis()->SetLabelSize(0.035);
+   f23008->GetYaxis()->SetTitleSize(0.035);
+   f23008->GetYaxis()->SetTitleFont(42);
+   f23008->SetParameter(0,0.4759966);
+   f23008->SetParError(0,0.02596777);
+   f23008->SetParLimits(0,0,0);
+   f23008->SetParameter(1,22.63214);
+   f23008->SetParError(1,0.008604372);
+   f23008->SetParLimits(1,0,0);
+   f23008->SetParameter(2,0.03272941);
+   f23008->SetParError(2,0.01231401);
+   f23008->SetParLimits(2,0,0);
+   f23008->SetParameter(3,0.5104413);
+   f23008->SetParError(3,0.02587795);
+   f23008->SetParLimits(3,0,0);
+   grae->GetListOfFunctions()->Add(f23008);
    grae->Draw("p ");
    
-   TF1 *f13021 = new TF1("f1","[0]*TMath::Erf(([1]-x)/[2])+[3]",22.3,22.9);
-   f13021->SetFillColor(19);
-   f13021->SetFillStyle(0);
+   TF1 *f13009 = new TF1("f1","[0]*TMath::Erf(([1]-x)/[2])+[3]",22.3,22.9);
+   f13009->SetFillColor(19);
+   f13009->SetFillStyle(0);
 
    ci = TColor::GetColor("#0000ff");
-   f13021->SetLineColor(ci);
-   f13021->SetLineWidth(3);
-   f13021->SetChisquare(1.248038);
-   f13021->SetNDF(26);
-   f13021->GetXaxis()->SetLabelFont(42);
-   f13021->GetXaxis()->SetLabelSize(0.035);
-   f13021->GetXaxis()->SetTitleSize(0.035);
-   f13021->GetXaxis()->SetTitleFont(42);
-   f13021->GetYaxis()->SetLabelFont(42);
-   f13021->GetYaxis()->SetLabelSize(0.035);
-   f13021->GetYaxis()->SetTitleSize(0.035);
-   f13021->GetYaxis()->SetTitleFont(42);
-   f13021->SetParameter(0,0.4845541);
-   f13021->SetParError(0,0.02639228);
-   f13021->SetParLimits(0,0,0);
-   f13021->SetParameter(1,22.57358);
-   f13021->SetParError(1,0.009046144);
-   f13021->SetParLimits(1,0,0);
-   f13021->SetParameter(2,0.04075299);
-   f13021->SetParError(2,0.01550863);
-   f13021->SetParLimits(2,0,0);
-   f13021->SetParameter(3,0.4845699);
-   f13021->SetParError(3,0.02540083);
-   f13021->SetParLimits(3,0,0);
-   f13021->Draw("same");
+   f13009->SetLineColor(ci);
+   f13009->SetLineWidth(3);
+   f13009->SetChisquare(1.248038);
+   f13009->SetNDF(26);
+   f13009->GetXaxis()->SetLabelFont(42);
+   f13009->GetXaxis()->SetLabelSize(0.035);
+   f13009->GetXaxis()->SetTitleSize(0.035);
+   f13009->GetXaxis()->SetTitleFont(42);
+   f13009->GetYaxis()->SetLabelFont(42);
+   f13009->GetYaxis()->SetLabelSize(0.035);
+   f13009->GetYaxis()->SetTitleSize(0.035);
+   f13009->GetYaxis()->SetTitleFont(42);
+   f13009->SetParameter(0,0.4845541);
+   f13009->SetParError(0,0.02639228);
+   f13009->SetParLimits(0,0,0);
+   f13009->SetParameter(1,22.57358);
+   f13009->SetParError(1,0.009046144);
+   f13009->SetParLimits(1,0,0);
+   f13009->SetParameter(2,0.04075299);
+   f13009->SetParError(2,0.01550863);
+   f13009->SetParLimits(2,0,0);
+   f13009->SetParameter(3,0.4845699);
+   f13009->SetParError(3,0.02540083);
+   f13009->SetParLimits(3,0,0);
+   f13009->Draw("same");
    
-   TF1 *f23022 = new TF1("f2","[0]*TMath::Erf((x-[1])/[2])+[3]",22.32,22.88);
-   f23022->SetFillColor(19);
-   f23022->SetFillStyle(0);
+   TF1 *f23010 = new TF1("f2","[0]*TMath::Erf((x-[1])/[2])+[3]",22.32,22.88);
+   f23010->SetFillColor(19);
+   f23010->SetFillStyle(0);
 
    ci = TColor::GetColor("#ff0000");
-   f23022->SetLineColor(ci);
-   f23022->SetLineWidth(3);
-   f23022->SetChisquare(2.965865);
-   f23022->SetNDF(24);
-   f23022->GetXaxis()->SetLabelFont(42);
-   f23022->GetXaxis()->SetLabelSize(0.035);
-   f23022->GetXaxis()->SetTitleSize(0.035);
-   f23022->GetXaxis()->SetTitleFont(42);
-   f23022->GetYaxis()->SetLabelFont(42);
-   f23022->GetYaxis()->SetLabelSize(0.035);
-   f23022->GetYaxis()->SetTitleSize(0.035);
-   f23022->GetYaxis()->SetTitleFont(42);
-   f23022->SetParameter(0,0.4759966);
-   f23022->SetParError(0,0.02596777);
-   f23022->SetParLimits(0,0,0);
-   f23022->SetParameter(1,22.63214);
-   f23022->SetParError(1,0.008604372);
-   f23022->SetParLimits(1,0,0);
-   f23022->SetParameter(2,0.03272941);
-   f23022->SetParError(2,0.01231401);
-   f23022->SetParLimits(2,0,0);
-   f23022->SetParameter(3,0.5104413);
-   f23022->SetParError(3,0.02587795);
-   f23022->SetParLimits(3,0,0);
-   f23022->Draw("same");
-   TArrow *arrow = new TArrow(22.57243,0.5,22.6315,0.5,0.03,"<|>");
+   f23010->SetLineColor(ci);
+   f23010->SetLineWidth(3);
+   f23010->SetChisquare(2.965865);
+   f23010->SetNDF(24);
+   f23010->GetXaxis()->SetLabelFont(42);
+   f23010->GetXaxis()->SetLabelSize(0.035);
+   f23010->GetXaxis()->SetTitleSize(0.035);
+   f23010->GetXaxis()->SetTitleFont(42);
+   f23010->GetYaxis()->SetLabelFont(42);
+   f23010->GetYaxis()->SetLabelSize(0.035);
+   f23010->GetYaxis()->SetTitleSize(0.035);
+   f23010->GetYaxis()->SetTitleFont(42);
+   f23010->SetParameter(0,0.4759966);
+   f23010->SetParError(0,0.02596777);
+   f23010->SetParLimits(0,0,0);
+   f23010->SetParameter(1,22.63214);
+   f23010->SetParError(1,0.008604372);
+   f23010->SetParLimits(1,0,0);
+   f23010->SetParameter(2,0.03272941);
+   f23010->SetParError(2,0.01231401);
+   f23010->SetParLimits(2,0,0);
+   f23010->SetParameter(3,0.5104413);
+   f23010->SetParError(3,0.02587795);
+   f23010->SetParLimits(3,0,0);
+   f23010->Draw("same");
+   TArrow *arrow = new TArrow(22.53134,0.9,22.66305,0.9,0.03,"<|>");
    arrow->SetFillColor(1);
    arrow->SetFillStyle(1001);
    arrow->SetLineWidth(2);
    arrow->SetAngle(35);
    arrow->Draw();
-   TLatex *   tex = new TLatex(0.47,0.5,"  60#mum");
+   TLatex *   tex = new TLatex(0.47,0.77," 130#mum");
 tex->SetNDC();
    tex->SetLineWidth(2);
    tex->Draw();

@@ -38,7 +38,7 @@ void MakeGap_HPK50DPIXVsX() {
   f1->SetParameters(1., 14.45, 1, 0.);
   g1->Fit("f1","R");
 
-  Double_t edge1 = f1->GetX(0.5);
+  Double_t edge1 = f1->GetX(0.9);
   f1->SetLineColor(kBlue);
   f1->SetLineWidth(3);
   f1->Draw("same");
@@ -47,13 +47,13 @@ void MakeGap_HPK50DPIXVsX() {
   TF1 * f2 = new TF1("f2", "[0]*TMath::Erf((x-[1])/[2])+[3]", 14.25, 14.65);
   f2->SetParameters(1., 14.55, 1, 0.);
   g2->Fit("f2","R");
-  Double_t edge2 = f2->GetX(0.5);
+  Double_t edge2 = f2->GetX(0.9);
   f2->SetLineColor(kRed);
   f2->SetLineWidth(3);
   f2->Draw("same");
 
 
-  TArrow *ar3 = new TArrow(edge1,0.5,edge2,0.5,0.05,"<|>");
+  TArrow *ar3 = new TArrow(edge1,0.9,edge2,0.9,0.05,"<|>");
   ar3->SetAngle(35);
   ar3->SetLineWidth(2);
   ar3->SetArrowSize(0.03);
@@ -61,7 +61,7 @@ void MakeGap_HPK50DPIXVsX() {
   ar3->SetFillColor(1);
   ar3->Draw();
 
-  TLatex *   tex = new TLatex(0.49, 0.5,Form("%4.0f #mum",round(100*(edge2-edge1))*10));
+  TLatex *   tex = new TLatex(0.49, 0.77,Form("%4.0f #mum",round(100*(edge2-edge1))*10));
   tex->SetNDC();
   tex->SetTextSize(0.05);
   tex->Draw();
@@ -128,7 +128,7 @@ void MakeGap_HPK50CPIXVsX() {
   f1->SetParameters(1., 13.6, 1, 0.);
   g1->Fit("f1","R");
 
-  Double_t edge1 = f1->GetX(0.5);
+  Double_t edge1 = f1->GetX(0.9);
   f1->SetLineColor(kBlue);
   f1->SetLineWidth(3);
   f1->Draw("same");
@@ -137,13 +137,13 @@ void MakeGap_HPK50CPIXVsX() {
   TF1 * f2 = new TF1("f2", "[0]*TMath::Erf((x-[1])/[2])+[3]", 13.5, 13.9);
   f2->SetParameters(1., 13.6, 1, 0.);
   g2->Fit("f2","R");
-  Double_t edge2 = f2->GetX(0.5);
+  Double_t edge2 = f2->GetX(0.9);
   f2->SetLineColor(kRed);
   f2->SetLineWidth(3);
   f2->Draw("same");
 
 
-  TArrow *ar3 = new TArrow(edge1,0.5,edge2,0.5,0.05,"<|>");
+  TArrow *ar3 = new TArrow(edge1,0.9,edge2,0.9,0.05,"<|>");
   ar3->SetAngle(35);
   ar3->SetLineWidth(2);
   ar3->SetArrowSize(0.03);
@@ -151,7 +151,7 @@ void MakeGap_HPK50CPIXVsX() {
   ar3->SetFillColor(1);
   ar3->Draw();
 
-  TLatex *   tex = new TLatex(0.47, 0.5,Form("%4.0f #mum",round(100*(edge2-edge1))*10));
+  TLatex *   tex = new TLatex(0.47, 0.77,Form("%4.0f #mum",round(100*(edge2-edge1))*10));
   tex->SetNDC();
   tex->SetTextSize(0.05);
   tex->Draw();
@@ -219,7 +219,7 @@ void MakeGap_HPK50CPIXVsY() {
   f1->SetParameters(1., 22.05, 1, 0.);
   g1->Fit("f1","R");
 
-  Double_t edge1 = f1->GetX(0.5);
+  Double_t edge1 = f1->GetX(0.9);
   f1->SetLineColor(kBlue);
   f1->SetLineWidth(3);
   f1->Draw("same");
@@ -228,14 +228,14 @@ void MakeGap_HPK50CPIXVsY() {
   TF1 * f2 = new TF1("f2", "[0]*TMath::Erf((x-[1])/[2])+[3]", 21.8, 22.2);
   f2->SetParameters(1., 22.05, 1, 0.);
   g2->Fit("f2","R");
-  Double_t edge2 = f2->GetX(0.5);
+  Double_t edge2 = f2->GetX(0.9);
   f2->SetLineColor(kRed);
   f2->SetLineWidth(3);
   f2->Draw("same");
 
 
 
-  TArrow *ar3 = new TArrow(edge1,0.5,edge2,0.5,0.05,"<|>");
+  TArrow *ar3 = new TArrow(edge1,0.9,edge2,0.9,0.05,"<|>");
   ar3->SetAngle(35);
   ar3->SetLineWidth(2);
   ar3->SetArrowSize(0.03);
@@ -243,7 +243,7 @@ void MakeGap_HPK50CPIXVsY() {
   ar3->SetFillColor(1);
   ar3->Draw();
 
-  TLatex *   tex = new TLatex(0.43, 0.5,Form("%4.0f #mum",round(100*(edge1-edge2))*10));
+  TLatex *   tex = new TLatex(0.43, 0.77,Form("%4.0f #mum",round(100*(edge1-edge2))*10));
   tex->SetNDC();
   tex->SetTextSize(0.05);
   tex->Draw();
@@ -314,7 +314,7 @@ void MakeGap_CNMVsX() {
   f1->SetParameters(1., 15., 1, 0.);
   g1->Fit("f1","R");
 
-  Double_t edge1 = f1->GetX(0.5);
+  Double_t edge1 = f1->GetX(0.9);
   std::cout<<edge1<<std::endl;
   f1->SetLineColor(kBlue);
   f1->SetLineWidth(3);
@@ -323,13 +323,13 @@ void MakeGap_CNMVsX() {
   TF1 * f2 = new TF1("f2", "[0]*TMath::Erf((x-[1])/[2])+[3]", 14.83, 15.3);
   f2->SetParameters(1., 15.08, 1, 0.);
   g2->Fit("f2","R");
-  Double_t edge2 = f2->GetX(0.5);
+  Double_t edge2 = f2->GetX(0.9);
   f2->SetLineColor(kRed);
   f2->SetLineWidth(3);
   f2->Draw("same");
 
 
-  TArrow *ar3 = new TArrow(edge1,0.5,edge2,0.5,0.05,"<|>");
+  TArrow *ar3 = new TArrow(edge1,0.9,edge2,0.9,0.05,"<|>");
   ar3->SetAngle(35);
   ar3->SetLineWidth(2);
   ar3->SetArrowSize(0.03);
@@ -337,7 +337,7 @@ void MakeGap_CNMVsX() {
   ar3->SetFillColor(1);
   ar3->Draw();
 
-  TLatex *   tex = new TLatex(0.45, 0.5,Form("%4.0f#mum",round(100*(edge2-edge1))*10));
+  TLatex *   tex = new TLatex(0.45, 0.77,Form("%4.0f#mum",round(100*(edge2-edge1))*10));
   tex->SetNDC();
   tex->SetTextSize(0.05);
   tex->Draw();
@@ -406,7 +406,7 @@ void MakeGap_CNMVsY() {
   f1->SetParameters(1., 23.0, 1, 0.);
   g1->Fit("f1","R");
 
-  Double_t edge1 = f1->GetX(0.5);
+  Double_t edge1 = f1->GetX(0.9);
   std::cout<<edge1<<std::endl;
   f1->SetLineColor(kBlue);
   f1->SetLineWidth(3);
@@ -415,13 +415,13 @@ void MakeGap_CNMVsY() {
   TF1 * f2 = new TF1("f2", "[0]*TMath::Erf((x-[1])/[2])+[3]", 22.32, 22.88);
   f2->SetParameters(1., 22.6, 1, 0.);
   g2->Fit("f2","R");
-  Double_t edge2 = f2->GetX(0.5);
+  Double_t edge2 = f2->GetX(0.9);
   f2->SetLineColor(kRed);
   f2->SetLineWidth(3);
   f2->Draw("same");
 
 
-  TArrow *ar3 = new TArrow(edge1,0.5,edge2,0.5,0.05,"<|>");
+  TArrow *ar3 = new TArrow(edge1,0.9,edge2,0.9,0.05,"<|>");
   ar3->SetAngle(35);
   ar3->SetLineWidth(2);
   ar3->SetArrowSize(0.03);
@@ -429,7 +429,7 @@ void MakeGap_CNMVsY() {
   ar3->SetFillColor(1);
   ar3->Draw();
 
-  TLatex *   tex = new TLatex(0.47, 0.5,Form("%4.0f#mum",round(100*(edge2-edge1))*10));
+  TLatex *   tex = new TLatex(0.47, 0.77,Form("%4.0f#mum",round(100*(edge2-edge1))*10));
   tex->SetNDC();
   tex->SetTextSize(0.05);
   tex->Draw();
@@ -463,7 +463,7 @@ void plotLGADGaps () {
   //MakeGap_HPK50DPIXVsX();
   //MakeGap_HPK50CPIXVsX();
   //MakeGap_HPK50CPIXVsY();
-  //MakeGap_CNMVsX();
-  //MakeGap_CNMVsY();
+  MakeGap_CNMVsX();
+  MakeGap_CNMVsY();
 
 }

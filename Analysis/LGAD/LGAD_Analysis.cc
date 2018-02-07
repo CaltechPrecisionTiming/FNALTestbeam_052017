@@ -73,10 +73,10 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(6, 200, 0.02, 13800., 16500., 20500, 23000., 0.16, 0.32);
   
   // //MPV
-  // myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.02, 0.1, 11100., 13500., 20500, 23000.);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.02, 0.1, 11100., 13500., 23500, 26000.);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.02, 0.1, 13800., 16500., 23500, 26000.);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.02, 0.1, 13800., 16500., 20500, 23000.);
+   myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.02, 0.1, 11100., 13500., 20500, 23000.);
+   //myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.02, 0.1, 11100., 13500., 23500, 26000.);
+   //myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.02, 0.1, 13800., 16500., 23500, 26000.);
+   //myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.02, 0.1, 13800., 16500., 20500, 23000.);
 
   // // --------------------
   // // Mean Time2
@@ -354,7 +354,7 @@ int main( int argc, char** argv)
   // myPulse->CreateDeltaT_vs_PositionHisto(1, 6, kGausTimestampOption, 250, 0.01, 0.1, 14600., 17100., 20500, 23000., 0, 100, false, 0.16, 0.32);
   
 
-
+  /*
   // //------------------------
   // //Runs 838,839,842 UCSC board: HPK50C-PIX (ch1-ch4)  , CNM W9HG11 (ch10-ch13)
   // //------------------------
@@ -367,7 +367,7 @@ int main( int argc, char** argv)
   myPulse->MakeEfficiencyVsXY(11, 200, 0.02, 12200., 14500., 23000, 24500., 0.16, 0.32);
   myPulse->MakeEfficiencyVsXY(12, 200, 0.02, 15100., 17900., 22900, 25400., 0.16, 0.32);
   myPulse->MakeEfficiencyVsXY(13, 200, 0.02, 15200., 18000., 19900, 22400., 0.16, 0.32);
-
+  */
   // //Efficiency (use 20 micron bins)
   // myPulse->MakeEfficiencyVsXY(1, 1000, 0.02, 11200., 13600., 19100, 21900, 0.16, 0.32);
   // myPulse->MakeEfficiencyVsXY(2, 1000, 0.02, 11300., 13900., 22100, 24800, 0.16, 0.32);

@@ -171,9 +171,9 @@ void pulse::MakeEfficiencyVsXY(int channelNumber, int nbins, float threshold, fl
       //reject events with more than 1 track
       if ( !(ntracks == 1 && chi2 < 10 )) continue;
       
-      //if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-4)) continue;
-      if ( !(fabs(xSlope) < 1e-3 && (fabs(ySlope) < 4e-3) && fabs(ySlope) > 3e-3)) continue;
-      //if ( !(fabs(xSlope + 1.12687e-04) < 5e-4 && fabs(ySlope + 3.546e-3) < 5e-4)) continue; //For CNM W9HG11 Run 838-839-841
+      // if ( !(fabs(xSlope) < 5e-4 && fabs(ySlope) < 5e-4)) continue;
+      //if ( !(fabs(xSlope) < 1e-3 && (fabs(ySlope) < 4e-3) && fabs(ySlope) > 3e-3)) continue;
+      if ( !(fabs(xSlope + 1.12687e-04) < 5e-4 && fabs(ySlope + 3.546e-3) < 5e-4)) continue; //For CNM W9HG11 Run 838-839-841
       if ( !(amp[channelNumber] < 0.45 )) continue;//No saturation
 
 
@@ -899,17 +899,20 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
       double timestamp = gauspeak[channel];
       if (timestampOption == 1) timestamp = linearTime45[channel];
 
+      double timeReference = gauspeak[0];
+      if (channel >= 9) timeReference = gauspeak[9];
+
       if ( amp[channel] >= AmpLowCut && amp[channel] <= AmpHighCut && amp[0] > photek_low && amp[0] < photek_high )
 	{
 	  if ( dut == 1 )
 	    {
-	      if ( (coor == "x" || coor == "X") && x1 >= coorLow && x1 < (coorLow + step) && y1 > other_corr_low && y1 < other_corr_high ) h_deltaT->Fill(timestamp-gauspeak[0]);
-	      if ( (coor == "y" || coor == "Y") && y1 >= coorLow && y1 < (coorLow + step) && x1 > other_corr_low && x1 < other_corr_high ) h_deltaT->Fill(timestamp-gauspeak[0]);
+	      if ( (coor == "x" || coor == "X") && x1 >= coorLow && x1 < (coorLow + step) && y1 > other_corr_low && y1 < other_corr_high ) h_deltaT->Fill(timestamp-timeReference);
+	      if ( (coor == "y" || coor == "Y") && y1 >= coorLow && y1 < (coorLow + step) && x1 > other_corr_low && x1 < other_corr_high ) h_deltaT->Fill(timestamp-timeReference);
 	    }
 	  else if ( dut == 2 )
 	    {
-	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high ) h_deltaT->Fill(timestamp-gauspeak[0]);
-	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high ) h_deltaT->Fill(timestamp-gauspeak[0]);
+	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high ) h_deltaT->Fill(timestamp-timeReference);
+	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high ) h_deltaT->Fill(timestamp-timeReference);
 	    }
 	}
     }

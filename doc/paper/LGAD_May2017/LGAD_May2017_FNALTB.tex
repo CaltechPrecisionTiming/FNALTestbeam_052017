@@ -501,14 +501,15 @@ mean parameter of the Gaussian is assigned as the timestamp $t_0$.
 A more detailed description can be found in Ref~\cite{Anderson:2015gha}.
 
 The timestamp for signals from the LGAD sensors is obtained in two different ways depending on
-which read-out board was used. For the KU board, which has a slower decay time,
+which read-out board was used. For the FNAL and UCSC boards,
+whose pulse widths are less than $2$~ns, the timestamp is obtained via a fit to a 
+Gaussian function analogous to what is done for the reference detector.
+For the KU board, whose pulses take much longer to fall to the baseline, 
 the timestamp is obtained by performing a linear fit to the
 rising edge of the pulse, between $15\%$ and $70\%$ of the maximum amplitude, 
 and the time at which the pulse reaches $45\%$ of the
 maximum amplitude is assigned as its timestamp $t_1$. We refer to this algorithm as the
-constant fraction discriminator (CFD) method. For the FNAL and UCSC boards,
-which have fast decay times, the timestamp is obtained via a fit to a 
-Gaussian function analogous to what is done for the reference detector.
+constant fraction discriminator (CFD) method. 
 This procedure is slightly different compared to previous studies of LGAD sensors, 
 where the CFD method was used uniformly.
 

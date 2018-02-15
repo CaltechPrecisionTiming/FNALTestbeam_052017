@@ -106,6 +106,13 @@ public :
 						  const float AmpLowCut = 0, const float AmpHighCut = 0.0,
 						  float other_corr_low = 0, float other_corr_high = 99999,
 						  float photek_low = 0.1, float photek_high = 0.3);
+
+  virtual std::pair<float,float> MPV_vs_Position_ROOFIT( int dut = -1, TString coor = "X", const int channel = -1,
+						  const float coorLow = 0, const float step = 25.,
+						  const float AmpLowCut = 0, const float AmpHighCut = 0.0,
+						  float other_corr_low = 0, float other_corr_high = 99999,
+						  float photek_low = 0.1, float photek_high = 0.3);
+  
   
   virtual std::pair<float,float> DeltaT_vs_Position( int dut = -1, TString coor = "X", const int channel = -1, 
 						     const int timestampOption = 0,

@@ -312,24 +312,25 @@ limited buffer depth of the CAEN V1742 board, special care had to be taken in
 the design of the DAQ system to ensure that both the DUT and telescope DAQs
 collect exactly the same amount of triggers. This was achieved by limiting the
 trigger rate by introducing an adjustable dead-time using a custom-designed
-trigger board. This trigger board is the combination of a custom FPGA board (the
-CAPTAN+x, equipped with multiple FPGA Mezzanine Card connectors and gigabit
-ethernet connectivity) mated to a front end board (the NIM+, with multiple
-inputs and outputs, each supporting a variety of interface levels such as NIM,
-LVDS, and TTL). The combined board is shown in Fig.~\ref{fig:NIM+Captan} and was
-used to interface to photomultiplier signals through on-board programmable
-discriminators, and to form trigger signals with software configurable
-time-based veto and pre-scaler event filtering. We found that at a rate of about
-1,500 triggers per spill the CAEN V1742 and pixel telescope maintained full
-synchronization. Processed data from the pixel telescope and the DUTs were
+trigger board. Processed data from the pixel telescope and the DUTs were
 merged offline by matching the trigger counters recorded by the two systems.
+%This trigger board is the combination of a custom FPGA board (the
+%CAPTAN+x, equipped with multiple FPGA Mezzanine Card connectors and gigabit
+%ethernet connectivity) mated to a front end board (the NIM+, with multiple
+%inputs and outputs, each supporting a variety of interface levels such as NIM,
+%LVDS, and TTL). The combined board is shown in Fig.~\ref{fig:NIM+Captan} and was
+%used to interface to photomultiplier signals through on-board programmable
+%discriminators, and to form trigger signals with software configurable
+%time-based veto and pre-scaler event filtering. We found that at a rate of about
+%1,500 triggers per spill the CAEN V1742 and pixel telescope maintained full
+%synchronization. 
 
-\begin{figure}[htbp] 
-\centering
-\includegraphics[width=0.5\textwidth, angle=270]{figs/CAPTAN_NIM_Plus.JPG} 
-\caption{The custom-made trigger board composed of NIM+ and CAPTAN+x boards.} 
-\label{fig:NIM+Captan} 
-\end{figure} 
+%\begin{figure}[htbp] 
+%\centering
+%\includegraphics[width=0.5\textwidth, angle=270]{figs/CAPTAN_NIM_Plus.JPG} 
+%\caption{The custom-made trigger board composed of NIM+ and CAPTAN+x boards.} 
+%\label{fig:NIM+Captan} 
+%\end{figure} 
 
 
 
@@ -409,25 +410,46 @@ The list of sensors studied in this article, as well as the temperature and the
 sensor bias voltage used during their operation are listed in
 Tab.~\ref{tab:DataConditions}. 
 
+%\begin{table}[!htb]
+%	\tiny
+%	\begin{center}
+%		\begin{tabular}{ |c | c | c| c | }
+%			\hline
+%			Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
+%			HPK 50A-PIX & \textbf{-630 V (13)} & -- & -- \\ \hline
+%			HPK 50B-PIX & \begin{tabular}{@{}c@{}}\textbf{-450 V (10), -550 V (25), -600 V (60)}\\ \underline{-510 V} \\ \textit{-510 V, -570 V}\end{tabular}  & -- & -- \\ \hline
+%			HPK 50C-PIX & \textbf{-400 V (20)} & \textbf{-410 V (22), -470 V (40)} & -- \\ \hline
+%			HPK 50D-PIX & \begin{tabular}{@{}c@{}}\textbf{-100 V (7), -200V (11),} \\ \textbf{ -250 V (17), -300 V (30), } \\ \textbf{-325 V (40)}\end{tabular}  & -- & \begin{tabular}{@{}c@{}}\textbf{-250 V (17), -300 V (30),} \\ \underline{-210 V, -250 V} \\ \textit{-250 V (30), -280 V (40)}\end{tabular} \\ \hline
+%			CNM W9HG11 & -- & \textbf{-140 V (10), -160 V (12), -180 V (14)} & -- \\ \hline
+%			\begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & \textit{-600 V (20), -635 V (30)} & -- \\ \hline
+%			\begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & \textit{-400 V (24), -420 V (28)} \\ \hline
+%			\hline
+%		\end{tabular}
+%		\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
+%		\label{tab:DataConditions}
+%	\end{center}
+%\end{table}
+%
+
 \begin{table}[!htb]
 	\tiny
 	\begin{center}
 		\begin{tabular}{ |c | c | c| c | }
 			\hline
 			Sensor      & KU Board 2-ch & UCSC board 4-ch & FNAL board 4-ch \\ \hline \hline
-			HPK 50A-PIX & \textbf{-630 V (13)} & -- & -- \\ \hline
-			HPK 50B-PIX & \begin{tabular}{@{}c@{}}\textbf{-450 V (10), -550 V (25), -600 V (60)}\\ \underline{-510 V} \\ \textit{-510 V, -570 V}\end{tabular}  & -- & -- \\ \hline
-			HPK 50C-PIX & \textbf{-400 V (20)} & \textbf{-410 V (22), -470 V (40)} & -- \\ \hline
-			HPK 50D-PIX & \begin{tabular}{@{}c@{}}\textbf{-100 V (7), -200V (11),} \\ \textbf{ -250 V (17), -300 V (30), } \\ \textbf{-325 V (40)}\end{tabular}  & -- & \begin{tabular}{@{}c@{}}\textbf{-250 V (17), -300 V (30),} \\ \underline{-210 V, -250 V} \\ \textit{-250 V (30), -280 V (40)}\end{tabular} \\ \hline
-			CNM W9HG11 & -- & \textbf{-140 V, -160 V, -180 V} & -- \\ \hline
+			HPK 50A-PIX & \textbf{-630 V (20)} & -- & -- \\ \hline
+			HPK 50B-PIX & \begin{tabular}{@{}c@{}}\textbf{-550 V (25)}\end{tabular}  & -- & -- \\ \hline
+			HPK 50C-PIX & \begin{tabular}{@{}c@{}}\textbf{-400 V (20)}\end{tabular} & \textbf{ -450 V (35)} & -- \\ \hline
+			HPK 50D-PIX & \begin{tabular}{@{}c@{}}\textbf{-300 V (30)} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}\textbf{-250 V (17), -300 V (30),} \\ \underline{-250 V (29)} \\ \textit{-250 V (36)}\end{tabular} \\ \hline
+			CNM W9HG11 & -- & \textbf{-180 V (14)} & -- \\ \hline
 			\begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & \textit{-600 V (20), -635 V (30)} & -- \\ \hline
-			\begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & \textit{-400 V, -420 V} \\ \hline
-			\hline
+			\begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & \textit{-400 V (24), -420 V (28)} \\ \hline
 		\end{tabular}
 		\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at  room temperature, underlined ones were taken at $-10$C$^{\circ}$, and those in italicized text were taken at $-20$C$^{\circ}$.}  
 		\label{tab:DataConditions}
 	\end{center}
 \end{table}
+
 
 \section{Readout Electronics}
 \label{sec:boards}
@@ -479,14 +501,15 @@ mean parameter of the Gaussian is assigned as the timestamp $t_0$.
 A more detailed description can be found in Ref~\cite{Anderson:2015gha}.
 
 The timestamp for signals from the LGAD sensors is obtained in two different ways depending on
-which read-out board was used. For the KU board, which has a slower decay time,
+which read-out board was used. For the FNAL and UCSC boards,
+whose pulse widths are less than $2$~ns, the timestamp is obtained via a fit to a 
+Gaussian function analogous to what is done for the reference detector.
+For the KU board, whose pulses take much longer to fall to the baseline, 
 the timestamp is obtained by performing a linear fit to the
 rising edge of the pulse, between $15\%$ and $70\%$ of the maximum amplitude, 
 and the time at which the pulse reaches $45\%$ of the
 maximum amplitude is assigned as its timestamp $t_1$. We refer to this algorithm as the
-constant fraction discriminator (CFD) method. For the FNAL and UCSC boards,
-which have fast decay times, the timestamp is obtained via a fit to a 
-Gaussian function analogous to what is done for the reference detector.
+constant fraction discriminator (CFD) method. 
 This procedure is slightly different compared to previous studies of LGAD sensors, 
 where the CFD method was used uniformly.
 
@@ -881,8 +904,8 @@ KU 2-channel board, and those for HPK 80C-PIX used the FNAL 4-channel board.
 
 \begin{figure}[htbp] 
 \centering
-\includegraphics[width=0.7\textwidth]{figs/FNAL_TimeResolution_vs_X_HPK50CVs80C.pdf} 
-\caption{Comparison of the uniformity of the measured time resolution of the HPK 80C-PIX versus 50C-PIX sensors. The 80~$\mu$m sensor is mounted on the FNAL board, and is biased at -610~V, and the 50~$\mu$m sensor is mounted on the KU board and is biased at -400~V.} 
+\includegraphics[width=0.7\textwidth]{figs/FNAL_TimeResolution_vs_X_HPK50CVs80C_WithFits.pdf} 
+\caption{Comparison of the uniformity of the measured time resolution of the HPK 80C-PIX versus 50C-PIX sensors. The 80~$\mu$m sensor is mounted on the FNAL board, and is biased at -610~V, and the 50~$\mu$m sensor is mounted on the KU board and is biased at -400~V. The lines show fits of the data to constant functions.} 
 \label{fig:HPK50CVs80C} 
 \end{figure} 
 
@@ -892,8 +915,10 @@ KU 2-channel board, and those for HPK 80C-PIX used the FNAL 4-channel board.
 In order to maintain their optimal performance at the highest fluences
 envisioned at the HL-LHC, the LGAD sensors will be cooled to temperatures below
 $-20^{\circ}$C degrees. Operation at such low temperatures will allow to
-significantly reduce the leakage current, and additionally improve the timing
-characteristics of the sensors. In this section we describe the measurements of
+significantly reduce the leakage current. The sensors yield higher gain at lower 
+temperatures, but at the cost of a lower breakdown voltage. Therefore, it is 
+important to study the impact of the temperature on the gain and time 
+resolution, as well as their uniformity. In this section we describe the measurements of
 the LGAD sensors performed at $-10$ and $-20^{\circ}$C degrees, and compare the
 results to those at room temperature. These measurements were performed with the
 HPK 50D-PIX sensors mounted on the FNAL 4-channel board. The sensor was biased
@@ -992,8 +1017,7 @@ aluminum (periphery) is about 2.5 times larger than that without aluminum
 left panel of Fig.~\ref{fig:HPK_irradiated_amp_Map}, and a uniform amplitude
 across the sensor surface is observed, which can also be seen on the right panel
 of Fig.~\ref{fig:HPK_irradiated_amp_Map}. In contrast to the CNM sensor, the
-whole surface of the active area of the HPK 50D sensor is covered with aluminum
-metallization.
+whole surface of the active area of the HPK 50D sensor is without metallization.
 
 
 \begin{figure}[htbp] 

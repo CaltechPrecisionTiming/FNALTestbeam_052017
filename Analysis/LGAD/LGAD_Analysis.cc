@@ -73,10 +73,10 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(6, 200, 0.02, 13800., 16500., 20500, 23000., 0.16, 0.32);
   
   // //MPV
-   myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.02, 0.1, 11100., 13500., 20500, 23000.);
-   //myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.02, 0.1, 11100., 13500., 23500, 26000.);
-   //myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.02, 0.1, 13800., 16500., 23500, 26000.);
-   //myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.02, 0.1, 13800., 16500., 20500, 23000.);
+  // myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.02, 0.1, 11100., 13500., 20500, 23000.);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.02, 0.1, 11100., 13500., 23500, 26000.);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.02, 0.1, 13800., 16500., 23500, 26000.);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.02, 0.1, 13800., 16500., 20500, 23000.);
 
   // // --------------------
   // // Mean Time2
@@ -102,8 +102,8 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(1, 400, 0.018, 11200., 12800., 21500, 23800., 0.16, 0.32);
   // myPulse->MakeEfficiencyVsXY(2, 400, 0.018, 13300., 16100., 24500, 26800., 0.16, 0.32);
   // //MPV
-  // myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.018, 0.12, 11200., 12800., 21500, 23800., 0.16, 0.32);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.018, 0.12, 13300., 16100., 24500, 26800., 0.16, 0.32);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.018, 0.3, 11200., 12800., 21500, 23800., 0.16, 0.32);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.018, 0.3, 13300., 16100., 24500, 26800., 0.16, 0.32);
   // //--------------------
   // // Mean Time
   // //--------------------
@@ -125,8 +125,8 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(2, 400, 0.020, 14500., 17100., 24300, 27000., 0.10, 0.30);
   
   // //MPV
-  // myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.030, 0.150, 11500., 14200., 24300, 27000., 0.10, 0.30);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.030, 0.150, 14500., 17100., 24300, 27000., 0.10, 0.30);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.020, 0.30, 11500., 14200., 24300, 27000., 0.10, 0.30);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.020, 0.30, 14500., 17100., 24300, 27000., 0.10, 0.30);
   // //--------------------
   // // Mean Time
   // //--------------------
@@ -148,8 +148,8 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(4, 400, 0.018, 13500., 16000., 26100, 28400., 0.16, 0.32);
   
   // //MPV
-  // myPulse->CreateMPV_vs_PositionHisto(1, 3, 200, 0.018, 0.10, 11100., 13000., 22900, 25300., 0.16, 0.32);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 4, 200, 0.018, 0.10, 13500., 16000., 26100, 28400., 0.16, 0.32);
+   //myPulse->CreateMPV_vs_PositionHisto(1, 3, 200, 0.018, 0.30, 11100., 13000., 22900, 25300., 0.16, 0.32);
+   //myPulse->CreateMPV_vs_PositionHisto(1, 4, 200, 0.018, 0.30, 13500., 16000., 26100, 28400., 0.16, 0.32);
   // //--------------------
   // // Mean Time
   // //--------------------
@@ -238,8 +238,8 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(2, 400, 0.010, 15600., 16300., 22100, 22800., 0.13, 0.32);
 
   // //MPV
-  // myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.015, 0.08, 13600., 14300., 21400, 21900., 0.13, 0.32);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.010, 0.06, 15600., 16300., 22100, 22800., 0.13, 0.32);
+  myPulse->CreateMPV_vs_PositionHisto(1, 1, 200, 0.015, 0.3, 13600., 14300., 21400, 21900., 0.13, 0.32);
+   myPulse->CreateMPV_vs_PositionHisto(1, 2, 200, 0.010, 0.3, 15600., 16300., 22100, 22800., 0.13, 0.32);
 
   // // --------------------
   // // Mean Time
@@ -301,10 +301,10 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(6, 200, 0.01, 14600., 17100., 20500, 23000., 0.16, 0.32);
   
   // //MPV
-  // myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.01, 0.1, 11600., 14000., 20500, 23000.);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.01, 0.1, 11600., 14000., 23500, 26000.);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.01, 0.1, 14600., 17100., 23500, 26000.);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.01, 0.1, 14600., 17100., 20500, 23000.);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.01, 0.3, 11600., 14000., 20500, 23000.);
+   //myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.01, 0.3, 11600., 14000., 23500, 26000.);
+   //myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.01, 0.3, 14600., 17100., 23500, 26000.);
+   //myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.01, 0.3, 14600., 17100., 20500, 23000.);
 
   // // --------------------
   // // Mean Time2
@@ -332,10 +332,10 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(6, 200, 0.01, 14600., 17100., 20500, 23000., 0.16, 0.32);
   
   // //MPV
-  // myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.01, 0.1, 11600., 14000., 20500, 23000.);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.01, 0.1, 11600., 14000., 23500, 26000.);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.01, 0.1, 14600., 17100., 23500, 26000.);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.01, 0.1, 14600., 17100., 20500, 23000.);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 3, 250, 0.01, 0.3, 11600., 14000., 20500, 23000.);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 4, 250, 0.01, 0.3, 11600., 14000., 23500, 26000.);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 5, 250, 0.01, 0.3, 14600., 17100., 23500, 26000.);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 6, 250, 0.01, 0.3, 14600., 17100., 20500, 23000.);
 
   // // --------------------
   // // Mean Time2
@@ -379,10 +379,10 @@ int main( int argc, char** argv)
   // myPulse->MakeEfficiencyVsXY(13, 1000, 0.02, 15200., 18000., 19900, 22400., 0.16, 0.32);
   
   //MPV
-  // myPulse->CreateMPV_vs_PositionHisto(1, 10, 200, 0.03, 0.10, 12100., 14900., 19600, 22400., 0.16, 0.32);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 11, 200, 0.03, 0.10, 12200., 14500., 23000, 24500., 0.16, 0.32);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 12, 200, 0.03, 0.10, 15100., 17900., 22900, 25400., 0.16, 0.32);
-  // myPulse->CreateMPV_vs_PositionHisto(1, 13, 200, 0.03, 0.10, 15200., 18000., 19900, 22400., 0.16, 0.32);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 10, 200, 0.02, 0.30, 12100., 14900., 19600, 22400., 0.16, 0.32);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 11, 200, 0.02, 0.30, 12200., 14500., 23000, 24500., 0.16, 0.32);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 12, 200, 0.02, 0.30, 15100., 17900., 22900, 25400., 0.16, 0.32);
+  //myPulse->CreateMPV_vs_PositionHisto(1, 13, 200, 0.02, 0.30, 15200., 18000., 19900, 22400., 0.16, 0.32);
 
   //--------------------
   // Mean Time

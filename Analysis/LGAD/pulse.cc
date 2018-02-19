@@ -584,7 +584,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
      }
   
   //Cosmetics
-  gr_mpv_x->GetYaxis()->SetRangeUser(0,1.2*max(average_x,average_y));
+  gr_mpv_x->GetYaxis()->SetRangeUser(0,1.8*max(average_x,average_y));
   gr_mpv_x->GetXaxis()->SetRangeUser(x_eff_low-1.0,x_eff_high+1.0);
   gr_mpv_x->SetTitle("");
   gr_mpv_x->GetXaxis()->SetTitle("x-coordinate [mm]");
@@ -921,17 +921,17 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
   //Define Model
   //---------------
   // Construct landau(t,ml,sl) ;
-  RooRealVar ml("ml", "mean landau", 4.86717e-02);
+  RooRealVar ml("ml", "mean landau", 5.0e-02);
   //RooRealVar ml("ml","mean landau",0.055);
   ml.setConstant( kFALSE );
-  RooRealVar sl("sl", "sigma landau", 2.67652e-03) ;
+  RooRealVar sl("sl", "sigma landau", 1.95e-03) ;
   //RooRealVar sl("sl","sigma landau",0.01);
   sl.setConstant( kFALSE );
   RooLandau landau("lx", "lx",Amp,ml,sl);
   
   // Construct gauss(t,mg,sg)
   RooRealVar mg("mg", "mg", 0);
-  RooRealVar sg("sg", "sg", 6.25166e-03);
+  RooRealVar sg("sg", "sg", 1.094e-02);
   sg.setConstant( kFALSE );
   RooGaussian gauss("gauss", "gauss", Amp, mg, sg);
   
@@ -1007,7 +1007,7 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
   //Restoring all branches
   fChain->SetBranchStatus("*", 1);
 
-  if ( data.numEntries() < 50 )
+  if ( data.numEntries() < 10 )
     {
       std::cout << "======================" << std::endl;
       std::cout << "============nofit==========" << std::endl;
@@ -1025,12 +1025,9 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
   // Fit gxlx to data
   ex_lxg->fitTo(data, RooFit::Strategy(0), RooFit::Extended( kTRUE ), RooFit::Range("fitRange") );
   
-  //RooFitResult* sres = ex_lxg->fitTo(data, RooFit::Strategy(2), RooFit::Extended( kTRUE ), RooFit::Save( kTRUE ), RooFit::Range("fitRange") );
+  RooFitResult* sres = ex_lxg->fitTo(data, RooFit::Strategy(2), RooFit::Extended( kTRUE ), RooFit::Save( kTRUE ), RooFit::Range("fitRange") );
   
   /*
-  sres->SetName( "sres" );
-  ws->import( *sres );
-  
   RooPlot* frame = amp.frame();
   data.plotOn( frame );
   
@@ -1050,6 +1047,8 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
   TString fname = Form("mpv_Channel%d_step%.2f_%s.root", channel,coorLow + step, myCoor.c_str());
   TFile* fout = new TFile(fname, "recreate");
   RooWorkspace* ws = new RooWorkspace( "ws", "" );
+  sres->SetName( "sres" );
+  ws->import( *sres );
   RooPlot* frame = Amp.frame();
   data.plotOn( frame );
   

@@ -99,7 +99,7 @@ void FNAL_MeanTime_vs_X_HPK50D_TemperatureDependance()
    -999000,
    -999000,
    -999000,
-   0.000365,
+   -999000,
    0.013186, //From CH3
    0.018857,
    0.025365,
@@ -120,10 +120,10 @@ void FNAL_MeanTime_vs_X_HPK50D_TemperatureDependance()
    -0.002275,
    0.008906,
    0.014696,
-   0.020343,
-   0.019685,
-   0.012728,
-   -0.005076,
+   -999000,
+   -999000,
+   -999000,
+   -999000,
    -999000,
    -999000,
    -999000,
@@ -339,10 +339,10 @@ void FNAL_MeanTime_vs_X_HPK50D_TemperatureDependance()
    gre3->SetName("Graph0");
    gre3->SetTitle("");
    gre3->SetFillColor(1);
-   gre3->SetLineColor(kRed);
+   gre3->SetLineColor(kViolet);
    gre3->SetLineWidth(2);
-   gre3->SetMarkerColor(kRed);
-   gre3->SetMarkerStyle(21);
+   gre3->SetMarkerColor(kViolet);
+   gre3->SetMarkerStyle(34);
    gre3->SetMarkerSize(1.3);
    
    TH1F *Graph_Graph_Graph10191001 = new TH1F("Graph_Graph_Graph10191001","",100,8.025,31.725);
@@ -487,9 +487,9 @@ void FNAL_MeanTime_vs_X_HPK50D_TemperatureDependance()
    0.002203,
    0.005571,
    0.017248,
-   0.021517,
-   0.019721,
-   0.016381,
+   -999000,
+   -999000,
+   -999000,
    -999000, 
    -999000, 
    -999000,
@@ -703,7 +703,7 @@ void FNAL_MeanTime_vs_X_HPK50D_TemperatureDependance()
    0,
    0,
    0};
-   gre2 = new TGraphErrors(80,Graph0_fx1002,Graph0_fy1002,Graph0_fex1002,Graph0_fey1002);
+   TGraphErrors* gre2 = new TGraphErrors(80,Graph0_fx1002,Graph0_fy1002,Graph0_fex1002,Graph0_fey1002);
    gre2->SetName("Graph0");
    gre2->SetTitle("");
    gre2->SetFillColor(1);
@@ -1067,15 +1067,15 @@ void FNAL_MeanTime_vs_X_HPK50D_TemperatureDependance()
    0,
    0,
    0};
-   gre1 = new TGraphErrors(80,Graph0_fx1003,Graph0_fy1003,Graph0_fex1003,Graph0_fey1003);
+   TGraphErrors* gre1 = new TGraphErrors(80,Graph0_fx1003,Graph0_fy1003,Graph0_fex1003,Graph0_fey1003);
    gre1->SetName("Graph0");
    gre1->SetTitle("");
    gre1->SetFillColor(1);
    gre1->SetLineWidth(2);
-   gre1->SetLineColor(kViolet);
-   gre1->SetMarkerColor(kViolet);
-   gre1->SetMarkerStyle(34);
-   gre1->SetMarkerSize(1.5);
+   gre1->SetLineColor(kRed);
+   gre1->SetMarkerColor(kRed);
+   gre1->SetMarkerStyle(21);
+   gre1->SetMarkerSize(1.3);
    
    TH1F *Graph_Graph_Graph10191003 = new TH1F("Graph_Graph_Graph10191003","",100,8.025,31.725);
    Graph_Graph_Graph10191003->SetMinimum(0);

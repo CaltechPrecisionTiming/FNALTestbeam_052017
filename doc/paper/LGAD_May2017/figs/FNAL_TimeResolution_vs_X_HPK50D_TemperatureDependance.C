@@ -488,9 +488,9 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    40.88081,
    42.10093,
    42.67832,
-   37.17654,
-   39.023,
-   36.31713,
+   -999000,
+   -999000,
+   -999000,
    -999000, //42.67486,
    -999000,
    -999000,
@@ -704,7 +704,7 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    0,
    0,
    0};
-   gre2 = new TGraphErrors(80,Graph0_fx1002,Graph0_fy1002,Graph0_fex1002,Graph0_fey1002);
+   TGraphErrors* gre2 = new TGraphErrors(80,Graph0_fx1002,Graph0_fy1002,Graph0_fex1002,Graph0_fey1002);
    gre2->SetName("Graph0");
    gre2->SetTitle("");
    gre2->SetFillColor(1);
@@ -859,9 +859,9 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    41.46838,
    34.6434,
    32.83292,
-   36.47297,
-   36.94978,
-   38.03934,
+   -999000,
+   -999000,
+   -999000,
    -999000, //37.20394,
    -999000,
    -999000,
@@ -1075,7 +1075,8 @@ void FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance()
    0,
    0,
    0};
-   gre3 = new TGraphErrors(80,Graph0_fx1003,Graph0_fy1003,Graph0_fex1003,Graph0_fey1003);
+   
+   TGraphErrors* gre3 = new TGraphErrors(80,Graph0_fx1003,Graph0_fy1003,Graph0_fex1003,Graph0_fey1003);
    gre3->SetName("Graph0");
    gre3->SetTitle("");
    gre3->SetFillColor(1);

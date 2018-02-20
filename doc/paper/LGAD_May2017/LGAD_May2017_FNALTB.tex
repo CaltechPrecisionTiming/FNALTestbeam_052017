@@ -104,22 +104,15 @@ at the Fermilab test beam.}
 \author[8]{D.~Flores}
 \author[4]{P.~Freeman}
 \author[4]{Z.~Galloway}
-%\author[4]{Y.~Ghao}
 \author[9]{A.~Ghassemi}
 \author[3]{H.~Al Ghoul}
 \author[1]{L.~Gray}
 \author[8]{S.~Hidalgo}
-%\author[4]{C.~Labitan}
 \author[9]{S.~Kamada}
 \author[1]{S.~Los}
-%\author[4]{Z.~Luce}
 \author[5]{M.~Mandurrino}
 \author[8]{A.~Merlos}
-%\author[2]{A.~Mangu}
-%\author[4]{F.~Martinez-Mckinney}
 \author[3]{N.~Minafra}
-%\author[1]{A.~Prosser}
-%\author[1]{R.~Rivera}
 \author[1]{A.~Ronzhin}
 \author[8]{G.~Pellegrini}
 \author[8]{D.~Quirion}
@@ -128,12 +121,10 @@ at the Fermilab test beam.}
 \author[4]{A.~Seiden}
 \author[5]{V.~Sola}
 \author[2]{M.~Spiropulu}
-%\author[4]{E.~Spencer}
 \author[5]{A.~Staiano}
 \author[1]{L.~Uplegger}
 \author[9]{K.~Yamamoto}
 \author[9]{K.~Yamamura}
-%\author[4]{M.~Wilder}
 
 \address[1]{Fermi National Accelerator Laboratory, Batavia, IL, USA}
 \address[2]{California Institute of Technology, Pasadena, CA, USA}
@@ -691,9 +682,23 @@ The pixel numbering scheme is defined in Fig.~\ref{fig:HPK_Sensors}. }
 An important characteristic is the uniformity of the signal size
 across the surface of the sensor, which directly impacts on its timing performance. We use the signal amplitude as the metric to characterize the signal
 size uniformity. The distribution of the LGAD signal amplitudes is fitted to a
-Landau distribution. The most probable value (MPV) parameter of the fitted
+Landau distribution. An example of the fit is shown in Fig.~\ref{fig:ExampleLandauFit}.
+The most probable value (MPV) parameter of the fitted
 Landau distribution is plotted in Fig.~\ref{fig:FNAL_HPK50_MPVXY}. 
 A flat response with a uniform signal size is observed over the whole sensor area.
+As a study of systematic effects, we have also repeated the fit using the convolution 
+of a Landau function and a Gaussian function to model the impact of noise and fluctuations
+in the multiplication process. We find that the peak location increases 
+systematically by about $5\%$ for all points in a correlated fashion. 
+However it does not appear to impact the conclusions drawn on the response uniformity.
+
+\begin{figure}[htbp] 
+\centering
+\includegraphics[width=0.49\textwidth]{figs/MPVFitExample_Landau.pdf} 
+\caption{The signal amplitude distribution is fitted to a Landau function. 
+The data corresponds to one bin of the X-axis scan.} 
+\label{fig:ExampleLandauFit} 
+\end{figure} 
 
 \begin{figure}[htbp] 
 \centering

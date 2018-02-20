@@ -488,8 +488,6 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
   float y_init    = 10000.;//microns
   int niterations = (int)((30000.-10000.)/binWidth);//microns
 
- 
-
 
   float x_pos[niterations];//x-positions
   float x_pos_un[niterations];//x-position uncertainty
@@ -511,21 +509,21 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
       x_pos[i] = x_init + binWidth*(float)i;
       x_pos_un[i] = 0;
       std::pair<float,float> MPVAndError_X = MPV_vs_Position_ROOFIT( dut, "X", channelNumber, x_pos[i], binWidth, threshold_low, threshold_high, ymin, ymax,
-							      photek_low, photek_high );
+       							      photek_low, photek_high );
       x_pos[i] = x_pos[i]*um_to_mm;
       mpv_x[i] = MPVAndError_X.first;
       mpv_x_un[i] = MPVAndError_X.second;
       if ( mpv_x_un[i]/mpv_x[i] > 0.2 )
 	{
-	  mpv_x[i]    = 0;
-	  mpv_x_un[i] = 0;
+	  cout << "MPV: " << x_pos[i] << " : " << mpv_x[i] << " +/- " << mpv_x_un[i] << "\n";
+	  // mpv_x[i]    = 0;
+	  // mpv_x_un[i] = 0;
 	}
       if ( mpv_x[i] > 0 && mpv_x[i] < 0.5)
 	{
 	  npoints_above_zero_x++;
 	  average_x += mpv_x[i];
 	}
-      
       
       y_pos[i] = y_init + binWidth*(float)i;
       y_pos_un[i] = 0;
@@ -696,8 +694,8 @@ void pulse::CreateDeltaT_vs_PositionHisto( int dut, int channelNumber, int times
 	  npoints_above_zero_x++;
 	  average_x += deltaT_x[i];
 	}
-      
-      
+            
+
       y_pos[i] = y_init + binWidth*(float)i;
       y_pos_un[i] = 0;
       std::pair<float,float> DeltaTAndError_Y;
@@ -921,17 +919,20 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
   //Define Model
   //---------------
   // Construct landau(t,ml,sl) ;
-  RooRealVar ml("ml", "mean landau", 5.0e-02);
+  //RooRealVar ml("ml", "mean landau", 5.0e-02);
   //RooRealVar ml("ml","mean landau",0.055);
+  RooRealVar ml("ml", "mean landau", 3.0e-02, 0, 1.0);
   ml.setConstant( kFALSE );
-  RooRealVar sl("sl", "sigma landau", 1.95e-03) ;
+  //  RooRealVar sl("sl", "sigma landau", 1.95e-03) ;
   //RooRealVar sl("sl","sigma landau",0.01);
+  RooRealVar sl("sl", "sigma landau", 0.5e-03, 0, 1.0) ;
   sl.setConstant( kFALSE );
   RooLandau landau("lx", "lx",Amp,ml,sl);
   
   // Construct gauss(t,mg,sg)
   RooRealVar mg("mg", "mg", 0);
-  RooRealVar sg("sg", "sg", 1.094e-02);
+  //  RooRealVar sg("sg", "sg", 1.094e-02, 0, 0.003);
+  RooRealVar sg("sg", "sg", 1.094e-02, 0, 0.005);
   sg.setConstant( kFALSE );
   RooGaussian gauss("gauss", "gauss", Amp, mg, sg);
   
@@ -978,11 +979,13 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
 	    {
 	      if ( (coor == "x" || coor == "X") && x1 >= coorLow && x1 < (coorLow + step) && y1 > other_corr_low && y1 < other_corr_high )
 		{
+		  h_mpv->Fill(amp[channel]);
 		  Amp.setVal( amp[channel] );
 		  data.add(RooArgSet(Amp));
 		}
 	      if ( (coor == "y" || coor == "Y") && y1 >= coorLow && y1 < (coorLow + step) && x1 > other_corr_low && x1 < other_corr_high )
 		{
+		  h_mpv->Fill(amp[channel]);
 		  Amp.setVal( amp[channel] );
 		  data.add(RooArgSet(Amp));
 		}
@@ -991,11 +994,13 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
 	    {
 	      if ( (coor == "x" || coor == "X") && x2 >= coorLow && x2 < (coorLow + step) && y2 > other_corr_low && y2 < other_corr_high )
 		{
+		  h_mpv->Fill(amp[channel]);
 		  Amp.setVal( amp[channel] );
 		  data.add(RooArgSet(Amp));
 		}
 	      if ( (coor == "y" || coor == "Y") && y2 >= coorLow && y2 < (coorLow + step) && x2 > other_corr_low && x2 < other_corr_high )
 		{
+		  h_mpv->Fill(amp[channel]);
 		  Amp.setVal( amp[channel] );
 		  data.add(RooArgSet(Amp));
 		}
@@ -1046,6 +1051,7 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
   if ( coor == "Y" || coor == "y" ) myCoor = "Y";
   TString fname = Form("mpv_Channel%d_step%.2f_%s.root", channel,coorLow + step, myCoor.c_str());
   TFile* fout = new TFile(fname, "recreate");
+  h_mpv->Write();
   RooWorkspace* ws = new RooWorkspace( "ws", "" );
   sres->SetName( "sres" );
   ws->import( *sres );
@@ -1058,6 +1064,7 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
   frame->SetName("MY_frame" );
   ws->import( *frame );
   ws->Write("myws");
+  frame->Write();
   fout->Close();
   
   /*

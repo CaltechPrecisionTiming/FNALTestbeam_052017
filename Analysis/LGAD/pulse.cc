@@ -515,7 +515,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
       x_pos[i] = x_pos[i]*um_to_mm;
       mpv_x[i] = MPVAndError_X.first;
       mpv_x_un[i] = MPVAndError_X.second;
-      if ( mpv_x_un[i]/mpv_x[i] > 0.05 )
+      if ( mpv_x_un[i]/mpv_x[i] > 0.2 )
 	{
 	  mpv_x[i]    = 0;
 	  mpv_x_un[i] = 0;
@@ -534,7 +534,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
       y_pos[i] = y_pos[i]*um_to_mm;
       mpv_y[i] = MPVAndError_Y.first;
       mpv_y_un[i] = MPVAndError_Y.second;
-      if ( mpv_y_un[i]/mpv_y[i] > 0.05 )
+      if ( mpv_y_un[i]/mpv_y[i] > 0.2 )
 	{
 	  mpv_y[i]    = 0;
 	  mpv_y_un[i] = 0;
@@ -584,7 +584,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
      }
   
   //Cosmetics
-  gr_mpv_x->GetYaxis()->SetRangeUser(0,1.8*max(average_x,average_y));
+  gr_mpv_x->GetYaxis()->SetRangeUser(0,2.8*max(average_x,average_y));
   gr_mpv_x->GetXaxis()->SetRangeUser(x_eff_low-1.0,x_eff_high+1.0);
   gr_mpv_x->SetTitle("");
   gr_mpv_x->GetXaxis()->SetTitle("x-coordinate [mm]");
@@ -600,7 +600,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
   gr_mpv_x->SetLineColor(kBlue);
   gr_mpv_x->SetMarkerStyle(20);
   
-  gr_mpv_y->GetYaxis()->SetRangeUser(0,1.2*max(average_x,average_y));
+  gr_mpv_y->GetYaxis()->SetRangeUser(0,2.8*max(average_x,average_y));
   gr_mpv_y->GetXaxis()->SetRangeUser(y_eff_low-1.0,y_eff_high+1.0);
   gr_mpv_y->SetTitle("");
   gr_mpv_y->GetXaxis()->SetTitle("y-coordinate [mm]");

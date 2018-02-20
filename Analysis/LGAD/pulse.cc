@@ -1127,7 +1127,7 @@ std::pair<float,float> pulse::DeltaT_vs_Position( int dut, TString coor, const i
   Long64_t nentries = fChain->GetEntriesFast();
   Long64_t nbytes = 0, nb = 0;
   
-  cout << "Running MPV_vs_Position Analysis\n";
+  cout << "Running Delta T_vs_Position Analysis\n";
   cout << "Total Events: " << nentries << "\n";
   TH1F* h_deltaT = new TH1F("h_delta_T", "h_delta_T", 1000, -10, 10);
   for (Long64_t jentry=0; jentry<nentries;jentry++)

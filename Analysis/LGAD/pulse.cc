@@ -47,6 +47,9 @@
 #include <RooDataHist.h>
 #include <RooHistPdf.h>
 #include <RooArgList.h>
+#include <RooRealBinding.h>
+#include <RooBrentRootFinder.h>
+#include <RooDerivative.h>
 
 using namespace std;
 
@@ -1085,6 +1088,14 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
   h_mpv->Write();
   fout->Close();
   */
+
+  RooAbsReal* dldx = lxg.derivative(Amp) ;
+  Double_t xpeak = 0.0;
+  double scanmin = 0.0;
+  double scanmax = 0.1;
+  Bool_t ok = RooBrentRootFinder(RooRealBinding(*dldx,Amp)).findRoot(xpeak,scanmin,scanmax,0.) ;
+  cout << "Max = " << xpeak << "\n";
+
   return result;
 };
 

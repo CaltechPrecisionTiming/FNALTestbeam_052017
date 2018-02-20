@@ -513,11 +513,11 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
       x_pos[i] = x_pos[i]*um_to_mm;
       mpv_x[i] = MPVAndError_X.first;
       mpv_x_un[i] = MPVAndError_X.second;
-      if ( mpv_x_un[i]/mpv_x[i] > 0.2 )
+      if ( mpv_x_un[i]/mpv_x[i] > 0.5 )
 	{
 	  cout << "MPV: " << x_pos[i] << " : " << mpv_x[i] << " +/- " << mpv_x_un[i] << "\n";
-	  // mpv_x[i]    = 0;
-	  // mpv_x_un[i] = 0;
+	   mpv_x[i]    = 0;
+	   mpv_x_un[i] = 0;
 	}
       if ( mpv_x[i] > 0 && mpv_x[i] < 0.5)
 	{
@@ -532,7 +532,7 @@ void pulse::CreateMPV_vs_PositionHisto( int dut, int channelNumber, float binWid
       y_pos[i] = y_pos[i]*um_to_mm;
       mpv_y[i] = MPVAndError_Y.first;
       mpv_y_un[i] = MPVAndError_Y.second;
-      if ( mpv_y_un[i]/mpv_y[i] > 0.2 )
+      if ( mpv_y_un[i]/mpv_y[i] > 0.1 )
 	{
 	  mpv_y[i]    = 0;
 	  mpv_y_un[i] = 0;
@@ -912,7 +912,7 @@ std::pair<float,float> pulse::MPV_vs_Position_ROOFIT( int dut, TString coor, con
   //------------------------------
   RooRealVar Amp( "amplitude", "Amp", 0, 0.5, "V" );
   Amp.setBins(100);
-  Amp.setRange( "fitRange", 0.02, 0.35 );
+  Amp.setRange( "fitRange", 0.01, 0.35 );
   RooDataSet data( "data", "", RooArgSet(Amp) );
 
   //---------------

@@ -151,11 +151,11 @@ Hamamatsu Photonics (HPK) were studied. The uniformity of the
 sensor response in pulse height before irradiation was found to have a
 2\% spread. The signal detection efficiency and timing resolution in the sensitive areas before irradiation
 were found to be 100\%  and 30-40~\si{ps}, respectively. A ``no-response'' area between pads was
-measured to be about 70~$\mu$m for CNM and 110$\mu$m for HPK sensors. After a
+measured to be about 130~$\mu$m for CNM and 170$\mu$m for HPK sensors. After a
 neutron fluence of $6\times 10^{14}$~n/cm$^2$ the CNM sensor exhibits a large
-gain variation of up to a factor of $2.5$ when comparing metallized and non-metallized
+gain variation of up to a factor of $2.5$ when comparing metalized and non-metalized
 sensor areas. An irradiated CNM sensor achieved a time resolution of 30~ps for the
-metallized area and 40~ps for the non-metallized area, while 
+metalized area and 40~ps for the non-metalized area, while 
 a HPK sensor irradiated to the same fluence achieved a 30~\si{ps} time resolution.
 \end{abstract}
 
@@ -356,7 +356,7 @@ detectors. The pads were produced in three versions: two with guard ring (GR and
 GBGR) and one without guard ring. Four-channel sensors in a $2\times 2$ array
 were produced with all 4 gain-splits, and are identified with the PIX
 identifier. For example, the $2\times 2$ array of the 50~$\mu$m sensor split D
-is labelled as 50D-PIX. The sensor corresponding to each of the four channels in
+is labeled as 50D-PIX. The sensor corresponding to each of the four channels in
 the array is also referred to as a pixel in this paper. Each pixel in the
 $2\times 2$ HPK array has dimensions of $3\times 3$~$\mathrm{mm}^{2}$. The CNM
 single-channel sensors are square pads with an active area of
@@ -434,7 +434,8 @@ Tab.~\ref{tab:DataConditions}.
 			HPK 50D-PIX & \begin{tabular}{@{}c@{}}\textbf{-300 V (30)} \end{tabular}  & -- & \begin{tabular}{@{}c@{}}\textbf{-250 V (17), -300 V (30),} \\ \underline{-250 V (29)} \\ \textit{-250 V (36)}\end{tabular} \\ \hline
 			CNM W9HG11 & -- & \textbf{-180 V (14)} & -- \\ \hline
 			\begin{tabular}{@{}c@{}}HPK 50D \\  $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & \textit{-600 V (20), -635 V (30)} & -- \\ \hline
-			\begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & -- & -- & \textit{-400 V (24), -420 V (28)} \\ \hline
+			\begin{tabular}{@{}c@{}}CNM W11LGA35 \\ $6\times 10^{14}$~n/cm$^2$ \end{tabular} & 
+			-- & \textit{-400 V (24), -420 V (28)}  & --\\ \hline
 		\end{tabular}
 		\caption{Data taking conditions for the studies presented in this paper. Numbers in bold indicate that the sensor was at room temperature, underlined ones were taken at $-10$C$^{\circ}$, 
 		  and those in italicized text were taken at $-20$C$^{\circ}$. The numbers in parenthesis indicate the gain at the given operation voltage. }  
@@ -718,9 +719,9 @@ reference timestamp ($t_0$) and the timestamp of the LGAD sensors ($t_1$) are
 shown in Fig.~\ref{fig:FNAL_HPK50_DTXY}. The micro-bonding scheme of the HPK and
 CNM $2\times 2$ sensor arrays is shown in Fig.~\ref{fig:HPK_Sensors}. For the
 HPK sensor, the $\Delta t$ dependence on the hit position indicates a shift of
-about $20$--$30$~ps between the metallized area near the center of the array
+about $20$--$30$~ps between the metalized area near the center of the array
 (gray region of the top-left image in Fig.~\ref{fig:HPK_Sensors}) and the
-non-metallized area. 
+non-metalized area. 
 This effect cannot be attributed to the algorithm used to time-stamp the events,
 since the same behavior is observed with the CFD and CDT algorithms.
 Furthermore, the same behavior is observed on all HPK sensor varieties mounted
@@ -774,10 +775,10 @@ function defined as:
 
 \begin{equation} Erf(x)= \frac{2}{\sqrt{\pi}}\times \int_{0}^{x}e^{-t^2}dt
 \end{equation} , and $p_i$ were free parameters of the fit. We define the width
-of the ``no-response'' area as the distance between the half-maxima of the two
+of the ``no-response'' area as the distance between the 90\% efficiencies on the two
 fitted S-curves, as shown in Fig.~\ref{fig:FNAL_HPK50_ZoomeffXY}. We measure the
-width of the no-response area on the HPK 50D-PIX sensor to be 110~$\mu$m, with
-an uncertainty of 10~$\mu$m. Data points outside the sensor area in
+width of the no-response area on the HPK 50D-PIX sensor to be 170~$\mu$m, with
+an uncertainty of 15~$\mu$m. Data points outside the sensor area in
 Figs.~\ref{fig:FNAL_HPK50_ZoomeffXY}, \ref{fig:UCSC_HPK50C_CNM_ZoomeffXY}
 actually had hit the sensor active area, but the coordinate of the track is incorrectly
 assigned, due to a small probability ($<1$\%) to misreconstruct the position of
@@ -797,9 +798,9 @@ sensor and the CNM W9HG11 sensor. We compare the width of the gap region of the
 HPK and CNM sensors in Fig.~\ref{fig:UCSC_HPK50C_CNM_ZoomeffXY}. Both sensors in
 this comparison were tested in the beam simultaneously. The HPK 50C-PIX sensor
 was operated at $-450$~V, and CNM W9HG11 sensor was operated at $-180$~V. We
-measure the size of the ``no-response'' region to be around 110~$\mu$m on the
-HPK 50C-PIX -- compatible with the HPK 50D-PIX sensor -- and around 70~$\mu$m
-for the CNM sensor. Both measurements have an uncertainty of 10~$\mu$m.
+measure the size of the ``no-response'' region to be around 150~$\mu$m on the
+HPK 50C-PIX -- compatible with the HPK 50D-PIX sensor -- and around 130~$\mu$m
+for the CNM sensor. Both measurements have an uncertainty of 15~$\mu$m.
 
 \begin{figure}[!htbp] 
 \centering
@@ -859,7 +860,7 @@ The measurements of the time difference between the reference timestamp and the
 timestamps of the HPK sensors are shown in
 Fig.~\ref{fig:KUBoard_50ABCD_MeanTime}. As was shown in
 Fig.~\ref{fig:FNAL_HPK50_DTXY}, the $\Delta t$ exhibits an offset of about
-$20$~ps between the metallized area and the non-metallized area of the sensor. The
+$20$~ps between the metalized area and the non-metalized area of the sensor. The
 feature is present in all 4 types of the HPK PIX sensors, does not depend on the
 readout board or timestamp reconstruction algorithm used, and appears to be
 statistically consistent in shape and magnitude. 
@@ -869,7 +870,7 @@ statistically consistent in shape and magnitude.
 \includegraphics[width=0.9\textwidth]{figs/KUBoard_HPK50ABCD/KUBoard_50ABCD_MeanTime.pdf} 
 \caption{$\Delta t$ measurements as a function of the X position of the beam particle 
 for the HPK 50A-, 50B-, 50C-, and 50D-PIX sensors mounted on the KU board. The scan 
-of pixels 1 and 2 along the X-axis is shown. The pixel numberng scheme is defined 
+of pixels 1 and 2 along the X-axis is shown. The pixel numbering scheme is defined 
 in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:KUBoard_50ABCD_MeanTime} 
 \end{figure} 
@@ -884,7 +885,7 @@ resolution around 40~ps across the entire sensor area.
 \includegraphics[width=0.9\textwidth]{figs/KUBoard_HPK50ABCD/KUBoard_50ABCD_TimeResolution.pdf} 
 \caption{Time resolution measurements as a function of the X position of the beam particle
 for the HPK 50A-, 50B-, 50C-, and 50D-PIX sensors mounted on the KU board. The scan of 
-pixels 1 and 2 along the X-axis is shown. The pixel numberng scheme is 
+pixels 1 and 2 along the X-axis is shown. The pixel numbering scheme is 
 defined in Fig.~\ref{fig:HPK_Sensors}.} 
 \label{fig:KUBoard_50ABCD_TimeResolution} 
 \end{figure} 
@@ -899,9 +900,9 @@ sensors of 80 and $50$~$\mu$m is presented in ~\cite{Galloway:2017gfx}. Here we
 compare the uniformity of the time resolution across the sensors of these two
 thicknesses. This study is performed using the HPK C-PIX sensors with the same
 dopant concentration. The $80$~$\mu$m sensor HPK 80C-PIX is biased at $-610$~V,
-while the $50$~$\mu$m sensor HPK 50C-PIX is biased at $-400$~V. The sensors's
+while the $50$~$\mu$m sensor HPK 50C-PIX is biased at $-400$~V. The sensor's
 gains at these bias voltages are: about 11 for the $80$~$\mu$m sensor, and about
-14 for the $50$~$\mu$m sensor. The time resolution for the two sensors are shown
+20 for the $50$~$\mu$m sensor. The time resolution for the two sensors are shown
 in Fig.~\ref{fig:HPK50CVs80C} as a function of position, and exhibit fairly
 uniform behavior. Measurements of the HPK 50C-PIX sensor were performed on the
 KU 2-channel board, and those for HPK 80C-PIX used the FNAL 4-channel board. 
@@ -929,8 +930,8 @@ the LGAD sensors performed at $-10$ and $-20^{\circ}$C degrees, and compare the
 results to those at room temperature. These measurements were performed with the
 HPK 50D-PIX sensors mounted on the FNAL 4-channel board. The sensor was biased
 at the same voltage of $-250$~V for all temperature scenarios. The HPK 50D gain
-at this bias voltage and at $+20^{\circ}$C was measured to be 15, while at
-$-20^{\circ}$C and the same bias voltage it was measured to be 25.
+at this bias voltage and at $+20^{\circ}$C was measured to be around 17, while at
+$-20^{\circ}$C and the same bias voltage it was measured to be around 36.
 
 The distribution of the signal MPV across the sensor surface is shown in
 Fig.~\ref{fig:MPV_vs_X_HPK50D_TemperatureDependance}. We observe that the signal
@@ -947,7 +948,7 @@ in the signal response between different pixel sensors at colder temperatures.
 \includegraphics[width=0.9\textwidth]{figs/FNAL_MPV_vs_X_HPK50D_TemperatureDependance.pdf} 
 \caption{Temperature dependance of the signal amplitude MPV uniformity across
 the X-axis of the HPK 50D-PIX sensors mounted on the FNAL board. The scan of
-pixels 1 and 2 along the X-axis is shown, and pixel numberng scheme is defined
+pixels 1 and 2 along the X-axis is shown, and pixel numbering scheme is defined
 in Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at $-250$~V.} 
 \label{fig:MPV_vs_X_HPK50D_TemperatureDependance} 
 \end{figure} 
@@ -962,7 +963,7 @@ significant changes in the behavior of the $\Delta t$ as the temperature varies.
 \includegraphics[width=0.9\textwidth]{figs/FNAL_MeanTime_vs_X_HPK50D_TemperatureDependance.pdf} 
 \caption{Temperature dependance of the $\Delta t$ uniformity across
 the X-axis of the HPK 50D-PIX sensors mounted on the FNAL board. The scan of
-pixels 1 and 2 along the X-axis is shown, and pixel numberng scheme is defined
+pixels 1 and 2 along the X-axis is shown, and pixel numbering scheme is defined
 in Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at $-250$~V.} 
 \label{fig:MeanTime_vs_X_HPK50D_TemperatureDependance} 
 \end{figure} 
@@ -987,7 +988,7 @@ LHC experiments.
 \includegraphics[width=0.9\textwidth]{figs/FNAL_TimeResolution_vs_X_HPK50D_TemperatureDependance.pdf} 
 \caption{Temperature dependance of the time resolution uniformity across the
 X-axis of the HPK 50D-PIX sensors mounted on the FNAL board. The scan of pixels
-1 and 2 along the X-axis is shown. The pixel numberng scheme is defined in
+1 and 2 along the X-axis is shown. The pixel numbering scheme is defined in
 Fig.~\ref{fig:HPK_Sensors}. The HPK sensor is biased at $-250$~V.} 
 \label{fig:TimeResolution_vs_X_HPK50D_TemperatureDependance} 
 \end{figure} 
@@ -1015,15 +1016,15 @@ irradiated sensors are shown in Figs.~\ref{fig:CNM_irradiated_amp_Map} and
 sensor shown in Fig.~\ref{fig:HPK_Sensors} and the distribution in
 Fig.~\ref{fig:CNM_irradiated_amp_Map}, it is clear that two distinct regions can
 be identified on the sensor based on the signal amplitude: the region under the
-aluminum metallization on the periphery of the sensor, and the region without
-aluminum metallization in the center. The distribution on the right of
+aluminum metalization on the periphery of the sensor, and the region without
+aluminum metalization in the center. The distribution on the right of
 Fig.~\ref{fig:CNM_irradiated_amp_Map} shows that at the same bias voltage the amplitude under the
 aluminum (periphery) is about 2.5 times larger than that without aluminum
 (center). The amplitude scan of the irradiated HPK 50D sensor is shown on the
 left panel of Fig.~\ref{fig:HPK_irradiated_amp_Map}, and a uniform amplitude
 across the sensor surface is observed, which can also be seen on the right panel
 of Fig.~\ref{fig:HPK_irradiated_amp_Map}. In contrast to the CNM sensor, the
-whole surface of the active area of the HPK 50D sensor is without metallization.
+whole surface of the active area of the HPK 50D sensor is without metalization
 
 
 \begin{figure}[htbp] 
@@ -1063,8 +1064,8 @@ The distribution of MPV of signal amplitudes across the sensor area is shown in
 Fig.~\ref{fig:IrradiatedSensorStudy_MPV}, where the MPV is extracted as
 described in Sec.~\ref{sec:HPK_CNM_uniformity}. Measurements were performed at
 two bias voltage values for both sensors: $-600$ and $-635$~V for HPK (gain
-equal to 19 and 29, respectively), and $-400$ and $-420$~V for CNM sensors (gain
-equal to 14 and 15, respectively). A uniform signal amplitude is observed across
+equal to 20 and 30, respectively), and $-400$ and $-420$~V for CNM sensors (gain
+equal to 24 and 28, respectively). A uniform signal amplitude is observed across
 the HPK sensor, while for the CNM sensor the amplitude varies across the sensor
 surface, as observed also in Fig.~\ref{fig:CNM_irradiated_amp_Map}. 
 
@@ -1081,8 +1082,8 @@ timestamps of the signals from the irradiated HPK and CNM sensors are shown in
 Fig.~\ref{fig:IrradiatedSensorStudy_MeanTime}. Measurements at both bias voltage
 values are presented. We measured a uniform distribution of the $\Delta{t}$
 values across the HPK sensor. The CNM sensor exhibits a non-uniformity across
-the sensor surface, where the signals from the central, non-metallized area
-arrive about 10~ps earlier than those from the peripheral, metallized area. 
+the sensor surface, where the signals from the central, non-metalized area
+arrive about 10~ps earlier than those from the peripheral, metalized area. 
 
 
 \begin{figure}[htbp] 
@@ -1126,10 +1127,11 @@ were used in these studies. The uniformity of the
 sensor response in pulse height before irradiation was found to have a
 2\% spread. The efficiency and timing  resolution before irradiation
 were found to be 100\%  and 30-40~\si{ps}, respectively. The
-``non-response'' region between pixels was measured to be about 70~$\mu$m for CNM sensors and 110~$\mu$m for HPK sensors. 
-A small timing shift across the HPK sensor of the order 20--30~\si{ps'} can
-be explained by the observed change in pulse shape when comparing metallized and
-non-metallized sensor areas. Uniform signal detection efficiency of 100\% is
+``non-response'' region between pixels was measured to be about 130~$\mu$m for CNM sensors 
+and 170~$\mu$m for HPK sensors. 
+A small timing shift across the HPK sensor of the order 20--30~\si{ps} can
+be explained by the observed change in pulse shape when comparing metalized and
+non-metalized sensor areas. Uniform signal detection efficiency of 100\% is
 observed on all sensors, both before and after irradiation. 
 
 For an un-irradiated 50~$\mu$m thick LGADs with 3~mm pads we find the following timing results: 
@@ -1143,8 +1145,8 @@ For an un-irradiated 50~$\mu$m thick LGADs with 3~mm pads we find the following 
         $-10^{\circ}$C to 36 ps at $-20^{\circ}$C. \end{itemize}
 
 After a neutron fluence of $6\times 10^{14}$~n/cm$^2$, the single pad CNM sensor
-exhibits a large gain variation of a factor 2.5 when comparing metallized and
-non-metallized sensor areas. For an 50~$\mu$m thick LGAD with 1~mm pads
+exhibits a large gain variation of a factor 2.5 when comparing metalized and
+non-metalized sensor areas. For an 50~$\mu$m thick LGAD with 1~mm pads
 irradiated $6\times 10^{14}$~n/cm$^2$ we find the following timing results when
 operated at $-20^{\circ}$C: 
 
@@ -1153,11 +1155,11 @@ operated at $-20^{\circ}$C:
     and the corresponding timing resolution is 30~ps; 
   \item for the CNM LGAD the highest bias voltage reached is $-420$~V
     and the corresponding
-        timing resolution is 30~ps for the metallized area and $40$~ps for the
-        non-metallized area.
+        timing resolution is 30~ps for the metalized area and $40$~ps for the
+        non-metalized area.
 \end{itemize}
 
-\section*{Acknowledgement}
+\section*{Acknowledgment}
 
 We thank the FTBF personnel and Fermilab accelerator's team for very good beam
 conditions during our test beam time. We also appreciate the technical support
